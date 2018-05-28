@@ -159,7 +159,7 @@ return [
         // amcsi\LyceeOverture\Providers\BroadcastServiceProvider::class,
         amcsi\LyceeOverture\Providers\EventServiceProvider::class,
         amcsi\LyceeOverture\Providers\RouteServiceProvider::class,
-
+        \amcsi\LyceeOverture\Providers\ContainerBindingsServiceProvider::class,
     ],
 
     /*
