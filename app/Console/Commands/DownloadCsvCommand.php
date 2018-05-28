@@ -11,14 +11,14 @@ use function GuzzleHttp\Psr7\copy_to_stream;
 use function GuzzleHttp\Psr7\stream_for;
 use function GuzzleHttp\Psr7\try_fopen;
 
-class ImportCsvCommand extends Command
+class DownloadCsvCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'lycee:import-csv {-f?}';
+    protected $signature = 'lycee:download-csv {-f?}';
 
     /**
      * The console command description.
