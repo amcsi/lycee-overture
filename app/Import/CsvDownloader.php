@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use function GuzzleHttp\Psr7\str;
 
 /**
- * Imports the CSV
+ * Downloads the CSV from the official Lycee website.
  */
 class CsvDownloader
 {
@@ -22,7 +22,7 @@ class CsvDownloader
         $this->client = $client;
     }
 
-    public function import(): ResponseInterface
+    public function download(): ResponseInterface
     {
         $config = $this->config;
         $url = $config['importBaseUrl'] . '?' . http_build_query($config['importQueryParameters']);

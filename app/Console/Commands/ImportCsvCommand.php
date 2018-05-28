@@ -4,6 +4,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Import\CsvDownloader;
+use Cake\Chronos\Chronos;
 use Illuminate\Console\Command;
 use Symfony\Component\Stopwatch\Stopwatch;
 use function GuzzleHttp\Psr7\copy_to_stream;
@@ -17,7 +18,7 @@ class ImportCsvCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'lycee:import-csv';
+    protected $signature = 'lycee:import-csv {-f?}';
 
     /**
      * The console command description.
@@ -36,25 +37,29 @@ class ImportCsvCommand extends Command
         $this->csvDownloader = $csvDownloader;
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle()
+    public function handle(): void
     {
-        $stopwatch = new Stopwatch();
+        $force = (bool)$this->argument('-f');
+        $cacheFile = storage_path('lycee.csv');
+
         $output = $this->output;
         $output->text('Importing CSV from Lycee website...');
+        $stopwatch = new Stopwatch();
         $stopwatch->start('import-csv');
-        $response = $this->csvDownloader->import();
 
-        $cacheFile = storage_path('lycee.csv');
+        // Rely on cache if the cached file newer by a specific time interval.
+        if (!$force && file_exists($cacheFile) && filemtime($cacheFile) > Chronos::now()->subWeek()->getTimestamp()) {
+            $output->text('Done importing CSV (cache).');
+            return;
+        }
+
+        $response = $this->csvDownloader->download();
+
         $cacheFileStream = stream_for(try_fopen($cacheFile, 'w+'));
         // Copy contents of download to CSV file.
         copy_to_stream($response->getBody(), $cacheFileStream);
 
-        $importCsvStopwatchEvent = $stopwatch->stop('import-csv');
+        $importCsvStopwatchEvent = $stopwatch->stop('mport-csv');
         $output->text('Done importing CSV. ' . Profiling::stopwatchToHuman($importCsvStopwatchEvent));
     }
 }
