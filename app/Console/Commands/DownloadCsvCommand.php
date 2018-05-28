@@ -4,6 +4,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Import\CsvDownloader;
+use amcsi\LyceeOverture\Import\ImportConstants;
 use Cake\Chronos\Chronos;
 use Illuminate\Console\Command;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -40,7 +41,7 @@ class DownloadCsvCommand extends Command
     public function handle(): void
     {
         $force = (bool)$this->argument('-f');
-        $cacheFile = storage_path('lycee.csv');
+        $cacheFile = storage_path(ImportConstants::CSV_PATH);
 
         $output = $this->output;
         $output->text('Importing CSV from Lycee website...');
