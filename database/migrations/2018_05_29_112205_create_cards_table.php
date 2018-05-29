@@ -1,12 +1,17 @@
 <?php
 
-use amcsi\LyceeOverture\Card\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateCardsTable extends Migration
 {
+    protected $primaryKey = 'id';
+    /**
+     * Our IDs are custom strings.
+     */
+    public $incrementing = false;
+
     /**
      * Run the migrations.
      *
@@ -18,7 +23,7 @@ class CreateCardsTable extends Migration
             $table->string('id');
             $table->timestamps();
             $table->string('variants')->default('');
-            $table->enum('type', Type::getAll());
+            $table->unsignedTinyInteger('type');
             $table->unsignedTinyInteger('ex')->default(0);
 
             $table->boolean('snow')->default(0);
