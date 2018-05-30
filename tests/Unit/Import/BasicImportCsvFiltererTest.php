@@ -16,9 +16,13 @@ class BasicImportCsvFiltererTest extends TestCase
         $result = toArray((new BasicImportCsvFilterer())->toDatabaseRows($exampleCsvReader));
 
         self::assertCount(2, $result);
-        self::assertSame('LO-0576', $result[0]['id']);
-        self::assertSame(Type::CHARACTER, $result[0]['type']);
-        self::assertSame('LO-0985', $result[1]['id']);
-        self::assertSame(Type::CHARACTER, $result[1]['type']);
+        $item = $result[0];
+        self::assertSame('LO-0576', $item['id']);
+        self::assertSame(Type::CHARACTER, $item['type']);
+        self::assertSame(2, $item['ex']);
+        $item = $result[1];
+        self::assertSame('LO-0985', $item['id']);
+        self::assertSame(Type::CHARACTER, $item['type']);
+        self::assertSame(2, $item['ex']);
     }
 }

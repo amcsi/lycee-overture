@@ -18,6 +18,7 @@ class BasicImportCsvFilterer
             $dbRow = [];
             $dbRow['id'] = $id;
             $dbRow['type'] = CsvValueInterpreter::getType($csvRow);
+            $dbRow['ex'] = (int) $csvRow[CsvColumns::EX];
             yield $dbRow;
         }
     }

@@ -12,4 +12,7 @@ class CsvColumns
     public const ABILITY_NAME = 1;
     public const NAME = 2;
     public const TYPE = 3;
+    public const RARITY = 4;
+    public const ELEMENT = 5;
+    public const EX = 6;
 }
