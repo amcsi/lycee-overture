@@ -6,6 +6,7 @@ use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
 use Illuminate\Cache\Repository;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
@@ -20,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Builder::macro('upsert', require __DIR__ . '/../../app/Database/upsert.php');
     }
 
     /**
