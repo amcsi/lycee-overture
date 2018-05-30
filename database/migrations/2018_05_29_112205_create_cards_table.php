@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCardsTable extends Migration
 {
-    protected $primaryKey = 'id';
     /**
      * Our IDs are custom strings.
      */
@@ -20,7 +19,7 @@ class CreateCardsTable extends Migration
     public function up()
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->string('id');
+            $table->string('id')->primary();
             $table->timestamps();
             $table->string('variants')->default('');
             $table->unsignedTinyInteger('type');
