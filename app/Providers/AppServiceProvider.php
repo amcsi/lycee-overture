@@ -15,13 +15,25 @@ use League\Flysystem\FilesystemInterface;
 class AppServiceProvider extends ServiceProvider
 {
     /**
+     * Keep track of whether static macros have already been booted for this Laravel Swoole application.
+     * @var bool
+     */
+    static private $booted = false;
+
+    /**
      * Bootstrap any application services.
      *
      * @return void
      */
     public function boot()
     {
+        if (self::$booted) {
+            return;
+        }
         Builder::macro('upsert', require __DIR__ . '/../../app/Database/upsert.php');
+        Builder::macro('insertIgnore', require __DIR__ . '/../../app/Database/insertIgnore.php');
+
+        self::$booted = true;
     }
 
     /**

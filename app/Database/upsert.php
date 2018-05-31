@@ -27,6 +27,7 @@ return function (array $values): int {
 
     $query .= ' ON DUPLICATE KEY UPDATE ' . implode(', ', $sets);
 
+    // This protected cleanBindings() method is why the closure needs to be registered as a macro.
     $bindings = $this->cleanBindings(Arr::flatten($values, 1));
     return $this->connection->affectingStatement(
         $query,

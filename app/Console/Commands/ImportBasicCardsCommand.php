@@ -25,7 +25,12 @@ class ImportBasicCardsCommand extends Command
         $this->output->writeln('Starting import of basic card data.');
         $reader = Reader::createFromPath(storage_path(ImportConstants::CSV_PATH));
         $toInsert = iterator_to_array($this->basicImportCsvFilterer->toDatabaseRows($reader));
-        Card::upsert($toInsert);
-        $this->output->writeln('Finished import of basic card data.');
+        $insertedCount = Card::getQuery()->insertIgnore($toInsert);
+        $updatedCount = Card::getQuery()->upsert($toInsert) / 2;
+        $this->output->writeln(sprintf(
+            'Finished import of basic card data. Inserted: %s, Updated: %s',
+            $insertedCount,
+            $updatedCount
+        ));
     }
 }
