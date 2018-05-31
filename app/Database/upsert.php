@@ -9,11 +9,11 @@ use Illuminate\Support\Arr;
 /**
  * Performs an upsert. This has to be a closure to be able to rebind $this.
  */
-return function (array $values) {
+return function (array $values): int {
     /** @var Builder $this */
 
     if (!$values) {
-        return true;
+        return 0;
     }
 
     $query = $this->grammar->compileInsert($this, $values);
@@ -28,7 +28,7 @@ return function (array $values) {
     $query .= ' ON DUPLICATE KEY UPDATE ' . implode(', ', $sets);
 
     $bindings = $this->cleanBindings(Arr::flatten($values, 1));
-    return $this->connection->insert(
+    return $this->connection->affectingStatement(
         $query,
         $bindings
     );
