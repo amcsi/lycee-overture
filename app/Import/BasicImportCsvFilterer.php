@@ -19,6 +19,17 @@ class BasicImportCsvFilterer
             $dbRow['id'] = $id;
             $dbRow['type'] = CsvValueInterpreter::getType($csvRow);
             $dbRow['ex'] = (int) $csvRow[CsvColumns::EX];
+            $dbRow['rarity'] = $csvRow[CsvColumns::RARITY];
+            foreach (CsvValueInterpreter::getElements($csvRow) as $key => $value) {
+                $dbRow[$key] = $value;
+            }
+            foreach (CsvValueInterpreter::getCosts($csvRow) as $key => $value) {
+                $dbRow[$key] = $value;
+            }
+            $dbRow['ap'] = (int) $csvRow[CsvColumns::AP];
+            $dbRow['dp'] = (int) $csvRow[CsvColumns::DP];
+            $dbRow['sp'] = (int) $csvRow[CsvColumns::SP];
+            $dbRow['dmg'] = (int) $csvRow[CsvColumns::DMG];
             yield $dbRow;
         }
     }

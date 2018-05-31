@@ -22,6 +22,7 @@ class CreateCardsTable extends Migration
             $table->string('id')->primary();
             $table->timestamps();
             $table->string('variants')->default('');
+            $table->string('rarity')->default('C');
             $table->unsignedTinyInteger('type');
             $table->unsignedTinyInteger('ex')->default(0);
 
