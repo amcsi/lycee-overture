@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,6 @@ class CreateCardsTable extends Migration
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->timestamps();
             $table->string('variants')->default('');
             $table->string('rarity')->default('C');
             $table->unsignedTinyInteger('type');
@@ -43,6 +43,9 @@ class CreateCardsTable extends Migration
             $table->unsignedTinyInteger('dp')->default(0);
             $table->unsignedTinyInteger('sp')->default(0);
             $table->unsignedTinyInteger('dmg')->default(0);
+
+            $table->timestamp(Model::CREATED_AT)->useCurrent();
+            $table->timestamp(Model::UPDATED_AT)->useCurrent();
         });
     }
 
