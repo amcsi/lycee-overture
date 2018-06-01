@@ -52,4 +52,30 @@ class CsvValueInterpreter
         }
         return $return;
     }
+
+    /**
+     * Extracts the different ability parts (the cost, description and comments) from a string ability.
+     */
+    public static function getAbilityPartsFromAbility(string $ability): array
+    {
+        $continuousPart = '';
+        $abilityCost = '';
+        $comments = '';
+        $ability = preg_replace_callback('/^(\[[^\]]*\])\s*/', function ($matches) use (&$continuousPart) {
+            // Maybe we'll want to later discard the whitespace by taking $matches[1].
+            $continuousPart = $matches[0];
+        }, $ability, 1);
+        $ability = preg_replace_callback('/^(.*):/', function ($matches) use (&$abilityCost) {
+            $abilityCost = $matches[1];
+        }, $ability, 1);
+        $ability = preg_replace_callback('/※.*$/', function ($matches) use (&$comments) {
+            $comments = $matches[0];
+        }, $ability, 1);
+        $parts = [
+            'ability_cost' => $abilityCost,
+            'ability_description' => $continuousPart . $ability,
+            'comments' => $comments,
+        ];
+        return $parts;
+    }
 }

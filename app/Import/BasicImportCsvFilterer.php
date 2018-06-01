@@ -8,11 +8,12 @@ namespace amcsi\LyceeOverture\Import;
  */
 class BasicImportCsvFilterer
 {
-    public function toDatabaseRows(iterable $reader): iterable
+    public function toDatabaseRows(iterable $reader): \Traversable
     {
         foreach ($reader as $csvRow) {
             $id = $csvRow[CsvColumns::ID];
             if (!preg_match('/^[A-Z]{2}-\d{4}$/', $id)) {
+                // Skip alternative variants of cards.
                 continue;
             }
             $dbRow = [];

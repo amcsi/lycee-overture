@@ -80,4 +80,42 @@ class CsvValueInterpreterTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider provideAbilities
+     */
+    public function testGetAbilityParts(array $expected, string $input): void
+    {
+        self::assertSame($expected, CsvValueInterpreter::getAbilityPartsFromAbility($input));
+    }
+
+    public function provideAbilities(): array
+    {
+        return [
+            [
+                [
+                    'ability_cost' => '',
+                    'ability_description' => '',
+                    'comments' => '',
+                ],
+                '',
+            ],
+            [
+                [
+                    'ability_cost' => '',
+                    'ability_description' => '-',
+                    'comments' => '',
+                ],
+                '-',
+            ],
+            [
+                [
+                    'ability_cost' => '[T][このキャラを破棄する]',
+                    'ability_description' => '[宣言] {相手ＡＦキャラ１体}を手札に入れる。',
+                    'comments' => '※このキャラは別番号の同名キャラとは別に４枚までデッキに入れることができる。',
+                ],
+                '[宣言] [T][このキャラを破棄する]:{相手ＡＦキャラ１体}を手札に入れる。※このキャラは別番号の同名キャラとは別に４枚までデッキに入れることができる。',
+            ],
+        ];
+    }
 }
