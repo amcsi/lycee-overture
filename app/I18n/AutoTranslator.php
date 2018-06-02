@@ -44,6 +44,36 @@ class AutoTranslator
             $autoTranslated
         );
 
+        // "{One of your characters} get X."
+        $autoTranslated = preg_replace_callback(
+            '/\{(味方)?キャラ(\d)体}に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            function ($matches) use ($autoTranslated) {
+                $ally = '味方' === $matches[1];
+                $howMany = $matches[2];
+                $one = $howMany == 1;
+                if ($ally) {
+                    return sprintf('{%s} gets %s.', $one ? 'Ally character' : "$howMany characters", $matches[3]);
+                }
+                return sprintf(
+                    '{%s} gets %s.',
+                    $one ? 'Character' : "$howMany characters",
+                    $matches[3]
+                );
+            },
+            $autoTranslated
+        );
+
+        // "{One of your characters} gain X."
+        $autoTranslated = preg_replace_callback(
+            '/\{味方キャラ(\d)体}は(\[.+?\]\])を得る\./u',
+            function ($matches) use ($autoTranslated) {
+                $howMany = $matches[1];
+                $one = 1 == $howMany;
+                return sprintf('{%s character} gains %s.', $one ? 'Ally' : "$howMany ally", $matches[2]);
+            },
+            $autoTranslated
+        );
+
         // Condense multiple spaces into one; trim.
         $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));
         // Fix capitalization.
