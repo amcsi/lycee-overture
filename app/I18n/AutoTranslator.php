@@ -30,27 +30,18 @@ class AutoTranslator
         $autoTranslated = preg_replace_callback(
             '/この(\[[^\]+]\])?キャラに((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
-                $something = '';
-                if ($matches[1]) {
-                    $something = ' ' . trim($matches[1]);
-                }
-                $replacement = "this$something character gets $matches[2].";
-                $position = strpos($autoTranslated, $matches[0]);
-                if ($position === 0) {
-                    // Beginning of the sentence. Capitalize first letter.
-                    $replacement = ucfirst($replacement);
-                } else {
-                    if ($autoTranslated[$position - 1] === '.') {
-                        // Period before replacement. Capitalize first letter.
-                        $replacement = ucfirst($replacement);
-                    }
-                    // Add space before word.
-                    $replacement = " $replacement";
-                }
+                $replacement = " this $matches[1] character gets $matches[2].";
                 return $replacement;
             },
             $autoTranslated
         );
+
+        // Condense multiple spaces into one; trim.
+        $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));
+        // Fix capitalization.
+        $autoTranslated = preg_replace_callback('/(^[a-z]|(?=\.\s*)[a-z])/', function ($matches) {
+            return strtoupper($matches[1]);
+        }, $autoTranslated);
 
         return $autoTranslated;
     }

@@ -24,7 +24,7 @@ class AutoTranslatorTest extends TestCase
                 '',
             ],
             [
-                'asdf',
+                'Asdf',
                 'asdf',
             ],
             [ // Punctuation.
@@ -50,6 +50,10 @@ class AutoTranslatorTest extends TestCase
             [
                 'This [花] character gets SP+1.',
                 'この[花]キャラにＳＰ＋１する。',
+            ],
+            [
+                '味方キャラが登場したとき, this character gets AP+1, DP+1.',
+                '味方キャラが登場したとき、このキャラにＡＰ＋１・ＤＰ＋１する。',
             ],
         ];
     }
