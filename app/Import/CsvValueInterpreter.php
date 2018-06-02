@@ -72,13 +72,12 @@ class CsvValueInterpreter
      */
     public static function getAbilityPartsFromAbility(string $ability): array
     {
-        $continuousPart = '';
         $abilityCost = '';
         $comments = '';
+        // Remove the ability type from the description. We should already have that among basic card data.
         $ability = preg_replace_callback('/^(\[[^\]]*\])\s*/', function ($matches) use (&$continuousPart) {
-            // Maybe we'll want to later discard the whitespace by taking $matches[1].
-            $continuousPart = $matches[0];
         }, $ability, 1);
+
         $ability = preg_replace_callback('/^(.*):/', function ($matches) use (&$abilityCost) {
             $abilityCost = $matches[1];
         }, $ability, 1);
@@ -87,7 +86,7 @@ class CsvValueInterpreter
         }, $ability, 1);
         $parts = [
             'ability_cost' => $abilityCost,
-            'ability_description' => $continuousPart . $ability,
+            'ability_description' => $ability,
             'comments' => $comments,
         ];
         return $parts;
