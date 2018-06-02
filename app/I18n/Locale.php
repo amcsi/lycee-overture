@@ -6,4 +6,5 @@ namespace amcsi\LyceeOverture\I18n;
 class Locale
 {
     public const JAPANESE = 'jp';
+    public const ENGLISH = 'en';
 }
