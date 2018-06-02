@@ -78,7 +78,7 @@ class CsvValueInterpreter
         $ability = preg_replace_callback('/^(\[[^\]]*\])\s*/', function ($matches) use (&$continuousPart) {
         }, $ability, 1);
 
-        $ability = preg_replace_callback('/^(.*?):/', function ($matches) use (&$abilityCost) {
+        $ability = preg_replace_callback('/^((?:\[[^\]]+\])+):/u', function ($matches) use (&$abilityCost) {
             $abilityCost = $matches[1];
         }, $ability, 1);
         $ability = preg_replace_callback('/※.*$/', function ($matches) use (&$comments) {

@@ -124,6 +124,14 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[宣言] [日日]:{味方キャラ１体}は[ステップ:[0]]を得る。',
             ],
+            'Non-cost colon' => [
+                [
+                    'ability_cost' => '',
+                    'ability_description' => 'このキャラと同列の味方キャラ全ては[オーダーチェンジ:[0]]を得る。',
+                    'comments' => '',
+                ],
+                '[常時] このキャラと同列の味方キャラ全ては[オーダーチェンジ:[0]]を得る。',
+            ],
         ];
     }
 }
