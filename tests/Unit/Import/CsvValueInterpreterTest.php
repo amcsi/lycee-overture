@@ -116,6 +116,14 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[宣言] [T][このキャラを破棄する]:{相手ＡＦキャラ１体}を手札に入れる。※このキャラは別番号の同名キャラとは別に４枚までデッキに入れることができる。',
             ],
+            'Two colons in ability' => [
+                [
+                    'ability_cost' => '[日日]',
+                    'ability_description' => '{味方キャラ１体}は[ステップ:[0]]を得る。',
+                    'comments' => '',
+                ],
+                '[宣言] [日日]:{味方キャラ１体}は[ステップ:[0]]を得る。',
+            ],
         ];
     }
 }
