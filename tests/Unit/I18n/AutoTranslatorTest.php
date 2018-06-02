@@ -47,6 +47,10 @@ class AutoTranslatorTest extends TestCase
                 '..とき this character gets AP+2, DP+2.',
                 '..ときこのキャラにＡＰ＋２・ＤＰ＋２する。',
             ],
+            [
+                'This [花] character gets SP+1.',
+                'この[花]キャラにＳＰ＋１する。',
+            ],
         ];
     }
 }

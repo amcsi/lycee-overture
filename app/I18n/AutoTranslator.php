@@ -26,22 +26,31 @@ class AutoTranslator
         }, $autoTranslated);
         $autoTranslated = FullWidthCharacters::translateFullWidthCharacters($autoTranslated);
 
-        $autoTranslated = preg_replace_callback('/このキャラに((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./', function ($matches) use ($autoTranslated) {
-            $replacement = "this character gets $matches[1].";
-            $position = strpos($autoTranslated, $matches[0]);
-            if ($position === 0) {
-                // Beginning of the sentence. Capitalize first letter.
-                $replacement = ucfirst($replacement);
-            } else {
-                if ($autoTranslated[$position - 1] === '.') {
-                    // Period before replacement. Capitalize first letter.
-                    $replacement = ucfirst($replacement);
+        // "This character gains X."
+        $autoTranslated = preg_replace_callback(
+            '/この(\[[^\]+]\])?キャラに((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            function ($matches) use ($autoTranslated) {
+                $something = '';
+                if ($matches[1]) {
+                    $something = ' ' . trim($matches[1]);
                 }
-                // Add space before word.
-                $replacement = " $replacement";
-            }
-            return $replacement;
-        }, $autoTranslated);
+                $replacement = "this$something character gets $matches[2].";
+                $position = strpos($autoTranslated, $matches[0]);
+                if ($position === 0) {
+                    // Beginning of the sentence. Capitalize first letter.
+                    $replacement = ucfirst($replacement);
+                } else {
+                    if ($autoTranslated[$position - 1] === '.') {
+                        // Period before replacement. Capitalize first letter.
+                        $replacement = ucfirst($replacement);
+                    }
+                    // Add space before word.
+                    $replacement = " $replacement";
+                }
+                return $replacement;
+            },
+            $autoTranslated
+        );
 
         return $autoTranslated;
     }
