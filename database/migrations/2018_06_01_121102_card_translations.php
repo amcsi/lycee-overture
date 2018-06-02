@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -31,8 +30,9 @@ class CardTranslations extends Migration
             $table->unique(['card_id', 'locale']);
             $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
 
-            $table->timestamp(Model::CREATED_AT)->useCurrent();
-            $table->timestamp(Model::UPDATED_AT)->useCurrent();
+            // The first timestamp column defined for MySQL 5.7 implicitly has default/onUpdate current_timestamp.
+            $table->timestamp('updated_at');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

@@ -6,6 +6,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\I18n\AutoTranslator;
 use amcsi\LyceeOverture\I18n\Locale;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 /**
@@ -22,15 +23,22 @@ class AutoTranslateCommand extends Command
         /** @var CardTranslation[] $japaneseCards */
         $japaneseCards = CardTranslation::where('locale', Locale::JAPANESE)->get();
         \Eloquent::unguard();
+
+        $updatedNowThreshold = Carbon::now()->subSecond(3);
+
+        $updatedCount = 0;
         foreach ($japaneseCards as $japaneseCard) {
             $englishCard = $japaneseCard->toArray();
-            unset($englishCard['id']);
+            unset($englishCard['id'], $englishCard['created_at'], $englishCard['updated_at']);
             $englishCard['locale'] = Locale::ENGLISH;
             foreach (['ability_description'] as $key) {
                 $englishCard[$key] = AutoTranslator::autoTranslate($japaneseCard->$key);
             }
-            CardTranslation::updateOrCreate($englishCard);
+            $englishCard = CardTranslation::updateOrCreate($englishCard);
+            if ($englishCard->updated_at > $updatedNowThreshold) {
+                ++$updatedCount;
+            }
         }
-        $this->output->writeln('Finished auto translation of cards.');
+        $this->output->writeln("Finished auto translation of cards. Updated: $updatedCount");
     }
 }
