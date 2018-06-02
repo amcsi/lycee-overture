@@ -26,12 +26,20 @@ class AutoTranslator
         }, $autoTranslated);
         $autoTranslated = FullWidthCharacters::translateFullWidthCharacters($autoTranslated);
 
-        // "This character gains X."
+        // "This character gets X."
         $autoTranslated = preg_replace_callback(
             '/この(\[[^\]+]\])?キャラに((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
-                $replacement = " this $matches[1] character gets $matches[2].";
-                return $replacement;
+                return " this $matches[1] character gets $matches[2].";
+            },
+            $autoTranslated
+        );
+
+        // "This character gains X."
+        $autoTranslated = preg_replace_callback(
+            '/このキャラは(\[[^\]]+\])を得る\./u',
+            function ($matches) use ($autoTranslated) {
+                return " this character gains $matches[1].";
             },
             $autoTranslated
         );
