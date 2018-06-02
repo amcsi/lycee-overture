@@ -34,7 +34,10 @@ class AutoTranslateCommand extends Command
             foreach (['ability_description'] as $key) {
                 $englishCard[$key] = AutoTranslator::autoTranslate($japaneseCard->$key);
             }
-            $englishCard = CardTranslation::updateOrCreate($englishCard);
+            $englishCard = CardTranslation::updateOrCreate([
+                'card_id' => $englishCard['card_id'],
+                'locale' => $englishCard['locale'],
+            ], $englishCard);
             if ($englishCard->updated_at > $updatedNowThreshold) {
                 ++$updatedCount;
             }
