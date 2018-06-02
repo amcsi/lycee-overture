@@ -31,6 +31,7 @@ class BasicImportCsvFilterer
             $dbRow['dp'] = (int) $csvRow[CsvColumns::DP];
             $dbRow['sp'] = (int) $csvRow[CsvColumns::SP];
             $dbRow['dmg'] = (int) $csvRow[CsvColumns::DMG];
+            $dbRow['ability_type'] = CsvValueInterpreter::getAbilityType($csvRow);
             yield $dbRow;
         }
     }

@@ -43,6 +43,7 @@ class CreateCardsTable extends Migration
             $table->unsignedTinyInteger('dp')->default(0);
             $table->unsignedTinyInteger('sp')->default(0);
             $table->unsignedTinyInteger('dmg')->default(0);
+            $table->unsignedTinyInteger('ability_type')->default(0);
 
             $table->timestamp(Model::CREATED_AT)->useCurrent();
             $table->timestamp(Model::UPDATED_AT)->useCurrent();

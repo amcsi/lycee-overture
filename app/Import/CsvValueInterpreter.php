@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import;
 
+use amcsi\LyceeOverture\Card\AbilityType;
 use amcsi\LyceeOverture\Card\Element;
 use amcsi\LyceeOverture\Card\Type;
 
@@ -51,6 +52,19 @@ class CsvValueInterpreter
             $return[$costKeys[$elementId]] += substr_count($costCell, $elementString);
         }
         return $return;
+    }
+
+    public static function getAbilityType(array $csvRow): int
+    {
+        if (!preg_match('/^\[([^]]+)\]/', $csvRow[CsvColumns::ABILITY], $matches)) {
+            return 0;
+        }
+        $match = $matches[1];
+        $map = AbilityType::getJapaneseMap();
+        if (isset($map[$match])) {
+            return $map[$match];
+        }
+        throw new \InvalidArgumentException("Unknown ability type: $match");
     }
 
     /**
