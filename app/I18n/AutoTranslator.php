@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
 use amcsi\LyceeOverture\I18n\AutoTranslator\WhenAppears;
 
@@ -76,6 +77,7 @@ class AutoTranslator
         );
 
         $autoTranslated = WhenAppears::autoTranslate($autoTranslated);
+        $autoTranslated = DrawCards::autoTranslate($autoTranslated);
 
         // Condense multiple spaces into one; trim.
         $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));
