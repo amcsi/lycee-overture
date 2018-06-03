@@ -5,6 +5,7 @@ namespace amcsi\LyceeOverture\I18n;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
+use amcsi\LyceeOverture\I18n\AutoTranslator\Target;
 use amcsi\LyceeOverture\I18n\AutoTranslator\WhenAppears;
 
 /**
@@ -50,25 +51,20 @@ class AutoTranslator
 
         // "{One of your characters} get X."
         $autoTranslated = preg_replace_callback(
-            '/(\{)?(味方|相手)?キャラ(\d)体}?に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            '/((味方|相手)キャラ(\d)体|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
-                $targets = $matches[1]; // Whether the effect targets.
+                $target = $matches[1] === '}'; // Whether the effect targets.
                 $allyOrEnemy = $matches[2]; // Ally or Enemy in Japanese (or '')
                 $howMany = $matches[3];
-                $one = $howMany == 1;
                 $statChanges = $matches[4]; // The stat changes involved.
-                if ($allyOrEnemy) {
+                if (!$target) {
                     $text = $allyOrEnemy === '味方' ? 'ally' : 'enemy';
                     $text = "$text character";
                     if ($howMany > 1) {
                         $text = "$howMany ${text}s";
                     }
                 } else {
-                    $text = $one ? 'character' : "$howMany characters";
-                }
-                if ($targets) {
-                    // There was targetting, so wrap the text in braces.
-                    $text = '{' . ucfirst($text) . '}';
+                    $text = '}';
                 }
                 return sprintf(
                     '%s gets %s.',
@@ -81,17 +77,16 @@ class AutoTranslator
 
         // "{One of your characters} gain X."
         $autoTranslated = preg_replace_callback(
-            '/\{味方キャラ(\d)体}は(\[.+?\]\])を得る\./u',
+            '/}は(\[.+?\]\])を得る\./u',
             function ($matches) use ($autoTranslated) {
-                $howMany = $matches[1];
-                $one = 1 == $howMany;
-                return sprintf('{%s character} gains %s.', $one ? 'Ally' : "$howMany ally", $matches[2]);
+                return sprintf('} gains %s.', $matches[1]);
             },
             $autoTranslated
         );
 
         $autoTranslated = WhenAppears::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
+        $autoTranslated = Target::autoTranslate($autoTranslated);
 
         // Condense multiple spaces into one; trim.
         $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));

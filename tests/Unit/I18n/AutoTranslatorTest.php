@@ -75,6 +75,10 @@ class AutoTranslatorTest extends TestCase
                 'Enemy character gets DP-1.',
                 '相手キャラ1体にDP-1する.',
             ],
+            'compound target gets stat changes; separated target logic' => [
+                '{Ally 「フルコンプ」 character} gets AP+1, DP+1.',
+                '{味方「フルコンプ」キャラ１体}にＡＰ＋１・ＤＰ＋１する。',
+            ],
             'target gets stat changes' => [
                 '{Character} gets DMG-2.',
                 '{キャラ1体}にDMG-2する.',
