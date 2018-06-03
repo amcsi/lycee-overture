@@ -132,6 +132,14 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[常時] このキャラと同列の味方キャラ全ては[オーダーチェンジ:[0]]を得る。',
             ],
+            'normalizing span to target' => [
+                [
+                    'ability_cost' => '[日]',
+                    'ability_description' => '{味方キャラ１体}にＡＰ＋１する。',
+                    'comments' => '',
+                ],
+                '[宣言] [日]:<span style=color:#FFCC00;font-weight:bold;>味方キャラ１体</span>にＡＰ＋１する。',
+            ],
         ];
     }
 }

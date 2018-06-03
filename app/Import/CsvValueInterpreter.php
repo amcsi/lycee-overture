@@ -84,6 +84,18 @@ class CsvValueInterpreter
         $ability = preg_replace_callback('/※.*$/', function ($matches) use (&$comments) {
             $comments = $matches[0];
         }, $ability, 1);
+
+        // Normalize description.
+        $ability = preg_replace(
+            sprintf(
+                '/%s(.*?)%s/',
+                preg_quote('<span style=color:#FFCC00;font-weight:bold;>', '/'),
+                preg_quote('</span>', '/')
+            ),
+            '{$1}',
+            $ability
+        );
+
         $parts = [
             'ability_cost' => $abilityCost,
             'ability_description' => $ability,
