@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\DiscardFromDeck;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
 use amcsi\LyceeOverture\I18n\AutoTranslator\Target;
@@ -86,6 +87,7 @@ class AutoTranslator
 
         $autoTranslated = WhenAppears::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
+        $autoTranslated = DiscardFromDeck::autoTranslate($autoTranslated);
         $autoTranslated = Target::autoTranslate($autoTranslated);
 
         // Condense multiple spaces into one; trim.
