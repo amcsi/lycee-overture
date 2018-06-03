@@ -87,6 +87,14 @@ class AutoTranslatorTest extends TestCase
                 'Use during your turn.',
                 '自ターン中に使用する. ',
             ],
+            'When this character supports another character' => [
+                'When this character supports another character.',
+                'このキャラでサポートをしたとき. ',
+            ],
+            'When this character gets supported' => [
+                'When this character gets supported.',
+                'このキャラにサポートをしたとき. ',
+            ],
         ];
     }
 }
