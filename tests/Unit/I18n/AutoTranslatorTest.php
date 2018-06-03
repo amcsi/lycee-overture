@@ -83,6 +83,10 @@ class AutoTranslatorTest extends TestCase
                 '{Character} gets DMG-2.',
                 '{キャラ1体}にDMG-2する.',
             ],
+            'use during your turn' => [
+                'Use during your turn.',
+                '自ターン中に使用する. ',
+            ],
         ];
     }
 }

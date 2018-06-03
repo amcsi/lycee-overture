@@ -85,6 +85,7 @@ class AutoTranslator
             $autoTranslated
         );
 
+        $autoTranslated = str_replace('自ターン中に使用する', 'use during your turn', $autoTranslated);
         $autoTranslated = WhenAppears::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
         $autoTranslated = DiscardFromDeck::autoTranslate($autoTranslated);
