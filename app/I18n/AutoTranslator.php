@@ -48,13 +48,19 @@ class AutoTranslator
 
         // "{One of your characters} get X."
         $autoTranslated = preg_replace_callback(
-            '/\{(味方)?キャラ(\d)体}に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            '/\{(味方|相手)?キャラ(\d)体}に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
-                $ally = '味方' === $matches[1];
+                $allyOrEnemy = $matches[1];
                 $howMany = $matches[2];
                 $one = $howMany == 1;
-                if ($ally) {
-                    return sprintf('{%s} gets %s.', $one ? 'Ally character' : "$howMany characters", $matches[3]);
+                if ($allyOrEnemy) {
+                    $text = $allyOrEnemy === '味方' ? 'ally' : 'enemy';
+                    $text = "$text character";
+                    if ($howMany > 1) {
+                        $text = "$howMany ${text}s";
+                    }
+                    $text = ucfirst($text);
+                    return sprintf('{%s} gets %s.', $text, $matches[3]);
                 }
                 return sprintf(
                     '{%s} gets %s.',
