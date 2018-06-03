@@ -127,6 +127,10 @@ class AutoTranslatorTest extends TestCase
                 'During this turn.',
                 'このターン中. ',
             ],
+            'fix capitalization' => [
+                'Use during your turn. This character gets AP+3.',
+                'Use during your turn. this character gets AP+3.',
+            ],
         ];
     }
 }

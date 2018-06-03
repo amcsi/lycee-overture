@@ -113,7 +113,9 @@ class AutoTranslator
         // Condense multiple spaces into one; trim.
         $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));
         // Fix capitalization.
-        $autoTranslated = preg_replace_callback('/(^[a-z]|(?=\.\s*)[a-z])/', function ($matches) {
+        $autoTranslated = preg_replace_callback(
+            '/(^[a-z]|(?:\.\s*)[a-z])/',
+            function ($matches) {
             return strtoupper($matches[1]);
         }, $autoTranslated);
 
