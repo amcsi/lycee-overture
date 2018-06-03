@@ -53,24 +53,36 @@ class AutoTranslator
 
         // "... get $statChanges."
         $autoTranslated = preg_replace_callback(
-            '/((味方|相手)?キャラ(\d)体|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            '/((?:(味方|相手)(.*?))?キャラ((\d)体|全て)|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
+                $plural = false;
                 $target = $matches[1] === '}'; // Whether the effect targets.
                 $allyOrEnemy = $matches[2]; // Ally or Enemy in Japanese (or '')
-                $howMany = $matches[3];
-                $statChanges = $matches[4]; // The stat changes involved.
+                $something = $matches[3]; // e.g. [sun] <- characters
+                $allOrHowMany = $matches[4];
+                $all = $allOrHowMany === '全て';
+                $howMany = $matches[5];
+                $statChanges = $matches[6]; // The stat changes involved.
                 if (!$target) {
-                    $text = $allyOrEnemy === '味方' ? 'ally' : 'enemy';
-                    $text = "$text character";
-                    if ($howMany > 1) {
-                        $text = "$howMany ${text}s";
+                    if ($all) {
+                        $text = $allyOrEnemy === '味方' ? "all your $something characters" : "all enemy $something characters";
+                        $plural = true;
+                    } else {
+                        $text = $allyOrEnemy === '味方' ? 'ally' : 'enemy';
+                        $text = "$text $something character";
+                        if ($howMany > 1) {
+                            $plural = true;
+                            $text = "$howMany ${text}s";
+                        }
                     }
                 } else {
                     $text = '}';
                 }
+                $s = $plural ? '' : 's';
                 return sprintf(
-                    '%s gets %s.',
+                    '%s get%s %s.',
                     $text,
+                    $s,
                     $statChanges
                 );
             },

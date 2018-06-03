@@ -55,6 +55,18 @@ class AutoTranslatorTest extends TestCase
                 '味方キャラが登場したとき, this character gets AP+1, DP+1.',
                 '味方キャラが登場したとき、このキャラにＡＰ＋１・ＤＰ＋１する。',
             ],
+            'all your characters get stats' => [
+                'All your characters get AP+1, DP+1, DMG+1.',
+                '味方キャラ全てにAP+1, DP+1, DMG+1する。',
+            ],
+            'all your [sun] characters get stats' => [
+                'All your [sun] characters get AP+1, DP+1, DMG+1.',
+                '味方[sun]キャラ全てにAP+1, DP+1, DMG+1する。',
+            ],
+            'all enemy characters get stats' => [
+                'All enemy characters get AP+1, DP+1, DMG+1.',
+                '相手キャラ全てにAP+1, DP+1, DMG+1する。',
+            ],
             'gaining abilities' => [
                 'This character gains [アグレッシブ].',
                 'このキャラは[アグレッシブ]を得る。',
