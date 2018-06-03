@@ -87,6 +87,10 @@ class AutoTranslatorTest extends TestCase
                 'Use during your turn.',
                 '自ターン中に使用する. ',
             ],
+            'use during your opponent\'s turn' => [
+                'Use during your opponent\'s turn.',
+                '相手ターン中に使用する. ',
+            ],
             'When this character supports another character' => [
                 'When this character supports another character.',
                 'このキャラでサポートをしたとき. ',
@@ -98,6 +102,14 @@ class AutoTranslatorTest extends TestCase
             'do not use during battle' => [
                 'Do not use during battle.',
                 'バトル中に使用できない. ',
+            ],
+            'use during battle involving this character' => [
+                'Use during battle involving this character.',
+                'このキャラのバトル中に使用する. ',
+            ],
+            'use during battle' => [
+                'Use during battle.',
+                'バトル中に使用する. ',
             ],
         ];
     }

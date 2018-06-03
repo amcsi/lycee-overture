@@ -53,7 +53,7 @@ class AutoTranslator
 
         // "... get $statChanges."
         $autoTranslated = preg_replace_callback(
-            '/((味方|相手)キャラ(\d)体|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            '/((味方|相手)?キャラ(\d)体|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
                 $target = $matches[1] === '}'; // Whether the effect targets.
                 $allyOrEnemy = $matches[2]; // Ally or Enemy in Japanese (or '')
@@ -87,7 +87,10 @@ class AutoTranslator
         );
 
         $autoTranslated = str_replace('自ターン中に使用する', 'use during your turn', $autoTranslated);
+        $autoTranslated = str_replace('相手ターン中に使用する', 'use during your opponent\'s turn', $autoTranslated);
         $autoTranslated = str_replace('バトル中に使用できない', 'do not use during battle', $autoTranslated);
+        $autoTranslated = str_replace('このキャラのバトル中に使用する', 'use during battle involving this character', $autoTranslated);
+        $autoTranslated = str_replace('バトル中に使用する', 'use during battle', $autoTranslated);
         $autoTranslated = WhenSupporting::autoTranslate($autoTranslated);
         $autoTranslated = WhenAppears::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
