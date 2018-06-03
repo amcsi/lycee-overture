@@ -111,6 +111,10 @@ class AutoTranslatorTest extends TestCase
                 'Use during battle.',
                 'バトル中に使用する. ',
             ],
+            'during this turn' => [
+                'During this turn.',
+                'このターン中. ',
+            ],
         ];
     }
 }

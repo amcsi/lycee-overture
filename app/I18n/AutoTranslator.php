@@ -91,6 +91,7 @@ class AutoTranslator
         $autoTranslated = str_replace('バトル中に使用できない', 'do not use during battle', $autoTranslated);
         $autoTranslated = str_replace('このキャラのバトル中に使用する', 'use during battle involving this character', $autoTranslated);
         $autoTranslated = str_replace('バトル中に使用する', 'use during battle', $autoTranslated);
+        $autoTranslated = str_replace('このターン中', 'during this turn', $autoTranslated);
         $autoTranslated = WhenSupporting::autoTranslate($autoTranslated);
         $autoTranslated = WhenAppears::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
