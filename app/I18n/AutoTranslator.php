@@ -49,7 +49,7 @@ class AutoTranslator
             $autoTranslated
         );
 
-        // "{One of your characters} get X."
+        // "... get $statChanges."
         $autoTranslated = preg_replace_callback(
             '/((味方|相手)キャラ(\d)体|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
@@ -75,7 +75,7 @@ class AutoTranslator
             $autoTranslated
         );
 
-        // "{One of your characters} gain X."
+        // "... gain $basicAbility."
         $autoTranslated = preg_replace_callback(
             '/}は(\[.+?\]\])を得る\./u',
             function ($matches) use ($autoTranslated) {
