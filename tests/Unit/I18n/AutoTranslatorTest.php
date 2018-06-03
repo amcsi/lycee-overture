@@ -71,6 +71,10 @@ class AutoTranslatorTest extends TestCase
                 '{Enemy character} gets SP-1.',
                 '{相手キャラ1体}にSP-1する.',
             ],
+            'enemy getting stat changes (no target)' => [
+                'Enemy character gets DP-1.',
+                '相手キャラ1体にDP-1する.',
+            ],
             'target gets stat changes' => [
                 '{Character} gets DMG-2.',
                 '{キャラ1体}にDMG-2する.',

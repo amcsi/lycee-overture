@@ -48,24 +48,30 @@ class AutoTranslator
 
         // "{One of your characters} get X."
         $autoTranslated = preg_replace_callback(
-            '/\{(味方|相手)?キャラ(\d)体}に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            '/(\{)?(味方|相手)?キャラ(\d)体}?に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
-                $allyOrEnemy = $matches[1];
-                $howMany = $matches[2];
+                $targets = $matches[1]; // Whether the effect targets.
+                $allyOrEnemy = $matches[2]; // Ally or Enemy in Japanese (or '')
+                $howMany = $matches[3];
                 $one = $howMany == 1;
+                $statChanges = $matches[4]; // The stat changes involved.
                 if ($allyOrEnemy) {
                     $text = $allyOrEnemy === '味方' ? 'ally' : 'enemy';
                     $text = "$text character";
                     if ($howMany > 1) {
                         $text = "$howMany ${text}s";
                     }
-                    $text = ucfirst($text);
-                    return sprintf('{%s} gets %s.', $text, $matches[3]);
+                } else {
+                    $text = $one ? 'character' : "$howMany characters";
+                }
+                if ($targets) {
+                    // There was targetting, so wrap the text in braces.
+                    $text = '{' . ucfirst($text) . '}';
                 }
                 return sprintf(
-                    '{%s} gets %s.',
-                    $one ? 'Character' : "$howMany characters",
-                    $matches[3]
+                    '%s gets %s.',
+                    $text,
+                    $statChanges
                 );
             },
             $autoTranslated
