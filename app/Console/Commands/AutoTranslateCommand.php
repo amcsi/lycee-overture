@@ -32,7 +32,13 @@ class AutoTranslateCommand extends Command
             unset($englishCard['id'], $englishCard['created_at'], $englishCard['updated_at']);
             $englishCard['locale'] = Locale::ENGLISH;
             foreach (['ability_description'] as $key) {
-                $englishCard[$key] = AutoTranslator::autoTranslate($japaneseCard->$key);
+                try {
+                    $englishCard[$key] = AutoTranslator::autoTranslate($japaneseCard->$key);
+                } catch (\LogicException $e) {
+                    $this->output->warning($e->getMessage());
+                    // Retain the original Japanese text in case of an exception.
+                    $englishCard[$key] = $japaneseCard->$key;
+                }
             }
             $englishCard = CardTranslation::updateOrCreate([
                 'card_id' => $englishCard['card_id'],

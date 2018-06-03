@@ -20,6 +20,8 @@ class AutoTranslator
 
     public static function autoTranslate(string $japaneseText): string
     {
+        $bracketCounts = self::countBrackets($japaneseText);
+
         $autoTranslated = $japaneseText;
 
         $autoTranslated = preg_replace('/。$/', '.', $autoTranslated);
@@ -98,6 +100,21 @@ class AutoTranslator
             return strtoupper($matches[1]);
         }, $autoTranslated);
 
+        if (self::countBrackets($autoTranslated) !== $bracketCounts) {
+            throw new \LogicException("Bracket count mismatch.\nOriginal: $japaneseText\nTranslated: $autoTranslated");
+        }
+
         return $autoTranslated;
+    }
+
+    /**
+     * @param string $japaneseText
+     * @return array
+     */
+    private static function countBrackets(string $japaneseText): array
+    {
+        $charsToLookAt = [ord('{') => 0, ord('}') => 0];
+        $charCounts = array_intersect_key(count_chars($japaneseText, 1), $charsToLookAt);
+        return $charCounts;
     }
 }
