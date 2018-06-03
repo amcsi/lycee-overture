@@ -87,6 +87,7 @@ class AutoTranslator
         );
 
         $autoTranslated = str_replace('自ターン中に使用する', 'use during your turn', $autoTranslated);
+        $autoTranslated = str_replace('バトル中に使用できない', 'do not use during battle', $autoTranslated);
         $autoTranslated = WhenSupporting::autoTranslate($autoTranslated);
         $autoTranslated = WhenAppears::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);

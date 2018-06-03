@@ -95,6 +95,10 @@ class AutoTranslatorTest extends TestCase
                 'When this character gets supported.',
                 'このキャラにサポートをしたとき. ',
             ],
+            'do not use during battle' => [
+                'Do not use during battle.',
+                'バトル中に使用できない. ',
+            ],
         ];
     }
 }
