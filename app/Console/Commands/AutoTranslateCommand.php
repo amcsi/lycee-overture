@@ -35,7 +35,9 @@ class AutoTranslateCommand extends Command
                 try {
                     $englishCard[$key] = AutoTranslator::autoTranslate($japaneseCard->$key);
                 } catch (\LogicException $e) {
-                    $this->output->warning($e->getMessage());
+                    $this->output->warning(
+                        $englishCard['card_id'] . ' - ' . $japaneseCard->$key . ': ' . $e->getMessage()
+                    );
                     // Retain the original Japanese text in case of an exception.
                     $englishCard[$key] = $japaneseCard->$key;
                 }

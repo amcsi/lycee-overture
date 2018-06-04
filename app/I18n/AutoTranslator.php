@@ -33,15 +33,6 @@ class AutoTranslator
         }, $autoTranslated);
         $autoTranslated = FullWidthCharacters::translateFullWidthCharacters($autoTranslated);
 
-        // "This character gets X."
-        $autoTranslated = preg_replace_callback(
-            '/この(\[[^]]+\])?キャラに((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
-            function ($matches) use ($autoTranslated) {
-                return " this $matches[1] character gets $matches[2].";
-            },
-            $autoTranslated
-        );
-
         // "This character gains X."
         $autoTranslated = preg_replace_callback(
             '/このキャラは((?:\[.+?\])+)を得る\./u',
@@ -53,11 +44,11 @@ class AutoTranslator
 
         // "... get $statChanges."
         $autoTranslated = preg_replace_callback(
-            '/((?:(味方|相手)(.*?))?キャラ((\d)体|全て)|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            '/((?:(味方|相手|この)((?:\[.+?\])*))?キャラ((\d)体|全て)?|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             function ($matches) use ($autoTranslated) {
                 $plural = false;
                 $target = $matches[1] === '}'; // Whether the effect targets.
-                $allyOrEnemy = $matches[2]; // Ally or Enemy in Japanese (or '')
+                $subject = $matches[2]; // Ally or Enemy in Japanese (or '')
                 $something = $matches[3]; // e.g. [sun] <- characters
                 $allOrHowMany = $matches[4];
                 $all = $allOrHowMany === '全て';
@@ -65,16 +56,46 @@ class AutoTranslator
                 $statChanges = $matches[6]; // The stat changes involved.
                 if (!$target) {
                     if ($all) {
-                        $text = $allyOrEnemy === '味方' ? "all your $something characters" : "all enemy $something characters";
+                        switch ($subject) {
+                            case '味方':
+                                $text = "all your $something characters";
+                                break;
+                            case '相手':
+                                $text = "all enemy $something characters";
+                                break;
+                            case '':
+                                // Unknown
+                                $text = "all $something characters";
+                                break;
+                            default:
+                                throw new \LogicException("Unexpected all subject: $subject");
+                        }
                         $plural = true;
                     } else {
-                        $text = $allyOrEnemy === '味方' ? 'ally' : 'enemy';
+                        switch ($subject) {
+                            case '味方':
+                                $text = 'ally';
+                                break;
+                            case '相手':
+                                $text = 'enemy';
+                                break;
+                            case 'この':
+                                $text = 'this';
+                                break;
+                            case '':
+                                // Unknown
+                                $text = '';
+                                break;
+                            default:
+                                throw new \LogicException("Unexpected subject: $subject");
+                        }
                         $text = "$text $something character";
                         if ($howMany > 1) {
                             $plural = true;
                             $text = "$howMany ${text}s";
                         }
                     }
+                    $text = " $text";
                 } else {
                     $text = '}';
                 }
