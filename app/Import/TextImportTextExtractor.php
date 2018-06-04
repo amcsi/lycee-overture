@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Import;
 
 use amcsi\LyceeOverture\I18n\Locale;
+use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 
 /**
  * Extracts text to columns in the import
@@ -22,7 +23,7 @@ class TextImportTextExtractor
             $dbRow['card_id'] = $id;
             $dbRow['locale'] = Locale::JAPANESE;
             $dbRow['name'] = $csvRow[CsvColumns::NAME];
-            $dbRow['basic_abilities'] = $csvRow[CsvColumns::BASIC_ABILITIES];
+            $dbRow['basic_abilities'] = MarkupConverter::convert($csvRow[CsvColumns::BASIC_ABILITIES]);
             $dbRow['ability_name'] = $csvRow[CsvColumns::ABILITY_NAME];
             foreach (CsvValueInterpreter::getAbilityPartsFromAbility($csvRow[CsvColumns::ABILITY]) as $dbKey => $val) {
                 $dbRow[$dbKey] = $val;

@@ -23,6 +23,15 @@ class Element
         '日' => self::SUN,
     ];
 
+    private static $elementToMarkupMap = [
+        '無' => 'star',
+        '雪' => 'snow',
+        '月' => 'moon',
+        '花' => 'flower',
+        '宙' => 'space',
+        '日' => 'sun',
+    ];
+
     /**
      * Returns all the elements including the star.
      */
@@ -71,5 +80,10 @@ class Element
         return array_map(function ($elementKeyUpperCase) {
             return 'cost_' . strtolower($elementKeyUpperCase);
         }, array_keys(static::getAll()));
+    }
+
+    public static function getElementToMarkupMap(): array
+    {
+        return self::$elementToMarkupMap;
     }
 }

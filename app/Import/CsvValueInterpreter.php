@@ -6,6 +6,7 @@ namespace amcsi\LyceeOverture\Import;
 use amcsi\LyceeOverture\Card\AbilityType;
 use amcsi\LyceeOverture\Card\Element;
 use amcsi\LyceeOverture\Card\Type;
+use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 
 /**
  * Interprets values from csv rows.
@@ -72,6 +73,7 @@ class CsvValueInterpreter
      */
     public static function getAbilityPartsFromAbility(string $ability): array
     {
+        $ability = MarkupConverter::convert($ability);
         $abilityCost = '';
         $comments = '';
         // Remove the ability type from the description. We should already have that among basic card data.
