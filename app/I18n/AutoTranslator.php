@@ -44,7 +44,7 @@ class AutoTranslator
 
         // "This character gains X."
         $autoTranslated = preg_replace_callback(
-            '/このキャラは(\[[^\]]+\])を得る\./u',
+            '/このキャラは((?:\[.+?\])+)を得る\./u',
             function ($matches) use ($autoTranslated) {
                 return " this character gains $matches[1].";
             },
