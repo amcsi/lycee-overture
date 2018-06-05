@@ -1,5 +1,7 @@
 <?php
 
+use amcsi\LyceeOverture\Http\Controllers\CardController;
+use Dingo\Api\Routing\Router;
 use Illuminate\Http\Request;
 
 /*
@@ -16,3 +18,16 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+$api = app('Dingo\Api\Routing\Router');
+$api->version(
+    'v1',
+    function (Router $api) {
+        $api->group(
+            ['prefix' => 'cards'],
+            function (Router $api) {
+                $api->resource('/', CardController::class, ['only' => ['index']]);
+            }
+        );
+    }
+);
