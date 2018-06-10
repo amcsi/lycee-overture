@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture;
 
-use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
-    use Translatable;
+    public function getType(): int
+    {
+        return $this->getAttribute('type');
+    }
 }

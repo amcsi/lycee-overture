@@ -2,10 +2,14 @@
 
 namespace amcsi\LyceeOverture\Http\Controllers;
 
+use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Card\CardTransformer;
+
 class CardController extends Controller
 {
-    public function index()
+    public function index(CardTransformer $cardTransformer)
     {
-        return 'Hello world';
+        $cards = Card::paginate(50);
+        return $this->response->paginator($cards, $cardTransformer);
     }
 }
