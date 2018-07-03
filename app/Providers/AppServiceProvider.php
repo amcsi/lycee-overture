@@ -27,6 +27,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (config('app.debug')) {
+            // Flush before enabling query log.
+            \DB::connection()->flushQueryLog();
+            \DB::connection()->enableQueryLog();
+        }
+
         if (self::$booted) {
             return;
         }
