@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\AbilityGainsOrOther;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DiscardFromDeck;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
@@ -34,26 +35,10 @@ class AutoTranslator
         }, $autoTranslated);
         $autoTranslated = FullWidthCharacters::translateFullWidthCharacters($autoTranslated);
 
-        // "This character gains X."
-        $autoTranslated = preg_replace_callback(
-            '/このキャラは((?:\[.+?\])+)を得る\./u',
-            function ($matches) use ($autoTranslated) {
-                return " this character gains $matches[1].";
-            },
-            $autoTranslated
-        );
+        $autoTranslated = AbilityGainsOrOther::autoTranslate($autoTranslated);
 
         // "... get $statChanges."
         $autoTranslated = StatChanges::autoTranslate($autoTranslated);
-
-        // "... gain $basicAbility."
-        $autoTranslated = preg_replace_callback(
-            '/}は(\[.+?\]\])を得る\./u',
-            function ($matches) use ($autoTranslated) {
-                return sprintf('} gains %s.', $matches[1]);
-            },
-            $autoTranslated
-        );
 
         $autoTranslated = str_replace('自ターン中に使用する', 'use during your turn', $autoTranslated);
         $autoTranslated = str_replace('相手ターン中に使用する', 'use during your opponent\'s turn', $autoTranslated);
