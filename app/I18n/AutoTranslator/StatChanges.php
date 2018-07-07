@@ -11,7 +11,7 @@ class StatChanges
     public static function autoTranslate(string $text): string
     {
         return preg_replace_callback(
-            '/((?:(味方|相手|この)((?:\[.+?\])*))?キャラ((\d)体|全て)?|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            '/((?:(味方|相手|この|対戦)((?:\[.+?\])*))?キャラ((\d)体|全て)?|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
             ['self', 'callback'],
             $text
         );
@@ -54,6 +54,9 @@ class StatChanges
                         break;
                     case 'この':
                         $text = 'this';
+                        break;
+                    case '対戦':
+                        $text = 'battling opponent\'s';
                         break;
                     case '':
                         // Unknown
