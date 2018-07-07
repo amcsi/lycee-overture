@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import;
 
+use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 
@@ -28,6 +29,7 @@ class TextImportTextExtractor
             foreach (CsvValueInterpreter::getAbilityPartsFromAbility($csvRow[CsvColumns::ABILITY]) as $dbKey => $val) {
                 $dbRow[$dbKey] = $val;
             }
+            $dbRow['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($dbRow);
             yield $dbRow;
         }
     }

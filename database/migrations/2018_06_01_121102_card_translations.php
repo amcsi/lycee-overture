@@ -26,6 +26,7 @@ class CardTranslations extends Migration
             $table->string('comments');
 
             $table->string('locale')->index();
+            $table->unsignedInteger('kanji_count');
 
             $table->unique(['card_id', 'locale']);
             $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
