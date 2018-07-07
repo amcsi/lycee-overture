@@ -12,7 +12,7 @@ class AbilityGainsOrOther
     {
         // "This character gains X."
         $text = preg_replace_callback(
-            '/(}|このキャラ)は((?:\[.+?\])+)を得る\./u',
+            '/(}|このキャラ|対戦キャラ)(は((?:\[.+?\])+)を得る|を破棄する)\./u',
             ['self', 'callback'],
             $text
         );
@@ -32,10 +32,24 @@ class AbilityGainsOrOther
     public static function callback(array $matches): string
     {
         $subject = $matches[1];
-        $doesAction = "gains $matches[2]";
+        $what =& $matches[3];
+        $action = $matches[2];
+        switch ($action) {
+            case 'を破棄する':
+                $doesAction = "gets discarded";
+                break;
+            default:
+                if (isset($what)) {
+                    $doesAction = "gains $what";
+                } else {
+                    throw new \InvalidArgumentException("Unexpected action: $action");
+                }
+        }
         switch ($subject) {
             case 'このキャラ':
                 return " this character $doesAction.";
+            case '対戦キャラ':
+                return " opponent's battling character $doesAction.";
             case '}':
                 return "} $doesAction.";
             default:
