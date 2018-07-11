@@ -29,6 +29,10 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' this character gets discarded.',
                 'このキャラを破棄する.',
             ],
+            [
+                ' this character gets untapped.',
+                'このキャラを未行動にする.',
+            ],
         ];
     }
 }
