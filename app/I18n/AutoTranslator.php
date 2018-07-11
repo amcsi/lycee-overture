@@ -9,8 +9,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
 use amcsi\LyceeOverture\I18n\AutoTranslator\StatChanges;
 use amcsi\LyceeOverture\I18n\AutoTranslator\Target;
-use amcsi\LyceeOverture\I18n\AutoTranslator\WhenAppears;
-use amcsi\LyceeOverture\I18n\AutoTranslator\WhenSupporting;
+use amcsi\LyceeOverture\I18n\AutoTranslator\WhenSomething;
 
 /**
  * Auto-translates parts of Japanese text.
@@ -46,8 +45,7 @@ class AutoTranslator
         $autoTranslated = str_replace('このキャラのバトル中に使用する', 'use during battle involving this character', $autoTranslated);
         $autoTranslated = str_replace('バトル中に使用する', 'use during battle', $autoTranslated);
         $autoTranslated = str_replace('このターン中', 'during this turn', $autoTranslated);
-        $autoTranslated = WhenSupporting::autoTranslate($autoTranslated);
-        $autoTranslated = WhenAppears::autoTranslate($autoTranslated);
+        $autoTranslated = WhenSomething::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
         $autoTranslated = DiscardFromDeck::autoTranslate($autoTranslated);
         $autoTranslated = Target::autoTranslate($autoTranslated);
