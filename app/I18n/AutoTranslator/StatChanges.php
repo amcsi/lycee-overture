@@ -10,8 +10,12 @@ class StatChanges
 {
     public static function autoTranslate(string $text): string
     {
+        $subject = '((?:(味方|相手|この|対戦)((?:\[.+?\])*))?キャラ((\d)体|全て)?|})';
+        $statPlusMinusAction = 'に((?:(?:AP|DP|SP|DMG)[+-]\\d(?:, )?)+)';
+        $statsToNumberAction = 'の((?:と?(?:AP|DP|SP|DMG))+)を(\d)に';
+        $pattern = "/{$subject}({$statPlusMinusAction}|{$statsToNumberAction})する./u";
         return preg_replace_callback(
-            '/((?:(味方|相手|この|対戦)((?:\[.+?\])*))?キャラ((\d)体|全て)?|})に((?:(?:AP|DP|SP|DMG)[+-]\d(?:, )?)+)する./u',
+            $pattern,
             ['self', 'callback'],
             $text
         );
@@ -20,13 +24,15 @@ class StatChanges
     private static function callback(array $matches): string
     {
         $plural = false;
-        $target = $matches[1] === '}'; // Whether the effect targets.
-        $subject = $matches[2]; // Ally or Enemy in Japanese (or '')
-        $something = $matches[3]; // e.g. [sun] <- characters
-        $allOrHowMany = $matches[4];
+        $target = next($matches) === '}'; // Whether the effect targets.
+        $subject = next($matches); // Ally or Enemy in Japanese (or '')
+        $something = next($matches); // e.g. [sun] <- characters
+        $allOrHowMany = next($matches);
         $all = $allOrHowMany === '全て';
-        $howMany = $matches[5];
-        $statChanges = $matches[6]; // The stat changes involved.
+        $howMany = next($matches);
+        $action = next($matches);
+        $statChanges = next($matches); // The stat changes involved for stat changes action.
+        $posessiveSubject = strpos($action, 'の') === 0; // {Target's}
         if (!$target) {
             if ($all) {
                 switch ($subject) {
@@ -72,15 +78,42 @@ class StatChanges
                 }
             }
             $text = " $text";
+            if ($posessiveSubject) {
+                $text = substr($text, -1) === 's' ?
+                    "$text'" : // Already ends with an "s". Just append an apostrophe.
+                    "$text's" // Doesn't, so "'s".
+                ;
+            }
         } else {
-            $text = '}';
+            $text = $posessiveSubject ? "'s}" : '}';
         }
-        $s = $plural ? '' : 's';
-        return sprintf(
-            '%s get%s %s.',
-            $text,
-            $s,
-            $statChanges
-        );
+        if (strpos($action, 'に') === 0) {
+            // ... gets Stat+-n ...
+
+            $s = $plural ? '' : 's';
+            return sprintf(
+                '%s get%s %s.',
+                $text,
+                $s,
+                $statChanges
+            );
+        } elseif (strpos($action, 'の') === 0) {
+            // ... 's Stat becomes 0.
+
+            $stats = next($matches);
+            $toWhatValue = next($matches);
+            // become(s)
+            $s = strpos($stats, 'と') !== false ? '' : 's';
+
+            return sprintf(
+                "%s %s become%s %d.",
+                $text,
+                str_replace('と', ' and ', $stats),
+                $s,
+                $toWhatValue
+            );
+        } else {
+            throw new \InvalidArgumentException("Unexpected action: $action");
+        }
     }
 }

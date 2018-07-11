@@ -23,6 +23,14 @@ class StatChangesTest extends TestCase
                 '..とき battling opponent\'s  character gets AP+2, DP+2.',
                 '..とき対戦キャラにAP+2, DP+2する.',
             ],
+            [
+                "{Enemy character's} AP and DP become 0.",
+                '{Enemy character}のAPとDPを0にする.',
+            ],
+            [
+                "の   character's DMG becomes 4.",
+                'のキャラのDMGを4にする.',
+            ],
         ];
     }
 }
