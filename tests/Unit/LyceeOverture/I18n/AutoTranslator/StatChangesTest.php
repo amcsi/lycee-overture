@@ -31,6 +31,10 @@ class StatChangesTest extends TestCase
                 "の   character's DMG becomes 4.",
                 'のキャラのDMGを4にする.',
             ],
+            'Target (that) character' => [
+                " that  character gets AP+1.",
+                '対象のキャラにAP+1する.',
+            ],
         ];
     }
 }

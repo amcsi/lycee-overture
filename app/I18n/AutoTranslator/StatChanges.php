@@ -10,7 +10,7 @@ class StatChanges
 {
     public static function autoTranslate(string $text): string
     {
-        $subject = '((?:(味方|相手|この|対戦)((?:\[.+?\])*))?キャラ((\d)体|全て)?|})';
+        $subject = '((?:(味方|相手|この|対象の|対戦)((?:\[.+?\])*))?キャラ((\d)体|全て)?|})';
         $statPlusMinusAction = 'に((?:(?:AP|DP|SP|DMG)[+-]\\d(?:, )?)+)';
         $statsToNumberAction = 'の((?:と?(?:AP|DP|SP|DMG))+)を(\d)に';
         $pattern = "/{$subject}({$statPlusMinusAction}|{$statsToNumberAction})する./u";
@@ -60,6 +60,9 @@ class StatChanges
                         break;
                     case 'この':
                         $text = 'this';
+                        break;
+                    case '対象の':
+                        $text = 'that';
                         break;
                     case '対戦':
                         $text = 'battling opponent\'s';
