@@ -21,19 +21,21 @@ class AutoTranslateCommand extends Command
     protected $signature = 'lycee:auto-translate';
     protected $description = 'Attempts translations from Japanese description text based on patterns.';
 
-    public function handle()
+    public function handle(CardTranslation $cardTranslation)
     {
         $this->output->writeln('Starting auto translation of cards.');
         /** @var Builder $japaneseBuilder */
-        $japaneseBuilder = CardTranslation::where('locale', Locale::JAPANESE);
+        $japaneseBuilder = $cardTranslation->newQuery()->where('locale', Locale::JAPANESE);
         /** @var Builder $englishBuilder */
-        $englishBuilder = CardTranslation::where('locale', Locale::ENGLISH);
+        $englishBuilder = $cardTranslation->newQuery()->where('locale', Locale::ENGLISH);
         /** @var CardTranslation[] $japaneseCards */
         $japaneseCards = $japaneseBuilder->get();
 
         $japaneseKanjiCount = $japaneseBuilder->sum('kanji_count') ?: 0;
         // By default the english japanese character count is the same as the Japanese (untranslated).
         $englishKanjiCount = $englishBuilder->sum('kanji_count') ?: $japaneseKanjiCount;
+        $cardCount = $japaneseBuilder->count();
+        $englishFullTranslatedCount = (clone $englishBuilder)->where('kanji_count', '=', '0')->count();
 
         \Eloquent::unguard();
 
@@ -90,9 +92,39 @@ class AutoTranslateCommand extends Command
 
         $this->output->writeln(
             sprintf(
-                "Auto translation: %s => %s",
+                "Auto translation description: %s => %s",
                 $oldPercentText,
                 $newPercentText
+            )
+        );
+
+        // Report on full translation coverage.
+
+        $afterEnglishFullTranslatedCount = $englishBuilder->where('kanji_count', '=', '0')->count();
+
+        $oldTranslationPercent = ($englishFullTranslatedCount * 100) / $cardCount;
+        $newTranslationPercent = ($afterEnglishFullTranslatedCount * 100) / $cardCount;
+
+        $oldPercentText = sprintf('%.3f%% (%d)', $oldTranslationPercent, $englishFullTranslatedCount);
+        $newPercentText = sprintf('%.3f%% (%d)', $newTranslationPercent, $afterEnglishFullTranslatedCount);
+
+        $compared = $newTranslationPercent <=> $oldTranslationPercent;
+
+        // Color in green/red depending on which is better.
+        if ($compared > 0) {
+            $newPercentText = "<fg=green>$newPercentText</>";
+            $oldPercentText = "<fg=red>$oldPercentText</>";
+        } elseif ($compared < 0) {
+            $oldPercentText = "<fg=green>$oldPercentText</>";
+            $newPercentText = "<fg=red>$newPercentText</>";
+        }
+
+        $this->output->writeln(
+            sprintf(
+                "Full translation: %s => %s out of (%d)",
+                $oldPercentText,
+                $newPercentText,
+                $cardCount
             )
         );
     }
