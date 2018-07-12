@@ -12,7 +12,7 @@ class AbilityGainsOrOther
     {
         // "This character gains X."
         $text = preg_replace_callback(
-            '/(}|このキャラ|対戦キャラ)(は((?:\[.+?\])+)を得る|を(破棄|未行動に)する)\./u',
+            '/(}|このキャラ|対戦キャラ)(は((?:\[.+?\])+)を得る|を(破棄|未行動に|行動済みに)する)\./u',
             ['self', 'callback'],
             $text
         );
@@ -40,6 +40,9 @@ class AbilityGainsOrOther
                 break;
             case 'を未行動にする':
                 $doesAction = "gets untapped";
+                break;
+            case 'を行動済みにする':
+                $doesAction = "gets tapped";
                 break;
             default:
                 if (isset($what)) {

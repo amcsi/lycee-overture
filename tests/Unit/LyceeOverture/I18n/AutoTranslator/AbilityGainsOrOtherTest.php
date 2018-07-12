@@ -33,6 +33,10 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' this character gets untapped.',
                 'このキャラを未行動にする.',
             ],
+            [
+                ' this character gets tapped.',
+                'このキャラを行動済みにする.',
+            ],
         ];
     }
 }
