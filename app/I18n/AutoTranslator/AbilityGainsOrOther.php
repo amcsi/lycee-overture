@@ -12,7 +12,7 @@ class AbilityGainsOrOther
     {
         // "This character gains X."
         $text = preg_replace_callback(
-            '/(}|このキャラ|対戦キャラ)(は((?:\[.+?\])+)を得る|を(破棄|未行動に|行動済みに)する)\./u',
+            '/(}|(この|対戦|相手)キャラ)(?:(\d)体)?(は((?:\[.+?\])+)を得る|を(破棄|未行動に|行動済みに)する)\./u',
             ['self', 'callback'],
             $text
         );
@@ -31,7 +31,9 @@ class AbilityGainsOrOther
 
     public static function callback(array $matches): string
     {
-        $subject = next($matches);
+        $subjectTargetOrSomethingElse = next($matches);
+        $matchedSubject = next($matches);
+        $howMany = next($matches);
         $action = next($matches);
         $what = next($matches);
         switch ($action) {
@@ -51,16 +53,28 @@ class AbilityGainsOrOther
                     throw new \InvalidArgumentException("Unexpected action: $action");
                 }
         }
-        switch ($subject) {
-            case 'このキャラ':
-                return " this character $doesAction.";
-            case '対戦キャラ':
-                return " opponent's battling character $doesAction.";
-            case '}':
-                return "} $doesAction.";
-            default:
-                throw new \InvalidArgumentException("Unexpected subject: $subject");
-
+        if ($subjectTargetOrSomethingElse === '}') {
+            return "} $doesAction.";
         }
+        switch ($matchedSubject) {
+            case 'この':
+                $subject = 'this character';
+                break;
+            case '対戦':
+                $subject = "opponent's battling character";
+                break;
+            case '相手':
+                $subject = "enemy character";
+                break;
+            default:
+                throw new \InvalidArgumentException("Unexpected subject: $subjectTargetOrSomethingElse");
+        }
+
+        if ($howMany) {
+            $s = $howMany === "1" ? '' : 's';
+            $subject = sprintf("%d %s%s", $howMany, $subject, $s);
+        }
+
+        return " $subject $doesAction.";
     }
 }
