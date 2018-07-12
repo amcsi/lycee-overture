@@ -143,6 +143,10 @@ class AutoTranslatorTest extends TestCase
                 'Use during your turn. This character gets AP+3.',
                 'Use during your turn. this character gets AP+3.',
             ],
+            'opponent turn start' => [
+                "At the start of your opponent's turn",
+                '相手ターン開始時',
+            ],
         ];
     }
 }
