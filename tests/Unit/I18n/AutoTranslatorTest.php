@@ -151,6 +151,10 @@ class AutoTranslatorTest extends TestCase
                 "At the start of your opponent's turn",
                 '相手ターン開始時',
             ],
+            'two stat changes' => [
+                '{未行動の味方AF character} gets DMG-1. This character gets DMG+1.',
+                '{未行動の味方ＡＦキャラ１体}にＤＭＧ－１する。このキャラにＤＭＧ＋１する。',
+            ]
         ];
     }
 }
