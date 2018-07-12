@@ -8,8 +8,25 @@ use PHPUnit\Framework\TestCase;
 
 class WhenSomethingTest extends TestCase
 {
-    public function testAutoTranslate()
+    /**
+     * @dataProvider provideAutoTranslate
+     */
+    public function testAutoTranslate(string $expected, string $input)
     {
-        self::assertSame('when an ally character enters engagement', WhenSomething::autoTranslate('味方キャラがエンゲージ登場したとき'));
+        self::assertSame($expected, WhenSomething::autoTranslate($input));
+    }
+
+    public function provideAutoTranslate()
+    {
+        return [
+            [
+                'when an ally character enters engagement',
+                '味方キャラがエンゲージ登場したとき',
+            ],
+            [
+                'when this character moves',
+                'このキャラが移動したとき',
+            ],
+        ];
     }
 }

@@ -12,6 +12,8 @@ class WhenSomething
     {
         $text = WhenSupporting::autoTranslate($text);
         $text = WhenAppears::autoTranslate($text);
-        return str_replace('味方キャラがエンゲージ登場したとき', 'when an ally character enters engagement', $text);
+        $text = str_replace('味方キャラがエンゲージ登場したとき', 'when an ally character enters engagement', $text);
+        $text = str_replace('このキャラが移動したとき', 'when this character moves', $text);
+        return $text;
     }
 }
