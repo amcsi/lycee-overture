@@ -24,6 +24,11 @@ class WhenSomething
             'when this character is destroyed due to Engage summon',
             $text
         );
+        $text = str_replace(
+            'このキャラで攻撃宣言をしたとき',
+            'when you declare an attack with this character',
+            $text
+        );
         return $text;
     }
 }

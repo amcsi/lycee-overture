@@ -27,6 +27,10 @@ class WhenSomethingTest extends TestCase
                 'when this character moves',
                 'このキャラが移動したとき',
             ],
+            [
+                'when you declare an attack with this character',
+                'このキャラで攻撃宣言をしたとき',
+            ],
         ];
     }
 }
