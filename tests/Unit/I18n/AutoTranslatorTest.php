@@ -92,7 +92,7 @@ class AutoTranslatorTest extends TestCase
                 '{相手キャラ1体}にSP-1する.',
             ],
             'enemy getting stat changes (no target)' => [
-                'Enemy character gets DP-1.',
+                '1 enemy character gets DP-1.',
                 '相手キャラ1体にDP-1する.',
             ],
             'compound target gets stat changes; separated target logic' => [

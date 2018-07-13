@@ -39,6 +39,9 @@ class Subject
         $target = next($matches); // The {target} if any.
         $subject = next($matches); // Ally or Enemy in Japanese (or '')
         $something = next($matches); // e.g. [sun] <- characters
+        if ($something) {
+            $something = " $something";
+        }
         $allOrHowMany = next($matches);
         $all = $allOrHowMany === '全て';
         $howMany = next($matches);
@@ -47,14 +50,14 @@ class Subject
             if ($all) {
                 switch ($subject) {
                     case '味方':
-                        $text = "all your $something characters";
+                        $text = "all your$something characters";
                         break;
                     case '相手':
-                        $text = "all enemy $something characters";
+                        $text = "all enemy$something characters";
                         break;
                     case '':
                         // Unknown
-                        $text = "all $something characters";
+                        $text = "all$something characters";
                         break;
                     default:
                         throw new \LogicException("Unexpected all subject: $subject");
@@ -75,7 +78,7 @@ class Subject
                         $text = 'that';
                         break;
                     case '対戦':
-                        $text = 'battling opponent\'s';
+                        $text = 'opponent\'s battling';
                         break;
                     case '':
                         // Unknown
@@ -84,10 +87,14 @@ class Subject
                     default:
                         throw new \LogicException("Unexpected subject: $subject");
                 }
-                $text = "$text $something character";
-                if ($howMany > 1) {
-                    $plural = true;
-                    $text = "$howMany ${text}s";
+                $text = "$text$something character";
+                if ($howMany) {
+                    if ($howMany !== '1') {
+                        $plural = true;
+                        $text = "$howMany ${text}s";
+                    } else {
+                        $text = "$howMany $text";
+                    }
                 }
             }
             $text = " $text" . self::POSSESSIVE_PLACEHOLDER;

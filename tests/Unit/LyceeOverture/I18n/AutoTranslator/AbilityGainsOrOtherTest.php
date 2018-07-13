@@ -34,6 +34,10 @@ class AbilityGainsOrOtherTest extends TestCase
                 '相手キャラ1体を破棄する.',
             ],
             [
+                ' 1 ally character gets destroyed.',
+                '味方キャラ1体を破棄する.',
+            ],
+            [
                 ' this character gets untapped.',
                 'このキャラを未行動にする.',
             ],
