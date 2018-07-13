@@ -43,6 +43,11 @@ class AutoTranslator
         $autoTranslated = StatChanges::autoTranslate($autoTranslated);
 
         $autoTranslated = str_replace('その宣言の解決は失敗する', 'negate its effect', $autoTranslated);
+        $autoTranslated = str_replace(
+            '相手キャラがダウンしたバトル終了時',
+            'at the end of the battle when the other character is defeated',
+            $autoTranslated
+        );
         $autoTranslated = str_replace('このキャラのバトル中に使用する', 'use during battle involving this character', $autoTranslated);
         $autoTranslated = str_replace(
             'この能力は失われる',

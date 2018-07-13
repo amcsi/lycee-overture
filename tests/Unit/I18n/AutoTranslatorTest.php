@@ -171,6 +171,10 @@ class AutoTranslatorTest extends TestCase
                 'Negate its effect.',
                 'その宣言の解決は失敗する。',
             ],
+            'At the end of the battle when the other character goes down' => [
+                'At the end of the battle when the other character is defeated.',
+                '相手キャラがダウンしたバトル終了時。',
+            ],
         ];
     }
 }
