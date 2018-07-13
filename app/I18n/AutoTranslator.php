@@ -48,6 +48,11 @@ class AutoTranslator
         $autoTranslated = str_replace('バトル中に使用する', 'use during battle', $autoTranslated);
         $autoTranslated = str_replace('このターン中', 'during this turn', $autoTranslated);
         $autoTranslated = str_replace('相手ターン開始時', "at the start of your opponent's turn", $autoTranslated);
+        $autoTranslated = str_replace(
+            'この能力は失われる',
+            'this effect can be used only once while this card is on the field',
+            $autoTranslated
+        );
         $autoTranslated = WhenSomething::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
         $autoTranslated = DiscardFromDeck::autoTranslate($autoTranslated);

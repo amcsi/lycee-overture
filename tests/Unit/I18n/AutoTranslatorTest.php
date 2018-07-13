@@ -154,7 +154,19 @@ class AutoTranslatorTest extends TestCase
             'two stat changes' => [
                 '{未行動の味方AF character} gets DMG-1. This character gets DMG+1.',
                 '{未行動の味方ＡＦキャラ１体}にＤＭＧ－１する。このキャラにＤＭＧ＋１する。',
-            ]
+            ],
+            'when opponent destroyed by your effect' => [
+                'When an opponent character is destroyed by use of your effects',
+                '自分の効果によって相手キャラを破棄したとき',
+            ],
+            'when destroyed from engage summon' => [
+                'When this character is destroyed due to Engage summon',
+                'このキャラをエンゲージ登場によって破棄したとき',
+            ],
+            'this effect is lost' => [
+                'This effect can be used only once while this card is on the field.',
+                'この能力は失われる。',
+            ],
         ];
     }
 }
