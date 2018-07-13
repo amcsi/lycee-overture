@@ -31,6 +31,10 @@ class WhenSomethingTest extends TestCase
                 'when you declare an attack with this character',
                 'このキャラで攻撃宣言をしたとき',
             ],
+            [
+                'when this character is defeated in battle',
+                'このキャラがダウンしたとき',
+            ],
         ];
     }
 }

@@ -29,6 +29,11 @@ class WhenSomething
             'when you declare an attack with this character',
             $text
         );
+        $text = str_replace(
+            'このキャラがダウンしたとき',
+            'when this character is defeated in battle',
+            $text
+        );
         return $text;
     }
 }
