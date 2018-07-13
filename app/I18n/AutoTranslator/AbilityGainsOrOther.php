@@ -38,7 +38,7 @@ class AbilityGainsOrOther
         $what = next($matches);
         switch ($action) {
             case 'を破棄する':
-                $doesAction = "gets discarded";
+                $doesAction = "gets destroyed";
                 break;
             case 'を未行動にする':
                 $doesAction = "gets untapped";
