@@ -17,7 +17,7 @@ class StatChanges
         $subjectRegex = Subject::getUncapturedRegex();
 
         // language=regexp
-        $statPlusMinusAction = 'に((?:(?:AP|DP|SP|DMG)[+-]\\d(?:, )?)+)';
+        $statPlusMinusAction = 'に((?:(?:AP|DP|SP|DMG)[+-]\\d(?:, |または)?)+)';
         // language=regexp
         $statsToNumberAction = 'の((?:と?(?:AP|DP|SP|DMG))+)を(\d)に';
 
@@ -46,6 +46,9 @@ class StatChanges
                 $thirdPersonPluralPlaceholder,
                 $statChanges
             );
+            // ... or ...
+            $actionText = str_replace('または', ' or ', $actionText);
+
             $action = new Action($actionText, $posessiveSubject, false);
         } elseif (strpos($actionText, 'の') === 0) {
             // ... 's Stat becomes 0.
