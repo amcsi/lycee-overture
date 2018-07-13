@@ -42,6 +42,7 @@ class AutoTranslator
         // "... get $statChanges."
         $autoTranslated = StatChanges::autoTranslate($autoTranslated);
 
+        $autoTranslated = str_replace('その宣言の解決は失敗する', 'negate its effect', $autoTranslated);
         $autoTranslated = str_replace('このキャラのバトル中に使用する', 'use during battle involving this character', $autoTranslated);
         $autoTranslated = str_replace(
             'この能力は失われる',

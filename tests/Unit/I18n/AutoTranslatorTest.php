@@ -167,6 +167,10 @@ class AutoTranslatorTest extends TestCase
                 'This effect can be used only once while this card is on the field.',
                 'この能力は失われる。',
             ],
+            'negate its effect' => [
+                'Negate its effect.',
+                'その宣言の解決は失敗する。',
+            ],
         ];
     }
 }
