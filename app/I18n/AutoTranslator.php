@@ -42,9 +42,7 @@ class AutoTranslator
         // "... get $statChanges."
         $autoTranslated = StatChanges::autoTranslate($autoTranslated);
 
-        $autoTranslated = str_replace('バトル中に使用できない', 'do not use during battle', $autoTranslated);
         $autoTranslated = str_replace('このキャラのバトル中に使用する', 'use during battle involving this character', $autoTranslated);
-        $autoTranslated = str_replace('バトル中に使用する', 'use during battle', $autoTranslated);
         $autoTranslated = str_replace(
             'この能力は失われる',
             'this effect can be used only once while this card is on the field',

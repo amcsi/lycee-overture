@@ -55,6 +55,10 @@ class TurnAndBattleTest extends TestCase
                 'until the end of the turn',
                 'ターン終了時まで',
             ],
+            'imaginary case with do not use' => [
+                'do not use during your turn',
+                '自ターン中に使用できない',
+            ],
         ];
     }
 }
