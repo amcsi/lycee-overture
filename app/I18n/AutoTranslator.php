@@ -9,6 +9,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
 use amcsi\LyceeOverture\I18n\AutoTranslator\StatChanges;
 use amcsi\LyceeOverture\I18n\AutoTranslator\Target;
+use amcsi\LyceeOverture\I18n\AutoTranslator\TurnAndBattle;
 use amcsi\LyceeOverture\I18n\AutoTranslator\WhenSomething;
 
 /**
@@ -41,13 +42,9 @@ class AutoTranslator
         // "... get $statChanges."
         $autoTranslated = StatChanges::autoTranslate($autoTranslated);
 
-        $autoTranslated = str_replace('自ターン中に使用する', 'use during your turn', $autoTranslated);
-        $autoTranslated = str_replace('相手ターン中に使用する', 'use during your opponent\'s turn', $autoTranslated);
         $autoTranslated = str_replace('バトル中に使用できない', 'do not use during battle', $autoTranslated);
         $autoTranslated = str_replace('このキャラのバトル中に使用する', 'use during battle involving this character', $autoTranslated);
         $autoTranslated = str_replace('バトル中に使用する', 'use during battle', $autoTranslated);
-        $autoTranslated = str_replace('このターン中', 'during this turn', $autoTranslated);
-        $autoTranslated = str_replace('相手ターン開始時', "at the start of your opponent's turn", $autoTranslated);
         $autoTranslated = str_replace(
             'この能力は失われる',
             'this effect can be used only once while this card is on the field',
@@ -57,6 +54,7 @@ class AutoTranslator
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
         $autoTranslated = DiscardFromDeck::autoTranslate($autoTranslated);
         $autoTranslated = Target::autoTranslate($autoTranslated);
+        $autoTranslated = TurnAndBattle::autoTranslate($autoTranslated);
 
         // Condense multiple spaces into one; trim.
         $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));
