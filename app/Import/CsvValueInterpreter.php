@@ -83,9 +83,19 @@ class CsvValueInterpreter
         $ability = preg_replace_callback('/^((?:\[[^\]]+\])+):/u', function ($matches) use (&$abilityCost) {
             $abilityCost = $matches[1];
         }, $ability, 1);
+        // Comments
         $ability = preg_replace_callback('/※.*$/', function ($matches) use (&$comments) {
-            $comments = $matches[0];
+            $comments .= $matches[0];
         }, $ability, 1);
+        // Deck restriction comments.
+        $ability = preg_replace_callback(
+            '/<br \/>(構築制限:.*)$/i',
+            function ($matches) use (&$comments) {
+                $comments .= $matches[1];
+            },
+            $ability,
+            1
+        );
 
         // Normalize description.
         $ability = preg_replace(

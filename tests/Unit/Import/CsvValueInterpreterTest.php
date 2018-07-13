@@ -140,6 +140,14 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[宣言] [日]:<span style=color:#FFCC00;font-weight:bold;>味方キャラ１体</span>にＡＰ＋１する。',
             ],
+            '<br /> comments' => [
+                [
+                    'ability_cost' => '',
+                    'ability_description' => 'このキャラにサポートをしたとき、このキャラを未行動にする。',
+                    'comments' => '構築制限:ゆずソフト,ゆずソフト 1.0,へいろー',
+                ],
+                '[誘発] このキャラにサポートをしたとき、このキャラを未行動にする。<BR />構築制限:ゆずソフト,ゆずソフト 1.0,へいろー',
+            ],
         ];
     }
 }
