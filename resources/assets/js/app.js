@@ -14,8 +14,12 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+import App from './App';
 
-const app = new Vue({
+//noinspection JSUnusedGlobalSymbols
+new Vue({
+  render(h) {
+    return h(App);
+  },
   el: '#app',
 });
