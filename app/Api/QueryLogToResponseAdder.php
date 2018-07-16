@@ -16,6 +16,9 @@ class QueryLogToResponseAdder
             return;
         }
         $content =& $event->content;
-        $content['debug'] = \DB::getQueryLog();
+        // Need to check that the response is an API response.
+        if (is_array($content)) {
+            $content['debug'] = \DB::getQueryLog();
+        }
     }
 }

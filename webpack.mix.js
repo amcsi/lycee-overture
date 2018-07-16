@@ -33,3 +33,5 @@ if (mix.config.hmr) {
   // "ENOENT: no such file or directory" every several hot reloads.
   mix.version();
 }
+
+mix.setPublicPath('./public');
