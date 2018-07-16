@@ -1,28 +1,44 @@
 <template>
-    <table v-if="cards">
-        <thead>
-        <tr>
-            <td>ID</td>
-            <td>Name</td>
-            <td>Ex</td>
-            <td>DMG</td>
-            <td>AP</td>
-            <td>DP</td>
-            <td>SP</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="card in cards.data">
-            <td>{{ card.id }}</td>
-            <td>{{ card.translation.name }}</td>
-            <td>{{ card.ex }}</td>
-            <td>{{ card.dmg }}</td>
-            <td>{{ card.ap }}</td>
-            <td>{{ card.dp }}</td>
-            <td>{{ card.sp }}</td>
-        </tr>
-        </tbody>
-    </table>
+    <el-table
+        v-if="cards"
+        :data="cards.data"
+    >
+        <el-table-column
+            prop="id"
+            label="ID"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="translation.name"
+            label="Name"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="ex"
+            label="Ex"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="dmg"
+            label="DMG"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="ap"
+            label="AP"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="dp"
+            label="DP"
+        >
+        </el-table-column>
+        <el-table-column
+            prop="sp"
+            label="SP"
+        >
+        </el-table-column>
+    </el-table>
     <div v-else>Loading...</div>
 </template>
 
