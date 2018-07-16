@@ -21,7 +21,13 @@ class CardTransformer extends TransformerAbstract
         /** @var CardTranslation $cardTranslation */
         $cardTranslation = $card->getTranslation();
         return [
+            'id' => $card->id,
             'type' => $card->getType(),
+            'ex' => $card->ex,
+            'dmg' => $card->dmg,
+            'ap' => $card->ap,
+            'dp' => $card->dp,
+            'sp' => $card->sp,
             'translation' => $this->cardTranslationTransformer->transform($cardTranslation),
         ];
     }

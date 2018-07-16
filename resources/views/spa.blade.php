@@ -45,10 +45,13 @@
             text-transform: uppercase;
         }
     </style>
+
 </head>
 <body>
 <div id="app" class="flex-center position-ref full-height"></div>
-
+<script>
+  window.vars = {!! json_encode($jsVars) !!};
+</script>
 <script defer type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

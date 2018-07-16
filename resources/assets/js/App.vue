@@ -1,15 +1,10 @@
 <template>
-    <div>hello</div>
+    <router-view></router-view>
 </template>
 
 <script>
   /** @class App */
   export default {
-    data() {
-      return {
-        msg: 'hello vue',
-      };
-    },
     components: {},
   };
 </script>

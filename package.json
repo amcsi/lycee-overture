@@ -19,6 +19,8 @@
     "vue": "^2.5.7"
   },
   "dependencies": {
-    "laravel-mix": "^2.1.11"
+    "laravel-mix": "^2.1.11",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   }
 }

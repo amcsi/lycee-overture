@@ -24,6 +24,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get(
     '{any}',
     function () {
-        return view('spa');
+        $vars = [
+            'apiBaseUrl' => env('API_BASE_URL'),
+        ];
+        return view('spa', ['jsVars' => $vars]);
     }
 )->where('any', '.*');

@@ -14,3 +14,4 @@ yarn-error.log
 /.phpstorm.meta.php
 /_ide_helper.php
 /storage/lycee.csv
+/public/mix-manifest.json
