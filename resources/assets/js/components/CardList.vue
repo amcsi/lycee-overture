@@ -13,36 +13,53 @@
                 <el-table-column
                     prop="id"
                     label="ID"
+                    width="100"
                 >
                 </el-table-column>
                 <el-table-column
                     prop="translation.name"
                     label="Name"
+                    width="200"
                 >
+                </el-table-column>
+                <el-table-column
+                    label="Text"
+                >
+                    <template slot-scope="scope">
+                        <div>
+                            <span v-if="scope.row.translation.ability_cost">{{ scope.row.translation.ability_cost }}:</span>
+                            {{ scope.row.translation.ability_description }}
+                        </div>
+                    </template>
                 </el-table-column>
                 <el-table-column
                     prop="ex"
                     label="Ex"
+                    width="50"
                 >
                 </el-table-column>
                 <el-table-column
                     prop="dmg"
                     label="DMG"
+                    width="60"
                 >
                 </el-table-column>
                 <el-table-column
                     prop="ap"
                     label="AP"
+                    width="50"
                 >
                 </el-table-column>
                 <el-table-column
                     prop="dp"
                     label="DP"
+                    width="50"
                 >
                 </el-table-column>
                 <el-table-column
                     prop="sp"
                     label="SP"
+                    width="50"
                 >
                 </el-table-column>
             </el-table>
