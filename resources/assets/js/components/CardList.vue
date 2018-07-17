@@ -42,7 +42,7 @@
             </el-table-column>
         </el-table>
 
-        <Paginator :pagination="cards.meta.pagination" :page-change="pageChange" />
+        <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
     </div>
     <div v-else>Loading...</div>
 </template>
