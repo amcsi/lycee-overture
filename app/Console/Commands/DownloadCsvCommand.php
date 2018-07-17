@@ -46,7 +46,7 @@ class DownloadCsvCommand extends Command
         $output = $this->output;
         $output->text('Importing CSV from Lycee website...');
         $stopwatch = new Stopwatch();
-        $stopwatch->start('import-csv');
+        $importCsvStopwatchEvent = $stopwatch->start('import-csv');
 
         // Rely on cache if the cached file newer by a specific time interval.
         if (!$force && file_exists($cacheFile) && filemtime($cacheFile) > Chronos::now()->subWeek()->getTimestamp()) {
@@ -60,7 +60,7 @@ class DownloadCsvCommand extends Command
         // Copy contents of download to CSV file.
         copy_to_stream($response->getBody(), $cacheFileStream);
 
-        $importCsvStopwatchEvent = $stopwatch->stop('mport-csv');
+        $importCsvStopwatchEvent->stop();
         $output->text('Done importing CSV. ' . Profiling::stopwatchToHuman($importCsvStopwatchEvent));
     }
 }
