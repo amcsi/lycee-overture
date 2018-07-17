@@ -1,50 +1,56 @@
 <template>
-    <div v-if="cards">
-        <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
+    <div>
+        <h2>Card list</h2>
+        <div v-if="cards">
+            <h3>Total: {{ cards.meta.pagination.total }}</h3>
 
-        <el-table
-            :data="cards.data"
-        >
-            <el-table-column
-                prop="id"
-                label="ID"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="translation.name"
-                label="Name"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="ex"
-                label="Ex"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="dmg"
-                label="DMG"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="ap"
-                label="AP"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="dp"
-                label="DP"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="sp"
-                label="SP"
-            >
-            </el-table-column>
-        </el-table>
+            <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
 
-        <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
+            <el-table
+                v-loading="cardsLoading"
+                :data="cards.data"
+            >
+                <el-table-column
+                    prop="id"
+                    label="ID"
+                >
+                </el-table-column>
+                <el-table-column
+                    prop="translation.name"
+                    label="Name"
+                >
+                </el-table-column>
+                <el-table-column
+                    prop="ex"
+                    label="Ex"
+                >
+                </el-table-column>
+                <el-table-column
+                    prop="dmg"
+                    label="DMG"
+                >
+                </el-table-column>
+                <el-table-column
+                    prop="ap"
+                    label="AP"
+                >
+                </el-table-column>
+                <el-table-column
+                    prop="dp"
+                    label="DP"
+                >
+                </el-table-column>
+                <el-table-column
+                    prop="sp"
+                    label="SP"
+                >
+                </el-table-column>
+            </el-table>
+
+            <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
+        </div>
+        <div v-else v-loading="cardsLoading" style="height: 300px;"></div>
     </div>
-    <div v-else>Loading...</div>
 </template>
 
 <script>
@@ -59,6 +65,7 @@
     },
     computed: {
       ...mapState({
+        cardsLoading: state => state.cards.listLoading,
         cards: state => state.cards.list,
       }),
     },
