@@ -28,6 +28,10 @@ class SubjectTest extends TestCase
                 " that character$posessivePlaceholder",
                 'そのキャラ',
             ],
+            [
+                " 2 untapped ally characters$posessivePlaceholder",
+                '未行動の味方キャラ2体',
+            ],
         ];
     }
 }

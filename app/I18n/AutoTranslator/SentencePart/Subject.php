@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(味方|相手|この|その|対象の|対戦)((?:\[.+?\])*|AF|DF))?キャラ((\d)体|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の)?(味方|相手|この|その|対象の|対戦)((?:\[.+?\])*|AF|DF))?キャラ((\d)体|全て)?';
 
     private $subjectText;
 
@@ -35,12 +35,23 @@ class Subject
      */
     public static function createInstance(string $subjectPart): self
     {
-        preg_match('/^' . self::REGEX . '$/', $subjectPart, $matches);
+        if (!preg_match('/^(?:' . self::REGEX . ')$/', $subjectPart, $matches)) {
+            // This static method expects subject substrings that already match self::getUncapturedRegex().
+            throw new \InvalidArgumentException(
+                "Subject part does not strictly match regular expression: $subjectPart"
+            );
+        }
+
+        $something = '';
         $target = next($matches); // The {target} if any.
+        $untapped = next($matches); // This "untapped" character.
+        if ($untapped) {
+            $something .= ' untapped';
+        }
         $subject = next($matches); // Ally or Enemy in Japanese (or '')
-        $something = next($matches); // e.g. [sun] <- characters
-        if ($something) {
-            $something = " $something";
+        $typeSource = next($matches); // e.g. [sun] <- characters
+        if ($typeSource) {
+            $something .= " $typeSource";
         }
         $allOrHowMany = next($matches);
         $all = $allOrHowMany === '全て';
@@ -53,7 +64,7 @@ class Subject
                         $text = "all your$something characters";
                         break;
                     case '相手':
-                        $text = "all enemy$something characters";
+                        $text = "all$something enemy characters";
                         break;
                     case '':
                         // Unknown
@@ -91,14 +102,16 @@ class Subject
                     default:
                         throw new \LogicException("Unexpected subject: $subject");
                 }
-                $text = "$text$something character";
                 if ($howMany) {
+                    $text = "$text character";
                     if ($howMany !== '1') {
                         $plural = true;
-                        $text = "$howMany ${text}s";
+                        $text = "$howMany$something ${text}s";
                     } else {
-                        $text = "$howMany $text";
+                        $text = "$howMany$something $text";
                     }
+                } else {
+                    $text = "$text$something character";
                 }
             }
             $text = " $text" . self::POSSESSIVE_PLACEHOLDER;
