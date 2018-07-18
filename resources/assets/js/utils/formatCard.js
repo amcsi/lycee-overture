@@ -6,7 +6,9 @@ function getIcon(name) {
  * Formats card text to use pretty icons and stuff.
  */
 export default function(text = '') {
-  text = text.replace(/\[0]/g, getIcon('free'));
   text = text.replace(/\[T]/g, getIcon('tap'));
+  text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, (match, contents) => {
+    return getIcon(contents);
+  });
   return text;
 }

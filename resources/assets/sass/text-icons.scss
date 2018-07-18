@@ -8,11 +8,11 @@
   position: relative;
   top: .125em;
 
-  &-free {
-    background-image: url(../images/text-icons/0.svg);
-  }
+  $icons: 0 tap star snow moon flower space sun;
 
-  &-tap {
-    background-image: url(../images/text-icons/tap.svg);
+  @each $icon in $icons {
+    &-#{$icon} {
+      background-image: url(../images/text-icons/#{$icon}.svg);
+    }
   }
 }
