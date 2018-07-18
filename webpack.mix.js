@@ -35,3 +35,15 @@ if (mix.config.hmr) {
 }
 
 mix.setPublicPath('./public');
+
+mix.options({
+  imgLoaderOptions: {
+    svgo: {
+      plugins: [
+        // Keeps <?xml in minified SVGs to make PHP see them as image/svg+xml rather than image/svg.
+        // With the latter the SVGs as background images won't appear.
+        { removeXMLProcInst: false },
+      ]
+    },
+  },
+});
