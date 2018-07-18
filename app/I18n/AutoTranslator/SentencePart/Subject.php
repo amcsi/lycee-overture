@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(味方|相手|この|対象の|対戦)((?:\[.+?\])*|AF|DF))?キャラ((\d)体|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(味方|相手|この|その|対象の|対戦)((?:\[.+?\])*|AF|DF))?キャラ((\d)体|全て)?';
 
     private $subjectText;
 
@@ -74,6 +74,10 @@ class Subject
                     case 'この':
                         $text = 'this';
                         break;
+                    case 'その':
+                        $text = 'that';
+                        break;
+                    // (target supported)
                     case '対象の':
                         $text = 'that';
                         break;

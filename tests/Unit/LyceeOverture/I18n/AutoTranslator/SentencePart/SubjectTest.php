@@ -24,6 +24,10 @@ class SubjectTest extends TestCase
                 " all your AF characters$posessivePlaceholder",
                 '味方AFキャラ全て',
             ],
+            [
+                " that character$posessivePlaceholder",
+                'そのキャラ',
+            ],
         ];
     }
 }
