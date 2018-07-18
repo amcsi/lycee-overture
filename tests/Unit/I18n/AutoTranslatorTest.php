@@ -107,6 +107,10 @@ class AutoTranslatorTest extends TestCase
                 '{1 character} gets DMG-2.',
                 '{キャラ1体}にDMGー2する.',
             ],
+            '− character' => [
+                '{1 character} gets DMG-2.',
+                '{キャラ1体}にDMG−2する.',
+            ],
             'multiple subjects in subsentence for stat changes' => [
                 'このキャラを除く all your characters get AP+1, DP+1, DMG+1.',
                 'このキャラを除く味方キャラ全てにＡＰ＋１・ＤＰ＋１・ＤＭＧ＋１する。',

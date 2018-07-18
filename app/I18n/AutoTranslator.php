@@ -37,7 +37,8 @@ class AutoTranslator
         }, $autoTranslated);
         $autoTranslated = FullWidthCharacters::translateFullWidthCharacters($autoTranslated);
         // Replace ー (longizing katakana) used in place of full width minus sign, but only if a number follows.
-        $autoTranslated = preg_replace('/ー(\d)/u', '-$1', $autoTranslated);
+        // Also replace − (weird alternative dash).
+        $autoTranslated = preg_replace('/[ー−](\d)/u', '-$1', $autoTranslated);
 
         $autoTranslated = AbilityGainsOrOther::autoTranslate($autoTranslated);
 
