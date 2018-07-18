@@ -32,6 +32,18 @@ class SubjectTest extends TestCase
                 " 2 untapped ally characters$posessivePlaceholder",
                 '未行動の味方キャラ2体',
             ],
+            'item (even if it doesnt make sense' => [
+                " all your AF items$posessivePlaceholder",
+                '味方AFアイテム全て',
+            ],
+            'event (even if it doesnt make sense' => [
+                " all your AF events$posessivePlaceholder",
+                '味方AFイベント全て',
+            ],
+            'field as noun' => [
+                " ally field$posessivePlaceholder",
+                '味方フィールド',
+            ],
         ];
     }
 }

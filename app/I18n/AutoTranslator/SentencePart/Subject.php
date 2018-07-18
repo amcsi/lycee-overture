@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の)?(味方|相手|この|その|対象の|対戦)((?:\[.+?\])*|AF|DF))?キャラ((\d)体|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の)?(味方|相手|この|その|対象の|対戦)((?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)((\d)体|全て)?';
 
     private $subjectText;
 
@@ -53,6 +53,28 @@ class Subject
         if ($typeSource) {
             $something .= " $typeSource";
         }
+        $noun = next($matches);
+        switch ($noun) {
+            case 'キャラ':
+                $noun = 'character';
+                break;
+            case 'アイテム':
+                $noun = 'item';
+                break;
+            case 'イベント':
+                $noun = 'event';
+                break;
+            case 'フィールド':
+                $noun = 'field';
+                break;
+            case false:
+                // There is no noun.
+                $noun = '';
+                break;
+            default:
+                throw new \LogicException("Unexpected noun: $noun");
+        }
+
         $allOrHowMany = next($matches);
         $all = $allOrHowMany === '全て';
         $howMany = next($matches);
@@ -61,14 +83,14 @@ class Subject
             if ($all) {
                 switch ($subject) {
                     case '味方':
-                        $text = "all your$something characters";
+                        $text = "all your$something {$noun}s";
                         break;
                     case '相手':
-                        $text = "all$something enemy characters";
+                        $text = "all$something enemy {$noun}s";
                         break;
                     case '':
                         // Unknown
-                        $text = "all$something characters";
+                        $text = "all$something {$noun}s";
                         break;
                     default:
                         throw new \LogicException("Unexpected all subject: $subject");
@@ -103,7 +125,7 @@ class Subject
                         throw new \LogicException("Unexpected subject: $subject");
                 }
                 if ($howMany) {
-                    $text = "$text character";
+                    $text = "$text {$noun}";
                     if ($howMany !== '1') {
                         $plural = true;
                         $text = "$howMany$something ${text}s";
@@ -111,7 +133,7 @@ class Subject
                         $text = "$howMany$something $text";
                     }
                 } else {
-                    $text = "$text$something character";
+                    $text = "$text$something {$noun}";
                 }
             }
             $text = " $text" . self::POSSESSIVE_PLACEHOLDER;
