@@ -124,6 +124,14 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[宣言] [日日]:{味方キャラ１体}は[ステップ:[0]]を得る。',
             ],
+            'tap included' => [
+                [
+                    'ability_cost' => '[T][sun][sun]',
+                    'ability_description' => '{味方キャラ１体}は...',
+                    'comments' => '',
+                ],
+                '[宣言] [T日日]:{味方キャラ１体}は...',
+            ],
             'Non-cost colon' => [
                 [
                     'ability_cost' => '',

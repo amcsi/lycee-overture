@@ -13,7 +13,7 @@ class MarkupConverter
 {
     public static function convert(string $text): string
     {
-        $text = preg_replace_callback('/\[([雪月花宙日無]+)\]/u', ['self', 'elementCallback'], $text);
+        $text = preg_replace_callback('/\[([T雪月花宙日無]+)\]/u', ['self', 'elementCallback'], $text);
 
         $japaneseToMarkup = BasicAbility::getJapaneseToMarkup();
         $japaneseBasicAbilitiesRegex = implode('|', array_keys($japaneseToMarkup));
@@ -31,6 +31,8 @@ class MarkupConverter
     {
         $elements = preg_split('//u', $matches[1], -1, PREG_SPLIT_NO_EMPTY);
         $markupMap = Element::getElementToMarkupMap();
+        // Include 'T' for tap.
+        $markupMap['T'] = 'T';
         foreach ($elements as $key => $value) {
             $elements[$key] = "[$markupMap[$value]]";
         }
