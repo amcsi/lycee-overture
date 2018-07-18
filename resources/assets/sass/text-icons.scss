@@ -7,6 +7,8 @@
   // https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b
   position: relative;
   top: .125em;
+  color: rgba(0, 0, 0, 0);
+  overflow: hidden;
 
   $icons: 0 tap star snow moon flower space sun;
 
