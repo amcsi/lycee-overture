@@ -26,9 +26,7 @@
                     label="Text"
                 >
                     <template slot-scope="scope">
-                        <div>
-                            <span v-if="scope.row.translation.ability_cost">{{ scope.row.translation.ability_cost }}:</span>
-                            {{ scope.row.translation.ability_description }}
+                        <div v-html="getCardHtml(scope.row.translation)">
                         </div>
                     </template>
                 </el-table-column>
@@ -72,6 +70,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex';
+  import formatCardText from '../utils/formatCard';
   import Paginator from './common/Paginator';
 
   /** @class Cards */
@@ -93,6 +92,14 @@
       pageChange(page) {
         this.$router.push({ path: '/cards', query: { page } });
       },
+      getCardHtml({ ability_cost, ability_description }) {
+        let text = '';
+        if (ability_cost) {
+          text += `<span>${formatCardText(ability_cost)}</span>: `;
+        }
+        text += formatCardText(ability_description);
+        return text;
+      },
     },
     watch: {
       '$route.query.page'() {
@@ -104,5 +111,4 @@
 </script>
 
 <style scoped>
-
 </style>

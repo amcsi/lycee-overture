@@ -9,6 +9,6 @@
   };
 </script>
 
-<style scoped>
-
+<style lang="scss">
+    @import 'resources/assets/sass/app.scss';
 </style>

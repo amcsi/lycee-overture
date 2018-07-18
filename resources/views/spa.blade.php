@@ -43,6 +43,8 @@
         }
     </style>
 
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
 </head>
 <body>
 <div id="app" class="flex-center position-ref full-height"></div>
