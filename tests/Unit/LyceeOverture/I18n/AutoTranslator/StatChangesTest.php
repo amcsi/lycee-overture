@@ -39,6 +39,10 @@ class StatChangesTest extends TestCase
                 " that character gets AP+1.",
                 '対象のキャラにAP+1する.',
             ],
+            'Until the end of battle' => [
+                " that character gets AP+1 until the end of  battle.",
+                '対象のキャラにバトル終了時までAP+1する.',
+            ],
         ];
     }
 }

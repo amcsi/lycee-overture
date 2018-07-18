@@ -8,11 +8,18 @@ namespace amcsi\LyceeOverture\I18n\AutoTranslator;
  */
 class TurnAndBattle
 {
+    private const REGEX = '(次の)?(この|自|相手)?(ターン|バトル)(開始時|中|終了時(?:まで))?(に使用する|に使用できない)?';
+
     public static function autoTranslate(string $text): string
     {
         // language=regexp
-        $pattern = '/(次の)?(この|自|相手)?(ターン|バトル)(開始時|中|終了時(?:まで))?(に使用する|に使用できない)?/u';
+        $pattern = '/' . self::REGEX . '/u';
         return preg_replace_callback($pattern, ['self', 'callback'], $text);
+    }
+
+    public static function getUncapturedRegex(): string
+    {
+        return RegexHelper::uncapture(self::REGEX);
     }
 
     private static function callback(array $matches): string

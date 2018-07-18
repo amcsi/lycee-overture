@@ -16,8 +16,10 @@ class StatChanges
     {
         $subjectRegex = Subject::getUncapturedRegex();
 
+        $turnAndBattleRegex = TurnAndBattle::getUncapturedRegex();
+
         // language=regexp
-        $statPlusMinusAction = 'に((?:(?:AP|DP|SP|DMG)[+-]\\d(?:, |または)?)+)';
+        $statPlusMinusAction = "に(${turnAndBattleRegex})?((?:(?:AP|DP|SP|DMG)[+-]\\d(?:, |または)?)+)";
         // language=regexp
         $statsToNumberAction = 'の((?:と?(?:AP|DP|SP|DMG))+)を(\d)に';
 
@@ -36,15 +38,18 @@ class StatChanges
         $subject = Subject::createInstance($subjectPart);
 
         $actionText = next($matches);
+        $turnAndBattleSource = next($matches); // e.g. "Until the end of battle"
         $statChanges = next($matches); // The stat changes involved for stat changes action.
         $posessiveSubject = strpos($actionText, 'の') === 0; // {Target's}
         $thirdPersonPluralPlaceholder = Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
+        $turnAndBattleText = $turnAndBattleSource ? ' ' . TurnAndBattle::autoTranslate($turnAndBattleSource) : '';
         if (strpos($actionText, 'に') === 0) {
 
             $actionText = sprintf(
-                'get%s %s.',
+                'get%s %s%s.',
                 $thirdPersonPluralPlaceholder,
-                $statChanges
+                $statChanges,
+                $turnAndBattleText
             );
             // ... or ...
             $actionText = str_replace('または', ' or ', $actionText);
@@ -60,10 +65,11 @@ class StatChanges
 
             $action = new Action(
                 sprintf(
-                    "%s become%s %d.",
+                    "%s become%s %d%s.",
                     str_replace('と', ' and ', $stats),
                     $thirdPersonPluralPlaceholder,
-                    $toWhatValue
+                    $toWhatValue,
+                    $turnAndBattleText
                 ), $posessiveSubject, $posessivePlural
             );
         } else {
