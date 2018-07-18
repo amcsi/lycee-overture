@@ -80,15 +80,15 @@ class AutoTranslatorTest extends TestCase
                 'このキャラは[Aggressive][OrderStep:[0]]を得る。',
             ],
             'ally gaining abilities' => [
-                '{Ally character} gains [オーダーステップ:[無]][サイドステップ:[無]].',
+                '{1 ally character} gains [オーダーステップ:[無]][サイドステップ:[無]].',
                 '{味方キャラ1体}は[オーダーステップ:[無]][サイドステップ:[無]]を得る.',
             ],
             'ally getting stat changes' => [
-                '{Ally character} gets SP+1.',
+                '{1 ally character} gets SP+1.',
                 '{味方キャラ1体}にSP+1する.',
             ],
             'enemy getting stat changes' => [
-                '{Enemy character} gets SP-1.',
+                '{1 enemy character} gets SP-1.',
                 '{相手キャラ1体}にSP-1する.',
             ],
             'enemy getting stat changes (no target)' => [
@@ -96,15 +96,15 @@ class AutoTranslatorTest extends TestCase
                 '相手キャラ1体にDP-1する.',
             ],
             'compound target gets stat changes; separated target logic' => [
-                '{Ally 「フルコンプ」 character} gets AP+1, DP+1.',
+                '{1 「フルコンプ」 ally character} gets AP+1, DP+1.',
                 '{味方「フルコンプ」キャラ１体}にＡＰ＋１・ＤＰ＋１する。',
             ],
             'target gets stat changes' => [
-                '{Character} gets DMG-2.',
+                '{1 character} gets DMG-2.',
                 '{キャラ1体}にDMG-2する.',
             ],
             'ー character' => [
-                '{Character} gets DMG-2.',
+                '{1 character} gets DMG-2.',
                 '{キャラ1体}にDMGー2する.',
             ],
             'multiple subjects in subsentence for stat changes' => [
@@ -152,7 +152,7 @@ class AutoTranslatorTest extends TestCase
                 '相手ターン開始時',
             ],
             'two stat changes' => [
-                '{未行動の味方AF character} gets DMG-1. This character gets DMG+1.',
+                '{1 untapped AF ally character} gets DMG-1. This character gets DMG+1.',
                 '{未行動の味方ＡＦキャラ１体}にＤＭＧ－１する。このキャラにＤＭＧ＋１する。',
             ],
             'when opponent destroyed by your effect' => [

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
+
 /**
  * For translating text within {targets}
  */
@@ -15,35 +17,23 @@ class Target
 
     private static function callback(array $matches): string
     {
-        return '{' .
-            preg_replace_callback(
-                '/(味方|相手)?(.*?)キャラ(\d)体/',
-                ['self', 'targetCharacterCallback'],
-                $matches[1]
-            ) .
-            '}';
-    }
+        $subjectRegex = Subject::getUncapturedRegex();
 
-    private static function targetCharacterCallback(array $matches): string
-    {
-        $allyOrEnemy = $matches[1]; // Ally or Enemy or X in Japanese (or '')
-        $something = $matches[2]; // e.g. 1 "Sun" character.
-        $howMany = $matches[3];
-        switch ($allyOrEnemy) {
-            case '味方':
-                $text = 'ally';
-                break;
-            case '相手':
-                $text = 'enemy';
-                break;
-            default:
-                $text = $allyOrEnemy;
-                break;
-        }
-        $text = "$text $something character";
-        if ($howMany > 1) {
-            $text = "$howMany ${text}";
-        }
-        return ucfirst(trim($text));
+        // "This character gains X."
+        $pattern = "/($subjectRegex)/u";
+
+        return '{' . trim(
+                preg_replace_callback(
+                    $pattern,
+                    function (array $matches): string {
+                        return str_replace(
+                            Subject::POSSESSIVE_PLACEHOLDER,
+                            '',
+                            Subject::createInstance($matches[0])->getSubjectText()
+                        );
+                    },
+                    $matches[1]
+                )
+            ) . '}';
     }
 }
