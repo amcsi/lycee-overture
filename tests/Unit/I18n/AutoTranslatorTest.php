@@ -175,6 +175,10 @@ class AutoTranslatorTest extends TestCase
                 'At the end of the battle when the other character is defeated.',
                 '相手キャラがダウンしたバトル終了時。',
             ],
+            'move' => [
+                'Move {character} to {ally field}.',
+                '{キャラ}を{味方フィールド}に移動する。',
+            ],
         ];
     }
 }
