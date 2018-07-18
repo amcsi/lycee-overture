@@ -7,8 +7,12 @@
   // https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b
   position: relative;
   top: .125em;
-}
 
-.card-text-icon-free {
-  background-image: url(../images/text-icons/0.svg);
+  &-free {
+    background-image: url(../images/text-icons/0.svg);
+  }
+
+  &-tap {
+    background-image: url(../images/text-icons/tap.svg);
+  }
 }
