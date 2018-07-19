@@ -8,8 +8,25 @@ use PHPUnit\Framework\TestCase;
 
 class WhenAppearsTest extends TestCase
 {
-    public function testAutoTranslate()
+    /**
+     * @dataProvider provideAutoTranslate
+     */
+    public function testAutoTranslate(string $expected, string $input)
     {
-        self::assertSame('when this character enters the field', WhenAppears::autoTranslate('このキャラが登場したとき'));
+        self::assertSame($expected, WhenAppears::autoTranslate($input));
+    }
+
+    public function provideAutoTranslate(): array
+    {
+        return [
+            [
+                'when this character is summoned',
+                'このキャラが登場したとき',
+            ],
+            'other subject' => [
+                'when an ally character is summoned',
+                '味方キャラが登場したとき',
+            ],
+        ];
     }
 }

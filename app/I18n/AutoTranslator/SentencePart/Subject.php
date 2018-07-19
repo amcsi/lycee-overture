@@ -167,6 +167,11 @@ class Subject
         return $this->subjectText;
     }
 
+    public function getSubjectTextWithoutPlaceholders(): string
+    {
+        return str_replace(self::POSSESSIVE_PLACEHOLDER, '', $this->subjectText);
+    }
+
     public function plural(): bool
     {
         return $this->plural;

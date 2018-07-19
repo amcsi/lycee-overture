@@ -56,7 +56,7 @@ class AutoTranslatorTest extends TestCase
                 'この[sun]キャラにＡＰ＋１・ＤＰ－１する。',
             ],
             [
-                '味方キャラが登場したとき, this character gets AP+1, DP+1.',
+                'When an ally character is summoned, this character gets AP+1, DP+1.',
                 '味方キャラが登場したとき、このキャラにＡＰ＋１・ＤＰ＋１する。',
             ],
             'all your characters get stats' => [

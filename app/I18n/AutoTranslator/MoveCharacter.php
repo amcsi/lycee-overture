@@ -39,8 +39,8 @@ class MoveCharacter
             sprintf(
                 " %s %s to %s.",
                 $verb,
-                str_replace(Subject::POSSESSIVE_PLACEHOLDER, '', $sourceSubject->getSubjectText()),
-                str_replace(Subject::POSSESSIVE_PLACEHOLDER, '', $destination->getSubjectText())
+                $sourceSubject->getSubjectTextWithoutPlaceholders(),
+                $destination->getSubjectTextWithoutPlaceholders()
             )
         );
     }
