@@ -12,7 +12,7 @@ class MoveCharacter
         $subjectRegex = Subject::getUncapturedRegex();
 
         // "This character gains X."
-        $pattern = "/($subjectRegex)を($subjectRegex)に移動する\./u";
+        $pattern = "/($subjectRegex)を($subjectRegex)に移動(する|できる)\./u";
         $text = preg_replace_callback(
             $pattern,
             ['self', 'callback'],
@@ -24,13 +24,21 @@ class MoveCharacter
 
     private static function callback(array $matches): string
     {
-        $sourceSubject = Subject::createInstance($matches[1]);
-        $destination = Subject::createInstance($matches[2]);
+        $sourceSubject = Subject::createInstance(next($matches));
+        $destination = Subject::createInstance(next($matches));
+        $canOrDoSource = next($matches);
+        $mandatory = true;
+        if ($canOrDoSource === 'できる') {
+            $mandatory = false;
+        }
+        $verb = $mandatory ? 'move' : 'you can move';
+
         return preg_replace(
             '/ {2,}/',
             ' ',
             sprintf(
-                " move %s to %s.",
+                " %s %s to %s.",
+                $verb,
                 str_replace(Subject::POSSESSIVE_PLACEHOLDER, '', $sourceSubject->getSubjectText()),
                 str_replace(Subject::POSSESSIVE_PLACEHOLDER, '', $destination->getSubjectText())
             )

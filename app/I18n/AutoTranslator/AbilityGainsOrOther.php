@@ -16,7 +16,7 @@ class AbilityGainsOrOther
     {
         $subjectRegex = Subject::getUncapturedRegex();
         // language=regexp
-        $getsSomethingActionRegex = 'は((?:\[.+?\])+)を得る|を(破棄|未行動に|行動済みに)する';
+        $getsSomethingActionRegex = 'は((?:\[.+?\])+)を得る|を(破棄|未行動に|行動済みに)(する|できる)';
 
         // "This character gains X."
         $pattern = "/($subjectRegex)($getsSomethingActionRegex)/u";
@@ -36,20 +36,28 @@ class AbilityGainsOrOther
 
         $action = next($matches);
         $what = next($matches);
+        $state = next($matches);
+        $canOrDoSource = next($matches);
+        $mandatory = true;
+        if ($canOrDoSource === 'できる') {
+            $mandatory = false;
+        }
         $s = SentencePart\Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
-        switch ($action) {
-            case 'を破棄する':
-                $doesAction = "get$s destroyed";
+        $verb = $mandatory ? "get$s" : 'can be';
+        switch ($state) {
+            case '破棄':
+                $doesAction = "$verb destroyed";
                 break;
-            case 'を未行動にする':
-                $doesAction = "get$s untapped";
+            case '未行動に':
+                $doesAction = "$verb untapped";
                 break;
-            case 'を行動済みにする':
-                $doesAction = "get$s tapped";
+            case '行動済みに':
+                $doesAction = "$verb tapped";
                 break;
             default:
+                $verb = $mandatory ? "gain$s" : "can gain";
                 if (isset($what)) {
-                    $doesAction = "gain$s $what";
+                    $doesAction = "$verb $what";
                 } else {
                     throw new \InvalidArgumentException("Unexpected action: $action");
                 }

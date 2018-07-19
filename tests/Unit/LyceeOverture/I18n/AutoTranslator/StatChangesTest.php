@@ -31,6 +31,10 @@ class StatChangesTest extends TestCase
                 "{Enemy character's} AP and DP become 0.",
                 '{Enemy character}のAPとDPを0にする.',
             ],
+            'optional making 0' => [
+                "{Enemy character's} AP and DP can become 0.",
+                '{Enemy character}のAPとDPを0にできる.',
+            ],
             [
                 "の  character's DMG becomes 4.",
                 'のキャラのDMGを4にする.',
@@ -38,6 +42,10 @@ class StatChangesTest extends TestCase
             'Target (that) character' => [
                 " that character gets AP+1.",
                 '対象のキャラにAP+1する.',
+            ],
+            'optional effect' => [
+                " that character can get AP+1.",
+                '対象のキャラにAP+1できる.',
             ],
             'Until the end of battle' => [
                 " that character gets AP+1 until the end of  battle.",

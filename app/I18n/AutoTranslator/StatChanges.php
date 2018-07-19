@@ -23,7 +23,7 @@ class StatChanges
         // language=regexp
         $statsToNumberAction = 'の((?:と?(?:AP|DP|SP|DMG))+)を(\d)に';
 
-        $pattern = "/($subjectRegex)({$statPlusMinusAction}|{$statsToNumberAction})する\./u";
+        $pattern = "/($subjectRegex)({$statPlusMinusAction}|{$statsToNumberAction})(する|できる)\./u";
 
         return preg_replace_callback(
             $pattern,
@@ -41,13 +41,20 @@ class StatChanges
         $turnAndBattleSource = next($matches); // e.g. "Until the end of battle"
         $statChanges = next($matches); // The stat changes involved for stat changes action.
         $posessiveSubject = strpos($actionText, 'の') === 0; // {Target's}
+        $stats = next($matches);
+        $toWhatValue = next($matches);
+        $canOrDoSource = next($matches);
+        $mandatory = true;
+        if ($canOrDoSource === 'できる') {
+            $mandatory = false;
+        }
         $thirdPersonPluralPlaceholder = Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
         $turnAndBattleText = $turnAndBattleSource ? ' ' . TurnAndBattle::autoTranslate($turnAndBattleSource) : '';
         if (strpos($actionText, 'に') === 0) {
-
+            $verb = $mandatory ? "get$thirdPersonPluralPlaceholder" : 'can get';
             $actionText = sprintf(
-                'get%s %s%s.',
-                $thirdPersonPluralPlaceholder,
+                '%s %s%s.',
+                $verb,
                 $statChanges,
                 $turnAndBattleText
             );
@@ -58,16 +65,14 @@ class StatChanges
         } elseif (strpos($actionText, 'の') === 0) {
             // ... 's Stat becomes 0.
 
-            $stats = next($matches);
-            $toWhatValue = next($matches);
-
             $posessivePlural = strpos($stats, 'と') !== false;
+            $verb = $mandatory ? "become$thirdPersonPluralPlaceholder" : 'can become';
 
             $action = new Action(
                 sprintf(
-                    "%s become%s %d%s.",
+                    "%s %s %d%s.",
                     str_replace('と', ' and ', $stats),
-                    $thirdPersonPluralPlaceholder,
+                    $verb,
                     $toWhatValue,
                     $turnAndBattleText
                 ), $posessiveSubject, $posessivePlural

@@ -45,6 +45,10 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' this character gets tapped.',
                 'このキャラを行動済みにする.',
             ],
+            'optional' => [
+                ' this character can be tapped.',
+                'このキャラを行動済みにできる.',
+            ],
         ];
     }
 }
