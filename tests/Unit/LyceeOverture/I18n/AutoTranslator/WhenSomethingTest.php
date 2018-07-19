@@ -39,6 +39,10 @@ class WhenSomethingTest extends TestCase
                 'when tapped',
                 '行動済みにしたとき',
             ],
+            [
+                'when destroyed',
+                '破棄したとき',
+            ],
         ];
     }
 }
