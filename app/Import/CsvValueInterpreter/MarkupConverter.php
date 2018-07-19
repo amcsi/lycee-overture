@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import\CsvValueInterpreter;
 
+use amcsi\LyceeOverture\Card\AbilityType;
 use amcsi\LyceeOverture\Card\BasicAbility;
 use amcsi\LyceeOverture\Card\Element;
 
@@ -24,6 +25,14 @@ class MarkupConverter
             $text
         );
 
+        $abilityTypesRegex = implode('|', array_keys(AbilityType::getJapaneseMap()));
+
+        $text = preg_replace_callback(
+            "/\\[($abilityTypesRegex)/u",
+            ['self', 'abilityTypeCallback'],
+            $text
+        );
+
         return $text;
     }
 
@@ -42,6 +51,12 @@ class MarkupConverter
     private static function basicAbilityCallback(array $matches)
     {
         $markupMap = BasicAbility::getJapaneseToMarkup();
+        return '[' . $markupMap[$matches[1]];
+    }
+
+    private static function abilityTypeCallback(array $matches)
+    {
+        $markupMap = AbilityType::getJapaneseToMarkup();
         return '[' . $markupMap[$matches[1]];
     }
 }

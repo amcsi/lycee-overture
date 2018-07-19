@@ -92,13 +92,8 @@
       pageChange(page) {
         this.$router.push({ path: '/cards', query: { page } });
       },
-      getCardHtml({ ability_cost, ability_description }) {
-        let text = '';
-        if (ability_cost) {
-          text += `<span>${formatCardText(ability_cost)}</span>: `;
-        }
-        text += formatCardText(ability_description);
-        return text;
+      getCardHtml({ ability_description }) {
+        return formatCardText(ability_description);
       },
     },
     watch: {

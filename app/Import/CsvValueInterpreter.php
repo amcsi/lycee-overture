@@ -73,46 +73,68 @@ class CsvValueInterpreter
      */
     public static function getAbilityPartsFromAbility(string $ability): array
     {
-        $ability = MarkupConverter::convert($ability);
         $abilityCost = '';
         $comments = '';
-        // Remove the ability type from the description. We should already have that among basic card data.
-        $ability = preg_replace_callback('/^(\[[^\]]*\])\s*/', function ($matches) use (&$continuousPart) {
-        }, $ability, 1);
 
-        $ability = preg_replace_callback('/^((?:\[[^\]]+\])+):/u', function ($matches) use (&$abilityCost) {
-            $abilityCost = $matches[1];
-        }, $ability, 1);
-        // Comments
-        $ability = preg_replace_callback('/※.*$/', function ($matches) use (&$comments) {
-            $comments .= $matches[0];
-        }, $ability, 1);
-        // Deck restriction comments.
-        $ability = preg_replace_callback(
-            '/<br \/>(構築制限:.*)$/i',
-            function ($matches) use (&$comments) {
-                $comments .= $matches[1];
-            },
-            $ability,
-            1
-        );
+        $abilityTypesRegex = '\[(' . implode('|', array_keys(AbilityType::getJapaneseMap())) . ')]';
+        $abilityJapaneseToMarkupMap = AbilityType::getJapaneseToMarkup();
+        // Split by effects
+        $pattern = "/$abilityTypesRegex(?:(?!$abilityTypesRegex).)*/";
+        preg_match_all($pattern, $ability, $matches, PREG_SET_ORDER);
 
-        // Normalize description.
-        $ability = preg_replace(
-            sprintf(
-                '/%s(.*?)%s/',
-                preg_quote('<span style=color:#FFCC00;font-weight:bold;>', '/'),
-                preg_quote('</span>', '/')
-            ),
-            '{$1}',
-            $ability
-        );
+        if (!$matches) {
+            // If there were no matches for different ability types, then either there's no ability, or this is not
+            // a character. So just use the entire text as the abilities.
+            $matches = [[$ability]];
+        }
+
+        $abilities = '';
+        foreach ($matches as [$ability]) {
+            $ability = MarkupConverter::convert($ability);
+
+            $ability = preg_replace_callback(
+                "/^$abilityTypesRegex/",
+                function (array $matches) use ($abilityJapaneseToMarkupMap) {
+                    return '[' . $abilityJapaneseToMarkupMap[$matches[1]] . ']';
+            }, $ability);
+
+            $ability = preg_replace_callback('/^((?:\[[^\]]+\])+):/u', function ($matches) use (&$abilityCost) {
+                $abilityCost = $matches[1];
+            }, $ability, 1);
+            // Comments
+            $ability = preg_replace_callback('/※.*$/', function ($matches) use (&$comments) {
+                $comments .= $matches[0];
+            }, $ability, 1);
+            $ability = str_ireplace('<br />', "\n", $ability);
+            // Deck restriction comments.
+            $ability = preg_replace_callback(
+                '/\n(構築制限:.*)$/i',
+                function ($matches) use (&$comments) {
+                    $comments .= $matches[1];
+                },
+                $ability,
+                1
+            );
+
+            // Normalize description.
+            $ability = preg_replace(
+                sprintf(
+                    '/%s(.*?)%s/',
+                    preg_quote('<span style=color:#FFCC00;font-weight:bold;>', '/'),
+                    preg_quote('</span>', '/')
+                ),
+                '{$1}',
+                $ability
+            );
+
+            $abilities .= $ability;
+        }
 
         $parts = [
-            'ability_cost' => $abilityCost,
-            'ability_description' => $ability,
+            'ability_description' => $abilities,
             'comments' => $comments,
         ];
+
         return $parts;
     }
 }

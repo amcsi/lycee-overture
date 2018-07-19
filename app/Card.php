@@ -15,7 +15,6 @@ class Card extends Model
     public $translatedAttributes = [
         'name',
         'ability_name',
-        'ability_cost',
         'ability_description',
     ];
 

@@ -94,7 +94,6 @@ class CsvValueInterpreterTest extends TestCase
         return [
             [
                 [
-                    'ability_cost' => '',
                     'ability_description' => '',
                     'comments' => '',
                 ],
@@ -102,7 +101,6 @@ class CsvValueInterpreterTest extends TestCase
             ],
             [
                 [
-                    'ability_cost' => '',
                     'ability_description' => '-',
                     'comments' => '',
                 ],
@@ -110,51 +108,53 @@ class CsvValueInterpreterTest extends TestCase
             ],
             [
                 [
-                    'ability_cost' => '[T][このキャラを破棄する]',
-                    'ability_description' => '{相手ＡＦキャラ１体}を手札に入れる。',
+                    'ability_description' => '[Activate] [T][このキャラを破棄する]:{相手ＡＦキャラ１体}を手札に入れる。',
                     'comments' => '※このキャラは別番号の同名キャラとは別に４枚までデッキに入れることができる。',
                 ],
                 '[宣言] [T][このキャラを破棄する]:{相手ＡＦキャラ１体}を手札に入れる。※このキャラは別番号の同名キャラとは別に４枚までデッキに入れることができる。',
             ],
             'Two colons in ability' => [
                 [
-                    'ability_cost' => '[sun][sun]',
-                    'ability_description' => '{味方キャラ１体}は[Step:[0]]を得る。',
+                    'ability_description' => '[Activate] [sun][sun]:{味方キャラ１体}は[Step:[0]]を得る。',
                     'comments' => '',
                 ],
                 '[宣言] [日日]:{味方キャラ１体}は[ステップ:[0]]を得る。',
             ],
             'tap included' => [
                 [
-                    'ability_cost' => '[T][sun][sun]',
-                    'ability_description' => '{味方キャラ１体}は...',
+                    'ability_description' => '[Activate] [T][sun][sun]:{味方キャラ１体}は...',
                     'comments' => '',
                 ],
                 '[宣言] [T日日]:{味方キャラ１体}は...',
             ],
             'Non-cost colon' => [
                 [
-                    'ability_cost' => '',
-                    'ability_description' => 'このキャラと同列の味方キャラ全ては[OrderChange:[0]]を得る。',
+                    'ability_description' => '[Continuous] このキャラと同列の味方キャラ全ては[OrderChange:[0]]を得る。',
                     'comments' => '',
                 ],
                 '[常時] このキャラと同列の味方キャラ全ては[オーダーチェンジ:[0]]を得る。',
             ],
             'normalizing span to target' => [
                 [
-                    'ability_cost' => '[sun]',
-                    'ability_description' => '{味方キャラ１体}にＡＰ＋１する。',
+                    'ability_description' => '[Activate] [sun]:{味方キャラ１体}にＡＰ＋１する。',
                     'comments' => '',
                 ],
                 '[宣言] [日]:<span style=color:#FFCC00;font-weight:bold;>味方キャラ１体</span>にＡＰ＋１する。',
             ],
             '<br /> comments' => [
                 [
-                    'ability_cost' => '',
-                    'ability_description' => 'このキャラにサポートをしたとき、このキャラを未行動にする。',
+                    'ability_description' => '[Trigger] このキャラにサポートをしたとき、このキャラを未行動にする。',
                     'comments' => '構築制限:ゆずソフト,ゆずソフト 1.0,へいろー',
                 ],
                 '[誘発] このキャラにサポートをしたとき、このキャラを未行動にする。<BR />構築制限:ゆずソフト,ゆずソフト 1.0,へいろー',
+            ],
+            'two effects' => [
+                [
+                    'ability_description' => '[Continuous] このキャラにＤＭＧ－２する。' . "\n" .
+                        '[Activate] [star][star][star]:相手ターン中に使用する。このアイテムを除外する。',
+                    'comments' => '',
+                ],
+                '[常時] このキャラにＤＭＧ－２する。<br />[宣言] [無無無]:相手ターン中に使用する。このアイテムを除外する。',
             ],
         ];
     }
