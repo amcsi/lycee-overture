@@ -41,7 +41,7 @@ class SubjectTest extends TestCase
                 '味方AFイベント全て',
             ],
             'field as noun' => [
-                " ally field$posessivePlaceholder",
+                " an ally field$posessivePlaceholder",
                 '味方フィールド',
             ],
         ];

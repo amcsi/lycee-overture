@@ -36,7 +36,7 @@ class StatChangesTest extends TestCase
                 '{Enemy character}のAPとDPを0にできる.',
             ],
             [
-                "の  character's DMG becomes 4.",
+                "の a character's DMG becomes 4.",
                 'のキャラのDMGを4にする.',
             ],
             'Target (that) character' => [

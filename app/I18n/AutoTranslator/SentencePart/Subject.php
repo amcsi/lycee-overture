@@ -100,9 +100,15 @@ class Subject
                 switch ($subject) {
                     case '味方':
                         $text = 'ally';
+                        if (!$howMany) {
+                            $text = 'an ally';
+                        }
                         break;
                     case '相手':
                         $text = 'enemy';
+                        if (!$howMany) {
+                            $text = 'an enemy';
+                        }
                         break;
                     case 'この':
                         $text = 'this';
@@ -120,6 +126,9 @@ class Subject
                     case '':
                         // Unknown
                         $text = '';
+                        if (!$howMany) {
+                            $text = preg_match('/[aeiou]/', $noun[0]) ? 'an' : 'a';
+                        }
                         break;
                     default:
                         throw new \LogicException("Unexpected subject: $subject");

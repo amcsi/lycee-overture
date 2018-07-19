@@ -180,7 +180,7 @@ class AutoTranslatorTest extends TestCase
                 '相手キャラがダウンしたバトル終了時。',
             ],
             'move' => [
-                'Move {character} to {ally field}.',
+                'Move {a character} to {an ally field}.',
                 '{キャラ}を{味方フィールド}に移動する。',
             ],
         ];
