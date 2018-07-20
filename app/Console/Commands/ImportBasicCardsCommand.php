@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
@@ -10,7 +11,9 @@ use League\Csv\Reader;
 
 class ImportBasicCardsCommand extends Command
 {
-    protected $signature = 'lycee:import-basic-cards';
+    const COMMAND = 'lycee:import-basic-cards';
+
+    protected $signature = self::COMMAND;
     protected $description = 'Imports the basic data of cards (excluding text)';
     private $basicImportCsvFilterer;
 

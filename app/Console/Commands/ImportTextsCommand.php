@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
@@ -10,7 +11,9 @@ use League\Csv\Reader;
 
 class ImportTextsCommand extends Command
 {
-    protected $signature = 'lycee:import-texts';
+    public const COMMAND = 'lycee:import-texts';
+
+    protected $signature = self::COMMAND;
     protected $description = 'Imports the japanese texts from the CSV';
     private $textImportTextExtractor;
 

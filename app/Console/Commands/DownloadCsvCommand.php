@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
@@ -14,22 +15,10 @@ use function GuzzleHttp\Psr7\try_fopen;
 
 class DownloadCsvCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'lycee:download-csv {-f?}';
+    public const COMMAND = 'lycee:download-csv';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
+    protected $signature = self::COMMAND . ' {-f?}';
     protected $description = 'Imports the CSV file with the Lycee cards from the official website.';
-    /**
-     * @var CsvDownloader
-     */
     private $csvDownloader;
 
     public function __construct(CsvDownloader $csvDownloader)

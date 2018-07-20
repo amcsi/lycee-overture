@@ -16,9 +16,11 @@ use Illuminate\Database\Query\Builder;
  */
 class AutoTranslateCommand extends Command
 {
+    public const COMMAND = 'lycee:auto-translate';
     public const AUTO_TRANSLATE_FIELDS = ['ability_description'];
 
-    protected $signature = 'lycee:auto-translate';
+    protected $signature = self::COMMAND;
+
     protected $description = 'Attempts translations from Japanese description text based on patterns.';
 
     public function handle(CardTranslation $cardTranslation)
