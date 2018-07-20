@@ -7,6 +7,7 @@ use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\I18n\AutoTranslator;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
+use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
@@ -23,21 +24,20 @@ class AutoTranslateCommand extends Command
 
     protected $description = 'Attempts translations from Japanese description text based on patterns.';
 
-    public function handle(CardTranslation $cardTranslation)
+    public function handle(CardTranslation $cardTranslation, TranslationCoverageChecker $translationCoverageChecker)
     {
         $this->output->writeln('Starting auto translation of cards.');
         /** @var Builder $japaneseBuilder */
         $japaneseBuilder = $cardTranslation->newQuery()->where('locale', Locale::JAPANESE);
-        /** @var Builder $englishBuilder */
-        $englishBuilder = $cardTranslation->newQuery()->where('locale', Locale::ENGLISH);
         /** @var CardTranslation[] $japaneseCards */
         $japaneseCards = $japaneseBuilder->get();
 
-        $japaneseKanjiCount = $japaneseBuilder->sum('kanji_count') ?: 0;
         // By default the english japanese character count is the same as the Japanese (untranslated).
-        $englishKanjiCount = $englishBuilder->sum('kanji_count') ?: $japaneseKanjiCount;
         $cardCount = $japaneseBuilder->count();
-        $englishFullTranslatedCount = (clone $englishBuilder)->where('kanji_count', '=', '0')->count();
+
+        $beforeEnglishKanjiRemovalRatio = $translationCoverageChecker->calculateRatioOfJapaneseCharacterRemoval();
+        $beforeEnglishFullTranslationRatio = $translationCoverageChecker->calculateRatioOfFullyTranslated();
+        $beforeEnglishFullTranslationCount = $translationCoverageChecker->countFullyTranslated();
 
         \Eloquent::unguard();
 
@@ -73,10 +73,12 @@ class AutoTranslateCommand extends Command
 
         // Report on translations with kanji count removal percentage as translation percentage.
 
-        $afterEnglishKanjiCount = $englishBuilder->sum('kanji_count') ?: 0;
+        $afterEnglishKanjiRemovalRatio = $translationCoverageChecker->calculateRatioOfJapaneseCharacterRemoval();
+        $afterEnglishFullTranslationRatio = $translationCoverageChecker->calculateRatioOfFullyTranslated();
+        $afterEnglishFullTranslationCount = $translationCoverageChecker->countFullyTranslated();
 
-        $oldTranslationPercent = 100 - ($englishKanjiCount * 100) / $japaneseKanjiCount;
-        $newTranslationPercent = 100 - ($afterEnglishKanjiCount * 100) / $japaneseKanjiCount;
+        $oldTranslationPercent = $beforeEnglishKanjiRemovalRatio * 100;
+        $newTranslationPercent = $afterEnglishKanjiRemovalRatio * 100;
 
         $oldPercentText = sprintf('%.3f%%', $oldTranslationPercent);
         $newPercentText = sprintf('%.3f%%', $newTranslationPercent);
@@ -102,13 +104,11 @@ class AutoTranslateCommand extends Command
 
         // Report on full translation coverage.
 
-        $afterEnglishFullTranslatedCount = $englishBuilder->where('kanji_count', '=', '0')->count();
+        $oldTranslationPercent = $beforeEnglishFullTranslationRatio * 100;
+        $newTranslationPercent = $afterEnglishFullTranslationRatio * 100;
 
-        $oldTranslationPercent = ($englishFullTranslatedCount * 100) / $cardCount;
-        $newTranslationPercent = ($afterEnglishFullTranslatedCount * 100) / $cardCount;
-
-        $oldPercentText = sprintf('%.3f%% (%d)', $oldTranslationPercent, $englishFullTranslatedCount);
-        $newPercentText = sprintf('%.3f%% (%d)', $newTranslationPercent, $afterEnglishFullTranslatedCount);
+        $oldPercentText = sprintf('%.3f%% (%d)', $oldTranslationPercent, $beforeEnglishFullTranslationCount);
+        $newPercentText = sprintf('%.3f%% (%d)', $newTranslationPercent, $afterEnglishFullTranslationCount);
 
         $compared = $newTranslationPercent <=> $oldTranslationPercent;
 
