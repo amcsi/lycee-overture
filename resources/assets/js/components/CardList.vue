@@ -2,7 +2,13 @@
     <div>
         <h2>Card list</h2>
         <div v-if="cards">
-            <h3>Total: {{ cards.meta.pagination.total }}</h3>
+            <h3>
+                Total: {{ cards.meta.pagination.total }}.
+                Fully translated: {{ statistics.translated_cards }}
+                ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
+                Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
+            </h3>
+
 
             <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
 
@@ -77,17 +83,19 @@
   export default {
     components: { Paginator },
     beforeRouteEnter(to, from, next) {
-      next(vm => vm.listCards(to.query.page));
+      next(vm => vm.loadCards(to.query.page));
     },
     computed: {
       ...mapState({
-        cardsLoading: state => state.cards.listLoading,
+        cardsLoading: state => state.cards.listLoading || state.statistics.statisticsLoading,
         cards: state => state.cards.list,
+        statistics: state => state.statistics.statistics,
       }),
     },
     methods: {
       ...mapActions({
         listCards: 'cards/listCards',
+        fetchStatistics: 'statistics/fetchStatistics',
       }),
       pageChange(page) {
         this.$router.push({ path: '/cards', query: { page } });
@@ -99,6 +107,16 @@
         }
         text += formatCardText(ability_description);
         return text;
+      },
+      loadCards(page) {
+        this.listCards(page);
+        this.fetchStatistics();
+      },
+      getPercentOfRatio(ratio) {
+        return new Intl.NumberFormat({
+          maximumFractionDigits: 3,
+          style: 'percent',
+        }).format(ratio * 100) + '%';
       },
     },
     watch: {

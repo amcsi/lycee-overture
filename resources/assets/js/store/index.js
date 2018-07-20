@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import cards from './modules/cards';
+import statistics from './modules/statistics';
 
 /**
  * In this file we instantiate the store with configuration and return it.
@@ -13,6 +14,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {
     cards,
+    statistics,
   },
 });
 
