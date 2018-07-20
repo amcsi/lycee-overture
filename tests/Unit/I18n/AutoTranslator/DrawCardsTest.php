@@ -8,9 +8,33 @@ use PHPUnit\Framework\TestCase;
 
 class DrawCardsTest extends TestCase
 {
-    public function testAutoTranslate()
+    /**
+     * @dataProvider provideAutoTranslate
+     */
+    public function testAutoTranslate(string $expected, string $input)
     {
-        self::assertSame('draw 2 cards', DrawCards::autoTranslate('2枚ドローする'));
-        self::assertSame('you can draw 2 cards', DrawCards::autoTranslate('2枚ドローできる'));
+        self::assertSame($expected, DrawCards::autoTranslate($input));
+    }
+
+    public function provideAutoTranslate()
+    {
+        return [
+            [
+                'draw 2 cards',
+                '2枚ドローする',
+            ],
+            [
+                'you can draw 2 cards',
+                '2枚ドローできる',
+            ],
+            [
+                'your opponent draws 2 cards',
+                '相手は2枚ドローする',
+            ],
+            [
+                'your opponent can draw 2 cards',
+                '相手は2枚ドローできる',
+            ],
+        ];
     }
 }
