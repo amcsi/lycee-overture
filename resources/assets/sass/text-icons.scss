@@ -17,4 +17,10 @@
       background-image: url(../images/text-icons/#{$icon}.svg);
     }
   }
+
+  @for $i from 1 through 4 {
+    &-d#{$i} {
+      background-image: url(../images/text-icons/d#{$i}.svg);
+    }
+  }
 }
