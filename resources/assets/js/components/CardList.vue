@@ -1,8 +1,8 @@
 <template>
     <div>
-        <el-container>
+        <el-container class="container">
 
-            <el-header height="auto" class="container">
+            <el-header height="auto">
                 <NavMenu />
                 <h1>
                     Lycee Overture TCG Translation Website
@@ -84,8 +84,13 @@
                 </div>
                 <div v-else v-loading="cardsLoading" style="height: 300px;"></div>
             </el-main>
-        </el-container>
 
+            <el-footer>
+                <Mailchimp />
+
+                <Footer />
+            </el-footer>
+        </el-container>
     </div>
 </template>
 
@@ -93,11 +98,13 @@
   import { mapActions, mapState } from 'vuex';
   import formatCardText from '../utils/formatCard';
   import Paginator from './common/Paginator';
+  import Footer from './Footer';
+  import Mailchimp from './Mailchimp';
   import NavMenu from './NavMenu';
 
   /** @class CardList */
   export default {
-    components: { NavMenu, Paginator },
+    components: { Footer, Mailchimp, NavMenu, Paginator },
     beforeRouteEnter(to, from, next) {
 
       next(vm => {
