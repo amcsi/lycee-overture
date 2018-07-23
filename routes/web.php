@@ -19,10 +19,14 @@ Route::get(
     '{any}',
     function () {
 
-        $apiBaseUrl = env('API_BASE_URL') ?: (Request::getSchemeAndHttpHost() . '/api');
+        if (!($appUrl = env('APP_URL'))) {
+            $scheme = env('FORCE_HTTPS') ? 'https' : Request::getScheme();
+            $host = Request::getHttpHost();
+            $appUrl = "$scheme://$host";
+        }
 
         $vars = [
-            'apiBaseUrl' => $apiBaseUrl,
+            'apiBaseUrl' => "$appUrl/api",
         ];
         return view('spa', ['jsVars' => $vars]);
     }
