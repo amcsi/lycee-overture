@@ -48,6 +48,10 @@
             target="_blank"
             href="https://twitter.com/amcsi_san"
         >Twitter</a>.<br />
+            Website source code can be found on <a
+            target="_blank"
+            href="https://github.com/amcsi/lycee-overture"
+        >GitHub</a>.<br />
             Thanks to Yee Cheng Xuan for consulting with me with the automatic translations.
         </el-footer>
     </el-container>
