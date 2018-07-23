@@ -99,7 +99,13 @@
   export default {
     components: { NavMenu, Paginator },
     beforeRouteEnter(to, from, next) {
-      next(vm => vm.loadCards(to.query.page));
+
+      next(vm => {
+        if (!vm.cards || vm.cards.meta.pagination.page !== to.query.page) {
+          // Cards aren't loaded yet, or pagination shows a different page now: load the cards!
+          vm.loadCards(to.query.page);
+        }
+      });
     },
     computed: {
       ...mapState({
