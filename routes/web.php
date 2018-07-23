@@ -18,8 +18,11 @@ Auth::routes();
 Route::get(
     '{any}',
     function () {
+
+        $apiBaseUrl = env('API_BASE_URL') ?: (Request::getSchemeAndHttpHost() . '/api');
+
         $vars = [
-            'apiBaseUrl' => env('API_BASE_URL'),
+            'apiBaseUrl' => $apiBaseUrl,
         ];
         return view('spa', ['jsVars' => $vars]);
     }

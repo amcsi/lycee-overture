@@ -11,6 +11,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+/.env.local
 /.phpstorm.meta.php
 /_ide_helper.php
 /storage/lycee.csv
