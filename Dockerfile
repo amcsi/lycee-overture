@@ -63,8 +63,6 @@ RUN mkdir -p bootstrap/cache && chmod a+rwx bootstrap/cache
 # This time, optimize and run hooks as well.
 RUN composer install --optimize-autoloader
 
-RUN npm run production
-
 RUN [ \
  "/bin/bash", \
  "-c", \
