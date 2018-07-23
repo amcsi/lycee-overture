@@ -33,13 +33,17 @@
             </p>
 
             <ul>
-                <li><a target="_blank" href="https://lycee-tcg.com/">Official Lycee Overture TCG website</a></li>
-                <li><a target="_blank" href="https://www.facebook.com/groups/205241722843396/">Unofficial Lycee TCG
-                    Facebook group</a></li>
+                <li><a target="_blank" href="https://lycee-tcg.com/">Japanese Official Lycee Overture website</a></li>
+                <li><a target="_blank" href="https://www.facebook.com/groups/205241722843396/">Facebook group
+                    (unofficial)</a></li>
                 <li><a target="_blank" href="https://lycdb.szeremi.org/">Old Lycee TCG translation website</a></li>
                 <li><a target="_blank" href="http://akiba.geocities.jp/lycee_tcg/">Old Lycee TCG rules website</a></li>
                 <li><a target="_blank" href="https://en.wikipedia.org/wiki/Lyc%C3%A8e_Trading_Card_Game">Old Lycee TCG
                     wikipedia page</a></li>
+                <li><a target="_blank" href="https://static.szeremi.org/untranslated-lycee-overture/">All the
+                    untranslated cards on one static page</a></li>
+                <li><a target="_blank" href="https://static.szeremi.org/translated-lycee-overture/">Auto-translation of
+                    effects seen on one static page</a></li>
             </ul>
         </el-main>
         <el-footer>
