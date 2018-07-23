@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Providers;
 
+use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
@@ -12,7 +13,6 @@ use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,10 +35,7 @@ class AppServiceProvider extends ServiceProvider
             \DB::connection()->enableQueryLog();
         }
 
-        // This is to make sure that even though HTTPS is proxies with the help of nginx-proxy (docker),
-        // Laravel should still show treat the current request as HTTPS when calling getSchemeAndHttpHost().
-        // TODO: find out Docker IP range to use instead of "*" for additional security.
-        \Illuminate\Support\Facades\Request::setTrustedProxies(['*'], Request::HEADER_X_FORWARDED_ALL);
+        ConfigureTrustedProxies::configure();
 
         if (self::$booted) {
             return;
