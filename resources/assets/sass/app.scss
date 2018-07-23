@@ -3,7 +3,25 @@
 // Bootstrap
 @import 'text-icons';
 
+html {
+  overflow-y: scroll;
+}
+
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+a {
+  color: #409eff;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.container {
+  width: 1120px;
+  margin: 0 auto;
 }

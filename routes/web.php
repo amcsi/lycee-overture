@@ -12,14 +12,8 @@ declare(strict_types=1);
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 /** @noinspection PhpUndefinedMethodInspection */
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get(
     '{any}',
