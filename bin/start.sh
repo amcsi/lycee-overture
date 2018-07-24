@@ -8,5 +8,8 @@ php artisan migrate
 # Do the import tasks (in the background).
 php artisan lycee:import-all &
 
+# Start nginx.
+nginx
+
 # Run the Swoole HTTP server.
 php artisan swoole:http start

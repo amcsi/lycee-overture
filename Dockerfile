@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
   nasm \
   libpng-dev \
 
+  # To proxy to Swoole.
+  nginx \
+
   # For composer
   zlib1g-dev
 
