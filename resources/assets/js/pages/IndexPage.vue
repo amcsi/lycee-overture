@@ -33,40 +33,62 @@
             </p>
 
             <ul>
-                <li><a target="_blank" href="https://lycee-tcg.com/">Japanese Official Lycee Overture website</a></li>
-                <li><a target="_blank" href="https://www.facebook.com/groups/205241722843396/">Facebook group
-                    (unofficial)</a></li>
-                <li><a target="_blank" href="https://lycdb.szeremi.org/">Old Lycee TCG translation website</a></li>
-                <li><a target="_blank" href="http://akiba.geocities.jp/lycee_tcg/">Old Lycee TCG rules website</a></li>
-                <li><a target="_blank" href="https://en.wikipedia.org/wiki/Lyc%C3%A8e_Trading_Card_Game">Old Lycee TCG
-                    wikipedia page</a></li>
-                <li><a target="_blank" href="https://static.szeremi.org/untranslated-lycee-overture/">All the
-                    untranslated cards on one static page</a></li>
-                <li><a target="_blank" href="https://static.szeremi.org/translated-lycee-overture/">Auto-translation of
-                    effects seen on one static page</a></li>
+                <li>
+                    <ExternalLink href="https://lycee-tcg.com/">Japanese Official Lycee Overture website</ExternalLink>
+                </li>
+                <li>
+                    <ExternalLink href="https://www.facebook.com/groups/205241722843396/">
+                        Facebook group (unofficial)
+                    </ExternalLink>
+                </li>
+                <li>
+                    <ExternalLink href="https://lycdb.szeremi.org/">Old Lycee TCG translation website</ExternalLink>
+                </li>
+                <li>
+                    <ExternalLink href="http://akiba.geocities.jp/lycee_tcg/">Old Lycee TCG rules website</ExternalLink>
+                </li>
+                <li>
+                    <ExternalLink href="https://en.wikipedia.org/wiki/Lyc%C3%A8e_Trading_Card_Game">
+                        Old Lycee TCG wikipedia page
+                    </ExternalLink>
+                </li>
+                <li>
+                    <ExternalLink href="https://static.szeremi.org/untranslated-lycee-overture/">
+                        All the untranslated cards on one static page
+                    </ExternalLink>
+                </li>
+                <li>
+                    <ExternalLink href="https://static.szeremi.org/translated-lycee-overture/">
+                        Auto-translation of effects seen on one static page
+                    </ExternalLink>
+                </li>
             </ul>
         </el-main>
         <el-footer>
-            Created by <a target="_blank" href="https://www.szeremi.org/">Attila Szeremi</a>. Drop me an email at
-            <strong>lycee-overture@szeremi.org</strong>, or follow me on <a
-            target="_blank"
-            href="https://twitter.com/amcsi_san"
-        >Twitter</a>.<br />
-            Website source code can be found on <a
-            target="_blank"
-            href="https://github.com/amcsi/lycee-overture"
-        >GitHub</a>.<br />
+            Created by
+            <ExternalLink href="https://www.szeremi.org/">Attila Szeremi</ExternalLink>
+            . Drop me an email at
+            <strong>lycee-overture@szeremi.org</strong>, or follow me on
+            <ExternalLink href="https://twitter.com/amcsi_san">Twitter</ExternalLink>
+            .<br />
+            Website source code can be found on
+            <ExternalLink
+                href="https://github.com/amcsi/lycee-overture"
+            >GitHub
+            </ExternalLink>
+            .<br />
             Thanks to Yee Cheng Xuan for consulting with me with the automatic translations.
         </el-footer>
     </el-container>
 </template>
 
 <script>
+  import ExternalLink from '../components/common/ExternalLink';
   import NavMenu from '../components/NavMenu';
 
   /** @class IndexPage */
   export default {
-    components: { NavMenu },
+    components: { ExternalLink, NavMenu },
   };
 </script>
 
