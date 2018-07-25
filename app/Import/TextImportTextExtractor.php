@@ -24,7 +24,12 @@ class TextImportTextExtractor
             $dbRow['card_id'] = $id;
             $dbRow['locale'] = Locale::JAPANESE;
             $dbRow['name'] = $csvRow[CsvColumns::NAME];
-            $dbRow['basic_abilities'] = MarkupConverter::convert($csvRow[CsvColumns::BASIC_ABILITIES]);
+            $rawBasicAbilities = $csvRow[CsvColumns::BASIC_ABILITIES];
+            if ($rawBasicAbilities && $rawBasicAbilities[0] !== '[') {
+                // Fix basic abilities that were forgotten to be wrapped in brackets from the official website.
+                $rawBasicAbilities = "[$rawBasicAbilities]";
+            }
+            $dbRow['basic_abilities'] = MarkupConverter::convert($rawBasicAbilities);
             $dbRow['ability_name'] = $csvRow[CsvColumns::ABILITY_NAME];
             foreach (CsvValueInterpreter::getAbilityPartsFromAbility($csvRow[CsvColumns::ABILITY]) as $dbKey => $val) {
                 $dbRow[$dbKey] = $val;
