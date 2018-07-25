@@ -45,8 +45,7 @@
                             label="Text"
                         >
                             <template slot-scope="scope">
-                                <div v-html="getCardHtml(scope.row.translation)">
-                                </div>
+                                <CardDescription :translation="scope.row.translation" />
                             </template>
                         </el-table-column>
                         <el-table-column
@@ -92,13 +91,13 @@
 
 <script>
   import { mapActions, mapState } from 'vuex';
-  import formatCardText from '../utils/formatCard';
+  import CardDescription from './card/CardDescription';
   import Paginator from './common/Paginator';
   import NavMenu from './NavMenu';
 
   /** @class CardList */
   export default {
-    components: { NavMenu, Paginator },
+    components: { CardDescription, NavMenu, Paginator },
     beforeRouteEnter(to, from, next) {
 
       next(vm => {
@@ -122,20 +121,6 @@
       }),
       pageChange(page) {
         this.$router.push({ path: '/cards', query: { page } });
-      },
-      getCardHtml({ ability_cost, ability_description, basic_abilities, comments }) {
-        let text = '';
-        if (basic_abilities) {
-          text += `<span class="basic_abilities">${formatCardText(basic_abilities)}</span><br />`;
-        }
-        if (ability_cost) {
-          text += `<span>${formatCardText(ability_cost)}</span>: `;
-        }
-        text += formatCardText(ability_description);
-        if (comments) {
-          text += `<br /><span class="comments">${comments}</span>`;
-        }
-        return text;
       },
       loadCards(page) {
         this.listCards(page);
