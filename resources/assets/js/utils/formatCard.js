@@ -22,5 +22,6 @@ export default function(text = '') {
   text = text.replace(/\[T]/g, getIcon('tap'));
   text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, simpleCallback);
   text = text.replace(/\[D([1-4])]/g, discardCallback);
+  text = text.replace(/{(.*?)}/g, `<span class="target">$1</span>`);
   return text;
 }

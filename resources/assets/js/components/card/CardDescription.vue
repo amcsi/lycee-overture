@@ -37,8 +37,13 @@
   };
 </script>
 
-<style scoped>
+<style>
     .basic-abilities {
         color: #49a97b;
+    }
+
+    /*noinspection CssUnusedSymbol*/
+    .target {
+        color: #e39000;
     }
 </style>
