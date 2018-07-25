@@ -27,6 +27,7 @@
                     <el-table
                         v-loading="cardsLoading"
                         :data="cards.data"
+                        row-key="id"
                     >
                         <el-table-column
                             prop="id"
