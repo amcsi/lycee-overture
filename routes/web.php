@@ -27,6 +27,7 @@ Route::get(
 
         $vars = [
             'apiBaseUrl' => "$appUrl/api",
+            'cloudinaryCloudName' => config('cloudinary.defaults.cloud_name'),
         ];
         return view('spa', ['jsVars' => $vars]);
     }

@@ -30,6 +30,14 @@
                         row-key="id"
                     >
                         <el-table-column
+                            label="Image"
+                            width="130"
+                        >
+                            <template slot-scope="scope">
+                                <CardImage :id="scope.row.id" />
+                            </template>
+                        </el-table-column>
+                        <el-table-column
                             prop="id"
                             label="ID"
                             width="100"
@@ -92,12 +100,13 @@
 <script>
   import { mapActions, mapState } from 'vuex';
   import CardDescription from './card/CardDescription';
+  import CardImage from './card/CardImage';
   import Paginator from './common/Paginator';
   import NavMenu from './NavMenu';
 
   /** @class CardList */
   export default {
-    components: { CardDescription, NavMenu, Paginator },
+    components: { CardImage, CardDescription, NavMenu, Paginator },
     beforeRouteEnter(to, from, next) {
 
       next(vm => {
