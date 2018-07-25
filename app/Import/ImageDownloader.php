@@ -103,7 +103,7 @@ class ImageDownloader
         return new Request('GET', $imageUrl, $headers);
     }
 
-    private function getLocalImagePathForCardId(string $cardId): string
+    public static function getLocalImagePathForCardId(string $cardId): string
     {
         return str_replace('{id}', $cardId, ImportConstants::IMAGE_FILENAME);
     }

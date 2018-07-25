@@ -21,6 +21,11 @@ class Card extends Model
 
     protected $with = ['translations'];
 
+    public function getId(): string
+    {
+        return $this->getAttribute('id');
+    }
+
     public function getType(): int
     {
         return $this->getAttribute('type');

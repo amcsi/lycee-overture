@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
@@ -9,7 +10,9 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class ImageDownloadCommand extends Command
 {
-    protected $signature = 'lycee:download-images';
+    const COMMAND = 'lycee:download-images';
+
+    protected $signature = self::COMMAND;
     protected $description = 'Downloads the images of the cards.';
     private $imageDownloader;
 
