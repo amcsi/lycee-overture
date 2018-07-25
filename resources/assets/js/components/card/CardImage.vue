@@ -18,7 +18,7 @@
     },
     computed: {
       src() {
-        return `http://res.cloudinary.com/${window.vars.cloudinaryCloudName}/image/upload/h_${this.height}/cards/${this.id}.jpg`;
+        return `https://res.cloudinary.com/${window.vars.cloudinaryCloudName}/image/upload/h_${this.height}/cards/${this.id}.jpg`;
       },
       width() {
         // Card width/height ratio.
