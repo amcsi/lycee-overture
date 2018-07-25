@@ -23,6 +23,7 @@ class BasicAbility
     public const ENGAGE = 19;
     public const RECOVERY = 20;
     public const LEADER = 21;
+    public const ASSIST = 22;
 
     private static $japaneseMap = [
         'アグレッシブ' => self::AGGRESSIVE,
@@ -34,6 +35,7 @@ class BasicAbility
         'エンゲージ' => self::ENGAGE,
         'リカバリー' => self::RECOVERY,
         'リーダー' => self::LEADER,
+        'アシスト' => self::ASSIST,
     ];
 
     public static function getJapaneseToMarkup(): array
