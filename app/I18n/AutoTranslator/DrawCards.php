@@ -30,7 +30,7 @@ class DrawCards
 
         $verbS = $opponent ? 's' : '';
         $s = $amount != '1' ? 's' : '';
-        $verb = $mandatory ? "draw$verbS" : 'you can draw';
+        $verb = $mandatory ? "draw$verbS" : 'can draw';
         return "$who$verb $amount card$s";
     }
 }

@@ -9,22 +9,17 @@ use Tests\TestCase;
 
 class ConfigureTrustedProxiesTest extends TestCase
 {
-    private $originalTrustedHosts;
-    private $originalTrustedProxies;
-    private $originalTrustedHeaderSet;
-
     public function setUp()
     {
         parent::setUp();
-        $this->originalTrustedHosts = Request::getTrustedHosts();
-        $this->originalTrustedProxies = Request::getTrustedProxies();
-        $this->originalTrustedHeaderSet = Request::getTrustedHeaderSet();
+        Request::setTrustedHosts([]);
+        Request::setTrustedProxies([], -1);
     }
 
     public function tearDown()
     {
-        Request::setTrustedHosts($this->originalTrustedHosts);
-        Request::setTrustedProxies($this->originalTrustedProxies, $this->originalTrustedHeaderSet);
+        Request::setTrustedHosts([]);
+        Request::setTrustedProxies([], -1);
         parent::tearDown();
     }
 
