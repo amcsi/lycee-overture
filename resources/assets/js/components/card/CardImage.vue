@@ -13,16 +13,24 @@
       },
       height: {
         type: Number,
-        default: 150,
+        default: false,
+      },
+      cloudinaryHeight: {
+        type: Number,
+        default: false,
       },
     },
     computed: {
       src() {
-        return `https://res.cloudinary.com/${window.vars.cloudinaryCloudName}/image/upload/h_${this.height}/cards/${this.id}.jpg`;
+        const modifiers = [];
+        if (this.cloudinaryHeight) {
+          modifiers.push(`h_${this.cloudinaryHeight}`);
+        }
+        return `https://res.cloudinary.com/${window.vars.cloudinaryCloudName}/image/upload/${modifiers.join(',')}/cards/${this.id}.jpg`;
       },
       width() {
         // Card width/height ratio.
-        return this.height * 0.71538461538;
+        return this.height ? this.height * 0.71538461538 : this.height;
       },
     },
   };

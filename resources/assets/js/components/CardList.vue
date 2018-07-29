@@ -34,7 +34,7 @@
                             width="130"
                         >
                             <template slot-scope="scope">
-                                <CardImage :id="scope.row.id" />
+                                <CardThumbnail :id="scope.row.id" />
                             </template>
                         </el-table-column>
                         <el-table-column
@@ -101,12 +101,13 @@
   import { mapActions, mapState } from 'vuex';
   import CardDescription from './card/CardDescription';
   import CardImage from './card/CardImage';
+  import CardThumbnail from './card/CardThumbnail';
   import Paginator from './common/Paginator';
   import NavMenu from './NavMenu';
 
   /** @class CardList */
   export default {
-    components: { CardImage, CardDescription, NavMenu, Paginator },
+    components: { CardThumbnail, CardImage, CardDescription, NavMenu, Paginator },
     beforeRouteEnter(to, from, next) {
 
       next(vm => {
@@ -141,6 +142,9 @@
           style: 'percent',
         }).format(ratio * 100) + '%';
       },
+      showCardImageOverlay() {
+
+      }
     },
     watch: {
       '$route.query.page'() {
