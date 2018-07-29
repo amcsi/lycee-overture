@@ -110,7 +110,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             [
                 [
-                    'ability_cost' => '[T][このキャラを破棄する]',
+                    'ability_cost' => '[Activate] [T][このキャラを破棄する]',
                     'ability_description' => '{相手ＡＦキャラ１体}を手札に入れる。',
                     'comments' => '※このキャラは別番号の同名キャラとは別に４枚までデッキに入れることができる。',
                 ],
@@ -118,7 +118,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'Two colons in ability' => [
                 [
-                    'ability_cost' => '[sun][sun]',
+                    'ability_cost' => '[Activate] [sun][sun]',
                     'ability_description' => '{味方キャラ１体}は[Step:[0]]を得る。',
                     'comments' => '',
                 ],
@@ -126,7 +126,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'tap included' => [
                 [
-                    'ability_cost' => '[T][sun][sun]',
+                    'ability_cost' => '[Activate] [T][sun][sun]',
                     'ability_description' => '{味方キャラ１体}は...',
                     'comments' => '',
                 ],
@@ -134,7 +134,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'Non-cost colon' => [
                 [
-                    'ability_cost' => '',
+                    'ability_cost' => '[Continuous]',
                     'ability_description' => 'このキャラと同列の味方キャラ全ては[OrderChange:[0]]を得る。',
                     'comments' => '',
                 ],
@@ -142,7 +142,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'normalizing span to target' => [
                 [
-                    'ability_cost' => '[sun]',
+                    'ability_cost' => '[Activate] [sun]',
                     'ability_description' => '{味方キャラ１体}にＡＰ＋１する。',
                     'comments' => '',
                 ],
@@ -150,11 +150,20 @@ class CsvValueInterpreterTest extends TestCase
             ],
             '<br /> comments' => [
                 [
-                    'ability_cost' => '',
+                    'ability_cost' => '[Trigger]',
                     'ability_description' => 'このキャラにサポートをしたとき、このキャラを未行動にする。',
                     'comments' => '構築制限:ゆずソフト,ゆずソフト 1.0,へいろー',
                 ],
                 '[誘発] このキャラにサポートをしたとき、このキャラを未行動にする。<BR />構築制限:ゆずソフト,ゆずソフト 1.0,へいろー',
+            ],
+            'two effects' => [
+                [
+                    'ability_cost' => "[Continuous]\n[Activate] [star][star][star]",
+                    'ability_description' => 'このキャラにＤＭＧ－２する。' . "\n" .
+                        '相手ターン中に使用する。このアイテムを除外する。',
+                    'comments' => '',
+                ],
+                '[常時] このキャラにＤＭＧ－２する。<br />[宣言] [無無無]:相手ターン中に使用する。このアイテムを除外する。',
             ],
         ];
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\AbilityGainsOrOther;
+use amcsi\LyceeOverture\I18n\AutoTranslator\CapitalizationFixer;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DiscardFromDeck;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
@@ -32,9 +33,13 @@ class AutoTranslator
         $autoTranslated = $japaneseText;
 
         $autoTranslated = preg_replace('/。$/', '.', $autoTranslated);
-        $autoTranslated = preg_replace_callback('/。|、|・/', function ($match) {
-            return self::$punctuationMap[$match[0]] . ' ';
-        }, $autoTranslated);
+        $autoTranslated = preg_replace_callback(
+            '/。|、|・/',
+            function ($match) {
+                return self::$punctuationMap[$match[0]] . ' ';
+            },
+            $autoTranslated
+        );
         $autoTranslated = FullWidthCharacters::translateFullWidthCharacters($autoTranslated);
         // Replace ー (longizing katakana) used in place of full width minus sign, but only if a number follows.
         // Also replace − (weird alternative dash).
@@ -67,10 +72,11 @@ class AutoTranslator
 
         // Condense multiple spaces into one; trim.
         $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));
+        // Fix spaces between brackets
+        $autoTranslated = preg_replace('/(?<=[[{(])\s+|\s+(?=[\]})])/', '', $autoTranslated);
+
         // Fix capitalization.
-        $autoTranslated = preg_replace_callback('/(^[a-z]|(?:\.\s*)[a-z])/', function ($matches) {
-            return strtoupper($matches[1]);
-        }, $autoTranslated);
+        $autoTranslated = CapitalizationFixer::fixCapitalization($autoTranslated);
 
         if (self::countBrackets($autoTranslated) !== $bracketCounts) {
             throw new \LogicException("Bracket count mismatch.\nOriginal: $japaneseText\nTranslated: $autoTranslated");

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    id="svg4219"
+    version="1.1"
+    width="27.758574pt"
+    height="17pt"
+    viewBox="0 0 27.758574 17">
+    <metadata
+        id="metadata4225">
+        <rdf:RDF>
+            <cc:Work
+                rdf:about="">
+                <dc:format>image/svg+xml</dc:format>
+                <dc:type
+                    rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+                <dc:title></dc:title>
+            </cc:Work>
+        </rdf:RDF>
+    </metadata>
+    <defs
+        id="defs4223" />
+    <path
+        style="fill:#7bb5b0"
+        id="path4197"
+        d="m 0,0 h 27.63 l 0.05,1.17 C 18.72,1.38 9.84,1.39 0.87,1.12 c -0.19,4.9 -0.19,9.8 0,14.7 5.43,-0.02 10.74,-1.07 16.11,-0.73 3.55,0.23 7.09,0.58 10.63,0.77 L 27.16,17 H 0.71 L 0,16.29 Z" />
+    <path
+        style="fill:#01a299"
+        id="path4201"
+        d="m 0.87,1.12 c 8.97,0.27 17.85,0.26 26.81,0.05 0.05,4.89 0.18,9.8 -0.07,14.69 C 24.07,15.67 20.53,15.32 16.98,15.09 11.61,14.75 6.3,15.8 0.87,15.82 0.68,10.92 0.68,6.02 0.87,1.12 Z" />
+    <path
+        style="fill:#ffffff"
+        id="path4217"
+        d="M 0,16.29 0.71,17 H 0 Z" />
+    <text
+     transform="scale(1.020815,0.97960942)"
+     id="text3612"
+     y="13.187043"
+     x="1.6297609"
+     style="font-style:normal;font-weight:normal;font-size:12.548069px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.31370172;stroke-opacity:1"
+     xml:space="preserve"><tspan
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.31370172;stroke-opacity:1"
+       y="24.635027"
+       x="1.6297609"
+       id="tspan3610" /></text>
+  <text
+     transform="scale(1.020815,0.97960942)"
+     id="text3612-6"
+     y="12.627275"
+     x="7.4424982"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.54800034px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.31370172;stroke-opacity:1"
+     xml:space="preserve"><tspan
+       y="12.627275"
+       x="7.4424982"
+       id="tspan4405">∞</tspan></text>
+</svg>

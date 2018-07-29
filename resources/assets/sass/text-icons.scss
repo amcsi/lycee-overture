@@ -12,6 +12,8 @@
 
   $icons: 0 tap star snow moon flower space sun;
 
+  $abilityTypes: activate continuous trigger;
+
   @each $icon in $icons {
     &-#{$icon} {
       background-image: url(../images/text-icons/#{$icon}.svg);
@@ -23,4 +25,14 @@
       background-image: url(../images/text-icons/d#{$i}.svg);
     }
   }
+
+  @each $icon in $abilityTypes {
+    &-#{$icon} {
+      background-image: url(../images/text-icons/#{$icon}-en.svg);
+    }
+  }
+}
+
+.card-text-icon-long {
+  width: 2em;
 }
