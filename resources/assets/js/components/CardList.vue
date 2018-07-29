@@ -28,6 +28,8 @@
                         v-loading="cardsLoading"
                         :data="cards.data"
                         row-key="id"
+                        :cell-style="{ position: 'static' }"
+                        :header-cell-style="{ position: 'static' }"
                     >
                         <el-table-column
                             label="Image"
@@ -144,7 +146,7 @@
       },
       showCardImageOverlay() {
 
-      }
+      },
     },
     watch: {
       '$route.query.page'() {
