@@ -68,6 +68,35 @@ class WhenSomething
             $text
         );
 
+        // When $subject's $stat is $n or more.
+        $text = preg_replace_callback(
+            "/($subjectRegex)が(\d)(以[上下])?の場合/u",
+            function (array $matches) {
+                $subject = Subject::createInstance(next($matches));
+                $amountSource = next($matches);
+                $upToOrUnderSource = next($matches);
+
+                $actionText = "is $amountSource";
+                if ($upToOrUnderSource) {
+                    if ($upToOrUnderSource) {
+                        $upToOrUnder = mb_substr($upToOrUnderSource, -1);
+                        if ($upToOrUnder === '下') {
+                            $adjective = 'or less';
+                        } elseif ($upToOrUnder === '上') {
+                            $adjective = 'or more';
+                        } else {
+                            throw new \UnexpectedValueException("Unexpected upToOrUnder: $upToOrUnder");
+                        }
+                        $actionText .= " $adjective";
+                    }
+                }
+
+                $action = new Action($actionText, false, false);
+                return 'when' . SentenceCombiner::combine($subject, $action);
+            },
+            $text
+        );
+
         return $text;
     }
 }

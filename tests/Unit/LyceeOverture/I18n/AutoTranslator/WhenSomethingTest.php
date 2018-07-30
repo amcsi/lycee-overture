@@ -55,6 +55,10 @@ class WhenSomethingTest extends TestCase
                 'when an ally character moves',
                 '味方キャラが移動したとき',
             ],
+            'when stats' => [
+                "when this character's SP is 5 or more",
+                'このキャラのSPが5以上の場合',
+            ],
         ];
     }
 }

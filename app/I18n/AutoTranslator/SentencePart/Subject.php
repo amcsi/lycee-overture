@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(味方|相手|この|その|対象の|対戦)(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)((\d)体|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(味方|相手|この|その|対象の|対戦)?(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)(?:の(DMG|AP|DP|SP))?((\d)体|全て)?';
 
     private $subjectText;
 
@@ -102,6 +102,8 @@ class Subject
                 throw new \LogicException("Unexpected noun: $noun");
         }
 
+        $itsStat = next($matches); // e.g. のSP
+
         $allOrHowMany = next($matches);
         $all = $allOrHowMany === '全て';
         $howMany = next($matches);
@@ -173,6 +175,12 @@ class Subject
                 }
             }
             $text = " $text$additionalAdjective" . self::POSSESSIVE_PLACEHOLDER;
+
+            if ($itsStat) {
+                // ...'s DP/SP/AP
+                $text = (new Subject((new self($text, $plural))->getSubjectTextPosessive(), false))
+                        ->getSubjectText() . " $itsStat" . self::POSSESSIVE_PLACEHOLDER;
+            }
         } else {
             if ($target[-1] === 's') {
                 // {Targets} is plural.

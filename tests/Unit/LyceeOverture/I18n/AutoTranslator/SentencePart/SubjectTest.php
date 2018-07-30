@@ -60,6 +60,14 @@ class SubjectTest extends TestCase
                 " 1 ally character with a DP of 2 or less$posessivePlaceholder",
                 'DPが2以下の味方キャラ1体',
             ],
+            'with DP restriction exact' => [
+                " 1  character with a DP of 3$posessivePlaceholder",
+                'DPが3のキャラ1体',
+            ],
+            "character's DP" => [
+                " that character's SP$posessivePlaceholder",
+                'そのキャラのSP',
+            ],
         ];
     }
 }
