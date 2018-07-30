@@ -19,7 +19,6 @@ class WhenSomething
         $text = WhenSupporting::autoTranslate($text);
         $text = WhenAppears::autoTranslate($text);
         $text = str_replace('味方キャラがエンゲージ登場したとき', 'when an ally character enters engagement', $text);
-        $text = str_replace('このキャラが移動したとき', 'when this character moves', $text);
         $text = str_replace('行動済みにしたとき', 'when tapped', $text);
         $text = str_replace(
             '自分の効果によって相手キャラを破棄したとき',
@@ -44,13 +43,26 @@ class WhenSomething
         $text = str_replace('味方キャラがエンゲージ登場している場合', 'when an ally character gets engaged', $text);
         $text = preg_replace('/\b破棄したとき/u', 'when destroyed', $text);
 
-        // When $subject gets destroyed.
+        // When $subject gets destroyed or moves.
         $text = preg_replace_callback(
-            "/($subjectRegex)を破棄したとき/",
+            "/($subjectRegex)(を破棄したとき|が移動したとき)/",
             function (array $matches) {
-                $subject = Subject::createInstance($matches[1]);
+                $subject = Subject::createInstance(next($matches));
+                $actionSource = next($matches);
                 $thirdPersonPlaceholder = Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
-                $action = new Action("get$thirdPersonPlaceholder destroyed", false, false);
+
+                switch ($actionSource) {
+                    case 'を破棄したとき':
+                        $actionText = "get$thirdPersonPlaceholder destroyed";
+                        break;
+                    case 'が移動したとき':
+                        $actionText = "move$thirdPersonPlaceholder";
+                        break;
+                    default:
+                        throw new \LogicException("Unexpected actionSource: $actionSource");
+                }
+
+                $action = new Action($actionText, false, false);
                 return 'when' . SentenceCombiner::combine($subject, $action);
             },
             $text

@@ -51,7 +51,10 @@ class WhenSomethingTest extends TestCase
                 'when an ally character gets destroyed',
                 '味方キャラを破棄したとき',
             ],
-
+            'when moves (generic over subjects)' => [
+                'when an ally character moves',
+                '味方キャラが移動したとき',
+            ],
         ];
     }
 }
