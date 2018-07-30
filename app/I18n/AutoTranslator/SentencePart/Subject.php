@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の)?(味方|相手|この|その|対象の|対戦)(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)((\d)体|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|コストが(\d)(点以[下上])?の)?(味方|相手|この|その|対象の|対戦)(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)((\d)体|全て)?';
 
     private $subjectText;
 
@@ -35,7 +35,7 @@ class Subject
      */
     public static function createInstance(string $subjectPart): self
     {
-        if (!preg_match('/^(?:' . self::REGEX . ')$/', $subjectPart, $matches)) {
+        if (!preg_match('/^(?:' . self::REGEX . ')$/u', $subjectPart, $matches)) {
             // This static method expects subject substrings that already match self::getUncapturedRegex().
             throw new \InvalidArgumentException(
                 "Subject part does not strictly match regular expression: $subjectPart"
@@ -44,10 +44,34 @@ class Subject
 
         $something = '';
         $target = next($matches); // The {target} if any.
-        $untapped = next($matches); // This "untapped" character.
-        if ($untapped) {
-            $something .= ' untapped';
+        $adjectiveSource = next($matches); // This "untapped" character.
+        $costAmountSource = next($matches);
+        $upToOrUnderSource = next($matches);
+        $additionalAdjective = '';
+
+        if ($adjectiveSource) {
+            if ($adjectiveSource === '未行動の') {
+                // Tapped.
+
+                $something .= ' untapped';
+            } else {
+                // Cost restriction.
+
+                $adjective = "with a cost of $costAmountSource";
+                if ($upToOrUnderSource) {
+                    $upToOrUnder = mb_substr($upToOrUnderSource, -1);
+                    if ($upToOrUnder === '下') {
+                        $adjective .= ' or less';
+                    } elseif ($upToOrUnder === '上') {
+                        $adjective .= ' or more';
+                    } else {
+                        throw new \UnexpectedValueException("Unexpected upToOrUnder: $upToOrUnder");
+                    }
+                }
+                $additionalAdjective = " $adjective";
+            }
         }
+
         $subject = next($matches); // Ally or Enemy in Japanese (or '')
         $typeSource = next($matches); // e.g. [sun] <- characters
         if ($typeSource) {
@@ -145,7 +169,7 @@ class Subject
                     $text = "$text$something {$noun}";
                 }
             }
-            $text = " $text" . self::POSSESSIVE_PLACEHOLDER;
+            $text = " $text$additionalAdjective" . self::POSSESSIVE_PLACEHOLDER;
         } else {
             if ($target[-1] === 's') {
                 // {Targets} is plural.

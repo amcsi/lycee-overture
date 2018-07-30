@@ -44,6 +44,10 @@ class SubjectTest extends TestCase
                 " an ally field$posessivePlaceholder",
                 '味方フィールド',
             ],
+            'with cost restriction' => [
+                " 1 ally character with a cost of 2 or less$posessivePlaceholder",
+                'コストが2点以下の味方キャラ1体',
+            ],
         ];
     }
 }
