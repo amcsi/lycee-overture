@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|コストが(\d)(点以[下上])?の)?(味方|相手|この|その|対象の|対戦)(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)((\d)体|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|コストが(\d)点(以下|以上)?の)?(味方|相手|この|その|対象の|対戦)(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)((\d)体|全て)?';
 
     private $subjectText;
 

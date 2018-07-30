@@ -48,6 +48,14 @@ class SubjectTest extends TestCase
                 " 1 ally character with a cost of 2 or less$posessivePlaceholder",
                 'コストが2点以下の味方キャラ1体',
             ],
+            'with cost restriction of more' => [
+                " 1 ally character with a cost of 2 or more$posessivePlaceholder",
+                'コストが2点以上の味方キャラ1体',
+            ],
+            'with exact cost restriction' => [
+                " 1 ally character with a cost of 2$posessivePlaceholder",
+                'コストが2点の味方キャラ1体',
+            ],
         ];
     }
 }
