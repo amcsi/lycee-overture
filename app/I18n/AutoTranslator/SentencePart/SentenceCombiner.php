@@ -10,15 +10,11 @@ class SentenceCombiner
 {
     public static function combine(Subject $subject, Action $action): string
     {
-        $subjectText = $subject->getSubjectText();
         if ($action->demandsPosessiveSubject()) {
-            // E.g. characters => characters'
-            $subjectText = str_replace('s' . Subject::POSSESSIVE_PLACEHOLDER, "'", $subjectText);
-            // E.g. character => character's
-            $subjectText = str_replace(Subject::POSSESSIVE_PLACEHOLDER, "'s", $subjectText);
+            $subjectText = $subject->getSubjectTextPosessive();
         } else {
             // E.g. character
-            $subjectText = str_replace(Subject::POSSESSIVE_PLACEHOLDER, '', $subjectText);
+            $subjectText = $subject->getSubjectTextWithoutPlaceholders();
         }
         $actionText = $action->getActionTextWithPlaceholders();
         // Whether the sentence subject is plural. If the Action actually contains a subject (in the grammar sense),

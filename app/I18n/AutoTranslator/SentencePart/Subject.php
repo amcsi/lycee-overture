@@ -194,6 +194,16 @@ class Subject
         return $this->subjectText;
     }
 
+    public function getSubjectTextPosessive(): string
+    {
+        $subjectText = $this->subjectText;
+        // E.g. characters => characters'
+        $subjectText = str_replace('s' . Subject::POSSESSIVE_PLACEHOLDER, "'", $subjectText);
+        // E.g. character => character's
+        $subjectText = str_replace(Subject::POSSESSIVE_PLACEHOLDER, "'s", $subjectText);
+        return $subjectText;
+    }
+
     public function getSubjectTextWithoutPlaceholders(): string
     {
         return str_replace(self::POSSESSIVE_PLACEHOLDER, '', $this->subjectText);
