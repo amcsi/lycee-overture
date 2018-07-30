@@ -43,6 +43,10 @@ class WhenSomethingTest extends TestCase
                 'when destroyed',
                 '破棄したとき',
             ],
+            [
+                'when an ally character gets engaged',
+                '味方キャラがエンゲージ登場している場合',
+            ],
         ];
     }
 }

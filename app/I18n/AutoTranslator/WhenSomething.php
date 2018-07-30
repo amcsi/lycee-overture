@@ -35,6 +35,7 @@ class WhenSomething
             'when this character is defeated in battle',
             $text
         );
+        $text = str_replace('味方キャラがエンゲージ登場している場合', 'when an ally character gets engaged', $text);
         $text = preg_replace('/\b破棄したとき/u', 'when destroyed', $text);
         return $text;
     }
