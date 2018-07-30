@@ -56,6 +56,10 @@ class SubjectTest extends TestCase
                 " 1 ally character with a cost of 2$posessivePlaceholder",
                 'コストが2点の味方キャラ1体',
             ],
+            'with DP restriction' => [
+                " 1 ally character with a DP of 2 or less$posessivePlaceholder",
+                'DPが2以下の味方キャラ1体',
+            ],
         ];
     }
 }

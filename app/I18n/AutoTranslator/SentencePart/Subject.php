@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|コストが(\d)点(以下|以上)?の)?(味方|相手|この|その|対象の|対戦)(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)((\d)体|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(味方|相手|この|その|対象の|対戦)(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)((\d)体|全て)?';
 
     private $subjectText;
 
@@ -44,7 +44,8 @@ class Subject
 
         $something = '';
         $target = next($matches); // The {target} if any.
-        $adjectiveSource = next($matches); // This "untapped" character.
+        $adjectiveSource = next($matches); // This "untapped" character / ...with a Cost/DP of n or less.
+        $statForRestrictionSource = next($matches); // For stat/property restrictions. E.g. コスト/DP/AP/SP/DMG
         $costAmountSource = next($matches);
         $upToOrUnderSource = next($matches);
         $additionalAdjective = '';
@@ -55,9 +56,11 @@ class Subject
 
                 $something .= ' untapped';
             } else {
-                // Cost restriction.
+                // Cost/stat restriction.
 
-                $adjective = "with a cost of $costAmountSource";
+                $nounOfRestriction = $statForRestrictionSource === 'コスト' ? 'cost' : $statForRestrictionSource;
+
+                $adjective = "with a $nounOfRestriction of $costAmountSource";
                 if ($upToOrUnderSource) {
                     $upToOrUnder = mb_substr($upToOrUnderSource, -1);
                     if ($upToOrUnder === '下') {
