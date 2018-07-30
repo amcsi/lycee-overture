@@ -47,4 +47,34 @@ class Action
     {
         return $this->posessivePlural;
     }
+
+    /**
+     * Replaces text where the uncaptured Subject is one of the captures, combines the action and subject, and
+     * returns the replaced text.
+     * The callback should return an Action, and $subjectIndex should point to the index where the subject gets matched.
+     *
+     * @param string $pattern
+     * @param callable $callback
+     * @param string $input
+     * @param int $subjectIndex
+     * @return string
+     */
+    public static function subjectReplaceCallback(
+        string $pattern,
+        callable $callback,
+        string $input,
+        int $subjectIndex = 1
+    ): string {
+        $pregReplaceCallback = function ($matches) use ($subjectIndex, $callback): string {
+            $subject = Subject::createInstance($matches[$subjectIndex]);
+            array_splice($matches, $subjectIndex, 1);
+            $action = $callback($matches);
+            if (!$action instanceof self) {
+                throw new \UnexpectedValueException('callback must return an Action.');
+            }
+            return SentenceCombiner::combine($subject, $action);
+        };
+
+        return preg_replace_callback($pattern, $pregReplaceCallback, $input);
+    }
 }

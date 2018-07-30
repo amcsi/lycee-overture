@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Action;
-use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\SentenceCombiner;
 use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
 
 /**
@@ -24,19 +23,15 @@ class StatChanges
         $statsToNumberAction = 'の((?:と?(?:AP|DP|SP|DMG))+)を(\d)に';
 
         $pattern = "/($subjectRegex)({$statPlusMinusAction}|{$statsToNumberAction})(する|できる)\./u";
-
-        return preg_replace_callback(
+        return Action::subjectReplaceCallback(
             $pattern,
-            ['self', 'callback'],
+            [self::class, 'callback'],
             $text
         );
     }
 
-    private static function callback(array $matches): string
+    public static function callback(array $matches): Action
     {
-        $subjectPart = next($matches);
-        $subject = Subject::createInstance($subjectPart);
-
         $actionText = next($matches);
         $turnAndBattleSource = next($matches); // e.g. "Until the end of battle"
         $statChanges = next($matches); // The stat changes involved for stat changes action.
@@ -80,6 +75,6 @@ class StatChanges
         } else {
             throw new \InvalidArgumentException("Unexpected action: $actionText");
         }
-        return SentenceCombiner::combine($subject, $action);
+        return $action;
     }
 }

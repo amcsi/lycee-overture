@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Action;
-use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\SentenceCombiner;
 use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
 
 /**
@@ -20,20 +19,17 @@ class AbilityGainsOrOther
 
         // "This character gains X."
         $pattern = "/($subjectRegex)($getsSomethingActionRegex)/u";
-        $text = preg_replace_callback(
+        $text = Action::subjectReplaceCallback(
             $pattern,
-            ['self', 'callback'],
+            [self::class, 'callback'],
             $text
         );
 
         return $text;
     }
 
-    public static function callback(array $matches): string
+    public static function callback(array $matches): Action
     {
-        $subjectPart = next($matches);
-        $subject = Subject::createInstance($subjectPart);
-
         $action = next($matches);
         $what = next($matches);
         $state = next($matches);
@@ -63,8 +59,6 @@ class AbilityGainsOrOther
                 }
         }
 
-        $action = new Action("$doesAction", false, false);
-
-        return SentenceCombiner::combine($subject, $action);
+        return new Action("$doesAction", false, false);
     }
 }
