@@ -47,6 +47,11 @@ class WhenSomethingTest extends TestCase
                 'when an ally character gets engaged',
                 '味方キャラがエンゲージ登場している場合',
             ],
+            'when destroyed (generic over subjects)' => [
+                'when an ally character gets destroyed',
+                '味方キャラを破棄したとき',
+            ],
+
         ];
     }
 }

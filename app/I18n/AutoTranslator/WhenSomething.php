@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Action;
+use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\SentenceCombiner;
+use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
+
 /**
  * For "when something happens" triggers.
  */
@@ -10,6 +14,8 @@ class WhenSomething
 {
     public static function autoTranslate(string $text): string
     {
+        $subjectRegex = Subject::getUncapturedRegex();
+
         $text = WhenSupporting::autoTranslate($text);
         $text = WhenAppears::autoTranslate($text);
         $text = str_replace('味方キャラがエンゲージ登場したとき', 'when an ally character enters engagement', $text);
@@ -37,6 +43,19 @@ class WhenSomething
         );
         $text = str_replace('味方キャラがエンゲージ登場している場合', 'when an ally character gets engaged', $text);
         $text = preg_replace('/\b破棄したとき/u', 'when destroyed', $text);
+
+        // When $subject gets destroyed.
+        $text = preg_replace_callback(
+            "/($subjectRegex)を破棄したとき/",
+            function (array $matches) {
+                $subject = Subject::createInstance($matches[1]);
+                $thirdPersonPlaceholder = Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
+                $action = new Action("get$thirdPersonPlaceholder destroyed", false, false);
+                return 'when' . SentenceCombiner::combine($subject, $action);
+            },
+            $text
+        );
+
         return $text;
     }
 }
