@@ -65,6 +65,10 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' this character gets sent to the top of the deck.',
                 'このキャラをデッキの上に置く.',
             ],
+            'removed from play' => [
+                ' this character gets removed from play.',
+                'このキャラを除外する.',
+            ],
         ];
     }
 }
