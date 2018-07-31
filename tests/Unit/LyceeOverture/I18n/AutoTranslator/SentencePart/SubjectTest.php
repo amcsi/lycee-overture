@@ -68,6 +68,10 @@ class SubjectTest extends TestCase
                 " that character's SP$posessivePlaceholder",
                 'そのキャラのSP',
             ],
+            "1 item with sheet (枚) kanji" => [
+                " 1  item$posessivePlaceholder",
+                'アイテム1枚',
+            ],
         ];
     }
 }
