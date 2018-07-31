@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(自分の|味方|相手|この|その|対象の|対戦)?(ゴミ箱の)?(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?((自分の|相手の)?ゴミ箱の)?(味方|相手|対象の|対戦|この|その)?(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
 
     private $subjectText;
 
@@ -75,8 +75,9 @@ class Subject
             }
         }
 
-        $subject = next($matches); // Ally or Enemy in Japanese (or '')
         $graveyard = next($matches); // Graveyard card.
+        $whosGraveyard = next($matches);
+        $subject = next($matches); // Ally or Enemy in Japanese (or '')
         $typeSource = next($matches); // e.g. [sun] <- characters
         if ($typeSource) {
             $something .= " $typeSource";
@@ -129,10 +130,6 @@ class Subject
             } else {
                 $nounPlural = false;
                 switch ($subject) {
-                    case '自分の':
-                        $text = 'of your';
-                        $nounPlural = true;
-                        break;
                     case '味方':
                         $text = 'ally';
                         if (!$howMany) {
@@ -180,7 +177,23 @@ class Subject
                     $text = "$text$something {$noun}";
                 }
             }
-            $inSomewhere = $graveyard ? ' in the graveyard' : '';
+            $inSomewhere = '';
+            if ($graveyard) {
+                switch ($whosGraveyard) {
+                    case '自分の':
+                        $inSomewhere = ' in your graveyard';
+                        break;
+                    case '相手の':
+                        $inSomewhere = " in your opponent's graveyard";
+                        break;
+                    case '':
+                        $inSomewhere = ' in the graveyard';
+                        break;
+                    default:
+                        throw new \LogicException("Unexpected whosGraveyard: $whosGraveyard");
+                        break;
+                }
+            }
             $text = " $text$inSomewhere$additionalAdjective" . self::POSSESSIVE_PLACEHOLDER;
 
             if ($itsStat) {
