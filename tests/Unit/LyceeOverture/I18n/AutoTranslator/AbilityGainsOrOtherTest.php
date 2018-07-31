@@ -57,6 +57,14 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' this character gets summoned.',
                 'このキャラを登場する.',
             ],
+            'sent to bottom of deck' => [
+                ' this character gets sent to the bottom of the deck.',
+                'このキャラをデッキの下に置く.',
+            ],
+            'sent to top of deck' => [
+                ' this character gets sent to the top of the deck.',
+                'このキャラをデッキの上に置く.',
+            ],
         ];
     }
 }
