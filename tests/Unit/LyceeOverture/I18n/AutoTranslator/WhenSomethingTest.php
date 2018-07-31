@@ -59,6 +59,10 @@ class WhenSomethingTest extends TestCase
                 "when this character's SP is 5 or more",
                 'このキャラのSPが5以上の場合',
             ],
+            'when this character is targeted by one of your effects' => [
+                'when this character is targeted by one of your effects',
+                'このキャラを自分の能力の対象に指定したとき',
+            ],
         ];
     }
 }

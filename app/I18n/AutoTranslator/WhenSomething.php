@@ -97,6 +97,8 @@ class WhenSomething
             $text
         );
 
+        $text = str_replace('このキャラを自分の能力の対象に指定したとき', 'when this character is targeted by one of your effects', $text);
+
         return $text;
     }
 }
