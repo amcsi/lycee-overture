@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(味方|相手|この|その|対象の|対戦)?(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(味方|相手|この|その|対象の|対戦)?(ゴミ箱の)?(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
 
     private $subjectText;
 
@@ -76,6 +76,7 @@ class Subject
         }
 
         $subject = next($matches); // Ally or Enemy in Japanese (or '')
+        $graveyard = next($matches); // Graveyard card.
         $typeSource = next($matches); // e.g. [sun] <- characters
         if ($typeSource) {
             $something .= " $typeSource";
@@ -174,7 +175,8 @@ class Subject
                     $text = "$text$something {$noun}";
                 }
             }
-            $text = " $text$additionalAdjective" . self::POSSESSIVE_PLACEHOLDER;
+            $inSomewhere = $graveyard ? ' in the graveyard' : '';
+            $text = " $text$inSomewhere$additionalAdjective" . self::POSSESSIVE_PLACEHOLDER;
 
             if ($itsStat) {
                 // ...'s DP/SP/AP

@@ -72,6 +72,10 @@ class SubjectTest extends TestCase
                 " 1  item$posessivePlaceholder",
                 'アイテム1枚',
             ],
+            "1 character in the graveyard" => [
+                " 1  character in the graveyard$posessivePlaceholder",
+                'ゴミ箱のキャラ1体',
+            ],
         ];
     }
 }
