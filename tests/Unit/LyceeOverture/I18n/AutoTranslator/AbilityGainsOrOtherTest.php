@@ -53,6 +53,10 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' this character gets returned to hand.',
                 'このキャラを手札に入れる.',
             ],
+            'summoned' => [
+                ' this character gets summoned.',
+                'このキャラを登場する.',
+            ],
         ];
     }
 }

@@ -15,7 +15,7 @@ class AbilityGainsOrOther
     {
         $subjectRegex = Subject::getUncapturedRegex();
         // language=regexp
-        $getsSomethingActionRegex = 'は((?:\[.+?\])+)を得る|を(破棄|未行動に|行動済みに|手札に入)(れる|する|できる)';
+        $getsSomethingActionRegex = 'は((?:\[.+?\])+)を得る|を(破棄|未行動に|行動済みに|手札に入|登場)(れる|する|できる)';
 
         // "This character gains X."
         $pattern = "/($subjectRegex)($getsSomethingActionRegex)/u";
@@ -52,6 +52,9 @@ class AbilityGainsOrOther
                 break;
             case '手札に入':
                 $doesAction = "$verb returned to hand";
+                break;
+            case '登場':
+                $doesAction = "$verb summoned";
                 break;
             default:
                 $verb = $mandatory ? "gain$s" : "can gain";
