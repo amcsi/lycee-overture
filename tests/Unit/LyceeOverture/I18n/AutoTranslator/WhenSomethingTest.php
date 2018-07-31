@@ -63,6 +63,10 @@ class WhenSomethingTest extends TestCase
                 'when this character is targeted by one of your effects',
                 'このキャラを自分の能力の対象に指定したとき',
             ],
+            'when this character is discarded from the deck' => [
+                'when this character is discarded from the deck',
+                'このキャラが自分のデッキから破棄されたとき',
+            ],
         ];
     }
 }

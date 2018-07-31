@@ -98,6 +98,7 @@ class WhenSomething
         );
 
         $text = str_replace('このキャラを自分の能力の対象に指定したとき', 'when this character is targeted by one of your effects', $text);
+        $text = str_replace('このキャラが自分のデッキから破棄されたとき', 'when this character is discarded from the deck', $text);
 
         return $text;
     }
