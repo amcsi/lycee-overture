@@ -49,6 +49,10 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' this character can be tapped.',
                 'このキャラを行動済みにできる.',
             ],
+            [
+                ' this character gets returned to hand.',
+                'このキャラを手札に入れる.',
+            ],
         ];
     }
 }
