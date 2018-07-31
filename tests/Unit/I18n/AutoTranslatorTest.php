@@ -183,6 +183,10 @@ class AutoTranslatorTest extends TestCase
                 'Move {a character} to {an ally field}.',
                 '{キャラ}を{味方フィールド}に移動する。',
             ],
+            'resources getting provided' => [
+                'Use during your opponent\'s turn. Discard 2 cards from the top of your deck. When destroyed, you get [moon][moon].',
+                '相手ターン中に使用する。自分のデッキを２枚破棄する。破棄したとき、[moon][moon]を発生する。',
+            ],
         ];
     }
 }
