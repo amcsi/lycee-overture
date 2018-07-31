@@ -62,6 +62,11 @@ class AutoTranslator
             'this effect can be used only once while this card is on the field',
             $autoTranslated
         );
+        $autoTranslated = str_replace(
+            '相手の能力の宣言に対応して使用する.',
+            'use when your opponent activates an ability.',
+            $autoTranslated
+        );
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
         $autoTranslated = WhenSomething::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);

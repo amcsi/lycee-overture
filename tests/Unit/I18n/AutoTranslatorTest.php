@@ -187,6 +187,10 @@ class AutoTranslatorTest extends TestCase
                 'Use during your opponent\'s turn. Discard 2 cards from the top of your deck. When destroyed, you get [moon][moon].',
                 '相手ターン中に使用する。自分のデッキを２枚破棄する。破棄したとき、[moon][moon]を発生する。',
             ],
+            'when your opponent activates an ability' => [
+                'Use when your opponent activates an ability.',
+                '相手の能力の宣言に対応して使用する。',
+            ],
         ];
     }
 }
