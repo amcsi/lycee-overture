@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(味方|相手|この|その|対象の|対戦)?(ゴミ箱の)?(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(自分の|味方|相手|この|その|対象の|対戦)?(ゴミ箱の)?(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
 
     private $subjectText;
 
@@ -127,7 +127,12 @@ class Subject
                 }
                 $plural = true;
             } else {
+                $nounPlural = false;
                 switch ($subject) {
+                    case '自分の':
+                        $text = 'of your';
+                        $nounPlural = true;
+                        break;
                     case '味方':
                         $text = 'ally';
                         if (!$howMany) {
@@ -163,14 +168,14 @@ class Subject
                     default:
                         throw new \LogicException("Unexpected subject: $subject");
                 }
+                if ($howMany && $howMany !== '1') {
+                    $nounPlural = true;
+                }
+                if ($noun && $nounPlural) {
+                    $noun = "${noun}s";
+                }
                 if ($howMany) {
-                    $text = "$text {$noun}";
-                    if ($howMany !== '1') {
-                        $plural = true;
-                        $text = "$howMany$something ${text}s";
-                    } else {
-                        $text = "$howMany$something $text";
-                    }
+                    $text = "$howMany$something $text {$noun}";
                 } else {
                     $text = "$text$something {$noun}";
                 }
