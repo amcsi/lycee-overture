@@ -15,17 +15,20 @@ class WhenAppears
         $subjectRegex = Subject::getUncapturedRegex();
 
         // "This character gains X."
-        $pattern = "/($subjectRegex)が登場したとき/u";
+        $pattern = "/($subjectRegex)が登場(したとき|している場合)/u";
         return preg_replace_callback($pattern, ['self', 'callback'], $text);
     }
 
     private static function callback(array $matches): string
     {
         $subjectSource = next($matches);
+        $partOrCurrent = next($matches);
         $subject = Subject::createInstance($subjectSource);
 
+        $text = $partOrCurrent === 'したとき' ? 'when%s is summoned' : 'while%s is being summoned';
+
         return sprintf(
-            'when%s is summoned',
+            $text,
             $subject->getSubjectTextWithoutPlaceholders()
         );
     }
