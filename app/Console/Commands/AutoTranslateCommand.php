@@ -18,7 +18,7 @@ use Illuminate\Database\Query\Builder;
 class AutoTranslateCommand extends Command
 {
     public const COMMAND = 'lycee:auto-translate';
-    public const AUTO_TRANSLATE_FIELDS = ['ability_description', 'basic_abilities'];
+    public const AUTO_TRANSLATE_FIELDS = ['ability_description', 'ability_cost', 'basic_abilities'];
 
     protected $signature = self::COMMAND;
 
