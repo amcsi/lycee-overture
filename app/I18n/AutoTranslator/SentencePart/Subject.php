@@ -14,7 +14,7 @@ class Subject
     public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
 
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?((自分の|相手の)?ゴミ箱の)?(味方|相手|対象の|対戦|この|その)?(「.+?」 ?|(?:\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド)(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?((自分の|相手の)?ゴミ箱の)?(味方|相手|対象の|対戦|この|その)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」])(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
 
     private $subjectText;
 
@@ -78,8 +78,9 @@ class Subject
         $graveyard = next($matches); // Graveyard card.
         $whosGraveyard = next($matches);
         $subject = next($matches); // Ally or Enemy in Japanese (or '')
-        $typeSource = next($matches); // e.g. [sun] <- characters
+        $typeSource = next($matches); // e.g. [sun] <- characters, "quoted"
         if ($typeSource) {
+            $typeSource = self::replaceIfQuoted($typeSource); // If <quoted>.
             $something .= " $typeSource";
         }
         $noun = next($matches);
@@ -101,7 +102,16 @@ class Subject
                 $noun = '';
                 break;
             default:
-                throw new \LogicException("Unexpected noun: $noun");
+                switch (mb_substr($noun, 0, 1)) {
+                    case '<':
+                    case '「':
+                        // Replace Japanese quotes with English ones.
+                        $noun = self::replaceIfQuoted($noun);
+                        break;
+                    default:
+                        throw new \LogicException("Unexpected noun: $noun");
+                }
+                break;
         }
 
         $itsStat = next($matches); // e.g. のSP
@@ -172,7 +182,7 @@ class Subject
                     $noun = "${noun}s";
                 }
                 if ($howMany) {
-                    $text = "$howMany$something $text {$noun}";
+                    $text = "$howMany $text$something {$noun}";
                 } else {
                     $text = "$text$something {$noun}";
                 }
@@ -240,5 +250,19 @@ class Subject
     public function plural(): bool
     {
         return $this->plural;
+    }
+
+    private static function replaceIfQuoted(string $quoted): string
+    {
+        switch (mb_substr($quoted, 0, 1)) {
+            case '<':
+                // Leave it as it is.
+                break;
+            case '「':
+                // Replace Japanese quotes with English ones.
+                $quoted = str_replace(['「', '」'], '"', $quoted);
+                break;
+        }
+        return $quoted;
     }
 }

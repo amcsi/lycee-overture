@@ -96,7 +96,7 @@ class AutoTranslatorTest extends TestCase
                 '相手キャラ1体にDP-1する.',
             ],
             'compound target gets stat changes; separated target logic' => [
-                '{1 「フルコンプ」 ally character} gets AP+1, DP+1.',
+                '{1 ally "フルコンプ" character} gets AP+1, DP+1.',
                 '{味方「フルコンプ」キャラ１体}にＡＰ＋１・ＤＰ＋１する。',
             ],
             'target gets stat changes' => [
@@ -156,7 +156,7 @@ class AutoTranslatorTest extends TestCase
                 '相手ターン開始時',
             ],
             'two stat changes' => [
-                '{1 untapped AF ally character} gets DMG-1. This character gets DMG+1.',
+                '{1 ally untapped AF character} gets DMG-1. This character gets DMG+1.',
                 '{未行動の味方ＡＦキャラ１体}にＤＭＧ－１する。このキャラにＤＭＧ＋１する。',
             ],
             'when opponent destroyed by your effect' => [

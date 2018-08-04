@@ -29,7 +29,7 @@ class SubjectTest extends TestCase
                 'そのキャラ',
             ],
             [
-                " 2 untapped ally characters$posessivePlaceholder",
+                " 2 ally untapped characters$posessivePlaceholder",
                 '未行動の味方キャラ2体',
             ],
             'item (even if it doesnt make sense' => [
@@ -103,6 +103,10 @@ class SubjectTest extends TestCase
             'quoted noun with another noun' => [
                 " 1  <稲生滸> character in your graveyard$posessivePlaceholder",
                 '自分のゴミ箱の<稲生滸>キャラ1体',
+            ],
+            'quoted 2' => [
+                " 1 ally <継続> character$posessivePlaceholder",
+                '味方<継続>キャラ1体',
             ],
         ];
     }
