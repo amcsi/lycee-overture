@@ -88,6 +88,10 @@ class SubjectTest extends TestCase
                 " 2  events in your opponent's graveyard$posessivePlaceholder",
                 '相手のゴミ箱のイベント2枚',
             ],
+            "this character's SP" => [
+                " this character's SP$posessivePlaceholder",
+                'このキャラのSP',
+            ],
         ];
     }
 }

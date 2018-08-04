@@ -51,6 +51,14 @@ class StatChangesTest extends TestCase
                 " that character gets AP+1 until the end of  battle.",
                 '対象のキャラにバトル終了時までAP+1する.',
             ],
+            'plus that characters SP' => [
+                " this character gets AP+[this character's SP].",
+                'このキャラにAP+[このキャラのSP]する.',
+            ],
+            'stats become this characters stats' => [
+                "{Enemy character's} AP and DP become [this character's SP].",
+                '{Enemy character}のAPとDPを[このキャラのSP]にする.',
+            ],
         ];
     }
 }
