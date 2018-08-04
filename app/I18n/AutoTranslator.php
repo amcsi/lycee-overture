@@ -7,6 +7,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\AbilityGainsOrOther;
 use amcsi\LyceeOverture\I18n\AutoTranslator\CapitalizationFixer;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DiscardFromDeck;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
+use amcsi\LyceeOverture\I18n\AutoTranslator\Equip;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
 use amcsi\LyceeOverture\I18n\AutoTranslator\IfCardsInHand;
 use amcsi\LyceeOverture\I18n\AutoTranslator\MoveCharacter;
@@ -75,6 +76,7 @@ class AutoTranslator
         $autoTranslated = TurnAndBattle::autoTranslate($autoTranslated);
         $autoTranslated = IfCardsInHand::autoTranslate($autoTranslated);
         $autoTranslated = MoveCharacter::autoTranslate($autoTranslated);
+        $autoTranslated = Equip::autoTranslate($autoTranslated);
 
         // Condense multiple spaces into one; trim.
         $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));

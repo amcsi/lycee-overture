@@ -191,6 +191,10 @@ class AutoTranslatorTest extends TestCase
                 'Use when your opponent activates an ability.',
                 '相手の能力の宣言に対応して使用する。',
             ],
+            'equipping' => [
+                'Use during your turn. Do not use during battle. Equip {1 item in your graveyard} to {1 character}. This effect can be used only once while this card is on the field.',
+                '自ターン中に使用する。バトル中に使用できない。{自分のゴミ箱のアイテム１枚}を{キャラ１体}に装備する。この能力は失われる。',
+            ],
         ];
     }
 }
