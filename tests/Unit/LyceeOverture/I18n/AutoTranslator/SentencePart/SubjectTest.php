@@ -92,6 +92,18 @@ class SubjectTest extends TestCase
                 " this character's SP$posessivePlaceholder",
                 'このキャラのSP',
             ],
+            'quoted noun' => [
+                " 1  \"稲生滸\" in your graveyard$posessivePlaceholder",
+                '自分のゴミ箱の「稲生滸」1体',
+            ],
+            'gt/lt noun' => [
+                " 1  <稲生滸> in your graveyard$posessivePlaceholder",
+                '自分のゴミ箱の<稲生滸>1体',
+            ],
+            'quoted noun with another noun' => [
+                " 1  <稲生滸> character in your graveyard$posessivePlaceholder",
+                '自分のゴミ箱の<稲生滸>キャラ1体',
+            ],
         ];
     }
 }

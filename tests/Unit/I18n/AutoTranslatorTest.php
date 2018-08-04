@@ -199,6 +199,10 @@ class AutoTranslatorTest extends TestCase
                 'This effect can only be used once per turn by cards of the same number',
                 '同番号の能力は1ターンに1回まで処理可能',
             ],
+            'quoted' => [
+                'At the start of the turn, you can move 1 ally <アンツィオ> character to an ally field.',
+                'ターン開始時、味方＜アンツィオ＞キャラ１体を味方フィールドに移動できる。',
+            ],
         ];
     }
 }
