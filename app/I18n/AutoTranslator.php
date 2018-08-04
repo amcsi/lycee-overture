@@ -68,6 +68,11 @@ class AutoTranslator
             'use when your opponent activates an ability.',
             $autoTranslated
         );
+        $autoTranslated = str_replace(
+            '同番号の能力は1ターンに1回まで処理可能',
+            'this effect can only be used once per turn by cards of the same number',
+            $autoTranslated
+        );
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
         $autoTranslated = WhenSomething::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
