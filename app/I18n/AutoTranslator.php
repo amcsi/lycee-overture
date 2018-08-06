@@ -73,6 +73,15 @@ class AutoTranslator
             'this effect can only be used once per turn by cards of the same number',
             $autoTranslated
         );
+        $autoTranslated = preg_replace_callback(
+            '/相手は相手の手札を(\d)枚破棄する/',
+            function (array $matches): string {
+                $howMany = next($matches);
+                $s = $howMany !== '1' ? 's' : '';
+                return "Your opponent discards $howMany card$s from their hand";
+            },
+            $autoTranslated
+        );
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
         $autoTranslated = WhenSomething::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);

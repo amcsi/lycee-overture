@@ -203,6 +203,10 @@ class AutoTranslatorTest extends TestCase
                 'At the start of the turn, you can move 1 ally <アンツィオ> character to an ally field.',
                 'ターン開始時、味方＜アンツィオ＞キャラ１体を味方フィールドに移動できる。',
             ],
+            'opponent discarding from hand' => [
+                'Your opponent discards 2 cards from their hand',
+                '相手は相手の手札を2枚破棄する',
+            ],
         ];
     }
 }

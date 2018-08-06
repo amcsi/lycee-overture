@@ -71,6 +71,10 @@ class WhenSomethingTest extends TestCase
                 'when an ally character is equipped with an item',
                 '味方キャラがアイテムを装備している場合',
             ],
+            'when you discard from your deck' => [
+                'when you discard from your deck',
+                '自分のデッキを破棄したとき',
+            ],
         ];
     }
 }

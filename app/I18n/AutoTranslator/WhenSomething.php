@@ -100,6 +100,7 @@ class WhenSomething
         $text = str_replace('このキャラを自分の能力の対象に指定したとき', 'when this character is targeted by one of your effects', $text);
         $text = str_replace('このキャラが自分のデッキから破棄されたとき', 'when this character is discarded from the deck', $text);
         $text = str_replace('味方キャラがアイテムを装備している場合', 'when an ally character is equipped with an item', $text);
+        $text = str_replace('自分のデッキを破棄したとき', 'when you discard from your deck', $text);
 
         return $text;
     }
