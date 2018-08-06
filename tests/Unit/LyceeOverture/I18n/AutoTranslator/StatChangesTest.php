@@ -20,11 +20,11 @@ class StatChangesTest extends TestCase
     {
         return [
             [
-                '..とき opponent\'s battling character gets AP+2, DP+2.',
+                '..とき opposing character gets AP+2, DP+2.',
                 '..とき対戦キャラにAP+2, DP+2する.',
             ],
             [
-                '..とき opponent\'s battling character gets AP+2 or DP+2.',
+                '..とき opposing character gets AP+2 or DP+2.',
                 '..とき対戦キャラにAP+2またはDP+2する.',
             ],
             [

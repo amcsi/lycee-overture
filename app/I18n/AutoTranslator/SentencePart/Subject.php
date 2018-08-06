@@ -163,7 +163,7 @@ class Subject
                         $text = 'that';
                         break;
                     case '対戦':
-                        $text = 'opponent\'s battling';
+                        $text = 'opposing';
                         break;
                     case '':
                         // Unknown

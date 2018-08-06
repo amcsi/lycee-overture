@@ -22,7 +22,7 @@ class AbilityGainsOrOtherTest extends TestCase
     {
         return [
             [
-                ' opponent\'s battling character gets destroyed.',
+                ' opposing character gets destroyed.',
                 '対戦キャラを破棄する.',
             ],
             [
