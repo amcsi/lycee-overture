@@ -62,7 +62,7 @@ class WhenSomething
                         throw new \LogicException("Unexpected actionSource: $actionSource");
                 }
 
-                $action = new Action($actionText, false, false);
+                $action = new Action($actionText);
                 return 'when' . SentenceCombiner::combine($subject, $action);
             },
             $text
@@ -91,7 +91,7 @@ class WhenSomething
                     }
                 }
 
-                $action = new Action($actionText, false, false);
+                $action = new Action($actionText);
                 return 'when' . SentenceCombiner::combine($subject, $action);
             },
             $text
