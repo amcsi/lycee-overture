@@ -22,51 +22,51 @@ class AbilityGainsOrOtherTest extends TestCase
     {
         return [
             [
-                ' opposing character gets destroyed.',
+                ' destroy opposing character.',
                 '対戦キャラを破棄する.',
             ],
             [
-                ' this character gets destroyed.',
+                ' destroy this character.',
                 'このキャラを破棄する.',
             ],
             [
-                ' 1 enemy character gets destroyed.',
+                ' destroy 1 enemy character.',
                 '相手キャラ1体を破棄する.',
             ],
             [
-                ' 1 ally character gets destroyed.',
+                ' destroy 1 ally character.',
                 '味方キャラ1体を破棄する.',
             ],
             [
-                ' this character gets untapped.',
+                ' untap this character.',
                 'このキャラを未行動にする.',
             ],
             [
-                ' this character gets tapped.',
+                ' tap this character.',
                 'このキャラを行動済みにする.',
             ],
             'optional' => [
-                ' this character can be tapped.',
+                ' you can tap this character.',
                 'このキャラを行動済みにできる.',
             ],
             [
-                ' this character gets returned to hand.',
+                " return this character to its owner's hand.",
                 'このキャラを手札に入れる.',
             ],
             'summoned' => [
-                ' this character gets summoned.',
+                ' summon this character.',
                 'このキャラを登場する.',
             ],
             'sent to bottom of deck' => [
-                ' this character gets sent to the bottom of the deck.',
+                ' send this character to the bottom of the deck.',
                 'このキャラをデッキの下に置く.',
             ],
             'sent to top of deck' => [
-                ' this character gets sent to the top of the deck.',
+                ' send this character to the top of the deck.',
                 'このキャラをデッキの上に置く.',
             ],
             'removed from play' => [
-                ' this character gets removed from play.',
+                ' remove this character from play.',
                 'このキャラを除外する.',
             ],
         ];

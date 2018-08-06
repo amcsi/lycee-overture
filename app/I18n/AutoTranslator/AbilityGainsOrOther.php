@@ -44,41 +44,41 @@ class AbilityGainsOrOther
             $mandatory = false;
         }
         $s = SentencePart\Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
-        $verb = $mandatory ? "get$s" : 'can be';
+        $youCan = $mandatory ? '' : 'you can ';
         switch ($state) {
             case '破棄':
-                $doesAction = "$verb destroyed";
+                $doesAction = "{$youCan}destroy [subject]";
                 break;
             case '未行動に':
-                $doesAction = "$verb untapped";
+                $doesAction = "{$youCan}untap [subject]";
                 break;
             case '行動済みに':
-                $doesAction = "$verb tapped";
+                $doesAction = "{$youCan}tap [subject]";
                 break;
             case '手札に入':
-                $doesAction = "$verb returned to hand";
+                $doesAction = "{$youCan}return [subject] to its owner's hand";
                 break;
             case '登場':
-                $doesAction = "$verb summoned";
+                $doesAction = "{$youCan}summon [subject]";
                 break;
             case 'デッキの下に置く':
-                $doesAction = "$verb sent to the bottom of the deck";
+                $doesAction = "{$youCan}send [subject] to the bottom of the deck";
                 break;
             case 'デッキの上に置く':
-                $doesAction = "$verb sent to the top of the deck";
+                $doesAction = "{$youCan}send [subject] to the top of the deck";
                 break;
             case '除外':
-                $doesAction = "$verb removed from play";
+                $doesAction = "{$youCan}remove [subject] from play";
                 break;
             default:
-                $verb = $mandatory ? "gain$s" : "can gain";
+                $youCan = $mandatory ? "gain$s" : "can gain";
                 if (isset($what)) {
-                    $doesAction = "$verb $what";
+                    $doesAction = "$youCan $what";
                 } else {
                     throw new \InvalidArgumentException("Unexpected action: $action");
                 }
         }
 
-        return new Action("$doesAction", false, false);
+        return new Action("$doesAction");
     }
 }

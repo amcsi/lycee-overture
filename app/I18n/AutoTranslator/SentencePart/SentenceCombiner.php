@@ -17,6 +17,8 @@ class SentenceCombiner
         $plural = $subject->plural();
         // E.g. character getS something, or characters get something.
         $actionText = str_replace(Action::THIRD_PERSON_PLURAL_PLACEHOLDER, $plural ? '' : 's', $actionText);
-        return "$subjectText $actionText";
+        return strpos($actionText, '[subject]') !== false ?
+            ' ' . str_replace('[subject]', trim($subjectText), $actionText) : // Subject placeholder present.
+            "$subjectText $actionText";
     }
 }
