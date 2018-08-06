@@ -63,6 +63,14 @@ class TurnAndBattleTest extends TestCase
                 "at the end of this character's battle",
                 'このキャラのバトル終了時',
             ],
+            'when attacking' => [
+                'use while attacking with this character',
+                'このキャラの攻撃中に使用する',
+            ],
+            'when defending' => [
+                'use while defending with this character',
+                'このキャラの防御中に使用する',
+            ],
         ];
     }
 }
