@@ -14,7 +14,11 @@ class TurnAndBattle
     {
         // language=regexp
         $pattern = '/' . self::getRegex() . '/u';
-        return preg_replace_callback($pattern, ['self', 'callback'], $text);
+        return str_replace(
+            'ゲーム中',
+            'during the game',
+            preg_replace_callback($pattern, ['self', 'callback'], $text)
+        );
     }
 
     public static function getUncapturedRegex(): string
@@ -26,7 +30,7 @@ class TurnAndBattle
     {
         $subjectRegex = Subject::getUncapturedRegex();
         // language=regexp
-        return "(味方キャラがダウンした)?(次の)?(この|自|相手|($subjectRegex)の)?(ターン|バトル|攻撃|防御)(開始時|中|終了時(?:まで)?)?(に使用する|に使用できない)?";
+        return "(味方キャラがダウンした)?(次の)?(この|自|相手|($subjectRegex))?の?(ターン|バトル|(?:攻撃)?宣言|攻撃|防御)(開始時|中|終了時(?:まで)?|に対応)?((?:に|して)使用する|(?:に|して)使用できない)?";
     }
 
     private static function callback(array $matches): string
@@ -54,6 +58,12 @@ class TurnAndBattle
             case '防御':
                 $turnOrBattle = 'defense';
                 break;
+            case '宣言':
+                $turnOrBattle = 'activation of an effect';
+                break;
+            case '攻撃宣言':
+                $turnOrBattle = 'attack declaration';
+                break;
             default:
                 throw new \LogicException("Unexpected turnOrBattleMatched: $turnOrBattleMatched");
         }
@@ -72,6 +82,9 @@ class TurnAndBattle
                 break;
             case '終了時まで':
                 $when = 'until the end of';
+                break;
+            case 'に対応':
+                $when = 'as a response to';
                 break;
             default:
                 // Can't translate this in that case.
@@ -92,7 +105,7 @@ class TurnAndBattle
                 if ($isBattle) {
                     $what = trim("$next battle");
                 } else {
-                    $what = "the$next turn";
+                    $what = "the$next $turnOrBattle";
                 }
                 break;
             default:
@@ -116,8 +129,10 @@ class TurnAndBattle
 
         switch ($useNotUse) {
             case 'に使用する':
+            case 'して使用する':
                 return "use $when $what";
             case 'に使用できない':
+            case 'して使用できない':
                 return "do not use $when $what";
             case '':
                 return "$when $what";

@@ -211,6 +211,26 @@ class AutoTranslatorTest extends TestCase
                 'Recover 2 cards to your deck',
                 '自分のデッキを2枚回復する',
             ],
+            'do not untap' => [
+                "The opponent's character does not get untapped at their next wake-up",
+                '対戦キャラは次の相手のウェイクアップで未行動に戻らない',
+            ],
+            'stop the battle' => [
+                "Stop the battle",
+                'バトルを中断する',
+            ],
+            'until the end of the turn cannot be destroyed by battle' => [
+                "This character cannot be destroyed by battle until the end of the turn",
+                'このキャラはターン終了時までダウンしない',
+            ],
+            'until the end of the turn cannot be destroyed by battle 2' => [
+                "Until the end of the turn {1 ally character} cannot be destroyed by battle",
+                'ターン終了時まで{味方キャラ１体}はダウンしない',
+            ],
+            'Put 1 card from your hand on the top of your deck' => [
+                'Put 1 card from your hand on the top of your deck',
+                '自分の手札を1枚デッキの上に置く',
+            ],
         ];
     }
 }

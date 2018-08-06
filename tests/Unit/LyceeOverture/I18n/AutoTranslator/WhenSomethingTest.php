@@ -83,6 +83,10 @@ class WhenSomethingTest extends TestCase
                 'while you have fewer characters on the field than your opponent',
                 '相手キャラの数より味方キャラの数が少ない場合',
             ],
+            'when this character is summoned except by Engage summon' => [
+                'when this character is summoned except by Engage summon',
+                'このキャラがエンゲージ登場以外で登場したとき',
+            ],
         ];
     }
 }

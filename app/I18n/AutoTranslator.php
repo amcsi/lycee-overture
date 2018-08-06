@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\AbilityGainsOrOther;
+use amcsi\LyceeOverture\I18n\AutoTranslator\CannotBeDestroyed;
 use amcsi\LyceeOverture\I18n\AutoTranslator\CapitalizationFixer;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DiscardFromDeck;
 use amcsi\LyceeOverture\I18n\AutoTranslator\DrawCards;
@@ -73,6 +74,16 @@ class AutoTranslator
             'this effect can only be used once per turn by cards of the same number',
             $autoTranslated
         );
+        $autoTranslated = str_replace(
+            '対戦キャラは次の相手のウェイクアップで未行動に戻らない',
+            "the opponent's character does not get untapped at their next wake-up",
+            $autoTranslated
+        );
+        $autoTranslated = str_replace(
+            'バトルを中断する',
+            "stop the battle",
+            $autoTranslated
+        );
         $autoTranslated = preg_replace_callback(
             '/相手は相手の手札を(\d)枚破棄する/',
             function (array $matches): string {
@@ -91,16 +102,30 @@ class AutoTranslator
             },
             $autoTranslated
         );
+        $autoTranslated = preg_replace_callback(
+            '/自分の手札を(\d)枚デッキの(上|下)に置く/',
+            function (array $matches): string {
+                $howMany = next($matches);
+                $whereSource = next($matches);
+                $s = $howMany !== '1' ? 's' : '';
+                $where = $whereSource === '上' ? 'top' : 'bottom';
+                return "Put $howMany card$s from your hand on the $where of your deck";
+            },
+            $autoTranslated
+        );
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
         $autoTranslated = WhenSomething::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
         $autoTranslated = DiscardFromDeck::autoTranslate($autoTranslated);
         $autoTranslated = Target::autoTranslate($autoTranslated);
+        $autoTranslated = CannotBeDestroyed::autoTranslate($autoTranslated);
         $autoTranslated = TurnAndBattle::autoTranslate($autoTranslated);
         $autoTranslated = IfCardsInHand::autoTranslate($autoTranslated);
         $autoTranslated = MoveCharacter::autoTranslate($autoTranslated);
         $autoTranslated = Equip::autoTranslate($autoTranslated);
 
+        // Fix spaces before brackets
+        $autoTranslated = preg_replace('/(?<=\w)[\[{(]/', ' $0', $autoTranslated);
         // Condense multiple spaces into one; trim.
         $autoTranslated = trim(preg_replace('/ {2,}/', ' ', $autoTranslated));
         // Fix spaces between brackets

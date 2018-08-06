@@ -79,6 +79,18 @@ class TurnAndBattleTest extends TestCase
                 'use while attacking with an ally character',
                 '味方キャラの攻撃中に使用する',
             ],
+            'during the game' => [
+                'during the game',
+                'ゲーム中',
+            ],
+            'do not use as response' => [
+                "do not use as a response to your opponent's activation of an effect",
+                '相手の宣言に対応して使用できない',
+            ],
+            'use as response to attack declaration' => [
+                "use as a response to your opponent's attack declaration",
+                '相手の攻撃宣言に対応して使用する',
+            ],
         ];
     }
 }

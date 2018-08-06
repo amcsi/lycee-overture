@@ -111,6 +111,11 @@ class WhenSomething
             'while you have fewer characters on the field than your opponent',
             $text
         );
+        $text = str_replace(
+            'このキャラがエンゲージ登場以外で登場したとき',
+            'when this character is summoned except by Engage summon',
+            $text
+        );
 
         return $text;
     }
