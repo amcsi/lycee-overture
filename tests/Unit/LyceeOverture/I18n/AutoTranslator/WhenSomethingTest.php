@@ -75,6 +75,10 @@ class WhenSomethingTest extends TestCase
                 'when you discard from your deck',
                 '自分のデッキを破棄したとき',
             ],
+            'when this character inflicts damage' => [
+                "when this character inflicts damage to your opponent's deck",
+                'このキャラが相手のデッキにダメージを与えたとき',
+            ],
         ];
     }
 }
