@@ -79,6 +79,10 @@ class WhenSomethingTest extends TestCase
                 "when this character inflicts damage to your opponent's deck",
                 'このキャラが相手のデッキにダメージを与えたとき',
             ],
+            'while you have fewer characters on the field than your opponent' => [
+                'while you have fewer characters on the field than your opponent',
+                '相手キャラの数より味方キャラの数が少ない場合',
+            ],
         ];
     }
 }

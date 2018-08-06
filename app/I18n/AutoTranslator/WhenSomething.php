@@ -106,6 +106,11 @@ class WhenSomething
             "when this character inflicts damage to your opponent's deck",
             $text
         );
+        $text = str_replace(
+            '相手キャラの数より味方キャラの数が少ない場合',
+            'while you have fewer characters on the field than your opponent',
+            $text
+        );
 
         return $text;
     }
