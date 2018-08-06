@@ -8,7 +8,7 @@ namespace amcsi\LyceeOverture\I18n\AutoTranslator;
  */
 class TurnAndBattle
 {
-    private const REGEX = '(次の)?(この|自|相手|このキャラの)?(ターン|バトル|攻撃|防御)(開始時|中|終了時(?:まで)?)?(に使用する|に使用できない)?';
+    private const REGEX = '(味方キャラがダウンした)?(次の)?(この|自|相手|このキャラの)?(ターン|バトル|攻撃|防御)(開始時|中|終了時(?:まで)?)?(に使用する|に使用できない)?';
 
     public static function autoTranslate(string $text): string
     {
@@ -24,6 +24,7 @@ class TurnAndBattle
 
     private static function callback(array $matches): string
     {
+        $allyDown = next($matches);
         $next = next($matches);
         if ($next) {
             $next = " next";
@@ -90,14 +91,17 @@ class TurnAndBattle
                 break;
             case '':
                 if ($isBattle) {
-                    $what = "$next battle";
+                    $what = trim("$next battle");
                 } else {
-
                     $what = "the$next turn";
                 }
                 break;
             default:
                 throw new \LogicException("Unexpected which: $which");
+        }
+
+        if ($allyDown) {
+            $what .= ' when an ally character is defeated';
         }
 
         switch ($useNotUse) {
