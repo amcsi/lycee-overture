@@ -3,23 +3,30 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
+
 /**
  * For translating things related to someone's turn or battle
  */
 class TurnAndBattle
 {
-    private const REGEX = '(味方キャラがダウンした)?(次の)?(この|自|相手|このキャラの)?(ターン|バトル|攻撃|防御)(開始時|中|終了時(?:まで)?)?(に使用する|に使用できない)?';
-
     public static function autoTranslate(string $text): string
     {
         // language=regexp
-        $pattern = '/' . self::REGEX . '/u';
+        $pattern = '/' . self::getRegex() . '/u';
         return preg_replace_callback($pattern, ['self', 'callback'], $text);
     }
 
     public static function getUncapturedRegex(): string
     {
-        return RegexHelper::uncapture(self::REGEX);
+        return RegexHelper::uncapture(self::getRegex());
+    }
+
+    private static function getRegex(): string
+    {
+        $subjectRegex = Subject::getUncapturedRegex();
+        // language=regexp
+        return "(味方キャラがダウンした)?(次の)?(この|自|相手|($subjectRegex)の)?(ターン|バトル|攻撃|防御)(開始時|中|終了時(?:まで)?)?(に使用する|に使用できない)?";
     }
 
     private static function callback(array $matches): string
@@ -30,6 +37,7 @@ class TurnAndBattle
             $next = " next";
         }
         $which = next($matches);
+        $subjectSource = next($matches);
         $turnOrBattleMatched = next($matches);
         $isBattle = false;
         switch ($turnOrBattleMatched) {
@@ -80,15 +88,6 @@ class TurnAndBattle
             case '相手':
                 $what = "your opponent's$next $turnOrBattle";
                 break;
-            case 'このキャラの':
-                $what = "this character's $turnOrBattle";
-                if ($when === 'during' && in_array($turnOrBattle, ['attack', 'defense'], true)) {
-                    $when = 'while';
-                    $what = $turnOrBattle === 'attack' ?
-                        'attacking with this character' :
-                        'defending with this character';
-                }
-                break;
             case '':
                 if ($isBattle) {
                     $what = trim("$next battle");
@@ -97,7 +96,18 @@ class TurnAndBattle
                 }
                 break;
             default:
-                throw new \LogicException("Unexpected which: $which");
+                if ($subjectSource) {
+                    $subject = Subject::autoTranslateStrict($subjectSource);
+                    $what = trim(Subject::posessivize($subject) . " $turnOrBattle");
+                    if ($when === 'during' && in_array($turnOrBattle, ['attack', 'defense'], true)) {
+                        $when = 'while';
+                        $what = $turnOrBattle === 'attack' ?
+                            "attacking with$subject" :
+                            "defending with$subject";
+                    }
+                } else {
+                    throw new \LogicException("Unexpected which: $which");
+                }
         }
 
         if ($allyDown) {

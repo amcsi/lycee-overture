@@ -20,7 +20,7 @@ class Subject
      */
     private $plural;
 
-    public function __construct(string $subjectText, bool $plural)
+    private function __construct(string $subjectText, bool $plural)
     {
         $this->subjectText = $subjectText;
         $this->plural = $plural;
@@ -228,6 +228,11 @@ class Subject
         return new self($text, $plural);
     }
 
+    public static function autoTranslateStrict(string $subject): string
+    {
+        return Subject::createInstance($subject)->getSubjectText();
+    }
+
     public static function getUncapturedRegex(): string
     {
         return RegexHelper::uncapture(self::REGEX);
@@ -246,7 +251,7 @@ class Subject
     /**
      * Makes the passed text into the possessive form.
      */
-    private static function posessivize(string $text): string
+    public static function posessivize(string $text): string
     {
         if ($text[-1] === '}') {
             // For: {Enemy character} => {Enemy character's}

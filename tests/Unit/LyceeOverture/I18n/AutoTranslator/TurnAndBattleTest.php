@@ -75,6 +75,10 @@ class TurnAndBattleTest extends TestCase
                 'at the end of battle when an ally character is defeated',
                 '味方キャラがダウンしたバトル終了時',
             ],
+            'attacking with ally' => [
+                'use while attacking with an ally character',
+                '味方キャラの攻撃中に使用する',
+            ],
         ];
     }
 }
