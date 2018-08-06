@@ -18,7 +18,7 @@ class WhenSomething
 
         $text = WhenSupporting::autoTranslate($text);
         $text = WhenAppears::autoTranslate($text);
-        $text = str_replace('味方キャラがエンゲージ登場したとき', 'when an ally character is Engage summoned', $text);
+        $text = str_replace('味方キャラがエンゲージ登場したとき', 'if an allied character has been Engage Summoned', $text);
         $text = str_replace('行動済みにしたとき', 'when tapped', $text);
         $text = str_replace(
             '自分の効果によって相手キャラを破棄したとき',

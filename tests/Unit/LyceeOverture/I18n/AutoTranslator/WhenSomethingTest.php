@@ -20,7 +20,7 @@ class WhenSomethingTest extends TestCase
     {
         return [
             [
-                'when an ally character is Engage summoned',
+                'if an allied character has been Engage Summoned',
                 '味方キャラがエンゲージ登場したとき',
             ],
             [
