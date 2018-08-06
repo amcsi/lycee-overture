@@ -207,6 +207,10 @@ class AutoTranslatorTest extends TestCase
                 'Your opponent discards 2 cards from their hand',
                 '相手は相手の手札を2枚破棄する',
             ],
+            'recover cards' => [
+                'Recover 2 cards to your deck',
+                '自分のデッキを2枚回復する',
+            ],
         ];
     }
 }

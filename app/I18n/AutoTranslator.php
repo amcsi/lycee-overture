@@ -82,6 +82,15 @@ class AutoTranslator
             },
             $autoTranslated
         );
+        $autoTranslated = preg_replace_callback(
+            '/自分のデッキを(\d)枚回復する/',
+            function (array $matches): string {
+                $howMany = next($matches);
+                $s = $howMany !== '1' ? 's' : '';
+                return "Recover $howMany card$s to your deck";
+            },
+            $autoTranslated
+        );
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
         $autoTranslated = WhenSomething::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
