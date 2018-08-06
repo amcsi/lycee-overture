@@ -39,8 +39,8 @@ class MoveCharacter
             sprintf(
                 " %s %s to %s.",
                 $verb,
-                $sourceSubject->getSubjectTextWithoutPlaceholders(),
-                $destination->getSubjectTextWithoutPlaceholders()
+                $sourceSubject->getSubjectText(),
+                $destination->getSubjectText()
             )
         );
     }

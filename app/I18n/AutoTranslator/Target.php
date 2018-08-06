@@ -26,11 +26,7 @@ class Target
                 preg_replace_callback(
                     $pattern,
                     function (array $matches): string {
-                        return str_replace(
-                            Subject::POSSESSIVE_PLACEHOLDER,
-                            '',
-                            Subject::createInstance($matches[0])->getSubjectText()
-                        );
+                        return Subject::createInstance($matches[0])->getSubjectText();
                     },
                     $matches[1]
                 )

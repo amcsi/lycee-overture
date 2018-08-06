@@ -29,7 +29,7 @@ class WhenAppears
 
         return sprintf(
             $text,
-            $subject->getSubjectTextWithoutPlaceholders()
+            $subject->getSubjectText()
         );
     }
 }

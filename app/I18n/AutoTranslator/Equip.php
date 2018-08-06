@@ -18,8 +18,8 @@ class Equip
     {
         return sprintf(
             'equip %s to %s',
-            Subject::createInstance($matches[1])->getSubjectTextWithoutPlaceholders(),
-            Subject::createInstance($matches[2])->getSubjectTextWithoutPlaceholders()
+            Subject::createInstance($matches[1])->getSubjectText(),
+            Subject::createInstance($matches[2])->getSubjectText()
         );
     }
 }

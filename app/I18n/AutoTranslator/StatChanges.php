@@ -20,7 +20,7 @@ class StatChanges
         // language=regexp
         $statPlusMinusAction = "に(${turnAndBattleRegex})?((?:(?:AP|DP|SP|DMG)[+-](?:\\d|\\[$subjectRegex])(?:, |または)?)+)";
         // language=regexp
-        $statsToNumberAction = "の((?:と?(?:AP|DP|SP|DMG))+)を(\\d|\[$subjectRegex])に";
+        $statsToNumberAction = "を(\\d|\[$subjectRegex])に";
 
         $pattern = "/($subjectRegex)({$statPlusMinusAction}|{$statsToNumberAction})(する|できる)\./u";
         return Action::subjectReplaceCallback(
@@ -35,8 +35,6 @@ class StatChanges
         $actionText = next($matches);
         $turnAndBattleSource = next($matches); // e.g. "Until the end of battle"
         $statChanges = next($matches); // The stat changes involved for stat changes action.
-        $posessiveSubject = strpos($actionText, 'の') === 0; // {Target's}
-        $stats = next($matches);
         $toWhatValue = next($matches);
         $canOrDoSource = next($matches);
         $mandatory = true;
@@ -49,7 +47,7 @@ class StatChanges
             $verb = $mandatory ? "get$thirdPersonPluralPlaceholder" : 'can get';
             $subjectRegex = Subject::getUncapturedRegex();
             $statChanges = preg_replace_callback(
-                "/\\[($subjectRegex)]/",
+                "/\\[($subjectRegex)]/u",
                 [self::class, 'subjectBetweenBracketsReplaceCallback'],
                 $statChanges
             );
@@ -63,8 +61,8 @@ class StatChanges
             // ... or ...
             $actionText = str_replace('または', ' or ', $actionText);
 
-            $action = new Action($actionText, $posessiveSubject, false);
-        } elseif (strpos($actionText, 'の') === 0) {
+            $action = new Action($actionText);
+        } else {
             // ... 's Stat becomes 0.
 
             if ($toWhatValue[0] === '[') {
@@ -75,26 +73,22 @@ class StatChanges
                 );
             }
 
-            $posessivePlural = strpos($stats, 'と') !== false;
             $verb = $mandatory ? "become$thirdPersonPluralPlaceholder" : 'can become';
 
             $action = new Action(
                 sprintf(
-                    "%s %s %s%s.",
-                    str_replace('と', ' and ', $stats),
+                    "%s %s%s.",
                     $verb,
                     $toWhatValue,
                     $turnAndBattleText
-                ), $posessiveSubject, $posessivePlural
+                )
             );
-        } else {
-            throw new \InvalidArgumentException("Unexpected action: $actionText");
         }
         return $action;
     }
 
     private static function subjectBetweenBracketsReplaceCallback(array $matches): string
     {
-        return '[' . trim(Subject::createInstance($matches[1])->getSubjectTextWithoutPlaceholders()) . ']';
+        return '[' . trim(Subject::createInstance($matches[1])->getSubjectText()) . ']';
     }
 }

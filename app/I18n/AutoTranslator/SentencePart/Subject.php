@@ -10,11 +10,8 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\RegexHelper;
  */
 class Subject
 {
-    // Placeholder for "'s" if the Action needs it.
-    public const POSSESSIVE_PLACEHOLDER = '¤possessive¤';
-
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?((自分の|相手の)?ゴミ箱の)?(味方|相手|対象の|対戦|この|その)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」])(?:の(DMG|AP|DP|SP))?((\d)[体枚]|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?((自分の|相手の)?ゴミ箱の)?(味方|相手|対象の|対戦|この|その)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?((\d)[体枚]|全て)?';
 
     private $subjectText;
 
@@ -84,6 +81,7 @@ class Subject
             $something .= " $typeSource";
         }
         $noun = next($matches);
+        $forceNoArticle = false; // Set to true if a/an should definitely not be placed.
         switch ($noun) {
             case 'キャラ':
                 $noun = 'character';
@@ -103,6 +101,9 @@ class Subject
                 break;
             default:
                 switch (mb_substr($noun, 0, 1)) {
+                    case '{': // Noun is a target (e.g. "{this character's} SP" all being a subject).
+                        $forceNoArticle = true;
+                        break;
                     case '<':
                     case '「':
                         // Replace Japanese quotes with English ones.
@@ -114,7 +115,7 @@ class Subject
                 break;
         }
 
-        $itsStat = next($matches); // e.g. のSP
+        $itsStatsSource = next($matches); // e.g. のSP
 
         $allOrHowMany = next($matches);
         $all = $allOrHowMany === '全て';
@@ -168,7 +169,7 @@ class Subject
                     case '':
                         // Unknown
                         $text = '';
-                        if (!$howMany) {
+                        if (!$howMany && !$forceNoArticle) {
                             $text = preg_match('/[aeiou]/', $noun[0]) ? 'an' : 'a';
                         }
                         break;
@@ -204,19 +205,24 @@ class Subject
                         break;
                 }
             }
-            $text = " $text$inSomewhere$additionalAdjective" . self::POSSESSIVE_PLACEHOLDER;
+            $text = " $text$inSomewhere$additionalAdjective";
 
-            if ($itsStat) {
+            if ($itsStatsSource) {
                 // ...'s DP/SP/AP
-                $text = (new Subject((new self($text, $plural))->getSubjectTextPosessive(), false))
-                        ->getSubjectText() . " $itsStat" . self::POSSESSIVE_PLACEHOLDER;
+                $itsStatsText = str_replace('と', ' and ', $itsStatsSource);
+                $plural = strpos($itsStatsText, ' and ') !== false;
+
+                $text = self::posessivize(
+                        (new Subject((new self($text, $plural))->getSubjectText(), false))
+                            ->getSubjectText()
+                    ) . " $itsStatsText";
             }
         } else {
             if ($target[-1] === 's') {
                 // {Targets} is plural.
                 $plural = true;
             }
-            $text = '{' . $target . self::POSSESSIVE_PLACEHOLDER . '}';
+            $text = '{' . $target . '}';
         }
 
         return new self($text, $plural);
@@ -232,24 +238,31 @@ class Subject
         return $this->subjectText;
     }
 
-    public function getSubjectTextPosessive(): string
-    {
-        $subjectText = $this->subjectText;
-        // E.g. characters => characters'
-        $subjectText = str_replace('s' . Subject::POSSESSIVE_PLACEHOLDER, "'", $subjectText);
-        // E.g. character => character's
-        $subjectText = str_replace(Subject::POSSESSIVE_PLACEHOLDER, "'s", $subjectText);
-        return $subjectText;
-    }
-
-    public function getSubjectTextWithoutPlaceholders(): string
-    {
-        return str_replace(self::POSSESSIVE_PLACEHOLDER, '', $this->subjectText);
-    }
-
     public function plural(): bool
     {
         return $this->plural;
+    }
+
+    /**
+     * Makes the passed text into the possessive form.
+     */
+    private static function posessivize(string $text): string
+    {
+        if ($text[-1] === '}') {
+            // For: {Enemy character} => {Enemy character's}
+            return preg_replace_callback(
+                '/\{(.*)}$/',
+                function (array $matches) {
+                    return '{' . self::posessivize($matches[1]) . '}';
+                },
+                $text
+            );
+        }
+        return $text . (
+            $text[-1] === 's' ?
+                $text . "'" : // Already ends' with an s
+                "'s"
+            ); // end's.
     }
 
     private static function replaceIfQuoted(string $quoted): string
