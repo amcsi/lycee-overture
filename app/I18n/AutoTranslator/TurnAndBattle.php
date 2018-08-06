@@ -8,7 +8,7 @@ namespace amcsi\LyceeOverture\I18n\AutoTranslator;
  */
 class TurnAndBattle
 {
-    private const REGEX = '(次の)?(この|自|相手)?(ターン|バトル)(開始時|中|終了時(?:まで))?(に使用する|に使用できない)?';
+    private const REGEX = '(次の)?(この|自|相手|このキャラの)?(ターン|バトル)(開始時|中|終了時(?:まで)?)?(に使用する|に使用できない)?';
 
     public static function autoTranslate(string $text): string
     {
@@ -51,6 +51,9 @@ class TurnAndBattle
                 break;
             case '相手':
                 $what = "your opponent's$next $turnOrBattle";
+                break;
+            case 'このキャラの':
+                $what = "this character's $turnOrBattle";
                 break;
             case '':
                 if ($isBattle) {

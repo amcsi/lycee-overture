@@ -59,6 +59,10 @@ class TurnAndBattleTest extends TestCase
                 'do not use during your turn',
                 '自ターン中に使用できない',
             ],
+            "at the end of this character's battle" => [
+                "at the end of this character's battle",
+                'このキャラのバトル終了時',
+            ],
         ];
     }
 }
