@@ -69,6 +69,10 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' remove this character from play.',
                 'このキャラを除外する.',
             ],
+            ' your opponent destroys 1 of his characters' => [
+                ' your opponent destroys 1 enemy character',
+                '相手は相手キャラ1体を破棄する',
+            ],
         ];
     }
 }

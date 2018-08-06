@@ -18,11 +18,12 @@ class AbilityGainsOrOther
         $getsSomethingActionRegex = 'は((?:\[.+?\])+)を得る|を(?:(破棄|未行動に|行動済みに|手札に入|登場|除外)(れる|する|できる)|(デッキの[下上]に置く))';
 
         // "This character gains X."
-        $pattern = "/($subjectRegex)($getsSomethingActionRegex)/u";
+        $pattern = "/(相手は)?($subjectRegex)($getsSomethingActionRegex)/u";
         $text = Action::subjectReplaceCallback(
             $pattern,
             [self::class, 'callback'],
-            $text
+            $text,
+            2
         );
 
         return $text;
@@ -30,6 +31,7 @@ class AbilityGainsOrOther
 
     public static function callback(array $matches): Action
     {
+        $opponentDoes = next($matches); // Your opponent does this action.
         $action = next($matches);
         $what = next($matches);
         $state = next($matches);
@@ -44,31 +46,45 @@ class AbilityGainsOrOther
             $mandatory = false;
         }
         $s = SentencePart\Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
-        $youCan = $mandatory ? '' : 'you can ';
+        $verbS = ''; // Whether the verb of imperitive action should have an s.
+        $beforeText = '';
+
+        if ($opponentDoes) {
+            $beforeText = 'your opponent ';
+            if (!$mandatory) {
+                $beforeText .= 'can ';
+            } else {
+                $verbS = 's';
+            }
+        } else {
+            if (!$mandatory) {
+                $beforeText = 'you can ';
+            }
+        }
         switch ($state) {
             case '破棄':
-                $doesAction = "{$youCan}destroy [subject]";
+                $doesAction = "{$beforeText}destroy$verbS [subject]";
                 break;
             case '未行動に':
-                $doesAction = "{$youCan}untap [subject]";
+                $doesAction = "{$beforeText}untap$verbS [subject]";
                 break;
             case '行動済みに':
-                $doesAction = "{$youCan}tap [subject]";
+                $doesAction = "{$beforeText}tap$verbS [subject]";
                 break;
             case '手札に入':
-                $doesAction = "{$youCan}return [subject] to its owner's hand";
+                $doesAction = "{$beforeText}return$verbS [subject] to its owner's hand";
                 break;
             case '登場':
-                $doesAction = "{$youCan}summon [subject]";
+                $doesAction = "{$beforeText}summon$verbS [subject]";
                 break;
             case 'デッキの下に置く':
-                $doesAction = "{$youCan}send [subject] to the bottom of the deck";
+                $doesAction = "{$beforeText}send$verbS [subject] to the bottom of the deck";
                 break;
             case 'デッキの上に置く':
-                $doesAction = "{$youCan}send [subject] to the top of the deck";
+                $doesAction = "{$beforeText}send$verbS [subject] to the top of the deck";
                 break;
             case '除外':
-                $doesAction = "{$youCan}remove [subject] from play";
+                $doesAction = "{$beforeText}remove$verbS [subject] from play";
                 break;
             default:
                 $youCan = $mandatory ? "gain$s" : "can gain";
