@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\I18n\AutoTranslator;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
@@ -11,6 +12,7 @@ use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
  * Attempts translations from Japanese description text based on patterns.
@@ -26,6 +28,7 @@ class AutoTranslateCommand extends Command
 
     public function handle(CardTranslation $cardTranslation, TranslationCoverageChecker $translationCoverageChecker)
     {
+        $stopwatchEvent = (new Stopwatch())->start('auto-translate-command');
         $this->output->writeln('Starting auto translation of cards.');
         /** @var Builder $japaneseBuilder */
         $japaneseBuilder = $cardTranslation->newQuery()->where('locale', Locale::JAPANESE);
@@ -128,6 +131,10 @@ class AutoTranslateCommand extends Command
                 $newPercentText,
                 $cardCount
             )
+        );
+
+        $this->output->text(
+            "Finished auto translation of cards in " . Profiling::stopwatchToHuman($stopwatchEvent->stop())
         );
     }
 }
