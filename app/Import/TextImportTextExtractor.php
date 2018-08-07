@@ -35,6 +35,7 @@ class TextImportTextExtractor
                 $dbRow[$dbKey] = $val;
             }
             $dbRow['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($dbRow);
+            $dbRow['character_type'] = $csvRow[CsvColumns::CHARACTER_TYPE];
             yield $dbRow;
         }
     }

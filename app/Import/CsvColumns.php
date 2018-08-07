@@ -20,7 +20,7 @@ class CsvColumns
     public const DP = 9;
     public const SP = 10;
     public const DMG = 11;
-    public const PROPERTY = 12;
+    public const CHARACTER_TYPE = 12;
     public const BASIC_ABILITIES = 13;
     public const ABILITY = 14;
     public const CARD_SET = 15;
