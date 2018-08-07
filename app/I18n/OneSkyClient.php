@@ -4,17 +4,15 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Handler\CurlHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Request;
-use function GuzzleHttp\Psr7\str;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\RequestInterface;
 
 class OneSkyClient
 {
     private $guzzleClient;
+
+    const CHARACTER_TYPES_JSON = 'character_types.json';
 
     public function __construct(array $oneSkyConfig)
     {
@@ -58,7 +56,7 @@ class OneSkyClient
                 [
                     'name' => 'file',
                     'contents' => json_encode(['character_types' => $characterTypesToUpload]),
-                    'filename' => 'character_types.json',
+                    'filename' => self::CHARACTER_TYPES_JSON,
                 ],
                 [
                     'name' => 'file_format',
@@ -66,5 +64,16 @@ class OneSkyClient
                 ],
             ],
         ]);
+    }
+
+    public function downloadTranslations(): array
+    {
+        $result = $this->getGuzzleClient()->get('translations/multilingual', [
+            'query' => [
+                'source_file_name' => self::CHARACTER_TYPES_JSON,
+                'file_format' => 'I18NEXT_MULTILINGUAL_JSON',
+            ],
+        ]);
+        return json_decode($result->getBody()->__toString(), true);
     }
 }
