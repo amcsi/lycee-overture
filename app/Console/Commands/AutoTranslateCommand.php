@@ -35,6 +35,15 @@ class AutoTranslateCommand extends Command
         /** @var CardTranslation[] $japaneseCards */
         $japaneseCards = $japaneseBuilder->get();
 
+        $englishCards = $cardTranslation->newQuery()
+            ->where('locale', Locale::ENGLISH)
+            ->get()
+            ->keyBy(function (
+                CardTranslation $cardTranslation
+            ) {
+                return $cardTranslation->card_id;
+            });
+
         // By default the english japanese character count is the same as the Japanese (untranslated).
         $cardCount = $japaneseBuilder->count();
 
@@ -47,12 +56,36 @@ class AutoTranslateCommand extends Command
         $updatedNowThreshold = Carbon::now()->subSecond(3);
 
         $updatedCount = 0;
+
+        // Iterate each Japanese card to create the English variant.
+        // We must make sure to only auto translate those properties which have not been manually translated.
+        // We must also make sure to copy all non-auto-translatable properties from Japanese,
+        // but only ones that haven't been manually translated.
         foreach ($japaneseCards as $japaneseCard) {
-            $englishCard = $japaneseCard->toArray();
+            $cardId = $japaneseCard->card_id;
+            $japaneseCardAsArray = $japaneseCard->toArray();
+            $englishCard = $englishCards->get($cardId) ?
+                // Update based on the existing English card data.
+                $englishCards->get($cardId)->toArray() :
+                // Work with the Japanese card then.
+                $japaneseCardAsArray;
+
+            // Fill in only missing values. This ensures anything manually translated would not get overwritten, but
+            // new properties would get copied over.
+            foreach ($japaneseCardAsArray as $field => $value) {
+                if (empty($englishCard[$field])) {
+                    $englishCard[$field] = $value;
+                }
+            }
+
+            // Strip these properties.
             unset($englishCard['id'], $englishCard['created_at'], $englishCard['updated_at']);
+
             $englishCard['locale'] = Locale::ENGLISH;
+            // Iterate the auto-translatable fields.
             foreach (self::AUTO_TRANSLATE_FIELDS as $key) {
                 try {
+                    // TODO: make sure manual translation of auto-translatable fields do not get overwritten.
                     $englishCard[$key] = AutoTranslator::autoTranslate($japaneseCard->$key);
                 } catch (\LogicException $e) {
                     $this->output->warning(
