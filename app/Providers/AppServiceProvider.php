@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Providers;
 
 use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
+use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
@@ -66,5 +67,9 @@ class AppServiceProvider extends ServiceProvider
             ->give(function () {
                 return new Filesystem(new Local(storage_path(ImportConstants::ORIGINAL_CARD_IMAGES_PATH)));
             });
+
+        $app->when(OneSkyClient::class)
+            ->needs('$oneSkyConfig')
+            ->give($config->get('onesky'));
     }
 }
