@@ -27,6 +27,13 @@ class QuoteTranslator
 
     public function callback(array $matches): string
     {
-        return $this->translations[Locale::ENGLISH]['translation']['character_types'][$matches[1]] ?? $matches[1];
+        return $this->tryToTranslateExact($matches[0]);
     }
+
+    public function tryToTranslateExact(string $quoted): string
+    {
+        return $this->translations[Locale::ENGLISH]['translation']['character_types'][$quoted] ?? $quoted;
+    }
+
+
 }

@@ -6,6 +6,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\I18n\AutoTranslator;
+use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
@@ -28,7 +29,8 @@ class AutoTranslateCommand extends Command
     public function handle(
         CardTranslation $cardTranslation,
         TranslationCoverageChecker $translationCoverageChecker,
-        AutoTranslator $autoTranslator
+        AutoTranslator $autoTranslator,
+        QuoteTranslator $quoteTranslator
     ) {
         $stopwatchEvent = (new Stopwatch())->start('auto-translate-command');
         $this->output->writeln('Starting auto translation of cards.');
@@ -96,6 +98,7 @@ class AutoTranslateCommand extends Command
                     // Retain the original Japanese text in case of an exception.
                     $englishCard[$key] = $japaneseCard->$key;
                 }
+                $englishCard['character_type'] = $quoteTranslator->tryToTranslateExact($japaneseCard['character_type']);
                 $englishCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($englishCard);
             }
             $englishCard = CardTranslation::updateOrCreate([
