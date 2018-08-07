@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit\I18n;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator;
+use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
 use PHPUnit\Framework\TestCase;
 
 class AutoTranslatorTest extends TestCase
@@ -13,7 +14,8 @@ class AutoTranslatorTest extends TestCase
      */
     public function testAutoTranslate(string $expected, string $input)
     {
-        self::assertSame($expected, AutoTranslator::autoTranslate($input));
+        $quoteTranslator = new QuoteTranslator([]);
+        self::assertSame($expected, (new AutoTranslator($quoteTranslator))->autoTranslate($input));
     }
 
     public function provideAutoTranslate()

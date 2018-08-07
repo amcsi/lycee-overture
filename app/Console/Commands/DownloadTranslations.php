@@ -25,11 +25,12 @@ declare(strict_types=1);
 
 // This file is auto-generated. Do not edit directly!
 
+return %s;
 
 PHP;
-        $newContents .= var_export($result, true) . ";\n";
+        $newContents = sprintf($newContents, var_export($result, true));
 
-        $filename = storage_path('app/translations.php');
+        $filename = self::getTranslationsFilePath();
         $oldContents = file_exists($filename) ? file_get_contents($filename) : '';
 
         if ($newContents !== $oldContents) {
@@ -41,5 +42,10 @@ PHP;
         $this->output->text(
             "Finished downloading translations from OneSky in " . Profiling::stopwatchToHuman($stopwatchEvent->stop())
         );
+    }
+
+    public static function getTranslationsFilePath(): string
+    {
+        return storage_path('app/translations.php');
     }
 }

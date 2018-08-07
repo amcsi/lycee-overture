@@ -12,6 +12,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\Equip;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
 use amcsi\LyceeOverture\I18n\AutoTranslator\IfCardsInHand;
 use amcsi\LyceeOverture\I18n\AutoTranslator\MoveCharacter;
+use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
 use amcsi\LyceeOverture\I18n\AutoTranslator\StatChanges;
 use amcsi\LyceeOverture\I18n\AutoTranslator\Target;
 use amcsi\LyceeOverture\I18n\AutoTranslator\TurnAndBattle;
@@ -27,8 +28,14 @@ class AutoTranslator
         '、' => ',',
         '・' => ',',
     ];
+    private $quoteTranslator;
 
-    public static function autoTranslate(string $japaneseText): string
+    public function __construct(QuoteTranslator $quoteTranslator)
+    {
+        $this->quoteTranslator = $quoteTranslator;
+    }
+
+    public function autoTranslate(string $japaneseText): string
     {
         $bracketCounts = self::countBrackets($japaneseText);
 
@@ -118,6 +125,7 @@ class AutoTranslator
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
         $autoTranslated = DiscardFromDeck::autoTranslate($autoTranslated);
         $autoTranslated = Target::autoTranslate($autoTranslated);
+        $autoTranslated = $this->quoteTranslator->autoTranslate($autoTranslated);
         $autoTranslated = CannotBeDestroyed::autoTranslate($autoTranslated);
         $autoTranslated = TurnAndBattle::autoTranslate($autoTranslated);
         $autoTranslated = IfCardsInHand::autoTranslate($autoTranslated);

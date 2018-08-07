@@ -23,11 +23,13 @@ class AutoTranslateCommand extends Command
     public const AUTO_TRANSLATE_FIELDS = ['ability_description', 'ability_cost', 'basic_abilities'];
 
     protected $signature = self::COMMAND;
-
     protected $description = 'Attempts translations from Japanese description text based on patterns.';
 
-    public function handle(CardTranslation $cardTranslation, TranslationCoverageChecker $translationCoverageChecker)
-    {
+    public function handle(
+        CardTranslation $cardTranslation,
+        TranslationCoverageChecker $translationCoverageChecker,
+        AutoTranslator $autoTranslator
+    ) {
         $stopwatchEvent = (new Stopwatch())->start('auto-translate-command');
         $this->output->writeln('Starting auto translation of cards.');
         /** @var Builder $japaneseBuilder */
@@ -86,7 +88,7 @@ class AutoTranslateCommand extends Command
             foreach (self::AUTO_TRANSLATE_FIELDS as $key) {
                 try {
                     // TODO: make sure manual translation of auto-translatable fields do not get overwritten.
-                    $englishCard[$key] = AutoTranslator::autoTranslate($japaneseCard->$key);
+                    $englishCard[$key] = $autoTranslator->autoTranslate($japaneseCard->$key);
                 } catch (\LogicException $e) {
                     $this->output->warning(
                         $englishCard['card_id'] . ' - ' . $japaneseCard->$key . ': ' . $e->getMessage()

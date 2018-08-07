@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Providers;
 
+use amcsi\LyceeOverture\Console\Commands\DownloadTranslations;
 use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
+use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
@@ -71,5 +73,14 @@ class AppServiceProvider extends ServiceProvider
         $app->when(OneSkyClient::class)
             ->needs('$oneSkyConfig')
             ->give($config->get('onesky'));
+
+        $translationsFilePath = DownloadTranslations::getTranslationsFilePath();
+        $app->when(QuoteTranslator::class)
+            ->needs('$translations')
+            ->give(
+                function () use ($translationsFilePath) {
+                    return file_exists($translationsFilePath) ? include $translationsFilePath : [];
+                }
+            );
     }
 }
