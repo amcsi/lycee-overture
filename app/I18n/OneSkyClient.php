@@ -10,9 +10,11 @@ use Psr\Http\Message\RequestInterface;
 
 class OneSkyClient
 {
-    private $guzzleClient;
+    private const CHARACTER_TYPES = 'character_types';
+    private const NAMES = 'names';
+    private const ABILITY_NAMES = 'ability_names';
 
-    const CHARACTER_TYPES_JSON = 'character_types.json';
+    private $guzzleClient;
 
     public function __construct(array $oneSkyConfig)
     {
@@ -44,36 +46,72 @@ class OneSkyClient
     /**
      * Uploads character types to OneSky.
      */
-    public function uploadCharacterTypes(array $characterTypesInput): void
+    public function uploadNamesAndTypes(array $characterTypesInput, array $namesInput, array $abilityNamesInput): void
     {
-        $characterTypesToUpload = [];
-        foreach ($characterTypesInput as $characterType) {
-            $characterTypesToUpload[$characterType] = $characterType;
+        $this->_uploadNameOrType(self::CHARACTER_TYPES, $characterTypesInput);
+        $this->_uploadNameOrType(self::NAMES, $namesInput);
+        $this->_uploadNameOrType(self::ABILITY_NAMES, $abilityNamesInput);
+    }
+
+    private function _uploadNameOrType(string $which, array $input): void
+    {
+        switch ($which) {
+            case self::CHARACTER_TYPES:
+            case self::NAMES:
+            case self::ABILITY_NAMES:
+                $key = $which;
+                $oneSkyFileName = "$key.json";
+                break;
+            default:
+                throw new \InvalidArgumentException("Bad which: $which");
         }
 
-        $this->getGuzzleClient()->request('POST', 'files', [
-            RequestOptions::MULTIPART => [
-                [
-                    'name' => 'file',
-                    'contents' => json_encode(['character_types' => $characterTypesToUpload]),
-                    'filename' => self::CHARACTER_TYPES_JSON,
+        $this->getGuzzleClient()->request(
+            'POST',
+            'files',
+            [
+                RequestOptions::MULTIPART => [
+                    [
+                        'name' => 'file',
+                        'contents' => json_encode(
+                            [
+                                $key => $input,
+                            ]
+                        ),
+                        'filename' => $oneSkyFileName,
+                    ],
+                    [
+                        'name' => 'file_format',
+                        'contents' => 'HIERARCHICAL_JSON',
+                    ],
+                    // Deprecate strings not present.
+                    [
+                        'name' => 'is_keeping_all_strings',
+                        'contents' => 'false',
+                    ],
                 ],
-                [
-                    'name' => 'file_format',
-                    'contents' => 'HIERARCHICAL_JSON',
-                ],
-            ],
-        ]);
+            ]
+        );
     }
 
     public function downloadTranslations(): array
     {
-        $result = $this->getGuzzleClient()->get('translations/multilingual', [
-            'query' => [
-                'source_file_name' => self::CHARACTER_TYPES_JSON,
-                'file_format' => 'I18NEXT_MULTILINGUAL_JSON',
-            ],
-        ]);
-        return json_decode($result->getBody()->__toString(), true);
+        $translations = [];
+        foreach ([self::CHARACTER_TYPES, self::NAMES, self::ABILITY_NAMES] as $key) {
+            $oneSkyFilename = "$key.json";
+            $result = $this->getGuzzleClient()->get(
+                'translations/multilingual',
+                [
+                    'query' => [
+                        'source_file_name' => $oneSkyFilename,
+                        'file_format' => 'I18NEXT_MULTILINGUAL_JSON',
+                    ],
+                ]
+            );
+            $result = json_decode($result->getBody()->__toString(), true);
+            /** @noinspection SlowArrayOperationsInLoopInspection */
+            $translations = array_merge_recursive($translations, $result);
+        }
+        return $translations;
     }
 }

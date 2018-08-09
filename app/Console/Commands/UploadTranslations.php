@@ -21,22 +21,26 @@ class UploadTranslations extends Command
         $this->output->text('Started uploading translations to OneSky');
 
         $typesFromDb = CardTranslation::where('locale', 'jp')
-            ->where('character_type', '!=', '')
-            ->select('character_type')->get();
+            ->select(['character_type', 'name', 'ability_name'])->get();
         $types = [];
+        $names = [];
+        $abilityNames = [];
         foreach ($typesFromDb as $typeFromDb) {
             $type = $typeFromDb->character_type;
-            if (!JapaneseCharacterCounter::countJapaneseCharacters($type)) {
-                // No Japanese characters; no need to translate.
-                continue;
+            $name = $typeFromDb->name;
+            $abilityName = $typeFromDb->ability_name;
+            if (JapaneseCharacterCounter::countJapaneseCharacters($type)) {
+                $types[$type] = $type;
             }
-            if (isset($types[$type])) {
-                continue;
+            if (JapaneseCharacterCounter::countJapaneseCharacters($name)) {
+                $names[$name] = $name;
             }
-            $types[$type] = true;
+            if (JapaneseCharacterCounter::countJapaneseCharacters($abilityName)) {
+                $abilityNames[$abilityName] = $abilityName;
+            }
         }
 
-        app(OneSkyClient::class)->uploadCharacterTypes(array_keys($types));
+        app(OneSkyClient::class)->uploadNamesAndTypes($types, $names, $abilityNames);
 
         $this->output->text(
             "Finished uploading translations to OneSky in " . Profiling::stopwatchToHuman($stopwatchEvent->stop())
