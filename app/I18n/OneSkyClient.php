@@ -10,9 +10,9 @@ use Psr\Http\Message\RequestInterface;
 
 class OneSkyClient
 {
-    private const CHARACTER_TYPES = 'character_types';
-    private const NAMES = 'names';
-    private const ABILITY_NAMES = 'ability_names';
+    public const CHARACTER_TYPES = 'character_types';
+    public const NAMES = 'names';
+    public const ABILITY_NAMES = 'ability_names';
 
     private $guzzleClient;
 

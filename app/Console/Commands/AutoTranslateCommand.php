@@ -98,7 +98,13 @@ class AutoTranslateCommand extends Command
                     // Retain the original Japanese text in case of an exception.
                     $englishCard[$key] = $japaneseCard->$key;
                 }
-                $englishCard['character_type'] = $quoteTranslator->tryToTranslateExact($japaneseCard['character_type']);
+                // Manual translations for names, types etc.
+                $englishCard['name'] = $quoteTranslator->tryToTranslateNameExact($japaneseCard['name']);
+                $englishCard['ability_name'] = $quoteTranslator->tryToTranslateNameExact($japaneseCard['ability_name']);
+                $englishCard['character_type'] = $quoteTranslator->tryToTranslateCharacterTypeExact(
+                    $japaneseCard['character_type']
+                );
+
                 $englishCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($englishCard);
             }
             $englishCard = CardTranslation::updateOrCreate([

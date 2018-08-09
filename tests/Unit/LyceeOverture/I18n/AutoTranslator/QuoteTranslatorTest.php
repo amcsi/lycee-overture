@@ -19,13 +19,21 @@ class QuoteTranslatorTest extends TestCase
                                 [
                                     '魔剣' => 'Magic Sword',
                                 ],
+                            'names' =>
+                                [
+                                    'lol' => 'translation',
+                                ],
+                            'ability_names' =>
+                                [
+                                    'lol2' => 'translation2',
+                                ],
                         ],
                 ],
         ];
 
         self::assertSame(
-            'asdf <Magic Sword> asdf',
-            (new QuoteTranslator($translations))->autoTranslate('asdf <魔剣> asdf')
+            'asdf <Magic Sword> asdf "translation" hey "translation2"',
+            (new QuoteTranslator($translations))->autoTranslate('asdf <魔剣> asdf "lol" hey "lol2"')
         );
     }
 }

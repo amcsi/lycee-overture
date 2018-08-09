@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\Locale;
+use amcsi\LyceeOverture\I18n\OneSkyClient;
 
 /**
- * Translates <quote> "like these".
+ * Translates <quotes> "like these".
  */
 class QuoteTranslator
 {
@@ -20,20 +21,39 @@ class QuoteTranslator
         $this->translations = $translations;
     }
 
-    public function autoTranslate(string $autoTranslated)
+    public function autoTranslate(string $autoTranslated): string
     {
-        return preg_replace_callback('/(?<=<)(.+?)(?=>)/', [$this, 'callback'], $autoTranslated);
+        $autoTranslated = preg_replace_callback(
+            '/(?<=<)(.+?)(?=>)/',
+            [$this, 'characterTypeCallback'],
+            $autoTranslated
+        );
+        return preg_replace_callback(
+            '/"(.+?)"/',
+            [$this, 'nameCallback'],
+            $autoTranslated
+        );
     }
 
-    public function callback(array $matches): string
+    public function characterTypeCallback(array $matches): string
     {
-        return $this->tryToTranslateExact($matches[0]);
+        return $this->tryToTranslateCharacterTypeExact($matches[0]);
     }
 
-    public function tryToTranslateExact(string $quoted): string
+    public function tryToTranslateCharacterTypeExact(string $quoted): string
     {
-        return $this->translations[Locale::ENGLISH]['translation']['character_types'][$quoted] ?? $quoted;
+        return $this->translations[Locale::ENGLISH]['translation'][OneSkyClient::CHARACTER_TYPES][$quoted] ?? $quoted;
     }
 
+    public function nameCallback(array $matches): string
+    {
+        return '"' . $this->tryToTranslateNameExact($matches[1]) . '"';
+    }
 
+    public function tryToTranslateNameExact(string $quoted): string
+    {
+        return $this->translations[Locale::ENGLISH]['translation'][OneSkyClient::NAMES][$quoted] ??
+            $this->translations[Locale::ENGLISH]['translation'][OneSkyClient::ABILITY_NAMES][$quoted] ??
+            $quoted;
+    }
 }
