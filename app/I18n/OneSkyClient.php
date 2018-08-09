@@ -38,6 +38,11 @@ class OneSkyClient
         $this->guzzleClient = $guzzleClient;
     }
 
+    public static function getTranslationGroupKeys(): array
+    {
+        return [self::CHARACTER_TYPES, self::NAMES, self::ABILITY_NAMES];
+    }
+
     public function getGuzzleClient(): Client
     {
         return $this->guzzleClient;
@@ -97,7 +102,7 @@ class OneSkyClient
     public function downloadTranslations(): array
     {
         $translations = [];
-        foreach ([self::CHARACTER_TYPES, self::NAMES, self::ABILITY_NAMES] as $key) {
+        foreach (self::getTranslationGroupKeys() as $key) {
             $oneSkyFilename = "$key.json";
             $result = $this->getGuzzleClient()->get(
                 'translations/multilingual',

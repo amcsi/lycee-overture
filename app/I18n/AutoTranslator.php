@@ -41,6 +41,9 @@ class AutoTranslator
 
         $autoTranslated = $japaneseText;
 
+        // Quoted translation must happen before full-width characters are replaced.
+        $autoTranslated = $this->quoteTranslator->autoTranslate($autoTranslated);
+
         $autoTranslated = preg_replace('/。$/', '.', $autoTranslated);
         $autoTranslated = preg_replace_callback(
             '/。|、|・/',
@@ -125,7 +128,6 @@ class AutoTranslator
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);
         $autoTranslated = DiscardFromDeck::autoTranslate($autoTranslated);
         $autoTranslated = Target::autoTranslate($autoTranslated);
-        $autoTranslated = $this->quoteTranslator->autoTranslate($autoTranslated);
         $autoTranslated = CannotBeDestroyed::autoTranslate($autoTranslated);
         $autoTranslated = TurnAndBattle::autoTranslate($autoTranslated);
         $autoTranslated = IfCardsInHand::autoTranslate($autoTranslated);

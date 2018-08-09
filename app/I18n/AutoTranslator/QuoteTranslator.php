@@ -18,18 +18,30 @@ class QuoteTranslator
      */
     public function __construct(array $translations)
     {
+        foreach (OneSkyClient::getTranslationGroupKeys() as $groupKey) {
+            if (isset($translations[Locale::ENGLISH]['translation'][$groupKey])) {
+                $localTranslations =& $translations[Locale::ENGLISH]['translation'][$groupKey];
+                foreach ($localTranslations as $key => $value) {
+                    // Have space-stripped copies of the string as source texts.
+                    // This is because some name references in card descriptions have no space, where the named card does.
+                    $localTranslations[str_replace(' ', '', $key)] = $value;
+                    // Also translate full width characters in case the card text references card names with full width chars.
+                    $localTranslations[FullWidthCharacters::translateFullWidthCharacters($key)] = $value;
+                }
+            }
+        }
         $this->translations = $translations;
     }
 
     public function autoTranslate(string $autoTranslated): string
     {
         $autoTranslated = preg_replace_callback(
-            '/(?<=<)(.+?)(?=>)/',
+            '/(?<=＜)(.+?)(?=＞)/u',
             [$this, 'characterTypeCallback'],
             $autoTranslated
         );
         return preg_replace_callback(
-            '/"(.+?)"/',
+            '/(?<=「)(.+?)(?=」)/u',
             [$this, 'nameCallback'],
             $autoTranslated
         );
@@ -47,7 +59,7 @@ class QuoteTranslator
 
     public function nameCallback(array $matches): string
     {
-        return '"' . $this->tryToTranslateNameExact($matches[1]) . '"';
+        return $this->tryToTranslateNameExact($matches[0]);
     }
 
     public function tryToTranslateNameExact(string $quoted): string
