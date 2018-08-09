@@ -11,7 +11,7 @@ class ImportAllCommand extends Command
 {
     public const COMMAND = 'lycee:import-all';
 
-    protected $signature = self::COMMAND . ' {--images : Also download images from website and upload to cloudinary}';
+    protected $signature = self::COMMAND . ' {--images : Also download images from website and upload to cloudinary} {--translations : Also download manual translations from OneSky}';
 
     protected $description = 'Does importing of the CSV, its data, and auto translations.';
 
@@ -24,6 +24,12 @@ class ImportAllCommand extends Command
         $this->call(DownloadCsvCommand::COMMAND);
         $this->call(ImportBasicCardsCommand::COMMAND);
         $this->call(ImportTextsCommand::COMMAND);
+
+        if ($this->option('translations')) {
+            $this->call(DownloadTranslations::COMMAND);
+            $this->call(UploadTranslations::COMMAND);
+        }
+
         $this->call(AutoTranslateCommand::COMMAND);
 
         if ($this->option('images')) {

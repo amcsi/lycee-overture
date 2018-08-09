@@ -10,8 +10,10 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class DownloadTranslations extends Command
 {
-    protected $signature = 'lycee:download-translations';
-    protected $description = 'Downloads translatables to OneSky';
+    public const COMMAND = 'lycee:download-translations';
+
+    protected $signature = self::COMMAND;
+    protected $description = 'Downloads translatables from OneSky';
 
     public function handle()
     {

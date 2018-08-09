@@ -6,7 +6,7 @@ rm -f storage/logs/swoole_http.pid
 php artisan migrate
 
 # Do the import tasks (in the background).
-php artisan lycee:import-all &
+php artisan lycee:import-all --translations &
 
 # Start nginx.
 nginx

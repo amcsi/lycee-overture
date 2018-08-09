@@ -12,7 +12,9 @@ use Symfony\Component\Stopwatch\Stopwatch;
 
 class UploadTranslations extends Command
 {
-    protected $signature = 'lycee:upload-translations';
+    public const COMMAND = 'lycee:upload-translations';
+
+    protected $signature = self::COMMAND;
     protected $description = 'Uploads translatables to OneSky';
 
     public function handle()
