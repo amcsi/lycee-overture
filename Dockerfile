@@ -57,6 +57,7 @@ RUN npm install
 
 COPY resources/assets resources/assets
 COPY webpack.mix.js .
+COPY .babelrc .
 RUN npm run production
 
 COPY . .
