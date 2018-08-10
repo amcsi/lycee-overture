@@ -129,6 +129,10 @@ class AutoTranslatorTest extends TestCase
                 'When this character supports another character.',
                 'このキャラでサポートをしたとき. ',
             ],
+            'When this character supports another character (with ga)' => [
+                'When this character supports another character.',
+                'このキャラがサポートをしたとき. ',
+            ],
             'When this character gets supported' => [
                 'When this character gets supported.',
                 'このキャラにサポートをしたとき. ',

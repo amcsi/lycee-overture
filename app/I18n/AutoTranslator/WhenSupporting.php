@@ -10,7 +10,7 @@ class WhenSupporting
 {
     public static function autoTranslate(string $text): string
     {
-        $text = str_replace('このキャラでサポートをしたとき', 'when this character supports another character', $text);
+        $text = preg_replace('/このキャラ(で|が)サポートをしたとき/u', 'when this character supports another character', $text);
         $text = str_replace('このキャラにサポートをしたとき', 'when this character gets supported', $text);
         return $text;
     }
