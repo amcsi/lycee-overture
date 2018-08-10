@@ -48,9 +48,6 @@
       },
     },
     components: { CardImage },
-    created() {
-      this.poppers = [];
-    },
     methods: {
       setupPopper() {
         const reference = this.$el.closest('td');
@@ -77,7 +74,9 @@
       },
     },
     destroyed() {
-      this.poppers.forEach(popper => popper.destroy());
+      if (this.poppers) {
+        this.poppers.forEach(popper => popper.destroy());
+      }
     },
   };
 </script>
