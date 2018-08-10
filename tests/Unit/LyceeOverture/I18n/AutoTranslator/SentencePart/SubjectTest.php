@@ -139,6 +139,10 @@ class SubjectTest extends TestCase
                 ' this character or that character',
                 'このキャラまたはそのキャラ',
             ],
+            'compound subject adjacent' => [
+                ' 1  character adjacent to this character',
+                'このキャラに隣接したキャラ1体',
+            ],
         ];
     }
 }

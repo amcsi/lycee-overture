@@ -13,6 +13,7 @@ class Subject
     // language=regexp
     private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?((\d)[体枚]|全て)?';
     private const REGEX_COMPOUND_AND_OR = '[subject](と|または)[subject]';
+    private const REGEX_COMPOUND_ADJACENT = '[subject]に隣接した[subject]';
 
     private $subjectText;
 
@@ -33,7 +34,7 @@ class Subject
      */
     public static function createInstance(string $subjectPart): self
     {
-        if (preg_match('/^' . self::getCompoundAndOrRegex() . '$/u', $subjectPart, $matches)) {
+        if (preg_match('/^' . self::getCompoundRegexFor(self::REGEX_COMPOUND_AND_OR) . '$/u', $subjectPart, $matches)) {
             $andOr = $matches[2] === 'と' ? 'and' : 'or';
             return new self(
                 sprintf(
@@ -45,6 +46,22 @@ class Subject
             );
         }
 
+        if (preg_match(
+            '/^' . self::getCompoundRegexFor(self::REGEX_COMPOUND_ADJACENT) . '$/u',
+            $subjectPart,
+            $matches
+        )) {
+            $mainSubject = self::createInstance($matches[2]);
+            return new self(
+                sprintf(
+                    '%s adjacent to%s',
+                    $mainSubject->getSubjectText(),
+                    self::autoTranslateStrict($matches[1])
+                ), $mainSubject->plural()
+            );
+        }
+
+        // Compound subjects end above here.
 
         if (!preg_match('/^(?:' . self::REGEX . ')$/u', $subjectPart, $matches)) {
             // This static method expects subject substrings that already match self::getUncapturedRegex().
@@ -265,7 +282,12 @@ class Subject
     {
         $uncapturedRegex = RegexHelper::uncapture(self::REGEX);
 
-        return sprintf('(?:%s|%s)', RegexHelper::uncapture(self::getCompoundAndOrRegex()), $uncapturedRegex);
+        return sprintf(
+            '(?:%s|%s|%s)',
+            RegexHelper::uncapture(self::getCompoundRegexFor(self::REGEX_COMPOUND_AND_OR)),
+            RegexHelper::uncapture(self::getCompoundRegexFor(self::REGEX_COMPOUND_ADJACENT)),
+            $uncapturedRegex
+        );
 
     }
 
@@ -303,11 +325,13 @@ class Subject
 
     /**
      * Gets the regular expression matching a compound subject with and/or.
+     * @param string $compoundReplacable A subregex string with multiple [subject]s.
+     * @return string
      */
-    private static function getCompoundAndOrRegex(): string
+    private static function getCompoundRegexFor(string $compoundReplacable): string
     {
         $subjectRegex = RegexHelper::uncapture(self::REGEX);
-        return str_replace('[subject]', "($subjectRegex)", self::REGEX_COMPOUND_AND_OR);
+        return str_replace('[subject]', "($subjectRegex)", $compoundReplacable);
     }
 
     private static function replaceIfQuoted(string $quoted): string
