@@ -249,6 +249,10 @@ class AutoTranslatorTest extends TestCase
                 'Do not untap this character in your next wake-up phase',
                 'このキャラは次の自分のウェイクアップで未行動に戻らない',
             ],
+            ' you can discard from your hand' => [
+                'You can discard 1 card from your hand',
+                '自分の手札を1枚破棄できる',
+            ],
         ];
     }
 }

@@ -144,6 +144,17 @@ class AutoTranslator
             },
             $autoTranslated
         );
+        $autoTranslated = preg_replace_callback(
+            "/自分の手札を(\d)枚破棄(する|できる)/u",
+            function (array $matches): string {
+                $howMany = next($matches);
+                $can = next($matches) === 'できる';
+                $s = '1' !== $howMany;
+                $youCan = $can ? 'you can ' : '';
+                return "${youCan}discard $howMany card$s from your hand";
+            },
+            $autoTranslated
+        );
 
 
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
