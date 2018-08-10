@@ -3,8 +3,8 @@
  */
 
 import VueRouter from 'vue-router';
-import CardList from './components/CardList';
-import IndexPage from './pages/IndexPage';
+const CardList = () => import('./components/CardList');
+const IndexPage = () => import('./pages/IndexPage');
 
 const router = new VueRouter({
   mode: 'history', // HTML5 history.
