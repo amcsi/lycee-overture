@@ -143,6 +143,10 @@ class SubjectTest extends TestCase
                 ' 1  character adjacent to this character',
                 'このキャラに隣接したキャラ1体',
             ],
+            '4 or more enemy characters' => [
+                ' 4 or more enemy characters',
+                '相手キャラが4体以上',
+            ],
         ];
     }
 }

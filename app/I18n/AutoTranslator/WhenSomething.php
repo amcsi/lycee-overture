@@ -129,6 +129,13 @@ class WhenSomething
             },
             $text
         );
+        $text = Action::subjectReplace(
+            "/($subjectRegex)の場合/u",
+            function (): Action {
+                return new Action("when there are [subject] on the field");
+            },
+            $text
+        );
 
         return trim($text);
     }

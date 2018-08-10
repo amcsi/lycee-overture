@@ -11,7 +11,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\RegexHelper;
 class Subject
 {
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?((\d)[体枚]|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?(が?(\d)[体枚](?:以(上|下))?|全て)?';
     private const REGEX_COMPOUND_AND_OR = '[subject](と|または)[subject]';
     private const REGEX_COMPOUND_ADJACENT = '[subject]に隣接した[subject]';
 
@@ -156,6 +156,7 @@ class Subject
         $allOrHowMany = next($matches);
         $all = $allOrHowMany === '全て';
         $howMany = next($matches);
+        $howManyOrMoreLessSource = next($matches);
         $plural = false;
         if (!$target) {
             if ($all) {
@@ -219,7 +220,11 @@ class Subject
                     $noun = "${noun}s";
                 }
                 if ($howMany) {
-                    $text = "$howMany $text$something {$noun}";
+                    $howManyOrMore = $howMany;
+                    if ($howManyOrMoreLessSource) {
+                        $howManyOrMore .= ' ' . ($howManyOrMoreLessSource === '上' ? 'or more' : 'or less');
+                    }
+                    $text = "$howManyOrMore $text$something {$noun}";
                 } else {
                     $text = "$text$something {$noun}";
                 }
