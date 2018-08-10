@@ -95,6 +95,14 @@ class WhenSomethingTest extends TestCase
                 'when there are 7 or more of your characters removed from play',
                 '除外された自分のキャラが7体以上の場合',
             ],
+            'when equipped' => [
+                'when a character is equipped with an item',
+                'キャラがアイテムを装備したとき',
+            ],
+            'while equipped' => [
+                'while a character is equipped with an item',
+                'キャラがアイテムを装備している場合',
+            ],
         ];
     }
 }

@@ -121,6 +121,14 @@ class WhenSomething
             'when there are $1 or more of your characters removed from play',
             $text
         );
+        $text = Action::subjectReplace(
+            "/($subjectRegex)がアイテムを装備(したとき|している場合)/u",
+            function (array $matches): Action {
+                $whenOrWhile = $matches[1] === 'したとき' ? 'when' : 'while';
+                return new Action("$whenOrWhile [subject] is equipped with an item");
+            },
+            $text
+        );
 
         return trim($text);
     }
