@@ -5,5 +5,7 @@
 <script>
   window.vars = {!! json_encode($jsVars) !!};
 </script>
+<script defer src="{{ mix('js/manifest.js') }}"></script>
+<script defer type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
 <script defer type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 @endsection
