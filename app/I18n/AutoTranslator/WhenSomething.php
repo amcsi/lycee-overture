@@ -116,6 +116,11 @@ class WhenSomething
             'when this character is summoned except by Engage summon',
             $text
         );
+        $text = preg_replace(
+            '/除外された自分のキャラが(\d+)体以上の場合/u',
+            'when there are $1 or more of your characters removed from play',
+            $text
+        );
 
         return trim($text);
     }

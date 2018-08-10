@@ -91,6 +91,10 @@ class WhenSomethingTest extends TestCase
                 'when opposing character is defeated in battle',
                 '対戦キャラがダウンしていた場合',
             ],
+            'when there are n excluded characters' => [
+                'when there are 7 or more of your characters removed from play',
+                '除外された自分のキャラが7体以上の場合',
+            ],
         ];
     }
 }
