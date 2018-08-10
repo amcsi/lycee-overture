@@ -25,6 +25,9 @@ function abilityTypeCallback(match, contents) {
  * Formats card text to use pretty icons and stuff.
  */
 export default function(text = '') {
+  text = text
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
   text = text.replace(/\[T]/g, getIcon('tap'));
   text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, simpleCallback);
   text = text.replace(/\[(Activate|Trigger|Continuous)]/g, abilityTypeCallback);
