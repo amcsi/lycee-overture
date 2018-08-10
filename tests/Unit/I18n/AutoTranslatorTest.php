@@ -233,6 +233,10 @@ class AutoTranslatorTest extends TestCase
                 'Put 1 card from your hand on the top of your deck',
                 '自分の手札を1枚デッキの上に置く',
             ],
+            'Can defend despite tapped' => [
+                'All your [flower] characters can defend even while tapped.',
+                '味方[flower]キャラ全ては、行動済みでも防御キャラに指定できる。',
+            ],
         ];
     }
 }

@@ -13,6 +13,8 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
 use amcsi\LyceeOverture\I18n\AutoTranslator\IfCardsInHand;
 use amcsi\LyceeOverture\I18n\AutoTranslator\MoveCharacter;
 use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
+use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Action;
+use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
 use amcsi\LyceeOverture\I18n\AutoTranslator\StatChanges;
 use amcsi\LyceeOverture\I18n\AutoTranslator\Target;
 use amcsi\LyceeOverture\I18n\AutoTranslator\TurnAndBattle;
@@ -38,6 +40,7 @@ class AutoTranslator
     public function autoTranslate(string $japaneseText): string
     {
         $bracketCounts = self::countBrackets($japaneseText);
+        $subjectRegex = Subject::getUncapturedRegex();
 
         $autoTranslated = $japaneseText;
 
@@ -121,6 +124,11 @@ class AutoTranslator
                 $where = $whereSource === '上' ? 'top' : 'bottom';
                 return "Put $howMany card$s from your hand on the $where of your deck";
             },
+            $autoTranslated
+        );
+        $autoTranslated = Action::subjectReplace(
+            "/($subjectRegex)は, 行動済みでも防御キャラに指定できる/u",
+            'can defend even while tapped',
             $autoTranslated
         );
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
