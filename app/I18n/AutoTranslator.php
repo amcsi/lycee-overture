@@ -60,6 +60,10 @@ class AutoTranslator
         // Also replace − (weird alternative dash).
         $autoTranslated = preg_replace('/[ー−](\d)/u', '-$1', $autoTranslated);
 
+        // Targets appearing between square instead of curly brackets (tsk-tsk original website creators).
+        // But only in the beginning of the text, and just for a single card's sake -.-
+        $autoTranslated = preg_replace("/^\\[($subjectRegex)]/u", '{$1}', $autoTranslated, -1, $count);
+
         $autoTranslated = AbilityGainsOrOther::autoTranslate($autoTranslated);
 
         // "... get $statChanges."
@@ -126,6 +130,7 @@ class AutoTranslator
             },
             $autoTranslated
         );
+
         $autoTranslated = Action::subjectReplace(
             "/($subjectRegex)は, 行動済みでも防御キャラに指定できる/u",
             'can defend even while tapped',
@@ -160,13 +165,24 @@ class AutoTranslator
     }
 
     /**
+     * Use this method to keep track of how many brackets there are before and after automatically translating.
+     * Having not the same count is bad, and it means some logic in the code is replacing text badly.
+     *
      * @param string $japaneseText
      * @return array
      */
     private static function countBrackets(string $japaneseText): array
     {
-        $charsToLookAt = [ord('{') => 0, ord('}') => 0];
+        $leftSquareBracket = \ord('[');
+        $rightSquareBracket = \ord(']');
+        $leftBrace = \ord('{');
+        $rightBrace = \ord('}');
+        $charsToLookAt = [$leftBrace => 0, $rightBrace => 0, $leftSquareBracket => 0, $rightSquareBracket => 0];
         $charCounts = array_intersect_key(count_chars($japaneseText, 1), $charsToLookAt);
-        return $charCounts;
+        // Allow braces and brackets to be interchangable, so add them together.
+        return [
+            ($charCounts[$leftBrace] ?? 0) + ($charCounts[$leftSquareBracket] ?? 0),
+            ($charCounts[$rightBrace] ?? 0) + ($charCounts[$rightSquareBracket] ?? 0),
+        ];
     }
 }
