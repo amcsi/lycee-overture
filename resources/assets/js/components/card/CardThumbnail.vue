@@ -48,6 +48,9 @@
       },
     },
     components: { CardImage },
+    created() {
+      this.poppers = [];
+    },
     methods: {
       setupPopper() {
         const reference = this.$el.closest('td');
