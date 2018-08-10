@@ -4,9 +4,12 @@
 
 import VueRouter from 'vue-router';
 
-const asyncComponentize = componentPromise => () => ({
+/**
+ * Loading wrapper for code-split async components in the route.
+ */
+const loadingizeAsyncComponent = asyncComponent => () => ({
   // The component to load (should be a Promise)
-  component: componentPromise,
+  component: asyncComponent(),
   // A component to use while the async component is loading
   loading: {
     render(h) {
@@ -22,8 +25,8 @@ const asyncComponentize = componentPromise => () => ({
   timeout: Infinity,
 });
 
-const CardList = asyncComponentize(import('./components/CardList'));
-const IndexPage = asyncComponentize(import ('./pages/IndexPage'));
+const CardList = loadingizeAsyncComponent(() => import('./components/CardList'));
+const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
 
 const router = new VueRouter({
   mode: 'history', // HTML5 history.
