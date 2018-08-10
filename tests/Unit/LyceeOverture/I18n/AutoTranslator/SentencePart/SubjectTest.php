@@ -115,6 +115,10 @@ class SubjectTest extends TestCase
                 ' 1  character in your graveyard with a cost of 2 or less',
                 '自分のゴミ箱のコストが2点以下のキャラ1体',
             ],
+            'battling character' => [
+                ' 1  character participating in battle',
+                'バトル参加キャラ1体',
+            ],
         ];
     }
 }
