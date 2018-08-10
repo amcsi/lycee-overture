@@ -23,7 +23,7 @@ class StatChanges
         $statsToNumberAction = "を(\\d|\[$subjectRegex])に";
 
         $pattern = "/($subjectRegex)({$statPlusMinusAction}|{$statsToNumberAction})(する|できる)\./u";
-        return Action::subjectReplaceCallback(
+        return Action::subjectReplace(
             $pattern,
             [self::class, 'callback'],
             $text

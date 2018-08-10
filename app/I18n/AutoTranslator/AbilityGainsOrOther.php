@@ -19,7 +19,7 @@ class AbilityGainsOrOther
 
         // "This character gains X."
         $pattern = "/(相手は)?($subjectRegex)($getsSomethingActionRegex)/u";
-        $text = Action::subjectReplaceCallback(
+        $text = Action::subjectReplace(
             $pattern,
             [self::class, 'callback'],
             $text,
@@ -95,6 +95,6 @@ class AbilityGainsOrOther
                 }
         }
 
-        return new Action("$doesAction");
+        return new Action($doesAction);
     }
 }

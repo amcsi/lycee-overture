@@ -18,7 +18,7 @@ class CannotBeDestroyed
 
         $regex = "/($subjectRegex)は($turnAndBattleRegex)?ダウンしない/u";
 
-        return Action::subjectReplaceCallback($regex, [self::class, 'callback'], $autoTranslated);
+        return Action::subjectReplace($regex, [self::class, 'callback'], $autoTranslated);
     }
 
     public static function callback(array $matches): Action

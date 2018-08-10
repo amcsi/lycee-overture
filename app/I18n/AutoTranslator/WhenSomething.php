@@ -35,9 +35,9 @@ class WhenSomething
             'when you declare an attack with this character',
             $text
         );
-        $text = str_replace(
-            'このキャラがダウンしたとき',
-            'when this character is defeated in battle',
+        $text = Action::subjectReplace(
+            "/($subjectRegex)がダウン(?:したとき|していた場合)/u",
+            'when [subject] is defeated in battle',
             $text
         );
         $text = str_replace('味方キャラがエンゲージ登場している場合', 'when an ally character gets engaged', $text);
@@ -117,6 +117,6 @@ class WhenSomething
             $text
         );
 
-        return $text;
+        return trim($text);
     }
 }

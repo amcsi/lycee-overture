@@ -87,6 +87,10 @@ class WhenSomethingTest extends TestCase
                 'when this character is summoned except by Engage summon',
                 'このキャラがエンゲージ登場以外で登場したとき',
             ],
+            'when opponent defeated in battle' => [
+                'when opposing character is defeated in battle',
+                '対戦キャラがダウンしていた場合',
+            ],
         ];
     }
 }
