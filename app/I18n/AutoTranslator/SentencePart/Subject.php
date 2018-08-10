@@ -11,7 +11,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\RegexHelper;
 class Subject
 {
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?((\d)[体枚]|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?((\d)[体枚]|全て)?';
 
     private $subjectText;
 
@@ -43,6 +43,11 @@ class Subject
         $target = next($matches); // The {target} if any.
         $battlingOrGraveyard = next($matches); // Graveyard card, or battling character.
         $whosGraveyard = next($matches);
+
+        $sameColumnOrRow = next($matches);
+        $whoseColumnOrRow = next($matches);
+        $columnOrRowSource = next($matches);
+
         $adjectiveSource = next($matches); // This "untapped" character / ...with a Cost/DP of n or less.
         $statForRestrictionSource = next($matches); // For stat/property restrictions. E.g. コスト/DP/AP/SP/DMG
         $costAmountSource = next($matches);
@@ -208,6 +213,11 @@ class Subject
                             break;
                     }
                 }
+            }
+            if ($sameColumnOrRow) {
+                $whose = $whoseColumnOrRow === 'この' ? 'this' : 'that';
+                $columnOrRow = $columnOrRowSource === '列' ? 'row' : 'column';
+                $inSomewhere .= " in the same $columnOrRow as $whose character";
             }
             $text = " $text$inSomewhere$additionalAdjective";
 
