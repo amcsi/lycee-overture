@@ -131,6 +131,14 @@ class SubjectTest extends TestCase
                 ' 1 ally character in the same column as that character',
                 'そのキャラと同オーダーの味方キャラ1体',
             ],
+            'compound subject' => [
+                ' this character and that character',
+                'このキャラとそのキャラ',
+            ],
+            'compound subject or' => [
+                ' this character or that character',
+                'このキャラまたはそのキャラ',
+            ],
         ];
     }
 }

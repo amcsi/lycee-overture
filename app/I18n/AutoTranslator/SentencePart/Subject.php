@@ -12,6 +12,7 @@ class Subject
 {
     // language=regexp
     private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?((\d)[体枚]|全て)?';
+    private const REGEX_COMPOUND_AND_OR = '[subject](と|または)[subject]';
 
     private $subjectText;
 
@@ -32,6 +33,19 @@ class Subject
      */
     public static function createInstance(string $subjectPart): self
     {
+        if (preg_match('/^' . self::getCompoundAndOrRegex() . '$/u', $subjectPart, $matches)) {
+            $andOr = $matches[2] === 'と' ? 'and' : 'or';
+            return new self(
+                sprintf(
+                    '%s %s%s',
+                    self::autoTranslateStrict($matches[1]),
+                    $andOr,
+                    self::autoTranslateStrict($matches[3])
+                ), $andOr === 'and'
+            );
+        }
+
+
         if (!preg_match('/^(?:' . self::REGEX . ')$/u', $subjectPart, $matches)) {
             // This static method expects subject substrings that already match self::getUncapturedRegex().
             throw new \InvalidArgumentException(
@@ -249,7 +263,10 @@ class Subject
 
     public static function getUncapturedRegex(): string
     {
-        return RegexHelper::uncapture(self::REGEX);
+        $uncapturedRegex = RegexHelper::uncapture(self::REGEX);
+
+        return sprintf('(?:%s|%s)', RegexHelper::uncapture(self::getCompoundAndOrRegex()), $uncapturedRegex);
+
     }
 
     public function getSubjectText(): string
@@ -282,6 +299,15 @@ class Subject
                 $text . "'" : // Already ends' with an s
                 "'s"
             ); // end's.
+    }
+
+    /**
+     * Gets the regular expression matching a compound subject with and/or.
+     */
+    private static function getCompoundAndOrRegex(): string
+    {
+        $subjectRegex = RegexHelper::uncapture(self::REGEX);
+        return str_replace('[subject]', "($subjectRegex)", self::REGEX_COMPOUND_AND_OR);
     }
 
     private static function replaceIfQuoted(string $quoted): string
