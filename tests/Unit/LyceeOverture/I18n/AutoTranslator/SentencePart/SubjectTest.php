@@ -111,6 +111,10 @@ class SubjectTest extends TestCase
                 ' 1 ally <継続> character',
                 '味方<継続>キャラ1体',
             ],
+            'graveyard and cost combination' => [
+                ' 1  character in your graveyard with a cost of 2 or less',
+                '自分のゴミ箱のコストが2点以下のキャラ1体',
+            ],
         ];
     }
 }

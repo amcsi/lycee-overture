@@ -11,7 +11,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\RegexHelper;
 class Subject
 {
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?((自分の|相手の)?ゴミ箱の)?(味方|相手|対象の|対戦|この|その)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?((\d)[体枚]|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(味方|相手|対象の|対戦|この|その)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?((\d)[体枚]|全て)?';
 
     private $subjectText;
 
@@ -41,6 +41,8 @@ class Subject
 
         $something = '';
         $target = next($matches); // The {target} if any.
+        $graveyard = next($matches); // Graveyard card.
+        $whosGraveyard = next($matches);
         $adjectiveSource = next($matches); // This "untapped" character / ...with a Cost/DP of n or less.
         $statForRestrictionSource = next($matches); // For stat/property restrictions. E.g. コスト/DP/AP/SP/DMG
         $costAmountSource = next($matches);
@@ -72,8 +74,6 @@ class Subject
             }
         }
 
-        $graveyard = next($matches); // Graveyard card.
-        $whosGraveyard = next($matches);
         $subject = next($matches); // Ally or Enemy in Japanese (or '')
         $typeSource = next($matches); // e.g. [sun] <- characters, "quoted"
         if ($typeSource) {
