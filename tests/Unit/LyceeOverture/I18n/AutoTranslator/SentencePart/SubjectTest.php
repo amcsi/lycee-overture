@@ -119,6 +119,10 @@ class SubjectTest extends TestCase
                 ' 1  character participating in battle',
                 'バトル参加キャラ1体',
             ],
+            'enemy item' => [
+                ' 1 enemy item',
+                '相手のアイテム1枚',
+            ],
         ];
     }
 }

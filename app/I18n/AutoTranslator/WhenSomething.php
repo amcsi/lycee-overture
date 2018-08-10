@@ -45,7 +45,7 @@ class WhenSomething
 
         // When $subject gets destroyed or moves.
         $text = preg_replace_callback(
-            "/($subjectRegex)(を破棄したとき|が移動したとき)/",
+            "/($subjectRegex)(を破棄したとき|が移動したとき)/u",
             function (array $matches) {
                 $subject = Subject::createInstance(next($matches));
                 $actionSource = next($matches);
