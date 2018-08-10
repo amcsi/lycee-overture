@@ -41,6 +41,7 @@ class AutoTranslator
     {
         $bracketCounts = self::countBrackets($japaneseText);
         $subjectRegex = Subject::getUncapturedRegex();
+        $turnAndBattleRegex = TurnAndBattle::getUncapturedRegex();
 
         $autoTranslated = $japaneseText;
 
@@ -136,6 +137,15 @@ class AutoTranslator
             'can defend even while tapped',
             $autoTranslated
         );
+        $autoTranslated = Action::subjectReplace(
+            "/($subjectRegex)は($turnAndBattleRegex)未行動に戻らない/u",
+            function (array $matches): Action {
+                return new Action('do not untap [subject] ' . TurnAndBattle::autoTranslate($matches[1]));
+            },
+            $autoTranslated
+        );
+
+
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
         $autoTranslated = WhenSomething::autoTranslate($autoTranslated);
         $autoTranslated = DrawCards::autoTranslate($autoTranslated);

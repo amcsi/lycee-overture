@@ -30,7 +30,7 @@ class TurnAndBattle
     {
         $subjectRegex = Subject::getUncapturedRegex();
         // language=regexp
-        return "(味方キャラがダウンした)?(次の)?(この|自|相手|($subjectRegex))?の?(ターン|バトル|(?:攻撃)?宣言|攻撃|防御)(開始時|中|終了時(?:まで)?|に対応)?((?:に|して)使用する|(?:に|して)使用できない)?";
+        return "(味方キャラがダウンした)?(次の)?(この|自分?|相手|($subjectRegex))?の?(ターン|バトル|(?:攻撃)?宣言|攻撃|防御|ウェイクアップ)(開始時|中|終了時(?:まで)?|に対応|で)?((?:に|して)使用する|(?:に|して)使用できない)?";
     }
 
     private static function callback(array $matches): string
@@ -64,6 +64,9 @@ class TurnAndBattle
             case '攻撃宣言':
                 $turnOrBattle = 'attack declaration';
                 break;
+            case 'ウェイクアップ':
+                $turnOrBattle = 'wake-up phase';
+                break;
             default:
                 throw new \LogicException("Unexpected turnOrBattleMatched: $turnOrBattleMatched");
         }
@@ -86,6 +89,9 @@ class TurnAndBattle
             case 'に対応':
                 $when = 'as a response to';
                 break;
+            case 'で':
+                $when = 'in';
+                break;
             default:
                 // Can't translate this in that case.
                 return $matches[0];
@@ -96,6 +102,7 @@ class TurnAndBattle
                 $what = "this $turnOrBattle";
                 break;
             case '自':
+            case '自分':
                 $what = "your$next $turnOrBattle";
                 break;
             case '相手':
@@ -134,6 +141,8 @@ class TurnAndBattle
             case 'に使用できない':
             case 'して使用できない':
                 return "do not use $when $what";
+            case 'で未行動に戻らない':
+                return "do not untap $what $when";
             case '':
                 return "$when $what";
                 break;

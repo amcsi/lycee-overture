@@ -91,6 +91,18 @@ class TurnAndBattleTest extends TestCase
                 "use as a response to your opponent's attack declaration",
                 '相手の攻撃宣言に対応して使用する',
             ],
+            'does not wake up next wakeup' => [
+                'in the next wake-up phase',
+                '次のウェイクアップで',
+            ],
+            'does not wake up your next wakeup' => [
+                'in your next wake-up phase',
+                '次の自分のウェイクアップで',
+            ],
+            'does not wake up opponent next wakeup' => [
+                "in your opponent's next wake-up phase",
+                '次の相手のウェイクアップで',
+            ],
         ];
     }
 }
