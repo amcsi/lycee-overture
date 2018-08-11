@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Monolog\Handler\StreamHandler;
 
@@ -35,7 +36,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'stderr'],
         ],
 
         'single' => [

@@ -5,6 +5,7 @@ use amcsi\LyceeOverture\Http\Controllers\CardController;
 use amcsi\LyceeOverture\Http\Controllers\StatisticsController;
 use Dingo\Api\Routing\Router;
 use Illuminate\Http\Request;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +26,18 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version(
     'v1',
     function (Router $api) {
+        // Locale auto-detection based on headers.
         $api->group(
-            ['prefix' => 'cards'],
+            ['prefix' => LaravelLocalization::setLocale()],
             function (Router $api) {
-                $api->resource('/', CardController::class, ['only' => ['index']]);
+                $api->group(
+                    ['prefix' => 'cards'],
+                    function (Router $api) {
+                        $api->resource('/', CardController::class, ['only' => ['index']]);
+                    }
+                );
+                $api->get('/statistics', StatisticsController::class . '@index');
             }
         );
-        $api->get('/statistics', StatisticsController::class . '@index');
     }
 );
