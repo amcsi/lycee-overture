@@ -16,6 +16,7 @@
     "danielstjules/stringy": "^3.1",
     "dimsav/laravel-translatable": "^9.0",
     "dingo/api": "^1",
+    "doctrine/dbal": "^2.8",
     "fideloper/proxy": "^4.0",
     "guzzlehttp/guzzle": "^6.3",
     "laravel/framework": "5.6.*",

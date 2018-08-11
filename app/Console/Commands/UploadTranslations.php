@@ -22,7 +22,7 @@ class UploadTranslations extends Command
         $stopwatchEvent = (new Stopwatch())->start('upload-translations');
         $this->output->text('Started uploading translations to OneSky');
 
-        $typesFromDb = CardTranslation::where('locale', 'jp')
+        $typesFromDb = CardTranslation::where('locale', 'ja')
             ->select(['character_type', 'name', 'ability_name'])->get();
         $types = [];
         $names = [];

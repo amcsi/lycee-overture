@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CardSet extends Model
 {
     protected $fillable = [
-        'name_jp',
+        'name_ja',
         'name_en',
         'cards',
         'deck',
