@@ -2,8 +2,6 @@
     <div v-if="initialCardTasksDone">
         <CardFilters />
 
-        <router-link to="cards/print"><i class="fa fa-print"></i> Print view</router-link>
-
         <CardList />
     </div>
     <div v-else v-loading="true" style="height: 300px;"></div>
