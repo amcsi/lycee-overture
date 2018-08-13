@@ -3,6 +3,7 @@
  */
 
 import VueRouter from 'vue-router';
+import Layout from './pages/Layout';
 
 /**
  * Loading wrapper for code-split async components in the route.
@@ -13,7 +14,7 @@ const loadingizeAsyncComponent = asyncComponent => () => ({
   // A component to use while the async component is loading
   loading: {
     render(h) {
-      return h('div', {directives: [{ loading: true }]});
+      return h('div', { directives: [{ loading: true }] });
     },
   },
   // A component to use if the load fails
@@ -25,14 +26,20 @@ const loadingizeAsyncComponent = asyncComponent => () => ({
   timeout: Infinity,
 });
 
+const CardListPrint = loadingizeAsyncComponent(() => import ('./components/CardListPrint'));
 const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage'));
 const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
 
 const router = new VueRouter({
   mode: 'history', // HTML5 history.
   routes: [
-    { path: '/', component: IndexPage },
-    { path: '/cards', component: CardListPage },
+    { path: '/cards/print', component: CardListPrint },
+    {
+      path: '', component: Layout, children: [
+        { path: '/', component: IndexPage },
+        { path: '/cards', component: CardListPage },
+      ],
+    },
   ],
 });
 

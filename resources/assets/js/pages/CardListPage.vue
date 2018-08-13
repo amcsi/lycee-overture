@@ -1,6 +1,9 @@
 <template>
     <div v-loading="!initialCardTasksDone">
         <CardFilters />
+
+        <router-link to="cards/print"><i class="fa fa-print"></i> Print view</router-link>
+
         <CardList />
     </div>
 </template>
