@@ -7,15 +7,35 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueRouter from 'vue-router';
 import App from './App';
 import router from './router';
 import store from './store';
+import {
+  Container,
+  Header,
+  Main,
+  Table,
+  TableColumn,
+  Menu,
+  MenuItem,
+  Pagination,
+  Footer,
+  Loading,
+} from 'element-ui';
 
 Vue.use(VueRouter);
-Vue.use(ElementUI);
+Vue.component(Container.name, Container);
+Vue.component(Header.name, Header);
+Vue.component(Main.name, Main);
+Vue.component(Table.name, Table);
+Vue.component(TableColumn.name, TableColumn);
+Vue.component(Menu.name, Menu);
+Vue.component(MenuItem.name, MenuItem);
+Vue.component(Pagination.name, Pagination);
+Vue.component(Footer.name, Footer);
+Vue.use(Loading.directive);
 
 //noinspection JSUnusedGlobalSymbols
 
