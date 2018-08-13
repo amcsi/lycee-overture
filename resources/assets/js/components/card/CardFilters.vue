@@ -7,7 +7,7 @@
                     v-for="cardSet in cardSetList"
                     :key="cardSet.id"
                     :label="cardSet.name"
-                    :value="cardSet.id"
+                    :value="'' + cardSet.id"
                 ></el-option>
             </el-select>
         </el-form-item>
