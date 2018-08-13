@@ -1,12 +1,19 @@
 <template>
-    <div v-if="basicAbilities || abilities.length">
-        <strong>{{ card.id }}</strong>
-        <span v-if="basicAbilities" class="basic-abilities" v-html="basicAbilities"></span>
-        <span v-for="[abilityCost, abilityDescription] in abilities">
-            <span v-if="abilityCost" class="ability-cost" v-html="abilityCost"></span>
-            <span class="ability-description" v-html="abilityDescription"></span>
+    <div>
+        <span v-if="basicAbilities || abilities.length">
+            <strong>{{ card.id }}</strong>
+            <span v-if="basicAbilities" class="basic-abilities" v-html="basicAbilities"></span>
+            <span v-for="[abilityCost, abilityDescription] in abilities">
+                <span v-if="abilityCost" class="ability-cost" v-html="abilityCost"></span>
+                <span class="ability-description" v-html="abilityDescription"></span>
+            </span>
+            <span v-if="comments" class="comments" v-html="comments"></span>
         </span>
-        <span v-if="comments" class="comments" v-html="comments"></span>
+        {{ card.translation.name }}
+        <span v-if="card.type === 0">
+        - {{ card.translation.ability_name }}
+        - {{ card.translation.character_type }}
+        </span>
     </div>
 </template>
 

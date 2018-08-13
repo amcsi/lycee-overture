@@ -7,6 +7,10 @@
 
             <p>Note that when printing: turn on "Background Images/graphics" in the printing options to include the
                 options!</p>
+
+            <p>It's recommended to print in color.</p>
+
+            <p>These help messages will <em>not</em> appear in the printed page.</p>
         </div>
 
         <div class="print">
