@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import cards from './modules/cards';
+import cardSets from './modules/cardSets';
 import statistics from './modules/statistics';
 
 /**
@@ -14,7 +15,28 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {
     cards,
+    cardSets,
     statistics,
+  },
+  state: {
+    startedInitialTasks: false,
+  },
+  mutations: {
+    STARTED_INITIAL_TASKS(state) {
+      state.startedInitialTasks = true;
+    },
+  },
+  actions: {
+    async doInitialCardTasks({ commit, dispatch, state }) {
+      if (!state.startedInitialTasks) {
+        commit('STARTED_INITIAL_TASKS');
+        await Promise.all([
+          dispatch('cards/listCards'),
+          dispatch('cardSets/listCardSets'),
+          dispatch('statistics/fetchStatistics'),
+        ]);
+      }
+    },
   },
 });
 

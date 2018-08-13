@@ -11,47 +11,26 @@
 namespace amcsi\LyceeOverture {
 
     /**
-     * amcsi\LyceeOverture\CardSet
+     * amcsi\LyceeOverture\User
      *
      * @property int $id
-     * @property string $name_ja
-     * @property string $name_en
-     * @property string $cards
-     * @property int $deck
+     * @property string $name
+     * @property string $email
+     * @property string $password
+     * @property string|null $remember_token
      * @property \Carbon\Carbon|null $created_at
      * @property \Carbon\Carbon|null $updated_at
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereCards($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereDeck($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereNameEn($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereNameJa($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereUpdatedAt($value)
+     * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[]
+     *     $notifications
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User wherePassword($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereRememberToken($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereUpdatedAt($value)
      */
-    class CardSet extends \Eloquent
-    {
-    }
-}
-
-namespace amcsi\LyceeOverture {
-
-    /**
-     * amcsi\LyceeOverture\CardImage
-     *
-     * @property int $id
-     * @property string $card_id
-     * @property string $md5
-     * @property \Carbon\Carbon $updated_at
-     * @property \Carbon\Carbon $created_at
-     * @property \Carbon\Carbon|null $last_uploaded
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereCardId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereLastUploaded($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereMd5($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereUpdatedAt($value)
-     */
-    class CardImage extends \Eloquent
+    class User extends \Eloquent
     {
     }
 }
@@ -95,6 +74,31 @@ namespace amcsi\LyceeOverture {
      * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardTranslation whereUpdatedAt($value)
      */
     class CardTranslation extends \Eloquent
+    {
+    }
+}
+
+namespace amcsi\LyceeOverture {
+
+    /**
+     * amcsi\LyceeOverture\CardSet
+     *
+     * @property int $id
+     * @property string $name_ja
+     * @property string $name_en
+     * @property string $cards
+     * @property int $deck
+     * @property \Carbon\Carbon|null $created_at
+     * @property \Carbon\Carbon|null $updated_at
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereCards($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereDeck($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereNameEn($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereNameJa($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardSet whereUpdatedAt($value)
+     */
+    class CardSet extends \Eloquent
     {
     }
 }
@@ -176,26 +180,22 @@ namespace amcsi\LyceeOverture {
 namespace amcsi\LyceeOverture {
 
     /**
-     * amcsi\LyceeOverture\User
+     * amcsi\LyceeOverture\CardImage
      *
      * @property int $id
-     * @property string $name
-     * @property string $email
-     * @property string $password
-     * @property string|null $remember_token
-     * @property \Carbon\Carbon|null $created_at
-     * @property \Carbon\Carbon|null $updated_at
-     * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[]
-     *     $notifications
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereCreatedAt($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereEmail($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereId($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereName($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User wherePassword($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereRememberToken($value)
-     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereUpdatedAt($value)
+     * @property string $card_id
+     * @property string $md5
+     * @property \Carbon\Carbon $updated_at
+     * @property \Carbon\Carbon $created_at
+     * @property \Carbon\Carbon|null $last_uploaded
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereCardId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereLastUploaded($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereMd5($value)
+     * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereUpdatedAt($value)
      */
-    class User extends \Eloquent
+    class CardImage extends \Eloquent
     {
     }
 }

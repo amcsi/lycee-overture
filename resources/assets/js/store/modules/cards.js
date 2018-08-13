@@ -5,6 +5,7 @@ export default {
   state: {
     listLoading: false,
     list: null,
+    loadedInitial: false,
   },
   mutations: {
     CARDS_LOADING(state) {
@@ -19,10 +20,10 @@ export default {
     },
   },
   actions: {
-    async listCards({ commit }, page) {
+    async listCards({ commit }, query) {
       commit('CARDS_LOADING');
       try {
-        const cards = await listCards(page);
+        const cards = await listCards(query);
         commit('CARDS_LOADED', cards);
       } catch (e) {
         commit('CARDS_LOADING_FAILED');

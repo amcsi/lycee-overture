@@ -3,9 +3,11 @@
         <div v-if="cards">
             <h3>
                 Total: {{ cards.meta.pagination.total }}.
-                Fully translated: {{ statistics.translated_cards }}
-                ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
-                Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
+                <span v-if="!$route.query.set">
+                    Fully translated: {{ statistics.translated_cards }}
+                    ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
+                    Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
+                </span>
             </h3>
 
 
@@ -83,20 +85,10 @@
   import CardImage from './card/CardImage';
   import CardThumbnail from './card/CardThumbnail';
   import Paginator from './common/Paginator';
-  import NavMenu from './NavMenu';
 
   /** @class CardList */
   export default {
-    components: { CardThumbnail, CardImage, CardDescription, NavMenu, Paginator },
-    beforeRouteEnter(to, from, next) {
-
-      next(vm => {
-        if (!vm.cards || vm.cards.meta.pagination.page !== to.query.page) {
-          // Cards aren't loaded yet, or pagination shows a different page now: load the cards!
-          vm.loadCards(to.query.page);
-        }
-      });
-    },
+    components: { CardThumbnail, CardImage, CardDescription, Paginator },
     computed: {
       ...mapState({
         cardsLoading: state => state.cards.listLoading || state.statistics.statisticsLoading,
@@ -110,11 +102,8 @@
         fetchStatistics: 'statistics/fetchStatistics',
       }),
       pageChange(page) {
-        this.$router.push({ path: '/cards', query: { page } });
-      },
-      loadCards(page) {
-        this.listCards(page);
-        this.fetchStatistics();
+        const query = { ...this.$route.query, page };
+        this.$router.push({ query });
       },
       getPercentOfRatio(ratio) {
         return new Intl.NumberFormat({
@@ -122,16 +111,7 @@
           style: 'percent',
         }).format(ratio * 100) + '%';
       },
-      showCardImageOverlay() {
-
-      },
     },
-    watch: {
-      '$route.query.page'() {
-        this.listCards(this.$route.query.page);
-      },
-    },
-
   };
 </script>
 

@@ -25,14 +25,14 @@ const loadingizeAsyncComponent = asyncComponent => () => ({
   timeout: Infinity,
 });
 
-const CardList = loadingizeAsyncComponent(() => import('./components/CardList'));
+const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage'));
 const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
 
 const router = new VueRouter({
   mode: 'history', // HTML5 history.
   routes: [
     { path: '/', component: IndexPage },
-    { path: '/cards', component: CardList },
+    { path: '/cards', component: CardListPage },
   ],
 });
 
