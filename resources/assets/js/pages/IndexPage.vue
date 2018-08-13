@@ -34,6 +34,15 @@
 
             <ul>
                 <li>
+                    <ExternalLink href="https://discord.gg/xtcQDtQ">
+                        <img
+                            class="discord-icon"
+                            src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"
+                        >
+                        Discord server
+                    </ExternalLink>
+                </li>
+                <li>
                     <ExternalLink href="https://lycee-tcg.com/">Japanese Official Lycee Overture website</ExternalLink>
                 </li>
                 <li>
@@ -93,4 +102,9 @@
 </script>
 
 <style scoped>
+    .discord-icon {
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+    }
 </style>
