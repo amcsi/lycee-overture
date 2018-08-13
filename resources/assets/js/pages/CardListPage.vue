@@ -24,7 +24,7 @@
       };
     },
     created() {
-      this.doInitialCardTasks().then(() => this.initialCardTasksDone = true);
+      this.doInitialCardTasks(this.$route.query).then(() => this.initialCardTasksDone = true);
     },
     methods: {
       ...mapActions({

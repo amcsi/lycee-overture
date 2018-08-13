@@ -27,11 +27,11 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    async doInitialCardTasks({ commit, dispatch, state }) {
+    async doInitialCardTasks({ commit, dispatch, state }, query) {
       if (!state.startedInitialTasks) {
         commit('STARTED_INITIAL_TASKS');
         await Promise.all([
-          dispatch('cards/listCards'),
+          dispatch('cards/listCards', query),
           dispatch('cardSets/listCardSets'),
           dispatch('statistics/fetchStatistics'),
         ]);
