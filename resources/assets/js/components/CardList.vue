@@ -58,7 +58,7 @@
                     width="70"
                 >
                     <template slot-scope="scope">
-                        <div>
+                        <div v-if="scope.row.type === 0">
                             <div>
                                 <span class="dmg">{{scope.row.dmg}}</span>
                                 <span class="dp">{{scope.row.dp}}</span>
@@ -68,6 +68,7 @@
                                 <span class="sp">{{scope.row.sp}}</span>
                             </div>
                         </div>
+                        <div v-else>&nbsp;</div>
                     </template>
 
                 </el-table-column>
