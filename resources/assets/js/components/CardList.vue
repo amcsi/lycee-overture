@@ -52,28 +52,22 @@
                 >
                 </el-table-column>
                 <el-table-column
-                    prop="dmg"
-                    label="DMG"
-                    width="60"
+                    label="Stats"
+                    width="70"
                 >
-                </el-table-column>
-                <el-table-column
-                    prop="ap"
-                    label="AP"
-                    width="50"
-                >
-                </el-table-column>
-                <el-table-column
-                    prop="dp"
-                    label="DP"
-                    width="50"
-                >
-                </el-table-column>
-                <el-table-column
-                    prop="sp"
-                    label="SP"
-                    width="50"
-                >
+                    <template slot-scope="scope">
+                        <div>
+                            <div>
+                                <span class="dmg">{{scope.row.dmg}}</span>
+                                <span class="dp">{{scope.row.dp}}</span>
+                            </div>
+                            <div>
+                                <span class="ap">{{scope.row.ap}}</span>
+                                <span class="sp">{{scope.row.sp}}</span>
+                            </div>
+                        </div>
+                    </template>
+
                 </el-table-column>
             </el-table>
 
@@ -142,4 +136,19 @@
 </script>
 
 <style scoped>
+    .dmg {
+        color: green;
+    }
+
+    .ap {
+        color: red;
+    }
+
+    .dp {
+        color: blue;
+    }
+
+    .sp {
+        color: orange;
+    }
 </style>
