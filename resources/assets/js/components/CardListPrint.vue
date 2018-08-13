@@ -25,7 +25,10 @@
     components: { CardPrint },
     computed: {
       ...mapState({
-        cards: state => state.cards.list.data,
+        cards: state => state.cards.list.data.sort(
+          // Ensure cards are sorted in ID order.
+          (card1, card2) => card1.id > card2.id ? 1 : -1,
+        ),
       }),
     },
     methods: {
