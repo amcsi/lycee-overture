@@ -35,10 +35,16 @@
                 >
                 </el-table-column>
                 <el-table-column
-                    prop="translation.name"
                     label="Name"
                     width="200"
                 >
+                    <template slot-scope="scope">
+                        <div>{{ scope.row.translation.name }}</div>
+                        <div v-if="scope.row.type === 0">
+                            <div>{{ scope.row.translation.ability_name }}</div>
+                            <div>Type: {{ scope.row.translation.character_type }}</div>
+                        </div>
+                    </template>
                 </el-table-column>
                 <el-table-column
                     label="Text"

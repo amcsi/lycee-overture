@@ -17,6 +17,7 @@ class CardTranslationTransformer extends TransformerAbstract
             'ability_cost' => $cardTranslation->ability_cost,
             'ability_description' => $cardTranslation->ability_description,
             'comments' => $cardTranslation->comments,
+            'character_type' => $cardTranslation->character_type,
         ];
     }
 }
