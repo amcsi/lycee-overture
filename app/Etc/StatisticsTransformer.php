@@ -8,13 +8,13 @@ use League\Fractal\TransformerAbstract;
 
 class StatisticsTransformer extends TransformerAbstract
 {
-    public function transform(TranslationCoverageChecker $translationCoverageChecker)
+    public function transform(Statistics $statistics)
     {
         return [
-            'kanji_removal_ratio' => $translationCoverageChecker->calculateRatioOfJapaneseCharacterRemoval(),
-            'fully_translated_ratio' => $translationCoverageChecker->calculateRatioOfFullyTranslated(),
-            'translated_cards' => $translationCoverageChecker->countFullyTranslated(),
-            'total_cards' => $translationCoverageChecker->countCards(),
+            'kanji_removal_ratio' => $statistics->getKanjiRemovalRatio(),
+            'fully_translated_ratio' => $statistics->getFullyTranslatedRatio(),
+            'translated_cards' => $statistics->getTranslatedCards(),
+            'total_cards' => $statistics->getTotalCards(),
         ];
     }
 }
