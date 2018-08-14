@@ -26,14 +26,14 @@ const loadingizeAsyncComponent = asyncComponent => () => ({
   timeout: Infinity,
 });
 
-const CardListPrint = loadingizeAsyncComponent(() => import ('./components/CardListPrint'));
+const CardListPrintPage = loadingizeAsyncComponent(() => import ('./pages/CardListPrintPage'));
 const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage'));
 const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
 
 const router = new VueRouter({
   mode: 'history', // HTML5 history.
   routes: [
-    { path: '/cards/print', component: CardListPrint },
+    { path: '/cards/print', component: CardListPrintPage },
     {
       path: '', component: Layout, children: [
         { path: '/', component: IndexPage },

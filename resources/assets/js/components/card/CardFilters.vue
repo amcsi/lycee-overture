@@ -12,7 +12,9 @@
             </el-select>
         </el-form-item>
 
-        <router-link to="cards/print" v-if="cardSetId"><i class="fa fa-print"></i> Print view</router-link>
+        <router-link :to="{path: 'cards/print', query: $route.query }" v-if="cardSetId"><i class="fa fa-print"></i>
+            Print view
+        </router-link>
     </el-form>
 </template>
 
