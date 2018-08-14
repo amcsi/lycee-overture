@@ -31,6 +31,10 @@ class MoveCharacterTest extends TestCase
                 ' you can move {character} to {ally field}.',
                 '{character}を{ally field}に移動できる.',
             ],
+            'change places' => [
+                ' this character and {1 ally character} change places',
+                'このキャラと{1 ally character}を入れ替える',
+            ],
         ];
     }
 }
