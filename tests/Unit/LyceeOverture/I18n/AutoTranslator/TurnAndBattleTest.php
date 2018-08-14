@@ -103,6 +103,10 @@ class TurnAndBattleTest extends TestCase
                 "in your opponent's next wake-up phase",
                 '次の相手のウェイクアップで',
             ],
+            'at the end of battle when your deck was damaged' => [
+                'at the end of battle when damage was dealt to your deck',
+                '自分のデッキがダメージを受けたバトル終了時',
+            ],
         ];
     }
 }

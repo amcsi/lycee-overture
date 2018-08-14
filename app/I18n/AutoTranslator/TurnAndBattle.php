@@ -30,12 +30,12 @@ class TurnAndBattle
     {
         $subjectRegex = Subject::getUncapturedRegex();
         // language=regexp
-        return "(味方キャラがダウンした)?(次の)?(この|自分?|相手|($subjectRegex))?の?(ターン|バトル|(?:攻撃)?宣言|攻撃|防御|ウェイクアップ)(開始時|中|終了時(?:まで)?|に対応|で)?((?:に|して)使用する|(?:に|して)使用できない)?";
+        return "(味方キャラがダウンした|自分のデッキがダメージを受けた)?(次の)?(この|自分?|相手|($subjectRegex))?の?(ターン|バトル|(?:攻撃)?宣言|攻撃|防御|ウェイクアップ)(開始時|中|終了時(?:まで)?|に対応|で)?((?:に|して)使用する|(?:に|して)使用できない)?";
     }
 
     private static function callback(array $matches): string
     {
-        $allyDown = next($matches);
+        $allyDownOrDeckDamagedSource = next($matches);
         $next = next($matches);
         if ($next) {
             $next = " next";
@@ -130,8 +130,10 @@ class TurnAndBattle
                 }
         }
 
-        if ($allyDown) {
+        if ($allyDownOrDeckDamagedSource === '味方キャラがダウンした') {
             $what .= ' when an ally character is defeated';
+        } elseif ($allyDownOrDeckDamagedSource === '自分のデッキがダメージを受けた') {
+            $what .= ' when damage was dealt to your deck';
         }
 
         switch ($useNotUse) {
