@@ -245,6 +245,10 @@ class AutoTranslatorTest extends TestCase
                 'All your [flower] characters can defend even while tapped.',
                 '味方[flower]キャラ全ては、行動済みでも防御キャラに指定できる。',
             ],
+            'This character can defend despite tapped' => [
+                'This character can defend even while tapped.',
+                'このキャラは行動済みでも防御キャラに指定できる.',
+            ],
             'does not wake up your next wakeup' => [
                 'Do not untap this character in your next wake-up phase',
                 'このキャラは次の自分のウェイクアップで未行動に戻らない',

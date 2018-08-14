@@ -133,7 +133,7 @@ class AutoTranslator
         );
 
         $autoTranslated = Action::subjectReplace(
-            "/($subjectRegex)は, 行動済みでも防御キャラに指定できる/u",
+            "/($subjectRegex)は(?:, )?行動済みでも防御キャラに指定できる/u",
             'can defend even while tapped',
             $autoTranslated
         );
