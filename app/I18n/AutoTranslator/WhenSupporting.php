@@ -15,10 +15,12 @@ class WhenSupporting
         $subjectRegex = Subject::getUncapturedRegex();
         $text = preg_replace('/このキャラ(で|が)サポートをしたとき/u', 'when this character supports another character', $text);
         $text = preg_replace_callback(
-            "/(?:($subjectRegex)で)?このキャラにサポートをしたとき/u",
+            "/(?:($subjectRegex)で)?($subjectRegex)にサポートをしたとき/u",
             function (array $matches): string {
-                $return = 'when this character gets supported';
                 $subject = next($matches);
+                $whoGetsSupported = next($matches);
+                $whoGetsSupportedText = Subject::autoTranslateStrict($whoGetsSupported);
+                $return = "when$whoGetsSupportedText gets supported";
                 if ($subject) {
                     $return .= ' by' . Subject::autoTranslateStrict($subject);
                 }
