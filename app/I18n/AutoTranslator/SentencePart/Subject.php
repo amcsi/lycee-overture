@@ -207,7 +207,11 @@ class Subject
                         // Unknown
                         $text = '';
                         if (!$howMany && !$forceNoArticle) {
-                            $text = preg_match('/[aeiou]/', $noun[0]) ? 'an' : 'a';
+                            // Check the $something and the $noun to determine which indefinite article to use.
+                            // Default to 'a' by using a fake 'b' as the fallback string.
+                            $articleVowelCheck = preg_replace('/\W/', '', $something . $noun . 'b')[0];
+
+                            $text = preg_match('/[aeiou]/i', $articleVowelCheck) ? 'an' : 'a';
                         }
                         break;
                     default:
