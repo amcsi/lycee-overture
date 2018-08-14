@@ -38,6 +38,18 @@ class CardController extends Controller
             );
         }
 
+        if ($cardId = $request->get('cardId')) {
+            // Card IDs are comma-separated, and only the number bits from each value matters,
+            // so the LO- and padding numbers are optional.
+            $cardIds = array_map(
+                function (string $cardId): string {
+                    return sprintf('LO-%04d', preg_replace('/\D/', '', $cardId));
+                },
+                explode(',', $cardId)
+            );
+            $builder->whereIn('cards.id', $cardIds);
+        }
+
         if ($locale !== Locale::JAPANESE) {
             // Bring forward cards with fewer kanjis (i.e. fewer untranslated bits).
             // Of course this is only necessary if the locale is non-Japanese.

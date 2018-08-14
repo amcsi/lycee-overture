@@ -13,6 +13,7 @@ import {
   Form,
   FormItem,
   Header,
+  Input,
   Loading,
   Main,
   Menu,
@@ -35,6 +36,7 @@ Vue.component(Footer.name, Footer);
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
 Vue.component(Header.name, Header);
+Vue.component(Input.name, Input);
 Vue.component(Main.name, Main);
 Vue.component(Menu.name, Menu);
 Vue.component(MenuItem.name, MenuItem);

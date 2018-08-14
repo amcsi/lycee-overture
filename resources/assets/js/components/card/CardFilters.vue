@@ -12,6 +12,10 @@
             </el-select>
         </el-form-item>
 
+        <el-form-item label="Card ID">
+            <el-input class="card-id-input" placeholder="LO-0001,LO-0002" v-model="cardId" />
+        </el-form-item>
+
         <router-link :to="{path: 'cards/print', query: $route.query }" v-if="cardSetId"><i class="fa fa-print"></i>
             Print view
         </router-link>
@@ -19,6 +23,7 @@
 </template>
 
 <script>
+  import debounce from 'lodash.debounce';
   import { mapState } from 'vuex';
 
   /** @class CardFilters */
@@ -41,10 +46,25 @@
           this.$router.push({ query });
         },
       },
+      cardId: {
+        get() {
+          return this.$route.query.cardId || '';
+        },
+        set: debounce(function(id) {
+          const query = { ...this.$route.query, page: 1 };
+          delete query.cardId;
+          if (id) {
+            query.cardId = id;
+          }
+          this.$router.push({ query });
+        }, 1000),
+      },
     },
   };
 </script>
 
 <style scoped>
-
+    .card-id-input {
+        width: 200px;
+    }
 </style>
