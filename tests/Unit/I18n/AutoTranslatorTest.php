@@ -257,6 +257,10 @@ class AutoTranslatorTest extends TestCase
                 'You can discard 1 card from your hand',
                 '自分の手札を1枚破棄できる',
             ],
+            ' can only support xy characters' => [
+                'This card can only support a "xy".',
+                'このキャラのサポートは「xy」のみを対象に指定できる。',
+            ],
         ];
     }
 }

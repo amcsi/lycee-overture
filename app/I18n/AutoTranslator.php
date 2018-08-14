@@ -155,6 +155,14 @@ class AutoTranslator
             },
             $autoTranslated
         );
+        $autoTranslated = preg_replace_callback(
+            "/このキャラのサポートは($subjectRegex)のみを対象に指定できる/u",
+            function (array $matches): string {
+                $subject = Subject::autoTranslateStrict($matches[1]);
+                return "this card can only support $subject";
+            },
+            $autoTranslated
+        );
 
 
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
