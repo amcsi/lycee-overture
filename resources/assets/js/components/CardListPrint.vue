@@ -2,7 +2,7 @@
     <div class="print-container">
         <div class="no-print">
             <p>
-                <router-link to="/cards">Back</router-link>
+                <router-link :to="{ path: '/cards', query: $route.query }">Back</router-link>
             </p>
 
             <p>Note that when printing: turn on "Background Images/graphics" in the printing options to include the
