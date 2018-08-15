@@ -45,18 +45,3 @@
     methods: {},
   };
 </script>
-
-<style>
-    .basic-abilities {
-        color: #49a97b;
-    }
-
-    .ability-cost {
-        color: cornflowerblue;
-    }
-
-    /*noinspection CssUnusedSymbol*/
-    .target {
-        color: #e39000;
-    }
-</style>
