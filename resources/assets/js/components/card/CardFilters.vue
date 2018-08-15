@@ -16,7 +16,8 @@
             <el-input class="card-id-input" placeholder="LO-0001,LO-0002" v-model="cardId" />
         </el-form-item>
 
-        <router-link :to="{path: 'cards/print', query: $route.query }" v-if="cardSetId"><i class="fa fa-print"></i>
+        <router-link :to="{path: 'cards/print', query: $route.query }" v-if="1 <= totalCards && totalCards <= 60">
+            <i class="fa fa-print"></i>
             Print view
         </router-link>
     </el-form>
@@ -32,6 +33,9 @@
     computed: {
       ...mapState('cardSets', {
         cardSetList: 'list',
+      }),
+      ...mapState('cards', {
+        totalCards: state => state.list.meta.pagination.total,
       }),
       cardSetId: {
         get() {
