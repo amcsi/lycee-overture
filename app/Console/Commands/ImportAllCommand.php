@@ -27,7 +27,6 @@ class ImportAllCommand extends Command
 
         if ($this->option('translations')) {
             $this->call(DownloadTranslations::COMMAND);
-            $this->call(UploadTranslations::COMMAND);
         }
 
         $this->call(AutoTranslateCommand::COMMAND);
