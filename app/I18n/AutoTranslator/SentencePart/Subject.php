@@ -256,7 +256,7 @@ class Subject
             }
             if ($sameColumnOrRow) {
                 $whose = $whoseColumnOrRow === 'この' ? 'this' : 'that';
-                $columnOrRow = $columnOrRowSource === '列' ? 'row' : 'column';
+                $columnOrRow = $columnOrRowSource === '列' ? 'column' : 'row';
                 $inSomewhere .= " in the same $columnOrRow as $whose character";
             }
             $text = " $text$inSomewhere$additionalAdjective";

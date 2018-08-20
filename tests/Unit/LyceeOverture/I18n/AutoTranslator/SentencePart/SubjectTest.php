@@ -124,11 +124,11 @@ class SubjectTest extends TestCase
                 '相手のアイテム1枚',
             ],
             'same row' => [
-                ' 1 ally character in the same row as this character',
+                ' 1 ally character in the same column as this character',
                 'このキャラと同列の味方キャラ1体',
             ],
             'same column' => [
-                ' 1 ally character in the same column as that character',
+                ' 1 ally character in the same row as that character',
                 'そのキャラと同オーダーの味方キャラ1体',
             ],
             'compound subject' => [
