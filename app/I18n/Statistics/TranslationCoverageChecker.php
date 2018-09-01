@@ -45,8 +45,8 @@ class TranslationCoverageChecker
                 $join->on('t.card_id', '=', 'cards.id')->where('t_ja.locale', '=', 'ja');
             }
         );
-        $japaneseKanjiCount = $builder->sum('t_ja.kanji_count') ?: 0;
-        $afterEnglishKanjiCount = $builder->sum('t.kanji_count') ?: $japaneseKanjiCount;
+        $japaneseKanjiCount = $builder->sum('t_ja.kanji_count');
+        $afterEnglishKanjiCount = $builder->sum('t.kanji_count');
         return 1 - $afterEnglishKanjiCount / $japaneseKanjiCount;
     }
 
