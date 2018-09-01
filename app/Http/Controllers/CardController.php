@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Http\Controllers;
 
 use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Card\CardBuilderFactory;
 use amcsi\LyceeOverture\Card\CardTransformer;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,42 +14,11 @@ use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
-    public function index(CardTransformer $cardTransformer, Request $request)
+    public function index(CardTransformer $cardTransformer, Request $request, CardBuilderFactory $builderFactory)
     {
         $locale = \App::getLocale();
 
-        /** @var Builder $builder */
-        $builder = Card::select(['cards.*'])
-            ->join(
-                'card_translations as t',
-                function (JoinClause $join) {
-                    $join->on('cards.id', '=', 't.card_id')
-                        ->where('t.locale', '=', 'en');
-                }
-            );
-
-        if ($set = $request->get('set')) {
-            $builder->join(
-                'card_sets AS cs',
-                function (JoinClause $join) use ($set): void {
-                    $join
-                        ->on(new Expression('FIND_IN_SET(cards.id, cs.cards)'), '>', new Expression('0'))
-                        ->where('cs.id', '=', $set);
-                }
-            );
-        }
-
-        if ($cardId = $request->get('cardId')) {
-            // Card IDs are comma-separated, and only the number bits from each value matters,
-            // so the LO- and padding numbers are optional.
-            $cardIds = array_map(
-                function (string $cardId): string {
-                    return sprintf('LO-%04d', preg_replace('/\D/', '', $cardId));
-                },
-                explode(',', $cardId)
-            );
-            $builder->whereIn('cards.id', $cardIds);
-        }
+        $builder = $builderFactory->createBuilderWithQuery($locale, $request->query());
 
         if ($locale !== Locale::JAPANESE) {
             // Bring forward cards with fewer kanjis (i.e. fewer untranslated bits).
