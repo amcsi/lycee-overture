@@ -5,13 +5,15 @@ namespace amcsi\LyceeOverture\Http\Controllers;
 
 use amcsi\LyceeOverture\Etc\StatisticsTransformer;
 use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
+use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
 {
     public function index(
         TranslationCoverageChecker $translationCoverageChecker,
-        StatisticsTransformer $statisticsTransformer
+        StatisticsTransformer $statisticsTransformer,
+        Request $request
     ) {
-        return $this->response->item($translationCoverageChecker, $statisticsTransformer);
+        return $this->response->item($translationCoverageChecker->calculateStatistics($request->query()), $statisticsTransformer);
     }
 }
