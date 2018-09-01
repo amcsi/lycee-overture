@@ -31,11 +31,16 @@ const store = new Vuex.Store({
       if (!state.startedInitialTasks) {
         commit('STARTED_INITIAL_TASKS');
         await Promise.all([
-          dispatch('cards/listCards', query),
+          dispatch('listCardsAndFetchStatistics', query),
           dispatch('cardSets/listCardSets'),
-          dispatch('statistics/fetchStatistics'),
         ]);
       }
+    },
+    async listCardsAndFetchStatistics({ dispatch }, query) {
+      return Promise.all([
+        dispatch('cards/listCards', query),
+        dispatch('statistics/fetchStatistics', query),
+      ]);
     },
   },
 });

@@ -28,12 +28,12 @@
     methods: {
       ...mapActions({
         doInitialCardTasks: 'doInitialCardTasks',
-        listCards: 'cards/listCards',
+        listCardsAndFetchStatistics: 'listCardsAndFetchStatistics',
       }),
     },
     watch: {
       '$route.query'() {
-        this.listCards(this.$route.query);
+        this.listCardsAndFetchStatistics(this.$route.query);
       },
     },
   };

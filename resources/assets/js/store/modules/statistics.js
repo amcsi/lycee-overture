@@ -19,10 +19,10 @@ export default {
     },
   },
   actions: {
-    async fetchStatistics({ commit }, page) {
+    async fetchStatistics({ commit }, params) {
       commit('STATISTICS_LOADING');
       try {
-        const statistics = (await api.get('/statistics')).data.data;
+        const statistics = (await api.get('/statistics', { params })).data.data;
         commit('STATISTICS_LOADING_SUCCEEDED', statistics);
       } catch (e) {
         commit('STATISTICS_LOADING_FAILED');

@@ -3,11 +3,9 @@
         <div v-if="cards">
             <h3>
                 Total: {{ cards.meta.pagination.total }}.
-                <span v-if="!$route.query.set">
-                    Fully translated: {{ statistics.translated_cards }}
-                    ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
-                    Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
-                </span>
+                Fully translated: {{ statistics.translated_cards }}
+                ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
+                Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
             </h3>
 
 
@@ -87,7 +85,7 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex';
+  import { mapState } from 'vuex';
   import CardDescription from './card/CardDescription';
   import CardImage from './card/CardImage';
   import CardThumbnail from './card/CardThumbnail';
@@ -104,10 +102,6 @@
       }),
     },
     methods: {
-      ...mapActions({
-        listCards: 'cards/listCards',
-        fetchStatistics: 'statistics/fetchStatistics',
-      }),
       pageChange(page) {
         const query = { ...this.$route.query, page };
         this.$router.push({ query });
