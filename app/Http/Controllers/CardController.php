@@ -3,13 +3,9 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Http\Controllers;
 
-use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Card\CardBuilderFactory;
 use amcsi\LyceeOverture\Card\CardTransformer;
 use amcsi\LyceeOverture\I18n\Locale;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Expression;
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -26,7 +22,7 @@ class CardController extends Controller
             $builder->orderBy('t.kanji_count', 'asc');
         }
         $builder->orderBy('id', 'asc');
-        $cards = $builder->paginate(50);
+        $cards = $builder->paginate(10);
 
         return $this->response->paginator($cards, $cardTransformer);
     }
