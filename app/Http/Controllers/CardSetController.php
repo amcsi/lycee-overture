@@ -10,6 +10,7 @@ class CardSetController extends Controller
 {
     public function index(CardSetTransformer $cardSetTransformer)
     {
-        return $this->response->collection(CardSet::all(), $cardSetTransformer);
+        $cardSets = CardSet::orderBy('name_en')->get();
+        return $this->response->collection($cardSets, $cardSetTransformer);
     }
 }
