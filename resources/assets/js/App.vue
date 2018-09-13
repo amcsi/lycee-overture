@@ -7,3 +7,7 @@
   export default {
   };
 </script>
+
+<style lang="scss">
+    @import 'resources/assets/sass/app.scss';
+</style>
