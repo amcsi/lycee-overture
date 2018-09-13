@@ -11,10 +11,15 @@
             <p>It's recommended to print in color.</p>
 
             <p>These help messages will <em>not</em> appear in the printed page.</p>
+
+            <p>
+                <el-switch v-model="withImages" />
+                With images
+            </p>
         </div>
 
         <div class="print">
-            <CardPrint v-for="card in cards" :key="card.id" :card="card" />
+            <CardPrint :withImages="withImages" v-for="card in cards" :key="card.id" :card="card" />
         </div>
     </div>
 </template>
@@ -27,6 +32,11 @@
   export default {
     name: 'CardListPrint',
     components: { CardPrint },
+    data() {
+      return {
+        withImages: true,
+      };
+    },
     computed: {
       ...mapState({
         cards: state => state.cards.list.data.sort(

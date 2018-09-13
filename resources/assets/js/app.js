@@ -7,23 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import {
-  Container,
-  Footer,
-  Form,
-  FormItem,
-  Header,
-  Input,
-  Loading,
-  Main,
-  Menu,
-  MenuItem,
-  Option,
-  Pagination,
-  Select,
-  Table,
-  TableColumn,
-} from 'element-ui';
+import { Container, Footer, Form, FormItem, Header, Input, Loading, Main, Menu, MenuItem, Option, Pagination, Select, Switch, Table, TableColumn } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueRouter from 'vue-router';
 import App from './App';
@@ -43,6 +27,7 @@ Vue.component(MenuItem.name, MenuItem);
 Vue.component(Option.name, Option);
 Vue.component(Pagination.name, Pagination);
 Vue.component(Select.name, Select);
+Vue.component(Switch.name, Switch);
 Vue.component(Table.name, Table);
 Vue.component(TableColumn.name, TableColumn);
 Vue.use(Loading.directive);
