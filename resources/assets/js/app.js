@@ -7,7 +7,25 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import { Container, Footer, Form, FormItem, Header, Input, Loading, Main, Menu, MenuItem, Option, Pagination, Select, Switch, Table, TableColumn } from 'element-ui';
+import {
+  Card,
+  Container,
+  Footer,
+  Form,
+  FormItem,
+  Header,
+  Input,
+  Loading,
+  Main,
+  Menu,
+  MenuItem,
+  Option,
+  Pagination,
+  Select,
+  Switch,
+  Table,
+  TableColumn,
+} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueRouter from 'vue-router';
 import App from './App';
@@ -15,6 +33,7 @@ import router from './router';
 import store from './store';
 
 Vue.use(VueRouter);
+Vue.component(Card.name, Card);
 Vue.component(Container.name, Container);
 Vue.component(Footer.name, Footer);
 Vue.component(Form.name, Form);

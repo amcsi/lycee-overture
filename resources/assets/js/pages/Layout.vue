@@ -7,7 +7,7 @@
                 Lycee Overture TCG Translation Website
             </h1>
         </el-header>
-        <el-main>
+        <el-main class="main">
             <router-view></router-view>
         </el-main>
         <el-footer>
@@ -40,4 +40,7 @@
 </script>
 
 <style lang="scss">
+    .main {
+        overflow: visible;
+    }
 </style>

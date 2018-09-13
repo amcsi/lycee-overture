@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-thumbnail-container">
         <CardImage
             :id="id"
             :height="150"
@@ -50,11 +50,17 @@
     components: { CardImage },
     methods: {
       setupPopper() {
-        const reference = this.$el.closest('td');
-        const onUpdate = (data) => {
-        };
+        const reference = this.$el;
         const options = {
-          placement: 'right', positionFixed: true, onUpdate, onCreate: onUpdate,
+          placement: 'left',
+          modifiers: {
+            flip: {
+              behavior: ['left', 'right', 'bottom', 'top'],
+            },
+            preventOverflow: {
+              boundariesElement: 'viewport',
+            },
+          },
         };
         if (!this.poppers) {
           this.poppers = [];
@@ -82,9 +88,14 @@
 </script>
 
 <style scoped>
+    .card-thumbnail-container {
+        position: relative;
+    }
+
     .biggerImage {
         position: absolute;
         bottom: -312px;
         left: 10px;
+        z-index: 10;
     }
 </style>
