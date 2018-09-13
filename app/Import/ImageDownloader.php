@@ -62,7 +62,7 @@ class ImageDownloader
 
         // http://docs.guzzlephp.org/en/stable/quickstart.html#concurrent-requests
         $pool = new Pool($this->client, $requests, [
-            'concurrency' => 5,
+            'concurrency' => 50,
             'fulfilled' => function (Response $response, $cardId) use ($output, $getOutputText) {
                 $statusCode = $response->getStatusCode();
                 $output->write($getOutputText($cardId));
