@@ -35,7 +35,7 @@ class TranslationCoverageChecker
         );
     }
 
-    public function calculateRatioOfJapaneseCharacterRemoval(array $query): float
+    public function calculateRatioOfJapaneseCharacterRemoval(array $query = []): float
     {
         $builder = $this->getBuilder(Locale::ENGLISH, $query);
 
@@ -50,7 +50,7 @@ class TranslationCoverageChecker
         return 1 - $afterEnglishKanjiCount / $japaneseKanjiCount;
     }
 
-    public function calculateRatioOfFullyTranslated(array $query): float
+    public function calculateRatioOfFullyTranslated(array $query = []): float
     {
         return $this->countFullyTranslated($query) / $this->countCards($query);
     }
@@ -58,7 +58,7 @@ class TranslationCoverageChecker
     /**
      * Counts the number of fully translated cards.
      */
-    public function countFullyTranslated(array $query): int
+    public function countFullyTranslated(array $query = []): int
     {
         $englishBuilder = $this->getBuilder(Locale::ENGLISH, $query);
         return $englishBuilder->where('kanji_count', '=', '0')->count();
