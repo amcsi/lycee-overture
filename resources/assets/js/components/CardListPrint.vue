@@ -14,7 +14,7 @@
         </div>
 
         <div class="print">
-            <CardPrint v-for="card in cards" :key="card.id" :card="card" />
+            <CardPrint class="card-print-item" v-for="card in cards" :key="card.id" :card="card" />
         </div>
     </div>
 </template>
