@@ -65,7 +65,7 @@
   };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .card-list-item {
         margin-bottom: .5rem;
     }
@@ -101,11 +101,20 @@
     }
 
     .stat {
+        display: inline-block;
         color: white;
         padding: .3rem .4rem;
         font-size: .75rem;
-        line-height: 1.2rem;
+        line-height: 1rem;
         border-radius: 1rem;
+        vertical-align: middle;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        }
     }
 
     .ex {

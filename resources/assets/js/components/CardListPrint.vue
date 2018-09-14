@@ -25,25 +25,23 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex';
+  import { mapActions } from 'vuex';
   import CardPrint from './card/CardPrint';
 
   /** @class CardListPrint */
   export default {
     name: 'CardListPrint',
     components: { CardPrint },
+    props: {
+      cards: {
+        type: Array,
+        required: true,
+      },
+    },
     data() {
       return {
         withImages: true,
       };
-    },
-    computed: {
-      ...mapState({
-        cards: state => state.cards.list.data.sort(
-          // Ensure cards are sorted in ID order.
-          (card1, card2) => card1.id > card2.id ? 1 : -1,
-        ),
-      }),
     },
     methods: {
       ...mapActions({

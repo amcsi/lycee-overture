@@ -1,10 +1,11 @@
 <template>
     <CardListContainer>
-        <CardListPrint />
+        <CardListPrint v-loading="printListLoading" :cards="printList" />
     </CardListContainer>
 </template>
 
 <script>
+  import { mapActions, mapState } from 'vuex';
   import CardListPrint from '../components/CardListPrint';
   import CardListContainer from '../components/container/CardListContainer';
 
@@ -12,6 +13,20 @@
   export default {
     name: 'CardListPrintPage',
     components: { CardListContainer, CardListPrint },
+    computed: {
+      ...mapState('cards', [
+        'printList',
+        'printListLoading',
+      ]),
+    },
+    methods: {
+      ...mapActions('cards', [
+        'listCardsForPrinting',
+      ]),
+    },
+    mounted() {
+      this.listCardsForPrinting(this.$route.query);
+    },
   };
 </script>
 

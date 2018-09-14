@@ -14,6 +14,8 @@ class CardController extends Controller
     {
         $locale = \App::getLocale();
 
+        $limit = min(100, $request->get('limit', 10));
+
         $builder = $builderFactory->createBuilderWithQuery($locale, $request->query());
 
         if ($locale !== Locale::JAPANESE) {
@@ -22,7 +24,7 @@ class CardController extends Controller
             $builder->orderBy('t.kanji_count', 'asc');
         }
         $builder->orderBy('id', 'asc');
-        $cards = $builder->paginate(10);
+        $cards = $builder->paginate($limit);
 
         return $this->response->paginator($cards, $cardTransformer);
     }
