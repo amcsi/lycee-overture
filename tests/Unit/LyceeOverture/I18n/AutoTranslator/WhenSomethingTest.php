@@ -107,6 +107,10 @@ class WhenSomethingTest extends TestCase
                 'when there are 4 or more enemy characters on the field',
                 '相手キャラが4体以上の場合',
             ],
+            'by xy effect' => [
+                'when an ally character gets destroyed by your effect',
+                '自分の効果で味方キャラを破棄したとき',
+            ],
         ];
     }
 }

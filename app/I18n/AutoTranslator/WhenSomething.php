@@ -45,8 +45,10 @@ class WhenSomething
 
         // When $subject gets destroyed or moves.
         $text = preg_replace_callback(
-            "/($subjectRegex)(を破棄したとき|が移動したとき)/u",
+            "/((自分|相手)の効果で)?($subjectRegex)(を破棄したとき|が移動したとき)/u",
             function (array $matches) {
+                $byEffect = next($matches);
+                $byYourEffect = next($matches) === '自分';
                 $subject = Subject::createInstance(next($matches));
                 $actionSource = next($matches);
                 $thirdPersonPlaceholder = Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
@@ -63,7 +65,12 @@ class WhenSomething
                 }
 
                 $action = new Action($actionText);
-                return 'when' . SentenceCombiner::combine($subject, $action);
+                $return = 'when' . SentenceCombiner::combine($subject, $action);
+                if ($byEffect) {
+                    $bySubject = $byYourEffect ? 'your' : "your opponent's";
+                    $return .= " by $bySubject effect";
+                }
+                return $return;
             },
             $text
         );
