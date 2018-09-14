@@ -12,6 +12,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\Equip;
 use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
 use amcsi\LyceeOverture\I18n\AutoTranslator\IfCardsInHand;
 use amcsi\LyceeOverture\I18n\AutoTranslator\MoveCharacter;
+use amcsi\LyceeOverture\I18n\AutoTranslator\OneOffs;
 use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
 use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Action;
 use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
@@ -64,6 +65,8 @@ class AutoTranslator
         // Targets appearing between square instead of curly brackets (tsk-tsk original website creators).
         // But only in the beginning of the text, and just for a single card's sake -.-
         $autoTranslated = preg_replace("/^\\[($subjectRegex)]/u", '{$1}', $autoTranslated, -1, $count);
+
+        $autoTranslated = OneOffs::autoTranslate($autoTranslated);
 
         $autoTranslated = AbilityGainsOrOther::autoTranslate($autoTranslated);
 
