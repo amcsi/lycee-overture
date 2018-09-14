@@ -11,7 +11,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\RegexHelper;
 class Subject
 {
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG))+))?(が?(\d)[体枚](?:以(上|下))?|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(破棄したカード|キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG|EX))+))?(が?(\d)[体枚](?:以(上|下))?|全て)?';
     private const REGEX_COMPOUND_AND_OR = '[subject](と|または)[subject]';
     private const REGEX_COMPOUND_ADJACENT = '[subject]に隣接した[subject]';
 
@@ -130,6 +130,10 @@ class Subject
                 break;
             case 'フィールド':
                 $noun = 'field';
+                break;
+            case '破棄したカード':
+                $noun = 'discarded card';
+                $forceNoArticle = true;
                 break;
             case false:
                 // There is no noun.

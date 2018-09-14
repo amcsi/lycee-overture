@@ -91,6 +91,10 @@ class SubjectTest extends TestCase
                 " this character's SP",
                 'このキャラのSP',
             ],
+            " discarded card's EX" => [
+                "  discarded card's EX",
+                '破棄したカードのEX',
+            ],
             "this character's SP and AP" => [
                 " this character's SP and AP",
                 'このキャラのSPとAP',
