@@ -265,6 +265,10 @@ class AutoTranslatorTest extends TestCase
                 'Summon {1 character} without paying its cost.',
                 '{キャラ1体}を無償で登場する。',
             ],
+            'once per turn or battle' => [
+                'This effect can only be used 1 time during the game.',
+                'ゲーム中１回まで使用可能。',
+            ],
         ];
     }
 }

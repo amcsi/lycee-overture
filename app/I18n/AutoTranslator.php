@@ -171,6 +171,16 @@ class AutoTranslator
             },
             $autoTranslated
         );
+        $autoTranslated = preg_replace_callback(
+            "/(ゲーム中|1ターンに)(\d+)回まで使用可能/u",
+            function (array $matches): string {
+                $atWhatTime = next($matches) === '1ターンに' ? 'per turn' : 'during the game';
+                $howManyTimes = next($matches);
+                $s = $howManyTimes !== '1';
+                return "this effect can only be used $howManyTimes time$s $atWhatTime";
+            },
+            $autoTranslated
+        );
 
 
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);
