@@ -28,7 +28,38 @@ class CardTransformer extends TransformerAbstract
             'ap' => $card->ap,
             'dp' => $card->dp,
             'sp' => $card->sp,
+            'element' => self::getElementMarkup($card),
+            'cost' => self::getCostMarkup($card),
             'translation' => $this->cardTranslationTransformer->transform($cardTranslation),
         ];
+    }
+
+    private static function getElementMarkup(Card $card): string
+    {
+        $coloredElements = Element::getElementKeys();
+        $elementsMarkup = '';
+        foreach ($coloredElements as $element) {
+            if ($card->$element) {
+                $elementsMarkup .= "[$element]";
+            }
+        }
+        if (!$elementsMarkup) {
+            // Default to showing a star as the element if lack of any colored elements.
+            $elementsMarkup = '[star]';
+        }
+        return $elementsMarkup;
+    }
+
+    private static function getCostMarkup(Card $card): string
+    {
+        $markup = '';
+        $elements = Element::getElementToMarkupMap();
+        // Move 'star' to the end so that star costs appear at the end.
+        $elements[] = array_shift($elements);
+
+        foreach ($elements as $element) {
+            $markup .= str_repeat("[$element]", $card->{"cost_$element"});
+        }
+        return $markup;
     }
 }

@@ -35,20 +35,21 @@ class Element
     /**
      * Returns all the elements including the star.
      */
-    public static function getAll(): array
+    public static function getAllLowerCase(): array
     {
+        $constants = (new \ReflectionClass(static::class))->getConstants();
         /** @noinspection PhpUnhandledExceptionInspection */
-        return (new \ReflectionClass(static::class))->getConstants();
+        return array_combine(array_map('strtolower', array_keys($constants)), $constants);
     }
 
     /**
      * Returns all the elements excluding the star.
      */
-    public static function getAllColored(): array
+    public static function getAllColoredLowerCase(): array
     {
         /** @noinspection PhpUnhandledExceptionInspection */
-        $elements = (new \ReflectionClass(static::class))->getConstants();
-        unset($elements['STAR']);
+        $elements = self::getAllLowerCase();
+        unset($elements['star']);
         return $elements;
     }
 
@@ -57,9 +58,9 @@ class Element
      */
     public static function getElementKeys(): array
     {
-        $elementKeys = array_flip(self::getAllColored());
-        foreach ($elementKeys as $key => $elementKeyUpperCase) {
-            $elementKeys[$key] = strtolower($elementKeyUpperCase);
+        $elementKeys = array_flip(self::getAllColoredLowerCase());
+        foreach ($elementKeys as $key => $elementKey) {
+            $elementKeys[$key] = $elementKey;
         }
         return $elementKeys;
     }
@@ -77,9 +78,12 @@ class Element
      */
     public static function getCostKeys(): array
     {
-        return array_map(function ($elementKeyUpperCase) {
-            return 'cost_' . strtolower($elementKeyUpperCase);
-        }, array_keys(static::getAll()));
+        return array_map(
+            function ($elementKey) {
+                return 'cost_' . $elementKey;
+            },
+            array_keys(static::getAllLowerCase())
+        );
     }
 
     public static function getElementToMarkupMap(): array

@@ -12,6 +12,7 @@
                     </span>
                 </div>
                 <div class="stats-and-stuff">
+                    <CardText class="element" :text="card.element" />
                     <span class="stat ex">{{ card.ex }} EX</span>
                     <template v-if="isCharacter">
                         <span class="stat dmg">{{ card.dmg }} DMG</span>
@@ -19,6 +20,8 @@
                         <span class="stat dp">{{ card.dp }} DP</span>
                         <span class="stat sp">{{ card.sp }} SP</span>
                     </template>
+                    Cost:
+                    <CardText class="cost" :text="card.cost" />
                 </div>
                 <div class="card-description" v-if="hasCardDescription">
                     <CardDescription :translation="card.translation" />
@@ -30,12 +33,13 @@
 
 <script>
   import CardDescription from './CardDescription';
+  import CardText from './CardText';
   import CardThumbnail from './CardThumbnail';
 
   /** @class CardListItem */
   export default {
     name: 'CardListItem',
-    components: { CardDescription, CardThumbnail },
+    components: { CardText, CardDescription, CardThumbnail },
     props: {
       card: {
         type: Object,
@@ -98,6 +102,11 @@
 
     .stats-and-stuff {
         margin-bottom: .5rem;
+    }
+
+    .element {
+        font-size: 1.5em;
+        vertical-align: middle;
     }
 
     .stat {
