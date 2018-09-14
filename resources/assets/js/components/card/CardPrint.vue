@@ -10,14 +10,18 @@
             />
             <div class="card-text">
                 <div>
-                    <span v-if="basicAbilities || abilities.length">
+                    <span v-if="card.translation.basic_abilities || abilities.length">
                         <strong>{{ card.id }}</strong>
-                        <span v-if="basicAbilities" class="basic-abilities" v-html="basicAbilities"></span>
+                        <CardText
+                            v-if="card.translation.basic_abilities"
+                            class="basic-abilities"
+                            :text="card.translation.basic_abilities"
+                        />
                         <span v-for="[abilityCost, abilityDescription] in abilities">
-                            <span v-if="abilityCost" class="ability-cost" v-html="abilityCost"></span>
-                            <span class="ability-description" v-html="abilityDescription"></span>
+                            <CardText v-if="abilityCost" class="ability-cost" :text="abilityCost" />
+                            <CardText class="ability-description" :text="abilityDescription" />
                         </span>
-                        <span v-if="comments" class="comments" v-html="comments"></span>
+                        <CardText v-if="card.translation.comments" class="comments" :text="card.translation.comments" />
                     </span>
                 </div>
                 <div style="color: grey; font-style: italic;">
@@ -33,8 +37,8 @@
 </template>
 
 <script>
-  import formatCardText from '../../utils/formatCard';
   import CardImage from './CardImage';
+  import CardText from './CardText';
 
   /**
    * Represents a card to print
@@ -43,7 +47,7 @@
    **/
   export default {
     name: 'CardPrint',
-    components: { CardImage },
+    components: { CardText, CardImage },
     props: [
       'card',
       'withImages',
@@ -65,15 +69,9 @@
           if (abilityCost && abilityCost.indexOf(' ') !== -1) {
             abilityCost += ': ';
           }
-          ret.push([formatCardText(abilityCost), formatCardText(abilityDescription)]);
+          ret.push([abilityCost, abilityDescription]);
         });
         return ret;
-      },
-      basicAbilities() {
-        return formatCardText(this.card.translation.basic_abilities);
-      },
-      comments() {
-        return formatCardText(this.card.translation.comments);
       },
     },
   };

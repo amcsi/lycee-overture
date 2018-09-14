@@ -5,7 +5,11 @@
 <script>
   import formatCardText from '../../utils/formatCard';
 
-  /** @class CardText */
+  /**
+   * Card text with card markup e.g. '[T][star][0]'.
+   *
+   * @class CardText
+   **/
   export default {
     name: 'CardText',
     props: {

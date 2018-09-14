@@ -1,20 +1,27 @@
 <template>
     <div>
-        <div v-if="basicAbilities" class="basic-abilities" v-html="basicAbilities"></div>
+        <CardText
+            v-if="translation.basic_abilities"
+            class="basic-abilities"
+            :text="translation.basic_abilities"
+        ></CardText>
         <div v-for="[abilityCost, abilityDescription] in abilities">
-            <span v-if="abilityCost" class="ability-cost" v-html="abilityCost"></span>
-            <span class="ability-description" v-html="abilityDescription"></span>
+            <CardText v-if="abilityCost" class="ability-cost" :text="abilityCost" />
+            <CardText class="ability-description" :text="abilityDescription" />
         </div>
-        <div v-if="comments" class="comments" v-html="comments"></div>
+        <div v-if="translation.comments" class="comments">
+            <CardText :text="translation.comments" />
+        </div>
     </div>
 </template>
 
 <script>
-  import formatCardText from '../../utils/formatCard';
+  import CardText from './CardText';
 
   /** @class CardDescription */
   export default {
     name: 'CardDescription',
+    components: { CardText },
     props: {
       translation: { required: true },
     },
@@ -31,15 +38,9 @@
           if (abilityCost && abilityCost.indexOf(' ') !== -1) {
             abilityCost += ': ';
           }
-          ret.push([formatCardText(abilityCost), formatCardText(abilityDescription)]);
+          ret.push([abilityCost, abilityDescription]);
         });
         return ret;
-      },
-      basicAbilities() {
-        return formatCardText(this.translation.basic_abilities);
-      },
-      comments() {
-        return formatCardText(this.translation.comments);
       },
     },
     methods: {},
