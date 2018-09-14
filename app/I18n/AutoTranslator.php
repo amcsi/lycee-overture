@@ -163,6 +163,14 @@ class AutoTranslator
             },
             $autoTranslated
         );
+        $autoTranslated = preg_replace_callback(
+            "/($subjectRegex)を無償で登場する/u",
+            function (array $matches): string {
+                $subject = Subject::autoTranslateStrict($matches[1]);
+                return "Summon $subject without paying its cost";
+            },
+            $autoTranslated
+        );
 
 
         $autoTranslated = preg_replace('/((?:\[.+?\])+)を発生する\./u', 'you get $1.', $autoTranslated);

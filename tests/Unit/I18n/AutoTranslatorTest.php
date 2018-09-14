@@ -261,6 +261,10 @@ class AutoTranslatorTest extends TestCase
                 'This card can only support a "xy".',
                 'このキャラのサポートは「xy」のみを対象に指定できる。',
             ],
+            'summon for free' => [
+                'Summon {1 character} without paying its cost.',
+                '{キャラ1体}を無償で登場する。',
+            ],
         ];
     }
 }
