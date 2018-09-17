@@ -21,7 +21,7 @@ use Symfony\Component\Stopwatch\Stopwatch;
 class AutoTranslateCommand extends Command
 {
     public const COMMAND = 'lycee:auto-translate';
-    public const AUTO_TRANSLATE_FIELDS = ['ability_description', 'ability_cost', 'basic_abilities'];
+    public const AUTO_TRANSLATE_FIELDS = ['ability_description', 'ability_cost', 'basic_abilities', 'comments'];
 
     protected $signature = self::COMMAND;
     protected $description = 'Attempts translations from Japanese description text based on patterns.';
