@@ -6,6 +6,7 @@ namespace amcsi\LyceeOverture\Providers;
 use amcsi\LyceeOverture\Console\Commands\DownloadTranslations;
 use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
 use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
+use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
@@ -13,6 +14,7 @@ use amcsi\LyceeOverture\Import\ImportConstants;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
+use JpnForPhp\Transliterator\Transliterator;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
@@ -82,5 +84,7 @@ class AppServiceProvider extends ServiceProvider
                     return file_exists($translationsFilePath) ? include $translationsFilePath : [];
                 }
             );
+
+        $app->singleton(Transliterator::class, \Closure::fromCallable([TransliteratorFactory::class, 'getInstance']));
     }
 }
