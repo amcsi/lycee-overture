@@ -5,6 +5,10 @@ namespace Tests\Unit\I18n;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator;
 use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
+use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
+use amcsi\LyceeOverture\I18n\NameTranslator\KanaTranslator;
+use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
+use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use PHPUnit\Framework\TestCase;
 
 class AutoTranslatorTest extends TestCase
@@ -14,7 +18,9 @@ class AutoTranslatorTest extends TestCase
      */
     public function testAutoTranslate(string $expected, string $input)
     {
-        $quoteTranslator = new QuoteTranslator([]);
+        $quoteTranslator = new QuoteTranslator(
+            new NameTranslator(new ManualNameTranslator([]), new KanaTranslator(TransliteratorFactory::getInstance()))
+        );
         self::assertSame($expected, (new AutoTranslator($quoteTranslator))->autoTranslate($input));
     }
 
@@ -98,7 +104,7 @@ class AutoTranslatorTest extends TestCase
                 '相手キャラ1体にDP-1する.',
             ],
             'compound target gets stat changes; separated target logic' => [
-                '{1 ally "フルコンプ" character} gets AP+1, DP+1.',
+                '{1 ally "Furukonpu" character} gets AP+1, DP+1.',
                 '{味方「フルコンプ」キャラ１体}にＡＰ＋１・ＤＰ＋１する。',
             ],
             'target gets stat changes' => [

@@ -5,8 +5,8 @@ namespace amcsi\LyceeOverture\Providers;
 
 use amcsi\LyceeOverture\Console\Commands\DownloadTranslations;
 use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
-use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
 use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
+use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
@@ -77,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
             ->give($config->get('onesky'));
 
         $translationsFilePath = DownloadTranslations::getTranslationsFilePath();
-        $app->when(QuoteTranslator::class)
+        $app->when(ManualNameTranslator::class)
             ->needs('$translations')
             ->give(
                 function () use ($translationsFilePath) {

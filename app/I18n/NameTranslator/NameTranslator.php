@@ -3,29 +3,35 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
-use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
-
 class NameTranslator
 {
-    private $quoteTranslator;
+    private $manualNameTranslator;
     private $kanaTranslator;
 
-    public function __construct(QuoteTranslator $quoteTranslator, KanaTranslator $kanaTranslator)
+    public function __construct(ManualNameTranslator $manualNameTranslator, KanaTranslator $kanaTranslator)
     {
-        $this->quoteTranslator = $quoteTranslator;
+        $this->manualNameTranslator = $manualNameTranslator;
         $this->kanaTranslator = $kanaTranslator;
     }
 
     /**
      * Tries to translate a card's name. First tries using the manual translations, then tries using the kana converter.
      */
-    public function tryTranslate(string $untranslated): string
+    public function tryTranslateName(string $untranslated): string
     {
-        $translated = $this->quoteTranslator->tryToTranslateNameExact($untranslated);
+        $translated = $this->manualNameTranslator->tryToTranslateNameExact($untranslated);
         if ($translated !== $untranslated) {
             return $translated;
         }
 
         return $this->kanaTranslator->translate($untranslated);
+    }
+
+    /**
+     * Tries to translate a card's name. First tries using the manual translations, then tries using the kana converter.
+     */
+    public function tryTranslateCharacterType(string $untranslated): string
+    {
+        return $this->manualNameTranslator->tryToTranslateCharacterTypeExact($untranslated);
     }
 }

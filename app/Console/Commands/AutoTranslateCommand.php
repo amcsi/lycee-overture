@@ -6,7 +6,6 @@ namespace amcsi\LyceeOverture\Console\Commands;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\I18n\AutoTranslator;
-use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
@@ -31,7 +30,6 @@ class AutoTranslateCommand extends Command
         CardTranslation $cardTranslation,
         TranslationCoverageChecker $translationCoverageChecker,
         AutoTranslator $autoTranslator,
-        QuoteTranslator $quoteTranslator,
         NameTranslator $nameTranslator
     ) {
         $stopwatchEvent = (new Stopwatch())->start('auto-translate-command');
@@ -101,9 +99,9 @@ class AutoTranslateCommand extends Command
                     $englishCard[$key] = $japaneseCard->$key;
                 }
                 // Manual translations for names, types etc.
-                $englishCard['name'] = $nameTranslator->tryTranslate($japaneseCard['name']);
-                $englishCard['ability_name'] = $nameTranslator->tryTranslate($japaneseCard['ability_name']);
-                $englishCard['character_type'] = $quoteTranslator->tryToTranslateCharacterTypeExact(
+                $englishCard['name'] = $nameTranslator->tryTranslateName($japaneseCard['name']);
+                $englishCard['ability_name'] = $nameTranslator->tryTranslateName($japaneseCard['ability_name']);
+                $englishCard['character_type'] = $nameTranslator->tryTranslateCharacterType(
                     $japaneseCard['character_type']
                 );
 
