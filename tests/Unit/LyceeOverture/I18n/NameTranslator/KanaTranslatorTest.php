@@ -49,6 +49,10 @@ class KanaTranslatorTest extends TestCase
                 'Vareiriivuvetu',
                 'ヴぁレェリィヴヴェトゥ',
             ],
+            'separated by romaji' => [
+                'Eremia VS Adeere',
+                'エレミアVSアデーレ',
+            ],
         ];
     }
 }

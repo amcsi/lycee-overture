@@ -32,6 +32,15 @@ class KanaTranslator
             return $text;
         }
 
+        if (Analyzer::hasLatinLetters($text)) {
+            $pattern = '/\p{Latin}+/u';
+            preg_match($pattern, $text, $matches);
+            $split = preg_split($pattern, $text, 2);
+
+            // Translate the words around the latin letters.
+            return $this->translate($split[0]) . ' ' . trim($matches[0]) . ' ' . $this->translate($split[1]);
+        }
+
         $translated = ucfirst($this->transliterator->transliterate($text));
 
         return preg_replace_callback('/-(.)/', [$this, 'dashSpaceCallback'], $translated);
