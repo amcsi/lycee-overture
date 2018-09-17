@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Tests\Unit\LyceeOverture\Http;
 
 use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-use Tests\TestCase;
 
 class ConfigureTrustedProxiesTest extends TestCase
 {

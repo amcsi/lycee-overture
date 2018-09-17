@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Http;
 
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 /**
  * This is to make sure that even though HTTPS is proxies with the help of nginx-proxy (docker),
