@@ -45,6 +45,10 @@ class KanaTranslatorTest extends TestCase
                 '天使の力／Kuraara',
                 '天使の力／クラーラ',
             ],
+            'foreign katakana' => [
+                'Vareiriivuvetu',
+                'ヴぁレェリィヴヴェトゥ',
+            ],
         ];
     }
 }
