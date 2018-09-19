@@ -35,8 +35,6 @@
         }
     </style>
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
     @if (env('GA_TRACKING_ID'))
         {{-- Global site tag (gtag.js) - Google Analytics --}}
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GA_TRACKING_ID') }}"></script>
