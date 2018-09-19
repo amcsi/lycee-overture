@@ -9,6 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 import {
   Card,
+  Col,
   Container,
   Footer,
   Form,
@@ -21,6 +22,7 @@ import {
   MenuItem,
   Option,
   Pagination,
+  Row,
   Select,
   Switch,
   Table,
@@ -35,6 +37,7 @@ import store from './store';
 Vue.use(VueRouter);
 Vue.component(Card.name, Card);
 Vue.component(Container.name, Container);
+Vue.component(Col.name, Col);
 Vue.component(Footer.name, Footer);
 Vue.component(Form.name, Form);
 Vue.component(FormItem.name, FormItem);
@@ -45,6 +48,7 @@ Vue.component(Menu.name, Menu);
 Vue.component(MenuItem.name, MenuItem);
 Vue.component(Option.name, Option);
 Vue.component(Pagination.name, Pagination);
+Vue.component(Row.name, Row);
 Vue.component(Select.name, Select);
 Vue.component(Switch.name, Switch);
 Vue.component(Table.name, Table);
