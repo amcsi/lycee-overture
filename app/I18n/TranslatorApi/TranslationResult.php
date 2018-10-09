@@ -22,7 +22,9 @@ class TranslationResult
         $words = json_decode(json_encode($xmlElement->Result->WordList));
 
         foreach ($words->Word as $word) {
-            $return[] = $word->Roman;
+            if (isset($word->Roman)) {
+                $return[] = $word->Roman;
+            }
         }
 
         return $return;
