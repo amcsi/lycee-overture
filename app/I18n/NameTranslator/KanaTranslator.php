@@ -6,6 +6,9 @@ namespace amcsi\LyceeOverture\I18n\NameTranslator;
 use JpnForPhp\Analyzer\Analyzer;
 use JpnForPhp\Transliterator\Transliterator;
 
+/**
+ * Translates hiragana and katakana to romaji.
+ */
 class KanaTranslator
 {
     private $transliterator;

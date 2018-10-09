@@ -5,7 +5,10 @@ namespace amcsi\LyceeOverture\I18n\TranslatorApi;
 
 use GuzzleHttp\Client;
 
-class KanjiTranslator
+/**
+ * Translates kanji (names) with Yahoo's API.
+ */
+class YahooKanjiTranslator
 {
     private $client;
     private $apiKey;
