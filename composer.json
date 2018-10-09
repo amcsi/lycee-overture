@@ -10,6 +10,7 @@
   "require": {
     "php": "^7.2",
     "ext-json": "*",
+    "ext-simplexml": "*",
     "beyondcode/laravel-self-diagnosis": "^0.4.1",
     "cakephp/chronos": "^1.1",
     "cloudinary/cloudinary_php": "^1.10",

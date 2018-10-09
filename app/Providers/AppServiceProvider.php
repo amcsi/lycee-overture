@@ -8,6 +8,7 @@ use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
 use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
+use amcsi\LyceeOverture\I18n\TranslatorApi\KanjiTranslator;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
@@ -84,6 +85,8 @@ class AppServiceProvider extends ServiceProvider
                     return file_exists($translationsFilePath) ? include $translationsFilePath : [];
                 }
             );
+
+        $app->when(KanjiTranslator::class)->needs('$apiKey')->give(env('YAHOO_TRANSLATOR_API_KEY'));
 
         $app->singleton(Transliterator::class, \Closure::fromCallable([TransliteratorFactory::class, 'getInstance']));
     }
