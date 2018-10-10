@@ -3,21 +3,19 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
-use amcsi\LyceeOverture\I18n\TranslatorApi\YahooKanjiTranslator;
+use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use JpnForPhp\Analyzer\Analyzer;
 
 /**
  * Attempts to translate kanji names to English.
- *
- * Uses Yahoo's API, so this is slow to run through all the cards.
  */
 class KanjiTranslator
 {
     private $yahooKanjiTranslator;
 
-    public function __construct(YahooKanjiTranslator $yahooKanjiTranslator)
+    public function __construct(TranslatorInterface $translator)
     {
-        $this->yahooKanjiTranslator = $yahooKanjiTranslator;
+        $this->yahooKanjiTranslator = $translator;
     }
 
     public function translate(string $text): string

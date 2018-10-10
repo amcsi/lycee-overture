@@ -6,12 +6,16 @@ namespace amcsi\LyceeOverture\Providers;
 use amcsi\LyceeOverture\Console\Commands\DownloadTranslations;
 use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
 use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
+use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooKanjiTranslator;
+use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
+use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
@@ -86,7 +90,16 @@ class AppServiceProvider extends ServiceProvider
                 }
             );
 
-        $app->when(YahooKanjiTranslator::class)->needs('$apiKey')->give(env('YAHOO_TRANSLATOR_API_KEY'));
+        $app->when(YahooRawKanjiTranslator::class)->needs('$apiKey')->give(env('YAHOO_TRANSLATOR_API_KEY'));
+
+        $app->when(KanjiTranslator::class)->needs(TranslatorInterface::class)->give(
+            function () use ($app) {
+                return new YahooKanjiTranslator(
+                    $app->make(YahooRawKanjiTranslator::class),
+                    $app->make(CacheManager::class)->driver('yahooTranslations')
+                );
+            }
+        );
 
         $app->singleton(Transliterator::class, \Closure::fromCallable([TransliteratorFactory::class, 'getInstance']));
     }

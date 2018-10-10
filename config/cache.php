@@ -49,6 +49,11 @@ return [
             'path' => storage_path('framework/cache/data'),
         ],
 
+        'yahooTranslations' => [
+            'driver' => 'file',
+            'path' => storage_path('framework/cache/yahooTranslations'),
+        ],
+
         'memcached' => [
             'driver' => 'memcached',
             'persistent_id' => env('MEMCACHED_PERSISTENT_ID'),

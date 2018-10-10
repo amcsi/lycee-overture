@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit\I18n\NameTranslator;
 
 use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
-use amcsi\LyceeOverture\I18n\TranslatorApi\YahooKanjiTranslator;
+use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +20,7 @@ class KanjiTranslatorTest extends TestCase
      */
     public function testTranslate(string $expected, string $input, array $translated = []): void
     {
-        $yahooTranslator = \Mockery::mock(YahooKanjiTranslator::class);
+        $yahooTranslator = \Mockery::mock(YahooRawKanjiTranslator::class);
         foreach ($translated as $mockTranslated) {
             $yahooTranslator->expects()->translate()->withAnyArgs()->andReturn($mockTranslated);
         }

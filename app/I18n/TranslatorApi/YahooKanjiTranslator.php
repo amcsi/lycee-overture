@@ -3,44 +3,41 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\TranslatorApi;
 
-use GuzzleHttp\Client;
+use amcsi\LyceeOverture\I18n\TranslatorInterface;
+use Illuminate\Contracts\Cache\Repository;
 
-/**
- * Translates kanji (names) with Yahoo's API.
- */
-class YahooKanjiTranslator
+class YahooKanjiTranslator implements TranslatorInterface
 {
-    private $client;
-    private $apiKey;
+    private $yahooRawKanjiTranslator;
+    private $cache;
 
-    public function __construct(Client $client, string $apiKey)
+    public function __construct(YahooRawKanjiTranslator $yahooRawKanjiTranslator, Repository $cache)
     {
-        $this->client = $client;
-        $this->apiKey = $apiKey;
+        $this->yahooRawKanjiTranslator = $yahooRawKanjiTranslator;
+        $this->cache = $cache;
     }
 
-    public function translate(string $kanji): string
+    public function translate(string $text): string
     {
-        $query = [
-            'appid' => $this->apiKey,
-            'sentence' => $kanji,
-        ];
-        $options = ['query' => $query];
-        $apiResponseBodyXml = $this->client
-            ->get('https://jlp.yahooapis.jp/FuriganaService/V1/furigana', $options)
-            ->getBody()
-            ->__toString();
+        // Try to get the cached translation, otherwise use the service to call the Yahoo API.
+        $translated = $this->cache->get($text);
+        if ($translated === null) {
+            $translated = $this->yahooRawKanjiTranslator->translate($text);
+            $expiry = 60 * 24 * 30 * 12; // 1 year.
+            $this->cache->put($text, $translated, $expiry);
+        }
 
-        $translationResult = new TranslationResult($apiResponseBodyXml);
-
-        return implode(
+        // Capitalize first letter of each word.
+        $translated = implode(
             ' ',
             array_map(
-                function (string $nameComponent) {
-                    return ucfirst($nameComponent);
+                function (string $word) {
+                    return ucfirst($word);
                 },
-                $translationResult->getWords()
+                explode(' ', $translated)
             )
         );
+
+        return $translated;
     }
 }

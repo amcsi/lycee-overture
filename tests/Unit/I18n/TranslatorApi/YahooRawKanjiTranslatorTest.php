@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\I18n\TranslatorApi;
 
-use amcsi\LyceeOverture\I18n\TranslatorApi\YahooKanjiTranslator;
+use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 
-class YahooKanjiTranslatorTest extends TestCase
+class YahooRawKanjiTranslatorTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
@@ -30,8 +30,8 @@ class YahooKanjiTranslatorTest extends TestCase
                 new Response(200, [], file_get_contents(__DIR__ . '/result.xml'))
             );
 
-        $instance = new YahooKanjiTranslator($guzzleClient, $apiKey);
+        $instance = new YahooRawKanjiTranslator($guzzleClient, $apiKey);
 
-        self::assertSame('Isuzu Hana', $instance->translate($kanjiInput));
+        self::assertSame('isuzu hana', $instance->translate($kanjiInput));
     }
 }
