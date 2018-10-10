@@ -32,7 +32,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import VueRouter from 'vue-router';
 import App from './App';
 import router from './router';
-import store from './store';
+import store from './store/index';
 
 Vue.use(VueRouter);
 Vue.component(Card.name, Card);

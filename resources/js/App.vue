@@ -9,5 +9,5 @@
 </script>
 
 <style lang="scss">
-    @import 'resources/assets/sass/app.scss';
+    @import '../sass/app';
 </style>

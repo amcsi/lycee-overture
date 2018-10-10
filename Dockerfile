@@ -55,7 +55,7 @@ COPY package-lock.json .
 
 RUN npm install
 
-COPY resources/assets resources/assets
+COPY resources resources
 COPY webpack.mix.js .
 COPY .babelrc .
 RUN npm run production
