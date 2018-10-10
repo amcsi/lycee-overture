@@ -27,6 +27,12 @@ class YahooKanjiTranslator implements TranslatorInterface
             $this->cache->put($text, $translated, $expiry);
         }
 
+        $words = explode(' ', trim($translated));
+        if (\count($words) !== 2) {
+            // Do not translate. The result is not two words so it can't be a typical Japanese name.
+            return $text;
+        }
+
         // Capitalize first letter of each word.
         $translated = implode(
             ' ',
@@ -34,7 +40,7 @@ class YahooKanjiTranslator implements TranslatorInterface
                 function (string $word) {
                     return ucfirst($word);
                 },
-                explode(' ', $translated)
+                $words
             )
         );
 

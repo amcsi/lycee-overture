@@ -9,6 +9,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator;
 use amcsi\LyceeOverture\I18n\CommentTranslator\CommentTranslator;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
+use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
 use Carbon\Carbon;
@@ -32,7 +33,8 @@ class AutoTranslateCommand extends Command
         TranslationCoverageChecker $translationCoverageChecker,
         AutoTranslator $autoTranslator,
         NameTranslator $nameTranslator,
-        CommentTranslator $commentTranslator
+        CommentTranslator $commentTranslator,
+        KanjiTranslator $kanjiTranslator
     ) {
         $stopwatchEvent = (new Stopwatch())->start('auto-translate-command');
         $this->output->writeln('Starting auto translation of cards.');
@@ -102,6 +104,7 @@ class AutoTranslateCommand extends Command
                 }
                 // Manual translations for names, types etc.
                 $englishCard['name'] = $nameTranslator->tryTranslateName($japaneseCard['name']);
+                $englishCard['name'] = $kanjiTranslator->translate($englishCard['name']);
                 $englishCard['ability_name'] = $nameTranslator->tryTranslateName($japaneseCard['ability_name']);
                 $englishCard['character_type'] = $nameTranslator->tryTranslateCharacterType(
                     $japaneseCard['character_type']
