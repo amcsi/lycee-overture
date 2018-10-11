@@ -1,6 +1,6 @@
 <template>
     <el-row>
-        <el-col span="12">
+        <el-col :sm="12">
             <el-pagination
                 :total="pagination.total"
                 :current-page="pagination.current_page"
@@ -10,7 +10,7 @@
             />
         </el-col>
 
-        <el-col span="12" class="limitContainer">
+        <el-col :sm="12" class="limitContainer">
             <select v-model="limit" class="right">
                 <option v-for="limitValue in limitValues" :value="limitValue">
                     {{ limitValue }}
@@ -54,8 +54,12 @@
   };
 </script>
 
-<style scoped>
-    .limitContainer {
-        text-align: right;
+<style scoped lang="scss">
+    @import '~element-ui/packages/theme-chalk/src/mixins/mixins.scss';
+
+    @include res(sm) {
+        .limitContainer {
+            text-align: right;
+        }
     }
 </style>
