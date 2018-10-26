@@ -9,6 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 import {
   Card,
+  Checkbox,
   Col,
   Container,
   Footer,
@@ -37,6 +38,7 @@ import store from './store/index';
 
 Vue.use(VueRouter);
 Vue.component(Card.name, Card);
+Vue.component(Checkbox.name, Checkbox);
 Vue.component(Container.name, Container);
 Vue.component(Col.name, Col);
 Vue.component(Footer.name, Footer);

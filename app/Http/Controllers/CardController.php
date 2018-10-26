@@ -18,7 +18,7 @@ class CardController extends Controller
 
         $builder = $builderFactory->createBuilderWithQuery($locale, $request->query());
 
-        if ($locale !== Locale::JAPANESE) {
+        if ($locale !== Locale::JAPANESE && !$request->query('noTranslatedFirst')) {
             // Bring forward cards with fewer kanjis (i.e. fewer untranslated bits).
             // Of course this is only necessary if the locale is non-Japanese.
             $builder->orderBy('t.kanji_count', 'asc');

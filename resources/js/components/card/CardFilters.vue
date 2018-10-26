@@ -16,6 +16,10 @@
             <el-input class="card-id-input" placeholder="LO-0001,LO-0002" v-model="cardId" />
         </el-form-item>
 
+        <el-form-item :label="$t('cardFilters.translatedFirst')">
+            <el-checkbox v-model="translatedFirst" />
+        </el-form-item>
+
         <router-link :to="{path: 'cards/print', query: $route.query }" v-if="1 <= totalCards && totalCards <= 60">
             <i class="fa fa-print"></i>
             Print view
@@ -62,6 +66,19 @@
           }
           this.$router.push({ query });
         }, 1000),
+      },
+      translatedFirst: {
+        get() {
+          return !this.$route.query.noTranslatedFirst;
+        },
+        set(translatedFirst) {
+          const query = { ...this.$route.query };
+          delete query.noTranslatedFirst;
+          if (!translatedFirst) {
+            query.noTranslatedFirst = 1;
+          }
+          this.$router.push({ query });
+        },
       },
     },
   };
