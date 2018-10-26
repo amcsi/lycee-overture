@@ -1,14 +1,17 @@
 <template>
     <div class="card-thumbnail-container">
-        <CardImage
-            :id="id"
-            :height="150"
-            :cloudinary-height="150"
-            @mouseenter.native="mouseEnter"
-            @mouseleave.native="mouseLeave"
-            @click.native="click"
-            style="cursor: pointer;"
-        />
+        <!-- Only open the image url in a new page if the thumbnail had already been clicked on before mouseleave -->
+        <a target="_blank" rel="nofollow" :href="largerImage ? imageUrl : null">
+            <CardImage
+                :id="id"
+                :height="150"
+                :cloudinary-height="150"
+                @mouseenter.native="mouseEnter"
+                @mouseleave.native="mouseLeave"
+                @click.native="click"
+                style="cursor: pointer;"
+            />
+        </a>
 
         <!-- Preview image stretched out for incremental image loading -->
         <CardImage
@@ -27,6 +30,7 @@
             :id="id"
             :height="height"
             :cloudinary-height="height"
+            @imageUrlChange="imageUrl = $event"
         />
     </div>
 </template>
@@ -42,6 +46,7 @@
       return {
         largerImage: false,
         revealImageOverlay: false,
+        imageUrl: null,
       };
     },
     props: {
