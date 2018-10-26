@@ -12,7 +12,7 @@
             </el-select>
         </el-form-item>
 
-        <el-form-item label="Card ID">
+        <el-form-item :label="$t('cardFilters.cardId')">
             <el-input class="card-id-input" placeholder="LO-0001,LO-0002" v-model="cardId" />
         </el-form-item>
 

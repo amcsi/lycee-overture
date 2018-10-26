@@ -31,6 +31,7 @@ import {
 import 'element-ui/lib/theme-chalk/index.css';
 import VueRouter from 'vue-router';
 import App from './App';
+import i18n from './i18n';
 import router from './router';
 import store from './store/index';
 
@@ -65,6 +66,7 @@ Vue.use(Loading.directive);
 new Vue({
   router,
   store,
+  i18n,
   render(h) {
     return h(App);
   },

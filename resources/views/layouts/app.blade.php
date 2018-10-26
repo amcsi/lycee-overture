@@ -49,6 +49,10 @@
         </script>
     @endif
 
+    <script>
+      var locale = @json(\App::getLocale());
+    </script>
+
 </head>
 <body>
 @yield('content')
