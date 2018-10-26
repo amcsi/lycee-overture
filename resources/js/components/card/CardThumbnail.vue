@@ -5,26 +5,28 @@
             :height="150"
             :cloudinary-height="150"
             @mouseenter.native="mouseEnter"
-            @mouseleave.native="showBiggerImage = false"
+            @mouseleave.native="mouseLeave"
+            @click.native="click"
+            style="cursor: pointer;"
         />
 
         <!-- Preview image stretched out for incremental image loading -->
         <CardImage
             ref="bigImagePreview"
             class="biggerImage"
-            v-show="showBiggerImage"
+            v-show="revealImageOverlay"
             :id="id"
-            :height="300"
+            :height="height"
             :cloudinary-height="150"
         />
 
         <CardImage
             ref="bigImage"
             class="biggerImage"
-            v-show="showBiggerImage"
+            v-show="revealImageOverlay"
             :id="id"
-            :height="300"
-            :cloudinary-height="300"
+            :height="height"
+            :cloudinary-height="height"
         />
     </div>
 </template>
@@ -38,7 +40,8 @@
     name: 'CardThumbnail',
     data() {
       return {
-        showBiggerImage: false,
+        largerImage: false,
+        revealImageOverlay: false,
       };
     },
     props: {
@@ -48,6 +51,11 @@
       },
     },
     components: { CardImage },
+    computed: {
+      height() {
+        return this.largerImage ? 520 : 300;
+      },
+    },
     methods: {
       setupPopper() {
         const reference = this.$el;
@@ -73,10 +81,18 @@
         }
       },
       mouseEnter() {
-        this.showBiggerImage = true;
+        this.revealImageOverlay = true;
         this.$nextTick(() => {
           this.setupPopper();
         });
+      },
+      mouseLeave() {
+        this.revealImageOverlay = false;
+        this.largerImage = false;
+      },
+      click() {
+        this.largerImage = true;
+        this.setupPopper();
       },
     },
     destroyed() {
