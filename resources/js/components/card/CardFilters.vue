@@ -20,6 +20,10 @@
             <el-input class="card-id-input" v-model="name" />
         </el-form-item>
 
+        <el-form-item>
+            <a href="#" @click.prevent="clearAllFilters"><i class="fa fa-eraser"></i> Clear all filters</a>
+        </el-form-item>
+
         <el-form-item :label="$t('cardFilters.translatedFirst')">
             <el-checkbox v-model="translatedFirst" />
         </el-form-item>
@@ -35,6 +39,12 @@
   import debounce from 'lodash.debounce';
   import { mapState } from 'vuex';
 
+  // Configuration for common query filter properties.
+  const filterConfig = [
+    { name: 'set' },
+    { name: 'cardId', debouncing: true },
+    { name: 'name', debouncing: true },
+  ];
   /** @class CardFilters */
   export default {
     name: 'CardFilters',
@@ -45,12 +55,7 @@
       ...mapState('cards', {
         totalCards: state => state.list.meta.pagination.total,
       }),
-      ...([
-        // Configuration for common query filter properties.
-        { name: 'set' },
-        { name: 'cardId', debouncing: true },
-        { name: 'name', debouncing: true },
-      ])
+      ...(filterConfig)
       /**
        * From a property configuration, generates a computed getter/setter pair, and returns an object with a single
        * property (the name), and puts the getter/setter as its value.
@@ -97,6 +102,16 @@
           }
           this.$router.push({ query });
         },
+      },
+    },
+    methods: {
+      clearAllFilters() {
+        const query = { ...this.$route.query };
+        filterConfig.forEach(({ name }) => {
+          delete query[name];
+        });
+        delete query.page;
+        this.$router.push({ query });
       },
     },
   };
