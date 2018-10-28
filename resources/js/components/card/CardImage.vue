@@ -3,6 +3,8 @@
 </template>
 
 <script>
+  import getCardImageUrl from '../../utils/getCardImageUrl';
+
   /** @class CardImage */
   export default {
     name: 'CardImage',
@@ -22,13 +24,7 @@
     },
     computed: {
       src() {
-        const modifiers = [];
-        if (this.cloudinaryHeight) {
-          modifiers.push(`h_${this.cloudinaryHeight}`);
-        }
-        let imageUrl = `https://res.cloudinary.com/${window.vars.cloudinaryCloudName}/image/upload/${modifiers.join(',')}/cards/${this.id}.jpg`;
-        this.$emit('imageUrlChange', imageUrl);
-        return imageUrl;
+        return getCardImageUrl(this.id, this.cloudinaryHeight);
       },
       width() {
         // Card width/height ratio.
