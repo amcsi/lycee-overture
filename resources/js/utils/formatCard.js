@@ -1,3 +1,5 @@
+import { escape } from './html';
+
 /**
  * @param name
  * @param text The hidden text for when copy-pasting.
@@ -28,6 +30,16 @@ export default function(text = '') {
   text = text
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+  text = text.replace(/"(.*?)"/g, (_, name) => {
+    // Get the same string, but it made into a link with a new name filter.
+
+    const url = new URL(document.location);
+    const params = url.searchParams;
+    params.set('name', name);
+    const href = url.toString();
+    const safeName = escape(name);
+    return `<a href="${href}" data-key="name" data-value="${safeName}">"${safeName}"</a>`;
+  });
   text = text.replace(/\[T]/g, getIcon('tap'));
   text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, simpleCallback);
   text = text.replace(/\[(Activate|Trigger|Continuous)]/g, abilityTypeCallback);
