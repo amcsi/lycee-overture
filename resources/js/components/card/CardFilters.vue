@@ -16,6 +16,10 @@
             <el-input class="card-id-input" placeholder="LO-0001,LO-0002" v-model="cardId" />
         </el-form-item>
 
+        <el-form-item :label="$t('cardFilters.nameOfCard')">
+            <el-input class="card-id-input" v-model="name" />
+        </el-form-item>
+
         <el-form-item :label="$t('cardFilters.translatedFirst')">
             <el-checkbox v-model="translatedFirst" />
         </el-form-item>
@@ -45,6 +49,7 @@
         // Configuration for common query filter properties.
         { name: 'set' },
         { name: 'cardId', debouncing: true },
+        { name: 'name', debouncing: true },
       ])
       /**
        * From a property configuration, generates a computed getter/setter pair, and returns an object with a single

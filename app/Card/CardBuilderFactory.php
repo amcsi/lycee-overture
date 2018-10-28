@@ -40,6 +40,17 @@ class CardBuilderFactory
             );
         }
 
+        if ($name = (string) ($query['name'] ?? null)) {
+            $builder->where(
+                function (Builder $whereBuilder) use ($name) {
+                    $like = '%' . self::escapeLike($name) . '%';
+                    $whereBuilder
+                        ->where('t.name', 'LIKE', $like)
+                        ->orWhere('t.ability_name', 'LIKE', $like);
+                }
+            );
+        }
+
         if ($cardId = ($query['cardId'] ?? null)) {
             // Card IDs are comma-separated, and only the number bits from each value matters,
             // so the LO- and padding numbers are optional.
@@ -53,5 +64,15 @@ class CardBuilderFactory
         }
 
         return $builder;
+    }
+
+    private static function escapeLike(string $value): string
+    {
+        $char = '\\';
+        return str_replace(
+            [$char, '%', '_'],
+            [$char . $char, $char . '%', $char . '_'],
+            $value
+        );
     }
 }
