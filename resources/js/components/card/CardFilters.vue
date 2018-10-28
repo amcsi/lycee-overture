@@ -1,7 +1,7 @@
 <template>
     <el-form ref="form" label-width="120px">
         <el-form-item label="Starter deck">
-            <el-select placeholder="-" v-model="cardSetId">
+            <el-select placeholder="-" v-model="set">
                 <el-option label="All cards" value=""></el-option>
                 <el-option
                     v-for="cardSet in cardSetList"
@@ -41,32 +41,45 @@
       ...mapState('cards', {
         totalCards: state => state.list.meta.pagination.total,
       }),
-      cardSetId: {
-        get() {
-          return this.$route.query.set || '';
-        },
-        set(id) {
-          const query = { ...this.$route.query, page: 1 };
-          delete query.set;
-          if (id) {
-            query.set = id;
-          }
-          this.$router.push({ query });
-        },
-      },
-      cardId: {
-        get() {
-          return this.$route.query.cardId || '';
-        },
-        set: debounce(function(id) {
-          const query = { ...this.$route.query, page: 1 };
-          delete query.cardId;
-          if (id) {
-            query.cardId = id;
-          }
-          this.$router.push({ query });
-        }, 1000),
-      },
+      ...([
+        // Configuration for common query filter properties.
+        { name: 'set' },
+        { name: 'cardId', debouncing: true },
+      ])
+      /**
+       * From a property configuration, generates a computed getter/setter pair, and returns an object with a single
+       * property (the name), and puts the getter/setter as its value.
+       */
+        .map(
+          ({ name, debouncing }) => {
+            const getterSetter = {
+              get() {
+                return this.$route.query[name] || '';
+              },
+              set(value) {
+                const query = { ...this.$route.query };
+                delete query.page; // Always clear the page when the filters change.
+                delete query[name];
+                if (value) {
+                  query[name] = value;
+                }
+                this.$router.push({ query });
+              },
+            };
+            if (debouncing) {
+              getterSetter.set = debounce(getterSetter.set, 1000);
+            }
+            return {
+              [name]: getterSetter,
+            };
+          })
+        /**
+         * Now we want to take the array where each contains an object with a single key (property) with a getter/setter
+         * in them, and make it into a single object containing all the properties with their getter/setters on them.
+         */
+        .reduce((acc, current) => {
+          return { ...acc, ...current };
+        }, {}),
       translatedFirst: {
         get() {
           return !this.$route.query.noTranslatedFirst;
