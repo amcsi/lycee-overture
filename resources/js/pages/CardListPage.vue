@@ -1,5 +1,9 @@
 <template>
     <CardListContainer>
+        <h1>
+            {{ $t('nav.cardList' )}}
+        </h1>
+
         <CardFilters />
         <CardList />
     </CardListContainer>

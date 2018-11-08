@@ -1,5 +1,9 @@
 <template>
     <div>
+        <h1>
+            {{ $t('welcome.websiteTitle' )}}
+        </h1>
+
         <h3>
             <router-link to="/cards">View cards</router-link>
         </h3>

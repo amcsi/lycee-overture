@@ -28,6 +28,7 @@ const loadingizeAsyncComponent = asyncComponent => () => ({
 
 const CardListPrintPage = loadingizeAsyncComponent(() => import ('./pages/CardListPrintPage'));
 const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage'));
+const RulesPage = loadingizeAsyncComponent(() => import('./pages/RulesPage'));
 const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
 
 const router = new VueRouter({
@@ -37,6 +38,7 @@ const router = new VueRouter({
     {
       path: '', component: Layout, children: [
         { path: '/', component: IndexPage },
+        { path: '/rules', component: RulesPage },
         { path: '/cards', component: CardListPage },
       ],
     },

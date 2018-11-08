@@ -2,10 +2,6 @@
     <el-container class="container">
         <el-header height="auto">
             <NavMenu />
-
-            <h1>
-                Lycee Overture TCG Translation Website
-            </h1>
         </el-header>
         <el-main class="main">
             <router-view></router-view>
