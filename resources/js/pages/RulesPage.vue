@@ -13,7 +13,6 @@
             <li>{{ $t('rules.deckRules.rule4') }}</li>
         </ul>
 
-
         <h3>{{ $t('rules.characterCard.title') }}</h3>
 
         <p>
@@ -21,7 +20,7 @@
             {{ $t('rules.characterCard.overviewNote') }}
         </p>
 
-        <div class="character-anatomy-container">
+        <div class="anatomy-container">
             <img src="https://lycee-tcg.com/rule/images/index_2_img1.png" :alt="$t('rules.characterCard.imageAlt')" />
             <AnatomyTable>
                 <AnatomyRow number="1" :name="$t('rules.characterCard.cardName')">
@@ -71,6 +70,67 @@
                 </AnatomyRow>
             </AnatomyTable>
         </div>
+
+        <h3>{{ $t('rules.eventCard.title') }}</h3>
+
+        <p>
+            {{ $t('rules.eventCard.description1') }}<br />
+            {{ $t('rules.eventCard.description2') }}
+        </p>
+
+        <div class="anatomy-container">
+            <img src="https://lycee-tcg.com/rule/images/index_2_img2.png" :alt="$t('rules.itemCard.imageAlt')" />
+            <AnatomyTable>
+                <AnatomyRow number="1" :name="$t('rules.characterCard.cardName')">
+                    {{ $t('rules.characterCard.cardNameDescription') }}
+                </AnatomyRow>
+                <AnatomyRow number="2" :name="$t('rules.characterCard.element')">
+                    {{ $t('rules.characterCard.elementDescription') }}
+                </AnatomyRow>
+                <AnatomyRow number="3" :name="$t('rules.characterCard.ex')">
+                    {{ $t('rules.characterCard.exDescription') }}
+                </AnatomyRow>
+                <AnatomyRow number="4" :name="$t('rules.characterCard.cost')">
+                    {{ $t('rules.characterCard.costDescription') }}
+                </AnatomyRow>
+                <AnatomyRow number="5" :name="$t('rules.eventCard.effect')">
+                    {{ $t('rules.eventCard.effectDescription') }}
+                </AnatomyRow>
+            </AnatomyTable>
+        </div>
+
+        <h3>{{ $t('rules.itemCard.title') }}</h3>
+
+        <p>
+            {{ $t('rules.itemCard.description1') }}<br />
+            {{ $t('rules.itemCard.description2') }}
+        </p>
+
+        <ul>
+            <li>{{ $t('rules.itemCard.description1') }}</li>
+            <li>{{ $t('rules.itemCard.description2') }}</li>
+        </ul>
+
+        <div class="anatomy-container">
+            <img src="https://lycee-tcg.com/rule/images/index_2_img3.png" :alt="$t('rules.itemCard.imageAlt')" />
+            <AnatomyTable>
+                <AnatomyRow number="1" :name="$t('rules.characterCard.cardName')">
+                    {{ $t('rules.characterCard.cardNameDescription') }}
+                </AnatomyRow>
+                <AnatomyRow number="2" :name="$t('rules.characterCard.element')">
+                    {{ $t('rules.characterCard.elementDescription') }}
+                </AnatomyRow>
+                <AnatomyRow number="3" :name="$t('rules.characterCard.ex')">
+                    {{ $t('rules.characterCard.exDescription') }}
+                </AnatomyRow>
+                <AnatomyRow number="4" :name="$t('rules.characterCard.cost')">
+                    {{ $t('rules.characterCard.costDescription') }}
+                </AnatomyRow>
+                <AnatomyRow number="5" :name="$t('rules.eventCard.effect')">
+                    {{ $t('rules.itemCard.effectDescription') }}
+                </AnatomyRow>
+            </AnatomyTable>
+        </div>
     </div>
 </template>
 
@@ -86,7 +146,7 @@
 </script>
 
 <style scoped>
-    .character-anatomy-container {
+    .anatomy-container {
         display: flex;
         align-items: flex-start;
     }

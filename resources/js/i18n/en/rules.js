@@ -8,8 +8,10 @@ export default {
       + ' of cards purely from the same brand.',
     rule4: 'At most a single character with the basic ability "Leader" may be in a deck.',
   },
+  dotNumberN: 'Dot number {number}',
   characterCard: {
     title: 'Character Card',
+    imageAlt: 'Picture of a Character Card with numbered dots in different locations',
     overview: 'A card that represents a character. It gets summoned to the field and attacks.',
     overviewNote: '※ When in portrait position, we call that "untapped". If sideways, then'
       + ' "tapped".',
@@ -40,5 +42,20 @@ export default {
     brand: 'Brand',
     brandDescription1: 'Brand of the card.',
     brandDescription2: 'Some cards can be restricted to only be played in decks purely consisting of cards of the same brand.',
+  },
+  eventCard: {
+    title: 'Event Card',
+    description1: 'By using one from your hand, it does what it says in the description.',
+    description2: 'After use, it is sent to the graveyard.',
+    effect: 'Effect',
+    effectDescription: 'Various effects the player gains by playing this card.',
+  },
+  itemCard: {
+    title: 'Item Card',
+    description1: 'By using one from your hand, you can equip 1 character with it.',
+    description2: 'Equipped cards stay active while equipped.',
+    point1: '1 can only be equipped with one character.',
+    point2: 'When the equipped character leaves the field, the item is sent to the graveyard.',
+    effectDescription: 'The effect the equipped character gains.',
   },
 };
