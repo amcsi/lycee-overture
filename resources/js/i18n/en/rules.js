@@ -1,5 +1,5 @@
 export default {
-  deck: 'Deck',
+  deckTitle: 'Deck',
   deckRules: {
     overview: 'The rules of constructing a deck are the following:',
     rule1: 'The number of cards must be exactly 60; no more, no less.',
@@ -57,5 +57,35 @@ export default {
     point1: '1 can only be equipped with one character.',
     point2: 'When the equipped character leaves the field, the item is sent to the graveyard.',
     effectDescription: 'The effect the equipped character gains.',
+  },
+  field: {
+    title: 'Field',
+    description: 'The place to which your characters are summoned. Attacking side (AF) defending side (DF) are three rows each. This is a total of 6 spots.',
+    point1: 'One spot can only have one character on it.',
+    point2: 'You can neither move, nor send the characters to the graveyard without an explicit basic ability or an effect.',
+    imageAlt: 'Picture of the board of a player\'s side.',
+  },
+  graveyard: {
+    title: 'Graveyard',
+    description1: 'The place your cards that are destroyed or discarded go.',
+    description2: 'All cards here are face-up, and either player can check each others\' at any time.',
+  },
+  deck: {
+    description1: 'Your deck.',
+    description2: 'Its contents are face-down, and neither player is allowed to look at them.',
+  },
+  rowsAndColumns: {
+    title: 'Rows and columns',
+    description: 'Lines of fields are called rows and columns.',
+    point1_line1: 'Looking at the image above, a lines going from left to right are rows (AKA. "orders"), and lines going from bottom to top are colums.',
+    point1_line2: 'For example, in the above figure, the upper right "Ruler / Jeanne d\'Arc" character located in the AF row of your right column.',
+    point1_line3: '(From your opponent\'s point of view, it\'s on the left column.)',
+    point2: 'A spot on the field can be referenced as "a field" in card texts.',
+    point3: 'The DF is also known as the back row, and AF as the front row.',
+  },
+  hand: {
+    title: 'Hand',
+    description1: 'Draw 7 cards from your deck at the start of the game. Those become part of your starting hand.',
+    description2: 'Only you can see your hand (do not show it to your opponent).',
   },
 };
