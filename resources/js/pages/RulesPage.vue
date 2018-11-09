@@ -1,21 +1,21 @@
 <template>
     <div>
-        <h1>{{ $t('nav.rules') }}</h1>
-
         <DeckAndCardRules />
         <FieldRules />
+        <CostRules />
     </div>
 </template>
 
 <script>
 
+  import CostRules from '../components/rules/CostRules';
   import DeckAndCardRules from '../components/rules/DeckAndCardRules';
   import FieldRules from '../components/rules/FieldRules';
 
   /** @class RulesPage */
   export default {
     name: 'RulesPage',
-    components: { FieldRules, DeckAndCardRules },
+    components: { CostRules, FieldRules, DeckAndCardRules },
   };
 </script>
 

@@ -1,8 +1,11 @@
 export default {
+  deckAndCardsRulesTitle: 'Deck and Cards',
   deckTitle: 'Deck',
   deckRules: {
     overview: 'The rules of constructing a deck are the following:',
-    rule1: 'The number of cards must be exactly 60; no more, no less.',
+    rule1: 'The numb'
+      + ''
+      + 'r of cards must be exactly 60; no more, no less.',
     rule2: 'You can have up to 4 copies of card with the same identification number.',
     rule3: 'Cards with "Deck Restriction" on them can only be played in decks that consist'
       + ' of cards purely from the same brand.',
@@ -58,6 +61,7 @@ export default {
     point2: 'When the equipped character leaves the field, the item is sent to the graveyard.',
     effectDescription: 'The effect the equipped character gains.',
   },
+  boardRulesTitle: 'Board',
   field: {
     title: 'Field',
     description: 'The place to which your characters are summoned. Attacking side (AF) defending side (DF) are three rows each. This is a total of 6 spots.',
@@ -87,5 +91,47 @@ export default {
     title: 'Hand',
     description1: 'Draw 7 cards from your deck at the start of the game. Those become part of your starting hand.',
     description2: 'Only you can see your hand (do not show it to your opponent).',
+  },
+  costRulesTitle: 'Card Costs',
+  cost: {
+    title: 'Cost',
+    description1: 'In order to summon characters to the field, or use events and abilities, you must pay the usage fee (cost) displayed on that card. Costs are paid by discarding cards in your hand.',
+    description2: 'The cost of the same element as the element displayed on the discarded card has to be paid by the value of EX.',
+    point1: 'Costs are paid at the same time you declare the use of a card.',
+    point2: 'When paying the cost, you can pay by discarding one or more cards, however any surplus you leave over is lost.',
+  },
+  costCard: {
+    element: 'Element',
+    cost: 'Cost',
+  },
+  costExample: {
+    example1: 'For example, if you discard one character with EX1 with a {flower} element, the cost you can pay with that is one of that element.',
+  },
+  howToSummon: {
+    title: 'How to summon a character?',
+    description: 'A cost of {flowers} is required to summon this character.',
+    box: {
+      title: 'To use this {flower} card, looking at its cost, either:',
+      option1: 'Discard two EX1 {flower} cards from your hand.',
+      or: 'Or',
+      option2: 'Discard one EX2 {flower} card from your hand.',
+    },
+    discard2Box: 'Discard two EX1 {flower} cards',
+    discard1Box: 'Discard one EX2 {flower} card',
+  },
+  typesOfCosts: {
+    title: 'Types of costs',
+    oneCostOfElement: '1 cost of {element} element.',
+    oneCostOfStar: '1 cost of any element.',
+    tap: 'Tap the character.',
+    other: {
+      title: 'Other',
+      description: 'Any other cost is indicated by blue text.',
+    },
+    free: 'Use it for free.',
+  },
+  assist: {
+    title: 'Assist',
+    description: 'When a card with [Assist] listed as a basic ability is used to pay for the cost of a character of the same type, the elements provided as a cost are treated as all elements (rainbow/joker).',
   },
 };

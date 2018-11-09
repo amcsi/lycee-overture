@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h2>{{ $t('rules.boardRulesTitle') }}</h2>
+
         <h3>{{ $t('rules.field.title') }}</h3>
 
         <p>{{ $t('rules.field.description') }}</p>
