@@ -134,4 +134,8 @@ export default {
     title: 'Assist',
     description: 'When a card with [Assist] listed as a basic ability is used to pay for the cost of a character of the same type, the elements provided as a cost are treated as all elements (rainbow/joker).',
   },
+  flowOfGameRulesTitle: 'Purpose and flow of the game (preparation before game start)',
+  turnRulesTitle: 'Turn',
+  battleRulesTitle: 'Battle',
+  basicAbilityRulesTitle: 'Basic Abilities',
 };
