@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>{{ $t('rules.flowOfGameRulesTitle') }}</h2>
+        <h2>{{ $t('rules.flowOfGameRules.title') }}</h2>
 
         <h3>Winning the game</h3>
 

@@ -28,7 +28,7 @@ const loadingizeAsyncComponent = asyncComponent => () => ({
 
 const CardListPrintPage = loadingizeAsyncComponent(() => import ('./pages/CardListPrintPage'));
 const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage'));
-const RulesPage = loadingizeAsyncComponent(() => import('./pages/RulesPage'));
+const RulesPage = loadingizeAsyncComponent(() => import(/* webpackChunkName: "rules" */ './pages/RulesPage'));
 const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
 
 const title = 'Lycee Overture TCG Translations';
@@ -45,9 +45,56 @@ const router = new VueRouter({
           },
         },
         {
-          path: '/rules', component: RulesPage, meta: {
+          path: '/rules',
+          component: RulesPage,
+          meta: {
             title: `${title} - Rules`,
           },
+          redirect: '/rules/deck-and-card',
+          children: [
+            {
+              path: 'deck-and-card',
+              component() {
+                return import(/* webpackChunkName: "rules" */ './components/rules/DeckAndCardRules');
+              },
+            },
+            {
+              path: 'field',
+              component() {
+                return import(/* webpackChunkName: "rules" */ './components/rules/FieldRules');
+              },
+            },
+            {
+              path: 'cost',
+              component() {
+                return import(/* webpackChunkName: "rules" */ './components/rules/CostRules');
+              },
+            },
+            {
+              path: 'flow',
+              component() {
+                return import(/* webpackChunkName: "rules" */ './components/rules/FlowOfGameRules');
+              },
+            },
+            {
+              path: 'turn',
+              component() {
+                return import(/* webpackChunkName: "rules" */ './components/rules/TurnRules');
+              },
+            },
+            {
+              path: 'battle',
+              component() {
+                return import(/* webpackChunkName: "rules" */ './components/rules/BattleRules');
+              },
+            },
+            {
+              path: 'basic-abilities-and-chaining',
+              component() {
+                return import(/* webpackChunkName: "rules" */ './components/rules/BasicAbilityRules');
+              },
+            },
+          ],
         },
         {
           path: '/cards', component: CardListPage, meta: {
