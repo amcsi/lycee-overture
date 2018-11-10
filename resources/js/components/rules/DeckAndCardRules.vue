@@ -28,7 +28,7 @@
                 {{ $t('rules.characterCard.cardNameDescription') }}
             </AnatomyRow>
             <AnatomyRow number="2" :name="$t('rules.characterCard.element')">
-                {{ $t('rules.characterCard.elementDescription') }}
+                <CardText :text="$t('rules.characterCard.elementDescription')" />
             </AnatomyRow>
             <AnatomyRow number="3" :name="$t('rules.characterCard.ex')">
                 {{ $t('rules.characterCard.exDescription') }}
@@ -54,8 +54,16 @@
             <AnatomyRow number="10" :name="$t('rules.characterCard.basicAbility')">
                 {{ $t('rules.characterCard.basicAbilityDescription') }}
             </AnatomyRow>
-            <AnatomyRow number="11" :name="$t('rules.characterCard.specialAbility')">
-                {{ $t('rules.characterCard.specialAbilityDescription') }}
+            <AnatomyRow number="11" :name="$t('rules.characterCard.specialAbility.title')">
+                {{ $t('rules.characterCard.specialAbility.description') }}<br />
+                <CardText text="[Activate]" />
+                : {{ $t('rules.characterCard.specialAbility.activate') }}<br />
+                <CardText text="[Trigger]" />
+                : {{ $t('rules.characterCard.specialAbility.trigger') }}<br />
+                <CardText text="[Continuous]" />
+                : {{ $t('rules.characterCard.specialAbility.continuous') }}<br />
+                <CardText text="[Cost]" />
+                : {{ $t('rules.characterCard.specialAbility.cost') }}<br />
             </AnatomyRow>
             <AnatomyRow number="12" :name="$t('rules.characterCard.cardNumber')">
                 {{ $t('rules.characterCard.cardNumberDescription') }}<br />
@@ -86,7 +94,7 @@
                 {{ $t('rules.characterCard.cardNameDescription') }}
             </AnatomyRow>
             <AnatomyRow number="2" :name="$t('rules.characterCard.element')">
-                {{ $t('rules.characterCard.elementDescription') }}
+                <CardText :text="$t('rules.characterCard.elementDescription')" />
             </AnatomyRow>
             <AnatomyRow number="3" :name="$t('rules.characterCard.ex')">
                 {{ $t('rules.characterCard.exDescription') }}
@@ -116,7 +124,7 @@
                 {{ $t('rules.characterCard.cardNameDescription') }}
             </AnatomyRow>
             <AnatomyRow number="2" :name="$t('rules.characterCard.element')">
-                {{ $t('rules.characterCard.elementDescription') }}
+                <CardText :text="$t('rules.characterCard.elementDescription')" />
             </AnatomyRow>
             <AnatomyRow number="3" :name="$t('rules.characterCard.ex')">
                 {{ $t('rules.characterCard.exDescription') }}
@@ -132,13 +140,14 @@
 </template>
 
 <script>
+  import CardText from '../card/CardText';
   import AnatomyRow from './AnatomyRow';
   import ImageWithAnatomy from './ImageWithAnatomy';
 
   /** @class DeckAndCardRules */
   export default {
     name: 'DeckAndCardRules',
-    components: { ImageWithAnatomy, AnatomyRow },
+    components: { CardText, ImageWithAnatomy, AnatomyRow },
   };
 </script>
 
