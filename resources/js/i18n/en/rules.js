@@ -151,5 +151,5 @@ export default {
   flowOfGameRulesTitle: 'Purpose and flow of the game (preparation before game start)',
   turnRulesTitle: 'Turn',
   battleRulesTitle: 'Battle',
-  basicAbilityRulesTitle: 'Basic Abilities',
+  basicAbilityRulesTitle: 'Basic Abilities and Chaining',
 };
