@@ -11,4 +11,11 @@ const i18n = new VueI18n({
   },
 });
 
+// Hot updates
+if (module.hot) {
+  module.hot.accept('./en', function () {
+    i18n.setLocaleMessage('en', require('./en').default)
+  })
+}
+
 export default i18n;
