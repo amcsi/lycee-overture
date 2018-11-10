@@ -31,6 +31,7 @@
         type: String,
         required: true,
       },
+
       onlyName: Boolean,
     },
     computed: {

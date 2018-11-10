@@ -16,6 +16,7 @@
     "jquery": "^3.2",
     "lodash": "^4.17.4",
     "popper.js": "^1.12",
+    "prettier": "^1.15.1",
     "vue": "^2.5.7"
   },
   "dependencies": {
