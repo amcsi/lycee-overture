@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <h2>{{ $t('rules.deckAndCardsRulesTitle') }}</h2>
-
-        <h3>{{ $t('rules.deckTitle') }}</h3>
+    <section>
+        <h2>{{ $t('rules.deckTitle') }}</h2>
 
         <p>{{ $t('rules.deckRules.overview') }}</p>
 
@@ -13,7 +11,7 @@
             <li>{{ $t('rules.deckRules.rule4') }}</li>
         </ul>
 
-        <h3>{{ $t('rules.characterCard.title') }}</h3>
+        <h2>{{ $t('rules.characterCard.title') }}</h2>
 
         <p>
             {{ $t('rules.characterCard.overview') }}<br />
@@ -79,7 +77,7 @@
             </AnatomyRow>
         </ImageWithAnatomy>
 
-        <h3>{{ $t('rules.eventCard.title') }}</h3>
+        <h2>{{ $t('rules.eventCard.title') }}</h2>
 
         <p>
             {{ $t('rules.eventCard.description1') }}<br />
@@ -107,7 +105,7 @@
             </AnatomyRow>
         </ImageWithAnatomy>
 
-        <h3>{{ $t('rules.itemCard.title') }}</h3>
+        <h2>{{ $t('rules.itemCard.title') }}</h2>
 
         <p>
             {{ $t('rules.itemCard.description1') }}<br />
@@ -136,7 +134,7 @@
                 {{ $t('rules.itemCard.effectDescription') }}
             </AnatomyRow>
         </ImageWithAnatomy>
-    </div>
+    </section>
 </template>
 
 <script>

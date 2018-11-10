@@ -1,30 +1,28 @@
 <template>
-    <div>
-        <h2>{{ $t('rules.battleRulesTitle') }}</h2>
-
-        <h3>Battle</h3>
+    <section>
+        <h2>Battle</h2>
 
         <ol>
             <li>
-                <h4>Attack Declaration</h4>
+                <h3>Attack Declaration</h3>
                 <p>A player declares an attack with an AF (front row) character while tapping it (turning it
                     sideways).</p>
             </li>
             <li>
-                <h4>Defending</h4>
+                <h3>Defending</h3>
                 <p>
                     The opponent player decides whether to defend or not with the DF (rear row) character in the same
                     column as the attacking character.
                 </p>
             </li>
             <li>
-                <h4>Use support / ability / event</h4>
+                <h3>Use support / ability / event</h3>
                 <p>
                     Aid character with support, ability, and events!
                 </p>
             </li>
             <li>
-                <h4>Battle result</h4>
+                <h3>Battle result</h3>
                 <p>
                     If defense was declared, the two characters battle. See lower down for details.<br />
                     If not, your discard cards from the top of your opponent's deck equal to the attacking character's
@@ -33,7 +31,7 @@
             </li>
         </ol>
 
-        <h4>Attack declaration</h4>
+        <h3>Attack declaration</h3>
 
         <p>
             You can declare an attack at any time during your main phase of your turn.<br />
@@ -41,7 +39,7 @@
             The designated character becomes the attacking character of the battle. Tap it (turn it sideways).
         </p>
 
-        <h4>Defense declaration</h4>
+        <h3>Defense declaration</h3>
 
         <p>
             When your opponent declares an attack, you can choose to defend.<br />
@@ -57,11 +55,11 @@
             <li>You can choose not to defend even if you had a DF character.</li>
         </ul>
 
-        <h4>Support declaration</h4>
+        <h3>Support declaration</h3>
 
         <p>Each player can declare "support". They can also declare events and abilities.</p>
 
-        <h5>Support</h5>
+        <h4>Support</h4>
 
         <p>
             During the battle you can "support" participants of the battle by designating ally characters adjacent
@@ -80,14 +78,14 @@
             <li>You can declare support as many times as you want during a battle.</li>
         </ul>
 
-        <h5>Battle result</h5>
+        <h4>Battle result</h4>
 
         <p>The result of the battle differs depending on whether there's a defending character or not.</p>
 
-        <h6>When there is no defending character</h6>
+        <h5>When there is no defending character</h5>
         <p>Destroy cards from the top of the defending player's deck equal to the attacker's DMG.</p>
 
-        <h6>When there is a defending character</h6>
+        <h5>When there is a defending character</h5>
         <p>
             Compare the AP of each character to the other characters' DP.<br />
             If the AP value exceeds the DP value, that character goes "down", and is discarded.
@@ -103,13 +101,13 @@
             </li>
         </ul>
 
-        <h4>Battle example</h4>
+        <h3>Battle example</h3>
 
         <p>The result of the battle differs depending on whether there is a defending character or not.</p>
 
         <img src="https://lycee-tcg.com/rule/images/index_7_img1.png" />
 
-        <h5>[If there is a defending character]</h5>
+        <h4>[If there is a defending character]</h4>
 
         <ol>
             <li>
@@ -123,7 +121,7 @@
         </ol>
 
         <el-card>
-            <h6>Rider / Ann Bonnie's result</h6>
+            <h5>Rider / Ann Bonnie's result</h5>
             <p>
                 DP1 (Rider / Ann Bonnie) < AP3 (Rider / Edward Teach)<br />
                 Rider / Ann Bonnie goes down.
@@ -131,14 +129,14 @@
         </el-card>
 
         <el-card>
-            <h6>Rider / Edward Teach's result</h6>
+            <h5>Rider / Edward Teach's result</h5>
             <p>
                 DP 0 (Rider / Edward Teach) < AP 2 (Rider / Ann Bonnie)<br />
                 Rider / Edward Teach goes down.
             </p>
         </el-card>
 
-        <h5>[When there is no defending character]</h5>
+        <h4>[When there is no defending character]</h4>
 
         <ol>
             <li>
@@ -150,7 +148,7 @@
             <li>Opponent discards 2 cards from the top of his deck.</li>
         </ol>
 
-        <h5>[When there is support declared]</h5>
+        <h4>[When there is support declared]</h4>
 
         <div class="card-image-with-numbered-bullets-on-side">
             <img src="https://lycee-tcg.com/rule/images/index_7_img3.png" />
@@ -171,7 +169,7 @@
         </div>
 
         <el-card>
-            <h6>Rider / Ann Bonnie's result</h6>
+            <h5>Rider / Ann Bonnie's result</h5>
             <p>
                 DP 3 (1 + 2) (Rider / Ann Bonnie) = AP 3 (Rider / Edward Teach)<br />
                 Rider / Anne Bonnie will not go down.<br />
@@ -180,13 +178,13 @@
         </el-card>
 
         <el-card>
-            <h6>Rider / Edward Teach's result</h6>
+            <h5>Rider / Edward Teach's result</h5>
             <p>
                 DP 0 (Rider / Edward Teach) < AP 2 (Rider / Ann Bonnie)<br />
                 Rider / Edward Teach goes down.
             </p>
         </el-card>
-    </div>
+    </section>
 </template>
 
 <script>

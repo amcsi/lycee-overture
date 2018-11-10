@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <h2>{{ $t('rules.costRulesTitle') }}</h2>
-
-        <h3>{{ $t('rules.cost.title') }}</h3>
+    <section>
+        <h2>{{ $t('rules.cost.title') }}</h2>
 
         <p>
             {{ $t('rules.cost.description1') }}<br />
@@ -31,7 +29,7 @@
             <img src="https://lycee-tcg.com/rule/images/index_4_img2.png" :alt="$t('rules.costExample.imageAlt')" />
         </p>
 
-        <h3>{{ $t('rules.howToSummon.title') }}</h3>
+        <h2>{{ $t('rules.howToSummon.title') }}</h2>
 
         <p>
             <CardText :text="$t('rules.howToSummon.description')"></CardText>
@@ -42,9 +40,9 @@
         </p>
 
         <el-card class="card">
-            <h4>
+            <h3>
                 <CardText :text="$t('rules.howToSummon.box.title')" />
-            </h4>
+            </h3>
 
             <p class="text-center">
                 ①
@@ -70,7 +68,7 @@
             <CardText :text="$t('rules.howToSummon.discard1Box')" />
         </div>
 
-        <h3>{{ $t('rules.typesOfCosts.title') }}</h3>
+        <h2>{{ $t('rules.typesOfCosts.title') }}</h2>
 
         <table class="type-of-costs-table">
             <tr>
@@ -135,10 +133,10 @@
             </tr>
         </table>
 
-        <h3>{{ $t('rules.assist.title') }}</h3>
+        <h2>{{ $t('rules.assist.title') }}</h2>
 
         <p>{{ $t('rules.assist.description') }}</p>
-    </div>
+    </section>
 </template>
 
 <script>

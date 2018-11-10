@@ -1,14 +1,12 @@
 <template>
-    <div>
-        <h2>{{ $t('rules.flowOfGameRules.title') }}</h2>
-
-        <h3>Winning the game</h3>
+    <section>
+        <h2>Winning the game</h2>
 
         <p>As soon as the size of your opponent's deck becomes 0, the game ends and you win.</p>
 
-        <h3>Game flow</h3>
+        <h2>Game flow</h2>
 
-        <h4>Preparation before the start of the game</h4>
+        <h3>Preparation before the start of the game</h3>
 
         <div class="box">
             Shuffle your deck.
@@ -32,9 +30,9 @@
             ※ You have one optional chance to shuffle the cards back and draw 7 again.
         </div>
 
-        <h3>
+        <h2>
             Start the game!
-        </h3>
+        </h2>
 
         <p>
             First player starts.<br />
@@ -42,7 +40,7 @@
         </p>
 
         <p>As soon as the size of your opponent's deck becomes 0, the game ends and you win.</p>
-    </div>
+    </section>
 </template>
 
 <script>

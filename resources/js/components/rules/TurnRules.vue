@@ -1,28 +1,26 @@
 <template>
-    <div>
-        <h2>{{ $t('rules.turnRulesTitle') }}</h2>
-
-        <h3>Turn</h3>
+    <section>
+        <h2>Turn</h2>
 
         <p>The turn is done in the following order:</p>
 
         <el-card>
-            <h4 slot="header">Start phase</h4>
+            <h3 slot="header">Start phase</h3>
 
             <div>
-                <h5>Wake up</h5>
+                <h4>Wake up</h4>
                 <p>Untap all your characters.</p>
 
-                <h5>Warm up</h5>
+                <h4>Warm up</h4>
                 <p>Draw 2 cards from your deck (and add them to your hand).</p>
             </div>
         </el-card>
 
         <el-card>
-            <h4 slot="header">Main phase</h4>
+            <h3 slot="header">Main phase</h3>
 
             <div>
-                <h5>You can...</h5>
+                <h4>You can...</h4>
                 <ul>
                     <li>
                         Use a card from your hand
@@ -36,7 +34,7 @@
                     <li>Attack</li>
                 </ul>
 
-                <h5>Your opponent can...</h5>
+                <h4>Your opponent can...</h4>
                 <ul>
                     <li>Use events</li>
                     <li>Use the ability of one of his characters</li>
@@ -45,10 +43,10 @@
         </el-card>
 
         <el-card>
-            <h4 slot="header">End phase</h4>
+            <h3 slot="header">End phase</h3>
 
             <div>
-                <h5>Hand adjustment</h5>
+                <h4>Hand adjustment</h4>
 
                 When you have 8 or more cards in your hand, discard cards until you have 7.
 
@@ -56,11 +54,11 @@
             </div>
         </el-card>
 
-        <h3>Start phase</h3>
+        <h2>Start phase</h2>
 
         <p>The following two steps happen:</p>
 
-        <h4>【1. Wake up】</h4>
+        <h3>【1. Wake up】</h3>
 
         <p>
             Untap all your characters (ally characters) on the field. (Make them vertical).
@@ -68,12 +66,12 @@
             vertical)
         </p>
 
-        <h4>【2. Warm up】</h4>
+        <h3>【2. Warm up】</h3>
 
         <p>Draw 2 cards from your deck and add them to your hand.</p>
         <p>The starting player on his first turn only draws 1 card.</p>
 
-        <h3>Main phase</h3>
+        <h2>Main phase</h2>
 
         <p>
             In the main phase you can make various declaration using cards in your hand and your characters on the
@@ -82,9 +80,9 @@
             If you do not declare any more, end the main phase and move on to the end phase.
         </p>
 
-        <h4>Use your hand</h4>
+        <h3>Use your hand</h3>
 
-        <h5>Summon characters</h5>
+        <h4>Summon characters</h4>
 
         <p>Place a character on the field.</p>
 
@@ -103,7 +101,7 @@
             </li>
         </ul>
 
-        <h5>Use events</h5>
+        <h4>Use events</h4>
 
         <p>Use event cards from your hand for various effects. Event cards that are used get discarded.</p>
 
@@ -111,7 +109,7 @@
             <li>You can use event cards even during your opponent's turn</li>
         </ul>
 
-        <h5>Use items</h5>
+        <h4>Use items</h4>
 
         <p>
             You can equip a character on the field with an item from your hand.<br />
@@ -123,7 +121,7 @@
             <li>You can even equip an opponent's character.</li>
         </ul>
 
-        <h5>Use a special ability of a character</h5>
+        <h4>Use a special ability of a character</h4>
 
         <p>
             You can use a special ability of a character of yours on the field.
@@ -141,7 +139,7 @@
             <li>Abilities can be used during your opponent's turn as well.</li>
         </ul>
 
-        <h5>Use a basic ability of a character</h5>
+        <h4>Use a basic ability of a character</h4>
 
         <p>
             You can use a basic ability of a character of yours on the field.
@@ -152,7 +150,7 @@
             </li>
         </ul>
 
-        <h5>Attack</h5>
+        <h4>Attack</h4>
 
         <p>
             You can attack with any character in your AF.<br />
@@ -160,7 +158,7 @@
             $t('rules.battleRulesTitle') }}"
         </p>
 
-        <h4>End phase</h4>
+        <h3>End phase</h3>
 
         <p>
             Your turn is over when your main phase ends. If the number of cards in your hand is 8 or more, discard until
@@ -169,7 +167,7 @@
             Any e.g. basic abilities gained by an effect are lost.<br />
             (They will not be lost if you are gaining from a continuous effect.)
         </p>
-    </div>
+    </section>
 </template>
 
 <script>

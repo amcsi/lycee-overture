@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <h2>{{ $t('rules.boardRulesTitle') }}</h2>
-
-        <h3>{{ $t('rules.field.title') }}</h3>
+    <section>
+        <h2>{{ $t('rules.field.title') }}</h2>
 
         <p>{{ $t('rules.field.description') }}</p>
 
@@ -15,21 +13,21 @@
             <img src="https://lycee-tcg.com/rule/images/index_3_img.jpg" :alt="$t('rules.field.imageAlt')" />
         </p>
 
-        <h3>{{ $t('rules.graveyard.title') }}</h3>
+        <h2>{{ $t('rules.graveyard.title') }}</h2>
 
         <p>
             {{ $t('rules.graveyard.description1') }}<br />
             {{ $t('rules.graveyard.description2') }}
         </p>
 
-        <h3>{{ $t('rules.deckTitle') }}</h3>
+        <h2>{{ $t('rules.deckTitle') }}</h2>
 
         <p>
             {{ $t('rules.deck.description1') }}<br />
             {{ $t('rules.deck.description2') }}
         </p>
 
-        <h3>{{ $t('rules.rowsAndColumns.title') }}</h3>
+        <h2>{{ $t('rules.rowsAndColumns.title') }}</h2>
 
         <p>
             {{ $t('rules.rowsAndColumns.description') }}
@@ -46,13 +44,13 @@
             <li>{{ $t('rules.rowsAndColumns.point4') }}</li>
         </ul>
 
-        <h3>{{ $t('rules.hand.title') }}</h3>
+        <h2>{{ $t('rules.hand.title') }}</h2>
 
         <p>
             {{ $t('rules.hand.description1') }}<br />
             {{ $t('rules.hand.description2') }}
         </p>
-    </div>
+    </section>
 </template>
 
 <script>

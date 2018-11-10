@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <h2>{{ $t('rules.basicAbilityRulesTitle') }}</h2>
-
-        <h3>Basic abilities</h3>
+    <section>
+        <h2>Basic abilities</h2>
 
         <p>
             There are characters that have things such as [Side Step], [Aggressive] etc. written on them.<br />
@@ -104,7 +102,7 @@
             </tr>
         </table>
 
-        <h3>Chaining</h3>
+        <h2>Chaining</h2>
 
         <p>
             When player A makes a declaration, the other player B can declare events and abilities as a response the
@@ -123,7 +121,7 @@
                 You must specify such targets when declaring the effect.
             </li>
         </ul>
-    </div>
+    </section>
 </template>
 
 <script>
