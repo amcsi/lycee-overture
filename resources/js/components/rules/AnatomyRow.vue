@@ -4,7 +4,7 @@
             <div class="number-and-name-container">
                 <img
                     :src="numberImageUrl"
-                    alt="$t('rules.characterCard.numberPointingToCharacterImage')"
+                    :alt="number"
                 />
 
                 <div class="number-and-name--name">
