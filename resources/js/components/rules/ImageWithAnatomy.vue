@@ -27,9 +27,16 @@
   };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import '~element-ui/packages/theme-chalk/src/mixins/mixins.scss';
+
     .anatomy-container {
         display: flex;
         align-items: flex-start;
+        flex-direction: column;
+
+        @include res(sm) {
+            flex-direction: row;
+        }
     }
 </style>
