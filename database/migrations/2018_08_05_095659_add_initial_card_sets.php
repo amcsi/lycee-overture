@@ -18,6 +18,9 @@ class AddInitialCardSets extends Migration
      */
     public function up()
     {
+        // Because name_jp has since been renamed to name_ja.
+        \Eloquent::unguard();
+
         CardSet::create(
             [
                 'name_jp' => self::FATE_GRAND_ORDER_2_0,
