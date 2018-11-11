@@ -16,3 +16,4 @@ yarn-error.log
 /_ide_helper*.php
 /storage/lycee.csv
 /public/mix-manifest.json
+/_ide_helper_models.php
