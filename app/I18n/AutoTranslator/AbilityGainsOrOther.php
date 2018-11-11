@@ -14,8 +14,10 @@ class AbilityGainsOrOther
     public static function autoTranslate(string $text): string
     {
         $subjectRegex = Subject::getUncapturedRegex();
+
+        $turnAndBattleRegex = TurnAndBattle::getUncapturedRegex();
         // language=regexp
-        $getsSomethingActionRegex = 'は((?:\[.+?\])+)を得る|を(?:(破棄|未行動に|行動済みに|手札に入|登場|除外)(れる|する|できる)|(デッキの[下上]に置く))';
+        $getsSomethingActionRegex = "は(${turnAndBattleRegex})?((?:\\[.+?\\])+)を(得る|失う)|を(?:(破棄|未行動に|行動済みに|手札に入|登場|除外)(れる|する|できる)|(デッキの[下上]に置く))";
 
         // "This character gains X."
         $pattern = "/(相手は)?($subjectRegex)($getsSomethingActionRegex)/u";
@@ -31,9 +33,11 @@ class AbilityGainsOrOther
 
     public static function callback(array $matches): Action
     {
-        $opponentDoes = next($matches); // Your opponent does this action.
+        $opponentDoes = next($matches); // E.g. "Your opponent discards 1 character".
         $action = next($matches);
+        $untilEndOfTurnSource = next($matches);
         $what = next($matches);
+        $gainsOrLoses = next($matches);
         $state = next($matches);
         $canOrDoSource = next($matches);
         $group2 = next($matches);
@@ -87,11 +91,15 @@ class AbilityGainsOrOther
                 $doesAction = "{$beforeText}remove$verbS [subject] from play";
                 break;
             default:
-                $youCan = $mandatory ? "gain$s" : "can gain";
+                $verb = $gainsOrLoses === '得る' ? 'gain' : 'lose';
+                $youCan = $mandatory ? "$verb$s" : "can $verb";
                 if (isset($what)) {
                     $doesAction = "$youCan $what";
                 } else {
                     throw new \InvalidArgumentException("Unexpected action: $action");
+                }
+                if ($untilEndOfTurnSource) {
+                    $doesAction .= ' ' . TurnAndBattle::autoTranslate($untilEndOfTurnSource);
                 }
         }
 

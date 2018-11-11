@@ -91,6 +91,10 @@ class AutoTranslatorTest extends TestCase
                 '{1 ally character} gains [オーダーステップ:[無]][サイドステップ:[無]].',
                 '{味方キャラ1体}は[オーダーステップ:[無]][サイドステップ:[無]]を得る.',
             ],
+            'opponent losing abilities' => [
+                '{1 enemy character} loses [アグレッシブ] until the end of the turn.',
+                '{相手キャラ１体}はターン終了時まで[アグレッシブ]を失う。',
+            ],
             'ally getting stat changes' => [
                 '{1 ally character} gets SP+1.',
                 '{味方キャラ1体}にSP+1する.',
