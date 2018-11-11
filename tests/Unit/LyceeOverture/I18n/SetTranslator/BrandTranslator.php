@@ -11,6 +11,7 @@ class BrandTranslator
         'ゆずソフト' => 'Yuzusoft',
         'ガールズ＆パンツァー' => 'Girls & Panzer',
         'ブレイブソード×ブレイズソウル' => 'BraveSword X BlazeSoul',
+        'ビジュアルアーツ' => 'Visual Arts',
     ];
 
     private $search;
