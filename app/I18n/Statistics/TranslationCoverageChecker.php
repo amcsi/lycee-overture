@@ -37,16 +37,16 @@ class TranslationCoverageChecker
 
     public function calculateRatioOfJapaneseCharacterRemoval(array $query = []): float
     {
-        $builder = $this->getBuilder(Locale::ENGLISH, $query);
+        $builder = $this->getBuilder(Locale::JAPANESE, $query);
 
-        $builder->join(
-            'card_translations as t_ja',
+        $builder->leftJoin(
+            'card_translations as t_en',
             function (JoinClause $join): void {
-                $join->on('t.card_id', '=', 'cards.id')->where('t_ja.locale', '=', 'ja');
+                $join->on('t.card_id', '=', 'cards.id')->where('t_en.locale', '=', Locale::ENGLISH);
             }
         );
-        $japaneseKanjiCount = $builder->sum('t_ja.kanji_count');
-        $afterEnglishKanjiCount = $builder->sum('t.kanji_count');
+        $japaneseKanjiCount = $builder->sum('t.kanji_count');
+        $afterEnglishKanjiCount = $builder->sum('t_en.kanji_count');
         return 1 - $afterEnglishKanjiCount / $japaneseKanjiCount;
     }
 
