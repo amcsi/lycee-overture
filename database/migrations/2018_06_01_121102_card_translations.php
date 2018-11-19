@@ -31,9 +31,9 @@ class CardTranslations extends Migration
             $table->unique(['card_id', 'locale']);
             $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
 
-            // The first timestamp column defined for MySQL 5.7 implicitly has default/onUpdate current_timestamp.
-            $table->timestamp('updated_at')->useCurrent()->onUpdate('CURRENT_TIMESTAMP');
-            $table->timestamp('created_at')->useCurrent();
+            // Do not rely on implicit first timestamp column being "on update CURRENT_TIMESTAMP".
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
