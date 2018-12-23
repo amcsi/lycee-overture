@@ -23,6 +23,10 @@ class YahooKanjiTranslator implements TranslatorInterface
         $translated = $this->cache->get($text);
         if ($translated === null) {
             $translated = $this->yahooRawKanjiTranslator->translate($text);
+            if ($translated === $text) {
+                // Couldn't be translated with the translation service.
+                return $text;
+            }
             $expiry = 60 * 24 * 30 * 12; // 1 year.
             $this->cache->put($text, $translated, $expiry);
         }

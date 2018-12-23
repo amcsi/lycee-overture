@@ -5,6 +5,7 @@ namespace amcsi\LyceeOverture\I18n\TranslatorApi;
 
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ServerException;
 
 /**
  * Translates kanji (names) with Yahoo's API.
@@ -27,10 +28,22 @@ class YahooRawKanjiTranslator implements TranslatorInterface
             'sentence' => $kanji,
         ];
         $options = ['query' => $query];
-        $apiResponseBodyXml = $this->client
-            ->get('https://jlp.yahooapis.jp/FuriganaService/V1/furigana', $options)
-            ->getBody()
-            ->__toString();
+        try {
+            $apiResponseBodyXml = $this->client
+                ->get('https://jlp.yahooapis.jp/FuriganaService/V1/furigana', $options)
+                ->getBody()
+                ->__toString();
+        } catch (ServerException $exception) {
+            if (
+                $exception->getCode() === 503 &&
+                ($response = $exception->getResponse()) &&
+                strpos((string) $response->getBody(), 'invalid parameter: sentence') !== false
+            ) {
+                // Bad kanji. Just return the input string.
+                return $kanji;
+            }
+            throw $exception;
+        }
 
         $translationResult = new TranslationResult($apiResponseBodyXml);
 
