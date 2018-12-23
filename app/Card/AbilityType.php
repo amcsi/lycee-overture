@@ -8,7 +8,7 @@ class AbilityType
     public const ACTIVATE = 1; // Blue
     public const TRIGGER = 2;// Red
     public const CONTINUOUS = 3;// Green
-    public const COST = 4;// Orange
+    public const COST = 4; // Orange
 
     public static function getJapaneseMap(): array
     {
