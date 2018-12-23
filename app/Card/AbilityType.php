@@ -9,6 +9,7 @@ class AbilityType
     public const TRIGGER = 2;// Red
     public const CONTINUOUS = 3;// Green
     public const COST = 4; // Orange
+    public const EQUIP_RESTRICTION = 5; // No color
 
     public static function getJapaneseMap(): array
     {
@@ -17,6 +18,7 @@ class AbilityType
             '誘発' => self::TRIGGER,
             '常時' => self::CONTINUOUS,
             'コスト' => self::COST,
+            '装備制限' => self::EQUIP_RESTRICTION,
         ];
     }
 
@@ -33,6 +35,8 @@ class AbilityType
                         return 'Continuous';
                     case self::COST:
                         return 'Cost';
+                    case self::EQUIP_RESTRICTION:
+                        return 'Equip Restriction';
                     default:
                         throw new \LogicException("Unexpected id: $id");
                 }

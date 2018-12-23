@@ -165,6 +165,14 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[常時] このキャラにＤＭＧ－２する。<br />[宣言] [無無無]:相手ターン中に使用する。このアイテムを除外する。',
             ],
+            'equip restriction' => [
+                [
+                    'ability_cost' => '[Equip Restriction]',
+                    'ability_description' => 'Something.',
+                    'comments' => '',
+                ],
+                '[装備制限] Something.',
+            ],
         ];
     }
 }
