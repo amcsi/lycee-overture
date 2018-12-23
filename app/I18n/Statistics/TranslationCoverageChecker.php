@@ -42,7 +42,7 @@ class TranslationCoverageChecker
         $builder->leftJoin(
             'card_translations as t_en',
             function (JoinClause $join): void {
-                $join->on('t.card_id', '=', 'cards.id')->where('t_en.locale', '=', Locale::ENGLISH);
+                $join->on('t_en.card_id', '=', 'cards.id')->where('t_en.locale', '=', Locale::ENGLISH);
             }
         );
         $japaneseKanjiCount = $builder->sum('t.kanji_count');
