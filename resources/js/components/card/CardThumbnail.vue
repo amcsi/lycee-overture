@@ -30,13 +30,13 @@
             :id="id"
             :height="height"
             :cloudinary-height="height"
-            @imageUrlChange="imageUrl = $event"
         />
     </div>
 </template>
 
 <script>
   import Popper from 'popper.js';
+  import { assembleCloudinaryImageUrl } from '../../utils/image';
   import CardImage from './CardImage';
 
   /** @class CardThumbnail */
@@ -46,7 +46,6 @@
       return {
         largerImage: false,
         revealImageOverlay: false,
-        imageUrl: null,
       };
     },
     props: {
@@ -59,6 +58,9 @@
     computed: {
       height() {
         return this.largerImage ? 520 : 300;
+      },
+      imageUrl() {
+        return assembleCloudinaryImageUrl(this.id, { cloudinaryHeight: this.height });
       },
     },
     methods: {
