@@ -21,7 +21,7 @@ class CardBuilderFactory
     {
         /** @var Builder $builder */
         $builder = $this->card->select(['cards.*'])
-            ->join(
+            ->leftJoin(
                 'card_translations as t',
                 function (JoinClause $join) use ($locale) {
                     $join->on('cards.id', '=', 't.card_id')
