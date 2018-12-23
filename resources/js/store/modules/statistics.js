@@ -5,11 +5,12 @@ export default {
   state: {
     lastStatisticsParams: null,
     statisticsLoading: false,
-    statistics: {},
+    statistics: null,
   },
   mutations: {
     STATISTICS_LOADING(state) {
       state.statisticsLoading = true;
+      state.statistics = null;
     },
     STATISTICS_LOADING_SUCCEEDED(state, statistics) {
       state.statistics = statistics;

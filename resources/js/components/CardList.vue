@@ -3,11 +3,12 @@
         <div v-if="cards">
             <h3>
                 Total: {{ cards.meta.pagination.total }}.
-                <span v-show="cards.meta.pagination.total > 0">
+                <span v-if="statistics" v-show="cards.meta.pagination.total > 0">
                     Fully translated: {{ statistics.translated_cards }}
                     ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
                     Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
                 </span>
+                <span v-else v-loading="true">&nbsp;</span>
             </h3>
 
             <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
@@ -32,7 +33,7 @@
     components: { CardListItem, Paginator },
     computed: {
       ...mapState({
-        cardsLoading: state => state.cards.listLoading || state.statistics.statisticsLoading,
+        cardsLoading: state => state.cards.listLoading,
         cards: state => state.cards.list,
         statistics: state => state.statistics.statistics,
       }),
