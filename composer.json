@@ -11,7 +11,7 @@
     "php": "^7.2",
     "ext-json": "*",
     "ext-simplexml": "*",
-    "beyondcode/laravel-self-diagnosis": "^0.4.1",
+    "beyondcode/laravel-self-diagnosis": "^1.0.2",
     "cakephp/chronos": "^1.1",
     "cloudinary/cloudinary_php": "^1.10",
     "danielstjules/stringy": "^3.1",
@@ -32,6 +32,7 @@
     "symfony/stopwatch": "^4.1"
   },
   "require-dev": {
+    "roave/security-advisories": "dev-master",
     "barryvdh/laravel-ide-helper": "^2.4",
     "eaglewu/swoole-ide-helper": "dev-master",
     "filp/whoops": "^2.0",
