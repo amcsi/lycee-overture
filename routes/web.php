@@ -28,6 +28,7 @@ Route::get(
         $vars = [
             'apiBaseUrl' => "$appUrl/api",
             'cloudinaryCloudName' => config('cloudinary.defaults.cloud_name'),
+            'sentryDsn' => env('SENTRY_LARAVEL_DSN'),
         ];
         return view('spa', ['jsVars' => $vars]);
     }

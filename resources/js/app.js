@@ -3,10 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
-require('./bootstrap');
-
-window.Vue = require('vue');
+import * as Sentry from '@sentry/browser';
 import {
   Card,
   Checkbox,
@@ -36,6 +33,10 @@ import i18n from './i18n';
 import router from './router';
 import store from './store/index';
 
+require('./bootstrap');
+
+window.Vue = require('vue');
+
 Vue.use(VueRouter);
 Vue.component(Card.name, Card);
 Vue.component(Checkbox.name, Checkbox);
@@ -59,6 +60,11 @@ Vue.component(TableColumn.name, TableColumn);
 Vue.use(Loading.directive);
 
 //noinspection JSUnusedGlobalSymbols
+
+Sentry.init({
+  dsn: window.vars.sentryDsn,
+  integrations: [new Sentry.Integrations.Vue({ Vue })],
+});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
