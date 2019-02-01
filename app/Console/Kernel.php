@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console;
 
+use amcsi\LyceeOverture\Console\Commands\ImportAllCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command(ImportAllCommand::COMMAND . ' --translations --no-cache')->daily();
     }
 
     /**
