@@ -32,6 +32,9 @@ COPY bin/docker-php-pecl-install /usr/local/bin/
 # PHP extensions
 RUN docker-php-ext-install \
   pdo_mysql \
+  # Newer Laravel Swoole needs this for some reason.
+  pcntl \
+
   zip
 
 RUN docker-php-pecl-install swoole
