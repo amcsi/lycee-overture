@@ -17,7 +17,7 @@ class DownloadCsvCommand extends Command
 {
     public const COMMAND = 'lycee:download-csv';
 
-    protected $signature = self::COMMAND . ' {-f?}';
+    protected $signature = self::COMMAND . ' {--f|force : Ignore cache}';
     protected $description = 'Imports the CSV file with the Lycee cards from the official website.';
     private $csvDownloader;
 
@@ -29,7 +29,7 @@ class DownloadCsvCommand extends Command
 
     public function handle(): void
     {
-        $force = (bool)$this->argument('-f');
+        $force = (bool) $this->option('force');
         $cacheFile = storage_path(ImportConstants::CSV_PATH);
 
         $output = $this->output;
