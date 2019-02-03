@@ -15,6 +15,8 @@ $openGraphImageUrl = 'https://media.archonia.com/images/samples/74/87/307487_s0.
 
     <meta property="og:image" content="{{ $openGraphImageUrl }}" />
     <meta property="og:image:secure_url" content="{{ $openGraphImageUrl }}" />
+    <meta property="og:image:width" content="249" />
+    <meta property="og:image:height" content="423" />
 
     <!-- Styles -->
     <style>
