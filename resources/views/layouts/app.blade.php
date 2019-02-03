@@ -1,7 +1,6 @@
 @php
 $title = 'Lycee Overture TCG Translations';
 $description = 'This is a website in progress with the goal of translating the this new Lycee Overture Trading Card Game and provide a useful database for being able to search for cards.';
-$openGraphImageUrl = 'https://media.archonia.com/images/samples/74/87/307487_s0.jpg';
 @endphp
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
@@ -17,8 +16,8 @@ $openGraphImageUrl = 'https://media.archonia.com/images/samples/74/87/307487_s0.
 
     <meta property="og:title" content="{{ $title }}" />
     <meta property="og:description" content="{{ $description }}" />
-    <meta property="og:image" content="{{ $openGraphImageUrl }}" />
-    <meta property="og:image:secure_url" content="{{ $openGraphImageUrl }}" />
+    <meta property="og:image" content="http://media.archonia.com/images/samples/74/87/307487_s0.jpg" />
+    <meta property="og:image:secure_url" content="https://media.archonia.com/images/samples/74/87/307487_s0.jpg" />
     <meta property="og:image:width" content="249" />
     <meta property="og:image:height" content="423" />
 
