@@ -10,6 +10,8 @@
     <meta name="description" content="This is a website in progress with the goal of translating the this new Lycee Overture Trading Card Game and provide a useful database for being able to search for cards.">
     <meta name="keywords" content="lycee, lycee overture, tcg, trading card game, english, japanese, translation, database">
 
+    <meta property="og:image" content="https://media.archonia.com/images/samples/74/87/307487_s0.jpg" />
+
     <!-- Styles -->
     <style>
         html, body {
