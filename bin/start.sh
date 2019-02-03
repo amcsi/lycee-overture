@@ -5,6 +5,10 @@ rm -f storage/logs/swoole_http.pid
 # Migrate the DB. Need to force to migrate on production.
 php artisan migrate --force
 
+# Run cache commands.
+php artisan config:cache
+php artisan view:cache
+
 # Do the import tasks (in the background).
 php artisan lycee:import-all --translations &
 
