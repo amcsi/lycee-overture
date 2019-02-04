@@ -99,7 +99,9 @@
       },
       click() {
         this.largerImage = true;
-        this.setupPopper();
+        this.$nextTick(() => {
+          this.setupPopper();
+        });
       },
     },
     destroyed() {
