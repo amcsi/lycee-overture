@@ -18,6 +18,7 @@
     "dimsav/laravel-translatable": "^9.0",
     "dingo/api": "^1",
     "doctrine/dbal": "^2.8",
+    "erusev/parsedown": "^1.7",
     "fideloper/proxy": "^4.0",
     "guzzlehttp/guzzle": "^6.3",
     "guzzlehttp/psr7": "^1.5",
