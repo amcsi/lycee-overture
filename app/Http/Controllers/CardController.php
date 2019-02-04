@@ -23,7 +23,7 @@ class CardController extends Controller
             // Of course this is only necessary if the locale is non-Japanese.
             $builder->orderBy('t.kanji_count', 'asc');
         }
-        $builder->orderBy('id', 'asc');
+        $builder->orderBy($request->get('sort', 'id'), $request->get('desc') ? 'desc' : 'asc');
         $cards = $builder->paginate($limit);
 
         return $this->response->paginator($cards, $cardTransformer);

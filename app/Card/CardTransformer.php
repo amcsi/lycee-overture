@@ -31,6 +31,7 @@ class CardTransformer extends TransformerAbstract
             'element' => self::getElementMarkup($card),
             'cost' => self::getCostMarkup($card),
             'translation' => $this->cardTranslationTransformer->transform($cardTranslation),
+            'created_at' => (clone $card->created_at)->setTimezone('UTC')->format('Y-m-d\TH:i:s\Z'),
         ];
     }
 
