@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Card;
 
+use amcsi\LyceeOverture\Api\GenericTransformers\DateTimeTransformer;
 use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\CardTranslation;
 use League\Fractal\TransformerAbstract;
@@ -10,10 +11,14 @@ use League\Fractal\TransformerAbstract;
 class CardTransformer extends TransformerAbstract
 {
     private $cardTranslationTransformer;
+    private $dateTimeTransformer;
 
-    public function __construct(CardTranslationTransformer $cardTranslationTransformer)
-    {
+    public function __construct(
+        CardTranslationTransformer $cardTranslationTransformer,
+        DateTimeTransformer $dateTimeTransformer
+    ) {
         $this->cardTranslationTransformer = $cardTranslationTransformer;
+        $this->dateTimeTransformer = $dateTimeTransformer;
     }
 
     public function transform(Card $card)
@@ -31,7 +36,7 @@ class CardTransformer extends TransformerAbstract
             'element' => self::getElementMarkup($card),
             'cost' => self::getCostMarkup($card),
             'translation' => $this->cardTranslationTransformer->transform($cardTranslation),
-            'created_at' => (clone $card->created_at)->setTimezone('UTC')->format('Y-m-d\TH:i:s\Z'),
+            'created_at' => $this->dateTimeTransformer->transform($card->created_at),
         ];
     }
 

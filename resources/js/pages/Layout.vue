@@ -25,36 +25,28 @@
             <p v-if="newestDate !== null">
                 Newest card(s) last imported:<br />
                 <span :style="{ zoom: !newestDate ? 0.5 : 1 }" v-loading="!newestDate">
-                    {{ newestDateFormatted }}
+                    {{ newestDate | formatDate }}
                     ({{ newestDateDaysAgo ? `${newestDateDaysAgo} days ago.` : 'Less than a day ago.'}})
                 </span>
             </p>
+
+            <LatestArticles />
         </el-footer>
     </el-container>
 </template>
 
 <script>
   import { mapActions, mapState } from 'vuex';
+  import LatestArticles from '../components/article/LatestArticles';
   import ExternalLink from '../components/common/ExternalLink';
   import NavMenu from '../components/NavMenu';
 
   /** @class Layout */
   export default {
     name: 'Layout',
-    components: { ExternalLink, NavMenu },
+    components: { LatestArticles, ExternalLink, NavMenu },
     computed: {
       ...mapState('cards', ['newestDate']),
-      newestDateFormatted() {
-        return this.newestDate ?
-          (new Intl.DateTimeFormat('default', {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-          })).format(this.newestDate) :
-          null;
-      },
       newestDateDaysAgo() {
         const newestDate = this.newestDate;
         if (!newestDate) {

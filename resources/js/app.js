@@ -66,6 +66,21 @@ Sentry.init({
   integrations: [new Sentry.Integrations.Vue({ Vue })],
 });
 
+const dateFormatter = new Intl.DateTimeFormat('default', {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+});
+
+Vue.filter('formatDate', function(value) {
+  if (typeof value === 'string') {
+    value = new Date(value);
+  }
+  return value ? dateFormatter.format(value) : '';
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
