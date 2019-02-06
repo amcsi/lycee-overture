@@ -19,11 +19,14 @@
     "@sentry/browser": "^4.5.3",
     "babel-plugin-component": "^1.1.1",
     "element-ui": "^2.4.4",
-    "laravel-mix": "^3.0.0",
+    "laravel-mix": "^4.0.14",
     "lodash.debounce": "^4.0.8",
+    "sass": "^1.17.0",
+    "sass-loader": "^7.1.0",
     "vue": "^2.6.2",
     "vue-i18n": "^8.2.1",
     "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.6.2",
     "vuex": "^3.0.1"
   }
 }
