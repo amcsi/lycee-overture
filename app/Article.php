@@ -5,7 +5,7 @@ namespace amcsi\LyceeOverture;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NewsArticle extends Model
+class Article extends Model
 {
     //
 }

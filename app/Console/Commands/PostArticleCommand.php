@@ -3,26 +3,26 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
-use amcsi\LyceeOverture\NewsArticle;
+use amcsi\LyceeOverture\Article;
 use Illuminate\Console\Command;
 
-class PostNewsArticleCommand extends Command
+class PostArticleCommand extends Command
 {
-    protected $signature = 'lycee:post-news-article {--markdown= : Markdown source file}';
-    protected $description = 'Posts a news article';
+    protected $signature = 'lycee:post-article {--markdown= : Markdown source file}';
+    protected $description = 'Posts an article';
 
     public function handle()
     {
         $markdownFilename = $this->option('markdown');
         if (!$markdownFilename || !is_readable($markdownFilename)) {
-            $this->warn('News article markdown source must be provided with --markdown and be readable.');
+            $this->warn('Article markdown source must be provided with --markdown and be readable.');
 
             return 1;
         }
 
         $markdown = file_get_contents($markdownFilename);
         if (!$markdown) {
-            $this->warn('News article markdown source must not be empty.');
+            $this->warn('Article markdown source must not be empty.');
 
             return 1;
         }
@@ -38,11 +38,11 @@ class PostNewsArticleCommand extends Command
             return 1;
         }
 
-        $newsArticle = new NewsArticle();
-        $newsArticle->title = $title;
-        $newsArticle->markdown = $markdown;
-        $newsArticle->html = $html;
-        $newsArticle->save();
+        $article = new Article();
+        $article->title = $title;
+        $article->markdown = $markdown;
+        $article->html = $html;
+        $article->save();
 
         return null;
     }
