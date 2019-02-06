@@ -6,7 +6,7 @@
         <el-main class="main">
             <router-view></router-view>
         </el-main>
-        <el-footer>
+        <el-footer height="auto">
             <p>Created by
             <ExternalLink href="https://www.szeremi.org/">Attila Szeremi</ExternalLink>
             . Drop me an email at
@@ -66,5 +66,9 @@
 <style lang="scss">
     .main {
         overflow: visible;
+    }
+
+    footer p:first-child {
+        margin-top: 0;
     }
 </style>
