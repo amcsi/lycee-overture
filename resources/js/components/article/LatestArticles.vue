@@ -1,9 +1,11 @@
 <template>
     <section v-loading="articles === null">
-        <h2>Latest news</h2>
+        <h3>Latest news</h3>
 
         <article v-for="{ title, html, created_at } in articles">
-            <h3>{{ title }} - {{ created_at | formatDate }}</h3>
+            <div>
+                <h4>{{ title }}</h4> - <time :datetime="created_at">{{ created_at | formatDate }}</time>
+            </div>
 
             <div v-html="html">
 
@@ -32,5 +34,11 @@
 </script>
 
 <style scoped>
+    h4 {
+        display: inline;
+    }
 
+    time {
+        font-size: .9em;
+    }
 </style>
