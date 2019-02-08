@@ -12,9 +12,11 @@ use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
+use amcsi\LyceeOverture\Import\BasicImportCsvFilterer;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
+use amcsi\LyceeOverture\Set;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Query\Builder;
@@ -102,5 +104,9 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $app->singleton(Transliterator::class, \Closure::fromCallable([TransliteratorFactory::class, 'getInstance']));
+
+        $app->when(BasicImportCsvFilterer::class)->needs('$sets')->give(function () use ($app) {
+            return $app->get(Set::class)->all();
+        });
     }
 }
