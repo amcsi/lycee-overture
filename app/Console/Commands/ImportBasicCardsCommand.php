@@ -15,19 +15,12 @@ class ImportBasicCardsCommand extends Command
 
     protected $signature = self::COMMAND;
     protected $description = 'Imports the basic data of cards (excluding text)';
-    private $basicImportCsvFilterer;
-
-    public function __construct(BasicImportCsvFilterer $basicImportCsvFilterer)
-    {
-        parent::__construct();
-        $this->basicImportCsvFilterer = $basicImportCsvFilterer;
-    }
 
     public function handle()
     {
         $this->output->writeln('Starting import of basic card data.');
         $reader = Reader::createFromPath(storage_path(ImportConstants::CSV_PATH));
-        $toInsert = iterator_to_array($this->basicImportCsvFilterer->toDatabaseRows($reader));
+        $toInsert = iterator_to_array(app(BasicImportCsvFilterer::class)->toDatabaseRows($reader));
         $insertedCount = Card::getQuery()->insertIgnore($toInsert);
         $updatedCount = Card::getQuery()->upsert($toInsert) / 2;
         $this->output->writeln(sprintf(
