@@ -97,7 +97,12 @@
         this.revealImageOverlay = false;
         this.largerImage = false;
       },
-      click() {
+      click(event) {
+        if (!this.largerImage) {
+          // Because of Vue 2.6+ macrotasks, we need to prevent default, because a click handler would appear on the
+          // parent before event bubbling begins that we _don't_ want triggered with this click.
+          event.preventDefault();
+        }
         this.largerImage = true;
         this.$nextTick(() => {
           this.setupPopper();
