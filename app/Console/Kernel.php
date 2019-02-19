@@ -26,7 +26,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(ImportAllCommand::COMMAND . ' --translations --no-cache')->daily();
+        $schedule->command(ImportAllCommand::COMMAND . ' --translations --no-cache')
+            ->dailyAt('20:00')
+            ->sendOutputTo('php://output');
     }
 
     /**
