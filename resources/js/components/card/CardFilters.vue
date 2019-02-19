@@ -76,9 +76,6 @@
                 this.$router.push({ query });
               },
             };
-            if (debouncing) {
-              getterSetter.set = debounce(getterSetter.set, 1000);
-            }
             return {
               [name]: getterSetter,
             };
