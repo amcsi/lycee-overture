@@ -36,8 +36,12 @@
 </template>
 
 <script>
-  import debounce from 'lodash.debounce';
-  import { mapState } from 'vuex';
+import debounce from 'lodash.debounce';
+import { mapState } from 'vuex';
+
+const debouncedChangeRoute = debounce(($router, query) => {
+  $router.push({ query });
+}, 250);
 
   // Configuration for common query filter properties.
   const filterConfig = [
@@ -48,6 +52,16 @@
   /** @class CardFilters */
   export default {
     name: 'CardFilters',
+    data() {
+      const filterData = {};
+      for (let { name } of filterConfig) {
+        filterData[name] = '';
+      }
+
+      return {
+        filterData,
+      };
+    },
     computed: {
       ...mapState('cardSets', {
         cardSetList: 'list',
@@ -64,16 +78,21 @@
           ({ name, debouncing }) => {
             const getterSetter = {
               get() {
-                return this.$route.query[name] || '';
+                return this.filterData[name] || this.$route.query[name] || '';
               },
               set(value) {
+                this.filterData[name] = value;
                 const query = { ...this.$route.query };
                 delete query.page; // Always clear the page when the filters change.
                 delete query[name];
                 if (value) {
                   query[name] = value;
                 }
-                this.$router.push({ query });
+                if (debouncing) {
+                  debouncedChangeRoute(this.$router, query);
+                } else {
+                  this.$router.push({ query });
+                }
               },
             };
             return {
