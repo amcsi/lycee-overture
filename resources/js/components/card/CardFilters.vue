@@ -55,7 +55,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
     data() {
       const filterData = {};
       for (let { name } of filterConfig) {
-        filterData[name] = '';
+        filterData[name] = this.$route.query[name] || '';
       }
 
       return {
@@ -78,7 +78,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
           ({ name, debouncing }) => {
             const getterSetter = {
               get() {
-                return this.filterData[name] || this.$route.query[name] || '';
+                return this.filterData[name];
               },
               set(value) {
                 this.filterData[name] = value;
