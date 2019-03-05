@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
   nginx \
 
   # For composer
+  libzip-dev \
   zlib1g-dev
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
