@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Card;
 
-use Stringy\StaticStringy;
+use Illuminate\Support\Str;
 
 /**
  * Constants should maintain backwards-compatibility with classic Lycee.
@@ -44,7 +44,7 @@ class BasicAbility
         $flippedConstants = array_flip((new \ReflectionClass(static::class))->getConstants());
         return array_map(
             function ($basicAbilityId) use ($flippedConstants) {
-                return StaticStringy::upperCamelize(strtolower($flippedConstants[$basicAbilityId]));
+                return Str::studly(strtolower($flippedConstants[$basicAbilityId]));
             },
             self::$japaneseMap
         );
