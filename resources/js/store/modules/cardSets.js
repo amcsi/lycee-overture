@@ -26,6 +26,7 @@ export default {
         commit('CARD_SETS_LOADED', cards);
       } catch (e) {
         commit('CARD_SETS_LOADING_FAILED');
+        throw e;
       }
     },
   },

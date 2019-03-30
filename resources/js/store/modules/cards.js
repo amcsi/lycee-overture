@@ -47,6 +47,7 @@ export default {
         commit('CARDS_LOADED', cards);
       } catch (e) {
         commit('CARDS_LOADING_FAILED');
+        throw e;
       }
     },
     async listCardsForPrinting({ commit, state }, queryInput) {

@@ -40,6 +40,7 @@ export default {
           commit('STATISTICS_LOADING_SUCCEEDED', statistics);
         } catch (e) {
           commit('STATISTICS_LOADING_FAILED');
+          throw e;
         }
       }
     },
