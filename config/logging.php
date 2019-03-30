@@ -39,6 +39,11 @@ return [
             'channels' => ['single', 'stderr', 'sentry'],
         ],
 
+        'productionStack' => [
+            'driver' => 'stack',
+            'channels' => ['errorlog', 'sentry'],
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
