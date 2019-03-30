@@ -64,6 +64,7 @@ Vue.use(Loading.directive);
 Sentry.init({
   dsn: window.vars.sentryDsn,
   integrations: [new Sentry.Integrations.Vue({ Vue })],
+  environment: window.vars.environment,
 });
 
 const dateFormatter = new Intl.DateTimeFormat('default', {
