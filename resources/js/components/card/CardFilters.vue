@@ -1,13 +1,25 @@
 <template>
     <el-form ref="form" label-width="120px">
         <el-form-item label="Starter deck">
-            <el-select placeholder="-" v-model="set">
+            <el-select placeholder="-" v-model="deck">
                 <el-option label="All cards" value=""></el-option>
                 <el-option
                     v-for="cardSet in cardSetList"
                     :key="cardSet.id"
                     :label="cardSet.name"
                     :value="'' + cardSet.id"
+                ></el-option>
+            </el-select>
+        </el-form-item>
+
+        <el-form-item label="Set">
+            <el-select placeholder="-" v-model="set">
+                <el-option label="All" value=""></el-option>
+                <el-option
+                  v-for="item in setList"
+                  :key="item.id"
+                  :label="item.full_name"
+                  :value="item.id"
                 ></el-option>
             </el-select>
         </el-form-item>
@@ -45,7 +57,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
 
   // Configuration for common query filter properties.
   const filterConfig = [
-    { name: 'set' },
+      { name: 'deck' },
     { name: 'cardId', debouncing: true },
     { name: 'name', debouncing: true },
   ];
@@ -66,6 +78,9 @@ const debouncedChangeRoute = debounce(($router, query) => {
       ...mapState('cardSets', {
         cardSetList: 'list',
       }),
+        ...mapState('sets', {
+            setList: 'list',
+        }),
       ...mapState('cards', {
         totalCards: state => state.list.meta.pagination.total,
       }),

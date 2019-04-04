@@ -29,13 +29,13 @@ class CardBuilderFactory
                 }
             );
 
-        if ($set = ($query['set'] ?? null)) {
+        if ($deck = ($query['deck'] ?? null)) {
             $builder->join(
                 'card_sets AS cs',
-                function (JoinClause $join) use ($set): void {
+                function (JoinClause $join) use ($deck): void {
                     $join
                         ->on(new Expression('FIND_IN_SET(cards.id, cs.cards)'), '>', new Expression('0'))
-                        ->where('cs.id', '=', $set);
+                        ->where('cs.id', '=', $deck);
                 }
             );
         }
