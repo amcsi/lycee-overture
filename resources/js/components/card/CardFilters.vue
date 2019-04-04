@@ -44,8 +44,8 @@
             <el-input class="card-id-input" v-model="name" />
         </el-form-item>
 
-        <el-form-item :label="$t('cardFilters.translatedFirst')">
-            <el-checkbox v-model="translatedFirst" />
+        <el-form-item>
+            <el-checkbox v-model="translatedFirst" :label="$t('cardFilters.translatedFirst')" />
         </el-form-item>
 
         <div style="clear: both;"></div>
