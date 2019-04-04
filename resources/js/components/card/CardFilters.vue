@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="form" label-width="120px">
+    <el-form inline ref="form" label-width="120px">
         <el-form-item label="Set">
             <el-select placeholder="-" v-model="set">
                 <el-option label="-" value=""></el-option>
@@ -44,12 +44,15 @@
             <el-input class="card-id-input" v-model="name" />
         </el-form-item>
 
-        <el-form-item>
-            <a href="#" @click.prevent="clearAllFilters"><i class="fa fa-eraser"></i> Clear all filters</a>
-        </el-form-item>
-
         <el-form-item :label="$t('cardFilters.translatedFirst')">
             <el-checkbox v-model="translatedFirst" />
+        </el-form-item>
+
+        <div style="clear: both;"></div>
+
+        <el-form-item>
+            <a href="#" @click.prevent="clearAllFilters"><i class="fa fa-eraser"></i> Clear all
+                filters</a>
         </el-form-item>
 
         <router-link :to="{path: 'cards/print', query: $route.query }" v-if="1 <= totalCards && totalCards <= 60">
