@@ -6,6 +6,19 @@ export default {
     listLoading: false,
     list: null,
   },
+  getters: {
+    brands({ list }) {
+      if (!list) {
+        return [];
+      }
+
+      function filterByUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+
+      return list.map(({ brand }) => brand).filter(filterByUnique);
+    },
+  },
   mutations: {
     SETS_LOADING(state) {
       state.listLoading = true;

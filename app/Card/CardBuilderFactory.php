@@ -44,6 +44,11 @@ class CardBuilderFactory
             $builder->whereIn('set_id', (array) $set);
         }
 
+        if (($brand = $query['brand'] ?? null)) {
+            $builder->join('sets', 'sets.id', '=', 'cards.set_id');
+            $builder->whereIn('brand', (array) $brand);
+        }
+
         if ($name = (string) ($query['name'] ?? null)) {
             $builder->where(
                 function (Builder $whereBuilder) use ($name) {

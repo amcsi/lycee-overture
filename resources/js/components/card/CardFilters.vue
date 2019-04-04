@@ -12,6 +12,18 @@
             </el-select>
         </el-form-item>
 
+        <el-form-item label="Brand">
+            <el-select placeholder="-" v-model="brand">
+                <el-option label="-" value=""></el-option>
+                <el-option
+                    v-for="_brand in brands"
+                    :key="_brand"
+                    :label="_brand"
+                    :value="_brand"
+                ></el-option>
+            </el-select>
+        </el-form-item>
+
         <el-form-item label="Starter deck">
             <el-select placeholder="-" v-model="deck">
                 <el-option label="All cards" value=""></el-option>
@@ -49,7 +61,7 @@
 
 <script>
 import debounce from 'lodash.debounce';
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 const debouncedChangeRoute = debounce(($router, query) => {
   $router.push({ query });
@@ -57,6 +69,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
 
   // Configuration for common query filter properties.
   const filterConfig = [
+    { name: 'brand' },
     { name: 'deck' },
     { name: 'set' },
     { name: 'cardId', debouncing: true },
@@ -85,6 +98,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
       ...mapState('cards', {
         totalCards: state => state.list.meta.pagination.total,
       }),
+      ...mapGetters('sets', ['brands']),
       ...(filterConfig)
       /**
        * From a property configuration, generates a computed getter/setter pair, and returns an object with a single
