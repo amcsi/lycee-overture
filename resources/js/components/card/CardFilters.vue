@@ -44,11 +44,11 @@
             <el-input class="card-id-input" v-model="name" />
         </el-form-item>
 
+        <div style="clear: both;"></div>
+
         <el-form-item>
             <el-checkbox v-model="translatedFirst" :label="$t('cardFilters.translatedFirst')" />
         </el-form-item>
-
-        <div style="clear: both;"></div>
 
         <el-form-item>
             <a href="#" @click.prevent="clearAllFilters"><i class="fa fa-eraser"></i> Clear all
@@ -168,6 +168,6 @@ const debouncedChangeRoute = debounce(($router, query) => {
 
 <style scoped>
     .card-id-input {
-        width: 200px;
+        width: 225px;
     }
 </style>
