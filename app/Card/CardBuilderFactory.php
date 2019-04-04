@@ -40,6 +40,10 @@ class CardBuilderFactory
             );
         }
 
+        if (($set = $query['set'] ?? null)) {
+            $builder->whereIn('set_id', (array) $set);
+        }
+
         if ($name = (string) ($query['name'] ?? null)) {
             $builder->where(
                 function (Builder $whereBuilder) use ($name) {

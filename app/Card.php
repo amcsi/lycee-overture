@@ -5,6 +5,7 @@ namespace amcsi\LyceeOverture;
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Card extends Model
 {
@@ -29,5 +30,10 @@ class Card extends Model
     public function getType(): int
     {
         return $this->getAttribute('type');
+    }
+
+    public function set(): HasOne
+    {
+        return $this->hasOne(Set::class);
     }
 }
