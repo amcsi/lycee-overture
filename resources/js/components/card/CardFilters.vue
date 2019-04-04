@@ -26,7 +26,7 @@
 
         <el-form-item label="Starter deck">
             <el-select placeholder="-" v-model="deck">
-                <el-option label="All cards" value=""></el-option>
+                <el-option label="-" value=""></el-option>
                 <el-option
                     v-for="cardSet in cardSetList"
                     :key="cardSet.id"
