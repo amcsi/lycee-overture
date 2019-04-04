@@ -4,6 +4,7 @@ declare(strict_types=1);
 use amcsi\LyceeOverture\Http\Controllers\ArticleController;
 use amcsi\LyceeOverture\Http\Controllers\CardController;
 use amcsi\LyceeOverture\Http\Controllers\CardSetController;
+use amcsi\LyceeOverture\Http\Controllers\SetController;
 use amcsi\LyceeOverture\Http\Controllers\StatisticsController;
 use Dingo\Api\Routing\Router;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ $api->version(
                     }
                 );
                 $api->get('/card-sets', CardSetController::class . '@index');
+                $api->get('/sets', SetController::class . '@index');
                 $api->get('/statistics', StatisticsController::class . '@index');
                 $api->get('/articles', ArticleController::class . '@index');
             }
