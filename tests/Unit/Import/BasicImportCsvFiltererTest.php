@@ -4,12 +4,10 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Import;
 
 use amcsi\LyceeOverture\Card\Type;
-use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
-use amcsi\LyceeOverture\Set;
-use Illuminate\Support\Collection;
 use League\Csv\Reader;
 use PHPUnit\Framework\TestCase;
 use function iter\toArray;
+use Tests\Tools\SetAutoCreatorStubber;
 
 class BasicImportCsvFiltererTest extends TestCase
 {
@@ -17,19 +15,7 @@ class BasicImportCsvFiltererTest extends TestCase
     {
         $exampleCsvReader = Reader::createFromPath(__DIR__ . '/test.csv');
 
-        $set = new Set();
-        $set->id = 1;
-        $set->name_ja = 'オーガスト';
-        $set->version = '1.0';
-        $sets[] = $set;
-        $set = new Set();
-        $set->id = 2;
-        $set->name_ja = 'Fate/Grand Order';
-        $set->version = '2.0';
-        $sets[] = $set;
-        $sets = new Collection($sets);
-
-        $setAutoCreator = new SetAutoCreator($sets);
+        $setAutoCreator = SetAutoCreatorStubber::createInstanceWithSets();
 
         $basicImportCsvFilterer = new BasicImportCsvFilterer($setAutoCreator);
 
