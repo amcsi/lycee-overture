@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Import;
 
 use amcsi\LyceeOverture\Card\Type;
+use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 use amcsi\LyceeOverture\Set;
 use Illuminate\Support\Collection;
 use League\Csv\Reader;
@@ -28,7 +29,9 @@ class BasicImportCsvFiltererTest extends TestCase
         $sets[] = $set;
         $sets = new Collection($sets);
 
-        $basicImportCsvFilterer = new BasicImportCsvFilterer($sets);
+        $setAutoCreator = new SetAutoCreator($sets);
+
+        $basicImportCsvFilterer = new BasicImportCsvFilterer($setAutoCreator);
 
         $result = toArray(($basicImportCsvFilterer)->toDatabaseRows($exampleCsvReader));
 

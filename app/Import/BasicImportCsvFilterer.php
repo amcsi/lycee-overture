@@ -3,30 +3,22 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import;
 
-use amcsi\LyceeOverture\Set;
-use Illuminate\Support\Collection;
+use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 
 /**
  * Converts a CSV reader to database rows for importing cards.
  */
 class BasicImportCsvFilterer
 {
-    private $sets;
+    private $setAutoCreator;
 
-    /**
-     * @var Collection|Set[] $sets
-     */
-    public function __construct($sets)
+    public function __construct(SetAutoCreator $setAutoCreator)
     {
-        $this->sets = $sets;
+        $this->setAutoCreator = $setAutoCreator;
     }
 
     public function toDatabaseRows(iterable $reader): \Traversable
     {
-        $sets = $this->sets->keyBy(function (Set $set) {
-            return sprintf('%s %s', $set->name_ja, $set->version);
-        });
-
         foreach ($reader as $csvRow) {
             $id = $csvRow[CsvColumns::ID];
             if (!preg_match('/^[A-Z]{2}-\d{4}$/', $id)) {
@@ -39,10 +31,7 @@ class BasicImportCsvFilterer
             // E.g. Fate/Grand Order 2.0
             $cardSetText = $csvRow[CsvColumns::CARD_SET];
 
-            $dbRow['set_id'] = null;
-            if (isset($sets[$cardSetText])) {
-                $dbRow['set_id'] = $sets[$cardSetText]->id;
-            }
+            $dbRow['set_id'] = $this->setAutoCreator->getOrCreateSetIdByJaFullName($cardSetText);
 
             $dbRow['type'] = CsvValueInterpreter::getType($csvRow);
             $dbRow['ex'] = (int) $csvRow[CsvColumns::EX];
