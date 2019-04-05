@@ -3,7 +3,7 @@
         <div v-if="cards">
             <h3>
                 Total: {{ cards.meta.pagination.total }}.
-                <span v-if="statistics" v-show="cards.meta.pagination.total > 0">
+                <span v-if="statistics" v-show="!cardsLoading && cards.meta.pagination.total > 0">
                     Fully translated: {{ statistics.translated_cards }}
                     ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
                     Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
@@ -24,11 +24,11 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import CardListItem from './card/CardListItem';
-  import Paginator from './common/Paginator';
+import { mapState } from 'vuex';
+import CardListItem from './card/CardListItem';
+import Paginator from './common/Paginator';
 
-  /** @class CardList */
+/** @class CardList */
   export default {
     components: { CardListItem, Paginator },
     computed: {
