@@ -40,8 +40,8 @@ class ImportAllCommand extends Command
         $this->call(AutoTranslateCommand::COMMAND);
 
         if ($this->option('images')) {
-            $this->call(ImageDownloadCommand::COMMAND);
-            $this->call(ImageUploadCommand::COMMAND);
+            $this->call(ImageDownloadCommand::COMMAND, ['--new-only' => true]);
+            $this->call(ImageUploadCommand::COMMAND, ['--new-only' => true]);
         }
 
         $this->output->text(

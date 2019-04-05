@@ -14,7 +14,8 @@ class ImageUploadCommand extends Command
 {
     public const COMMAND = 'lycee:upload-images';
 
-    protected $signature = self::COMMAND;
+    protected $signature = self::COMMAND .
+    ' {--new-only : Only upload images that haven\'t been uploaded yet according to the local DB.}';
     protected $description = 'Uploads images to cloud service. Images must have been downloaded.';
     private $card;
     private $cardImage;
@@ -44,12 +45,40 @@ class ImageUploadCommand extends Command
         $this->output->text('Started uploading images to cloud service...');
 
         $cards = $this->card->all();
+        $newOnly = $this->option('new-only');
         /** @var CardImage[] $cardImages */
         $cardImages = $this->cardImage->all()->keyBy('card_id');
+        if ($newOnly) {
+            // Filter out cards whose images are already in the card images DB.
+            $cards = $cards->reject(function (Card $card) use ($cardImages) {
+                return isset($cardImages[$card->id]);
+            });
+        }
+
+        $total = $cards->count();
+        $this->output->text("$total card images to upload.");
+
+        $i = 0;
+
+        /**
+         * Gets the text that should be outputted to report progress.
+         * Includes the index of card too.
+         *
+         * @param string $cardId
+         * @return string
+         */
+        $getOutputText = function ($cardId) use (&$i, $total): string {
+            return sprintf('(%04d/%04d) % -10s... ', ++$i, $total, $cardId);
+        };
+
         foreach ($cards as $card) {
             try {
                 $id = $card->id;
-                $this->output->write("$id... ");
+                if ($newOnly && isset($cardImages[$id])) {
+                    // Only new card option was provided, and this is an old card.
+                    continue;
+                }
+                $this->output->write($getOutputText($id));
                 $message = $this->cardImageCloudinaryUploader->upload($card, $cardImages);
                 $this->output->writeln($message);
             } catch (\Exception $e) {

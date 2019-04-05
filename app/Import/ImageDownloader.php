@@ -31,7 +31,7 @@ class ImageDownloader
         $this->filesystem = $filesystem;
     }
 
-    public function downloadImages(SymfonyStyle $output)
+    public function downloadImages(SymfonyStyle $output, bool $newOnly = false)
     {
         $reader = Reader::createFromPath(storage_path(ImportConstants::CSV_PATH));
         // Iterator with the card ids pointing to the images (LO-0001, LO-0001-A, LO-0002 etc).
@@ -40,6 +40,9 @@ class ImageDownloader
         $requests = [];
         $total = 0;
         foreach ($cardIdIterator as $cardId) {
+            if ($newOnly && $this->filesystem->has(self::getLocalImagePathForCardId($cardId))) {
+                continue;
+            }
             $requests[$cardId] = $this->createCardIdRequest($cardId);
             ++$total;
         }
