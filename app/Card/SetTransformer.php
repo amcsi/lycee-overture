@@ -12,7 +12,7 @@ class SetTransformer extends TransformerAbstract
     {
         return [
             'id' => $set->id,
-            'full_name' => $set->getFullName(\App::getLocale()),
+            'full_name' => $set->getFullName(\LaravelLocalization::getCurrentLocale()),
             'brand' => $set->brand,
         ];
     }
