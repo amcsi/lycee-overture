@@ -17,10 +17,10 @@
             <el-select placeholder="-" v-model="brand">
                 <el-option label="-" value=""></el-option>
                 <el-option
-                    v-for="_brand in brands"
-                    :key="_brand"
-                    :label="_brand"
-                    :value="_brand"
+                    v-for="{value, label} in _brands"
+                    :key="value"
+                    :label="label"
+                    :value="value"
                 ></el-option>
             </el-select>
         </el-form-item>
@@ -152,6 +152,16 @@ const debouncedChangeRoute = debounce(($router, query) => {
           }
           this.$router.push({ query });
         },
+      },
+      _brands() {
+        if (!this.brands) {
+          return null;
+        }
+
+        return [...this.brands].sort().map(brand => ({
+          value: brand || '-1',
+          label: brand || '(Unknown or no brand)',
+        }));
       },
     },
     methods: {

@@ -49,6 +49,10 @@ class CardBuilderFactory
         }
 
         if (($brand = $query['brand'] ?? null)) {
+            if ($brand === '-1') {
+                // Unknown/no brand.
+                $brand = '';
+            }
             $builder->join('sets', 'sets.id', '=', 'cards.set_id');
             $builder->whereIn('brand', (array) $brand);
         }
