@@ -41,7 +41,11 @@ class CardBuilderFactory
         }
 
         if (($set = $query['set'] ?? null)) {
-            $builder->whereIn('set_id', (array) $set);
+            if ($set === '-1') {
+                $builder->whereNull('set_id');
+            } else {
+                $builder->whereIn('set_id', (array) $set);
+            }
         }
 
         if (($brand = $query['brand'] ?? null)) {

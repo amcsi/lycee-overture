@@ -3,6 +3,7 @@
         <el-form-item label="Set">
             <el-select placeholder="-" v-model="set">
                 <el-option label="-" value=""></el-option>
+                <el-option label="(Unknown or no set)" value="-1"></el-option>
                 <el-option
                     v-for="item in setList"
                     :key="item.id"
