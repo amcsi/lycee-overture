@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Http;
 
@@ -19,6 +20,7 @@ class Kernel extends HttpKernel
         \amcsi\LyceeOverture\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \amcsi\LyceeOverture\Http\Middleware\TrustProxies::class,
+        \amcsi\LyceeOverture\Http\Middleware\SetLocale::class,
     ];
 
     /**
