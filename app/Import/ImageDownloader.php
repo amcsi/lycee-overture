@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Import;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -82,7 +83,15 @@ class ImageDownloader
                 }
             },
             'rejected' => function ($reason, $cardId) use ($output, $getOutputText) {
-                $output->error($getOutputText($cardId) . ' ' . $reason);
+                $output->write($getOutputText($cardId));
+                if ($reason instanceof RequestException && ($response = $reason->getResponse())) {
+                    // Bad response.
+                    $statusCode = $response->getStatusCode();
+                    $output->writeln(sprintf("[<fg=red>$statusCode</>]"));
+                    return;
+                }
+                // No response.
+                $output->error($reason);
             },
         ]);
 
