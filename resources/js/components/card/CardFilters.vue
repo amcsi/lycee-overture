@@ -168,6 +168,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
       clearAllFilters() {
         const query = { ...this.$route.query };
         filterConfig.forEach(({ name }) => {
+          this.filterData[name] = '';
           delete query[name];
         });
         delete query.page;
