@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command(ImportAllCommand::COMMAND . ' --translations --images --no-cache')
             ->dailyAt('20:00')
-            ->sendOutputTo('/dev/stdout');
+            ->sendOutputTo(storage_path(sprintf('logs/schedule-%s.log', date('Y-m-d'))));
     }
 
     /**
