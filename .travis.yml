@@ -1,6 +1,6 @@
 language: php
 php:
-  - 7.2
+  - 7.3
 before_script:
   - echo 'APP_KEY=SomeRandomString >> .env'
   - mysql -e 'create database lycee_overture;'
