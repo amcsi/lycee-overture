@@ -64,7 +64,7 @@ $description = 'This is a website in progress with the goal of translating the t
     @endif
 
     <script>
-    var locale = @json(\LaravelLocalization::getCurrentLocale());
+      var locale = @json(\App::getLocale());
     </script>
 
 </head>

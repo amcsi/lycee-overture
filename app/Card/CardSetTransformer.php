@@ -13,8 +13,7 @@ class CardSetTransformer extends TransformerAbstract
     {
         return [
             'id' => $cardSet->id,
-            'name' => \LaravelLocalization::getCurrentLocale() === Locale::JAPANESE ? $cardSet->name_ja :
-                $cardSet->name_en,
+            'name' => \App::getLocale() === Locale::JAPANESE ? $cardSet->name_ja : $cardSet->name_en,
         ];
     }
 }

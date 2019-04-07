@@ -12,7 +12,7 @@ class CardController extends Controller
 {
     public function index(CardTransformer $cardTransformer, Request $request, CardBuilderFactory $builderFactory)
     {
-        $locale = \LaravelLocalization::getCurrentLocale();
+        $locale = \App::getLocale();
 
         $limit = min(100, $request->get('limit', 10));
 
