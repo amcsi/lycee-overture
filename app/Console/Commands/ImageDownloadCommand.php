@@ -27,7 +27,7 @@ class ImageDownloadCommand extends Command
         $stopwatch = new Stopwatch();
         $downloadImagesEvent = $stopwatch->start('download-images');
         $this->output->text('Started downloading images...');
-        $this->imageDownloader->downloadImages($this->output, $this->option('new-only'));
+        $this->imageDownloader->downloadImages($this->output, (bool) $this->option('new-only'));
         $downloadImagesEvent->stop();
         $this->output->text("Finished downloading images in " . Profiling::stopwatchToHuman($downloadImagesEvent));
     }
