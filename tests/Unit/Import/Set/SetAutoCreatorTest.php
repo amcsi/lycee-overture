@@ -56,7 +56,7 @@ class SetAutoCreatorTest extends TestCase
             'version' => ''
         ])->andReturn((new Set())->forceFill(['id' => 3, 'name_ja' => 'メロンブックス', 'version' => '']));
 
-
+        self::assertSame(3, $instance->getOrCreateSetIdByJaFullName('メロンブックス'));
         self::assertSame(3, $instance->getOrCreateSetIdByJaFullName('メロンブックス'));
     }
 

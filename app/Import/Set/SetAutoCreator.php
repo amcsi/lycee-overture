@@ -67,7 +67,7 @@ class SetAutoCreator
     private function setSetsAndKeyByFullName(Collection $sets): void
     {
         $this->sets = $sets->keyBy(function (Set $set) {
-            return sprintf('%s %s', $set->name_ja, $set->version);
+            return trim(sprintf('%s %s', $set->name_ja, $set->version));
         });
     }
 }
