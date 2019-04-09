@@ -74,7 +74,7 @@ return [
     | set it to false.
     |
     */
-    'fallback_locale' => 'en',
+    'fallback_locale' => \amcsi\LyceeOverture\I18n\Locale::JAPANESE,
 
     /*
     |--------------------------------------------------------------------------
