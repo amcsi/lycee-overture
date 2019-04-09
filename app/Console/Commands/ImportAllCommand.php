@@ -5,6 +5,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\Debug\Profiling;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class ImportAllCommand extends Command
@@ -34,7 +35,12 @@ class ImportAllCommand extends Command
         $this->call(ImportTextsCommand::COMMAND);
 
         if ($this->option('translations')) {
-            $this->call(DownloadTranslations::COMMAND);
+            try {
+                $this->call(DownloadTranslations::COMMAND);
+            } catch (\Throwable $exception) {
+                // Log the warning, but continue execution, because this step is optional.
+                Log::warning((string) $exception);
+            }
         }
 
         $this->call(AutoTranslateCommand::COMMAND);
