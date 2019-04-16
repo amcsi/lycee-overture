@@ -6,10 +6,10 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex';
-  import CardFilters from '../card/CardFilters';
+import { mapActions } from 'vuex';
+import CardFilters from '../card/CardFilters';
 
-  /**
+/**
    * Wrapper for card lists
    *
    * @class CardListContainer
@@ -22,8 +22,8 @@
         initialCardTasksDone: false,
       };
     },
-    created() {
-      this.doInitialCardTasks(this.$route.query).then(() => this.initialCardTasksDone = true);
+  async created() {
+    await this.doInitialCardTasks(this.$route.query).then(() => this.initialCardTasksDone = true);
     },
     methods: {
       ...mapActions({
@@ -32,8 +32,8 @@
       }),
     },
     watch: {
-      '$route.query'() {
-        this.listCardsAndFetchStatistics(this.$route.query);
+      async '$route.query'() {
+        await this.listCardsAndFetchStatistics(this.$route.query);
       },
     },
   };
