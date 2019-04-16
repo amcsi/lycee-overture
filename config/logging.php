@@ -36,12 +36,12 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', 'stderr'],
+            'channels' => ['single', 'stderr', 'rollbar'],
         ],
 
         'productionStack' => [
             'driver' => 'stack',
-            'channels' => ['errorlog'],
+            'channels' => ['errorlog', 'rollbar'],
         ],
 
         'single' => [
@@ -80,6 +80,13 @@ return [
 
         'errorlog' => [
             'driver' => 'errorlog',
+            'level' => 'debug',
+        ],
+
+        'rollbar' => [
+            'driver' => 'monolog',
+            'handler' => \Rollbar\Laravel\MonologHandler::class,
+            'access_token' => env('ROLLBAR_SERVER_TOKEN'),
             'level' => 'debug',
         ],
     ],

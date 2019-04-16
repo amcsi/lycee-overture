@@ -28,6 +28,7 @@ Route::get(
         $vars = [
             'apiBaseUrl' => "$appUrl/api",
             'cloudinaryCloudName' => config('cloudinary.defaults.cloud_name'),
+            'rollbarToken' => env('ROLLBAR_CLIENT_TOKEN'),
             'environment' => config('app.env'),
         ];
         return view('spa', ['jsVars' => $vars]);

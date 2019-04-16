@@ -3,6 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import Rollbar from 'rollbar';
 import {
   Card,
   Checkbox,
@@ -59,6 +60,26 @@ Vue.component(TableColumn.name, TableColumn);
 Vue.use(Loading.directive);
 
 //noinspection JSUnusedGlobalSymbols
+
+const rollbar = Rollbar.init({
+  accessToken: window.vars.rollbarToken,
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  enabled: true,
+  source_map_enabled: true,
+  environment: window.vars.environment,
+  payload: {
+    client: {
+      javascript: {
+        code_version: '1.0'
+      }
+    }
+  }
+});
+Vue.prototype.$rollbar = rollbar;
+Vue.config.errorHandler = function (err, vm, info) {
+  rollbar.error(err);
+};
 
 const dateFormatter = new Intl.DateTimeFormat('default', {
   year: 'numeric',
