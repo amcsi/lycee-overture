@@ -119,7 +119,7 @@
                 <td>
                     <CardText text="[D1]" />
                 </td>
-                <td colspan="5">{{ $t('rules.typesOfCosts.tap') }}</td>
+                <td colspan="5">{{ $t('rules.typesOfCosts.discardFromDeck') }}</td>
             </tr>
             <tr>
                 <td>{{ $t('rules.typesOfCosts.other.title') }}</td>
