@@ -36,12 +36,12 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', 'stderr', 'sentry'],
+            'channels' => ['single', 'stderr'],
         ],
 
         'productionStack' => [
             'driver' => 'stack',
-            'channels' => ['errorlog', 'sentry'],
+            'channels' => ['errorlog'],
         ],
 
         'single' => [
@@ -81,10 +81,6 @@ return [
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => 'debug',
-        ],
-
-        'sentry' => [
-            'driver' => 'sentry',
         ],
     ],
 

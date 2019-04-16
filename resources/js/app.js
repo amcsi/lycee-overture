@@ -3,7 +3,6 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import * as Sentry from '@sentry/browser';
 import {
   Card,
   Checkbox,
@@ -60,12 +59,6 @@ Vue.component(TableColumn.name, TableColumn);
 Vue.use(Loading.directive);
 
 //noinspection JSUnusedGlobalSymbols
-
-Sentry.init({
-  dsn: window.vars.sentryDsn,
-  integrations: [new Sentry.Integrations.Vue({ Vue })],
-  environment: window.vars.environment,
-});
 
 const dateFormatter = new Intl.DateTimeFormat('default', {
   year: 'numeric',
