@@ -3,7 +3,7 @@ import { listDecks } from '../../api/endpoints/decks';
 export default {
   namespaced: true,
   state: {
-    listLoading: false,
+    listLoading: true,
     list: null,
   },
   mutations: {

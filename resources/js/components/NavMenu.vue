@@ -12,6 +12,9 @@
         <el-menu-item index="/cards" route="/cards">
             <a href="/cards" @click.prevent>{{ $t('nav.cardList') }}</a>
         </el-menu-item>
+        <el-menu-item index="/deck">
+            <router-link to="/deck">{{ $t('nav.deck') }}</router-link>
+        </el-menu-item>
 
         <li class="language-links">
             <a :href="enHref" class="language-link" :class="{ active: locale !== 'ja' }">

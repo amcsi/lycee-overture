@@ -30,6 +30,8 @@ const loadingizeAsyncComponent = asyncComponent => () => ({
 
 const CardListPrintPage = loadingizeAsyncComponent(() => import ('./pages/CardListPrintPage'));
 const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage'));
+const DeckPage = loadingizeAsyncComponent(() => import(/* webpackChunkName: "deck" */ './pages/DeckPage'));
+const DeckCardListPage = loadingizeAsyncComponent(() => import(/* webpackChunkName: "deck" */ './pages/Deck/DeckCardListPage'));
 const RulesPage = loadingizeAsyncComponent(() => import(/* webpackChunkName: "rules" */ './pages/RulesPage'));
 const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
 const HelpTranslatePage = loadingizeAsyncComponent(() => import ('./pages/HelpTranslatePage'));
@@ -113,6 +115,20 @@ const router = new VueRouter({
           path: '/cards', component: CardListPage, meta: {
             title: `${title} - Card List`,
           },
+        },
+        {
+          path: '/deck',
+          component: DeckPage,
+          meta: {
+            title: `${title} - Deck`,
+          },
+          children: [
+            {
+              path: ':deck',
+              title: `${title} - Deck Card List`,
+              component: DeckCardListPage,
+            },
+          ],
         },
         { path: '*', component: NotFoundPage }, // 404.
       ],
