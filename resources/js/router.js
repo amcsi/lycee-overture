@@ -4,6 +4,7 @@
 
 import VueRouter from 'vue-router';
 import Layout from './pages/Layout';
+import NotFoundPage from './pages/NotFoundPage';
 
 /**
  * Loading wrapper for code-split async components in the route.
@@ -101,6 +102,7 @@ const router = new VueRouter({
             title: `${title} - Card List`,
           },
         },
+        { path: '*', component: NotFoundPage }, // 404.
       ],
     },
   ],
