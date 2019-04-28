@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use amcsi\LyceeOverture\CardSet;
+use amcsi\LyceeOverture\Deck;
 use Illuminate\Database\Migrations\Migration;
 
 /**
@@ -54,13 +54,13 @@ class AddMoreStarterDecks extends Migration
     public function up()
     {
         foreach (self::SETS as $setData) {
-            CardSet::create($setData);
+            Deck::create($setData);
         }
     }
 
     public function down()
     {
-        app(CardSet::class)->whereIn(
+        app(Deck::class)->whereIn(
             'name_ja',
             array_map(
                 function (array $cardSetData) {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use amcsi\LyceeOverture\CardSet;
+use amcsi\LyceeOverture\Deck;
 use Illuminate\Database\Migrations\Migration;
 
 class AddInitialCardSets extends Migration
@@ -21,7 +21,7 @@ class AddInitialCardSets extends Migration
         // Because name_jp has since been renamed to name_ja.
         \Eloquent::unguard();
 
-        CardSet::create(
+        Deck::create(
             [
                 'name_jp' => self::FATE_GRAND_ORDER_2_0,
                 'name_en' => 'Fate/Grand Order 2.0',
@@ -29,7 +29,7 @@ class AddInitialCardSets extends Migration
                 'deck' => true,
             ]
         );
-        CardSet::create(
+        Deck::create(
             [
                 'name_jp' => self::GIRLS_UND_PANZER,
                 'name_en' => 'Girls und Panzer Senshadou Daisakusen! 1.0',
@@ -37,7 +37,7 @@ class AddInitialCardSets extends Migration
                 'deck' => true,
             ]
         );
-        CardSet::create(
+        Deck::create(
             [
                 'name_jp' => self::KAMIHIME_PROJECT,
                 'name_en' => 'Kamihime Project 1.0',
@@ -45,7 +45,7 @@ class AddInitialCardSets extends Migration
                 'deck' => true,
             ]
         );
-        CardSet::create(
+        Deck::create(
             [
                 'name_jp' => self::YUZU_SOFT,
                 'name_en' => 'Yuzusoft 1.0',
@@ -57,7 +57,7 @@ class AddInitialCardSets extends Migration
 
     public function down()
     {
-        app(CardSet::class)->whereIn(
+        app(Deck::class)->whereIn(
             'name_jp',
             [
                 self::FATE_GRAND_ORDER_2_0,

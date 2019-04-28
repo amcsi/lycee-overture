@@ -29,10 +29,10 @@
             <el-select placeholder="-" v-model="deck">
                 <el-option label="-" value=""></el-option>
                 <el-option
-                    v-for="cardSet in cardSetList"
-                    :key="cardSet.id"
-                    :label="cardSet.name"
-                    :value="'' + cardSet.id"
+                    v-for="deck in deckList"
+                    :key="deck.id"
+                    :label="deck.name"
+                    :value="'' + deck.id"
                 ></el-option>
             </el-select>
         </el-form-item>
@@ -119,8 +119,8 @@ const debouncedChangeRoute = debounce(($router, query) => {
       }
     },
     computed: {
-      ...mapState('cardSets', {
-        cardSetList: 'list',
+      ...mapState('decks', {
+        deckList: 'list',
       }),
       ...mapState('sets', {
         setList: 'list',

@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import articles from './modules/articles';
 import auth from './modules/auth';
 import cards from './modules/cards';
-import cardSets from './modules/cardSets';
+import decks from './modules/decks';
 import sets from './modules/sets';
 import statistics from './modules/statistics';
 import translation from './modules/translation';
@@ -21,7 +21,7 @@ const store = new Vuex.Store({
     articles,
     auth,
     cards,
-    cardSets,
+    decks,
     sets,
     statistics,
     translation,
@@ -41,7 +41,7 @@ const store = new Vuex.Store({
         commit('STARTED_INITIAL_TASKS');
         await Promise.all([
           // Dropdowns for filters.
-          dispatch('cardSets/listCardSets'),
+          dispatch('decks/listDecks'),
           dispatch('sets/listSets'),
           // First cards.
           dispatch('listCardsAndFetchStatistics', query),

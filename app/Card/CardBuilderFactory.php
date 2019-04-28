@@ -32,7 +32,7 @@ class CardBuilderFactory
 
         if ($deck = ($query['deck'] ?? null)) {
             $builder->join(
-                'card_sets AS cs',
+                'decks AS cs',
                 function (JoinClause $join) use ($deck): void {
                     $join
                         ->on(new Expression('FIND_IN_SET(cards.id, cs.cards)'), '>', new Expression('0'))
