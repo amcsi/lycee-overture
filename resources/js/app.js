@@ -77,7 +77,7 @@ const rollbar = Rollbar.init({
   }
 });
 Vue.prototype.$rollbar = rollbar;
-Vue.config.errorHandler = function (err, vm, info) {
+Vue.config.errorHandler = function(err) {
   rollbar.error(err);
 };
 
