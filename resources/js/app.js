@@ -3,7 +3,6 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import Rollbar from 'rollbar';
 import {
   Card,
   Checkbox,
@@ -27,6 +26,7 @@ import {
   TableColumn,
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import Rollbar from 'rollbar';
 import VueRouter from 'vue-router';
 import App from './App';
 import i18n from './i18n';
@@ -81,7 +81,7 @@ Vue.config.errorHandler = function (err, vm, info) {
   rollbar.error(err);
 };
 
-const dateFormatter = new Intl.DateTimeFormat('default', {
+const dateFormatter = new Intl.DateTimeFormat(void 0, {
   year: 'numeric',
   month: 'numeric',
   day: 'numeric',
