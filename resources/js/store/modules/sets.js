@@ -3,7 +3,7 @@ import { listSets } from '../../api/endpoints/sets';
 export default {
   namespaced: true,
   state: {
-    listLoading: false,
+    listLoading: true,
     list: null,
   },
   getters: {
@@ -36,7 +36,11 @@ export default {
     },
   },
   actions: {
-    async listSets({ commit }) {
+    async listSets({ commit, state }) {
+      if (state.list) {
+        // Do not load again.
+        return;
+      }
       commit('SETS_LOADING');
       try {
         const cards = await listSets();

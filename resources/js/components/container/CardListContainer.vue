@@ -1,44 +1,40 @@
 <template>
-    <div v-if="initialCardTasksDone">
+    <div v-if="list">
         <slot></slot>
     </div>
     <div v-else v-loading="true" style="height: 300px;"></div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import CardFilters from '../card/CardFilters';
 
 /**
-   * Wrapper for card lists
-   *
-   * @class CardListContainer
-   **/
-  export default {
-    name: 'CardListContainer',
-    components: { CardFilters },
-    data() {
-      return {
-        initialCardTasksDone: false,
-      };
+ * Wrapper for card lists
+ *
+ * @class CardListContainer
+ **/
+export default {
+  name: 'CardListContainer',
+  components: { CardFilters },
+  created() {
+    this.listCardsAndFetchStatistics(this.$route.query);
+  },
+  computed: {
+    ...mapState('cards', ['list']),
+  },
+  methods: {
+    ...mapActions({
+      listCardsAndFetchStatistics: 'listCardsAndFetchStatistics',
+    }),
+  },
+  watch: {
+     '$route.query': {
+      immediate: true,
+        async handler() {await this.listCardsAndFetchStatistics(this.$route.query);
     },
-  async created() {
-    await this.doInitialCardTasks(this.$route.query).then(() => this.initialCardTasksDone = true);
-    },
-    methods: {
-      ...mapActions({
-        doInitialCardTasks: 'doInitialCardTasks',
-        listCardsAndFetchStatistics: 'listCardsAndFetchStatistics',
-      }),
-    },
-    watch: {
-      '$route.query': {
-        immediate: true,
-        async handler() {
-          await this.listCardsAndFetchStatistics(this.$route.query);
-        },
-      },
-    },
+  },
+},
   };
 </script>
 

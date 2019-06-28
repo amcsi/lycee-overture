@@ -19,7 +19,11 @@ export default {
     },
   },
   actions: {
-    async listDecks({ commit }) {
+    async listDecks({ commit, state }) {
+      if (state.list) {
+        // Do not load again.
+        return;
+      }
       commit('DECKS_LOADING');
       try {
         const cards = await listDecks();
