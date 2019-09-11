@@ -13,14 +13,14 @@ class IncreaseCardsDatePrecisions extends Migration
         $this->changePrecision(self::NEW_PRECISION);
     }
 
+    public function down()
+    {
+        $this->changePrecision(self::OLD_PRECISION);
+    }
+
     protected function changePrecision(int $precision): void
     {
         \DB::statement("ALTER TABLE cards MODIFY created_at timestamp($precision) default CURRENT_TIMESTAMP($precision) not null");
         \DB::statement("ALTER TABLE cards MODIFY updated_at timestamp($precision) default CURRENT_TIMESTAMP($precision) not null");
-    }
-
-    public function down()
-    {
-        $this->changePrecision(self::OLD_PRECISION);
     }
 }
