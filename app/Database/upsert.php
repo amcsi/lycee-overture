@@ -21,8 +21,7 @@ return function (array $values): int {
     $sets = array_map(function ($columnKey) {
         return "`$columnKey`=VALUES(`$columnKey`)";
     }, array_filter(array_keys($values[0]), function ($value) {
-        // Filter out created_at for updates.
-        return $value !== 'created_at' && $value !== 'id';
+        return $value !== 'id';
     }));
 
     $query .= ' ON DUPLICATE KEY UPDATE ' . implode(', ', $sets);

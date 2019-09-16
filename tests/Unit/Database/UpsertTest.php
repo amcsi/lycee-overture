@@ -35,7 +35,7 @@ class UpsertTest extends TestCase
         $insertPart = 'insertPart';
         $grammar->expects($this->once())->method('compileInsert')->willReturn($insertPart);
 
-        $expected = "$insertPart ON DUPLICATE KEY UPDATE `column1`=VALUES(`column1`), `column2`=VALUES(`column2`)";
+        $expected = "$insertPart ON DUPLICATE KEY UPDATE `created_at`=VALUES(`created_at`), `column1`=VALUES(`column1`), `column2`=VALUES(`column2`)";
 
         $connection->expects($this->once())->method('affectingStatement')
             ->with($expected, ['1', '1', 'value1', 'value2', '2', '2', 'value3', 'value4'])
