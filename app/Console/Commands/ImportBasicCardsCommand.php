@@ -13,14 +13,17 @@ class ImportBasicCardsCommand extends Command
 {
     const COMMAND = 'lycee:import-basic-cards';
 
-    protected $signature = self::COMMAND;
+    protected $signature = self::COMMAND .
+    ' {--reset-dates : Resets all cards\' creation the dates, making newer cards have later dates}';
     protected $description = 'Imports the basic data of cards (excluding text)';
 
     public function handle()
     {
         $this->output->writeln('Starting import of basic card data.');
+        /** @var Reader $reader */
         $reader = Reader::createFromPath(storage_path(ImportConstants::CSV_PATH));
-        $toInsert = iterator_to_array(app(BasicImportCsvFilterer::class)->toDatabaseRows($reader));
+        $reader = array_reverse(iterator_to_array($reader)); // Reverse to ensure that newer cards have newer dates.
+        $toInsert = app(BasicImportCsvFilterer::class)->toDatabaseRows($reader, (bool) $this->option('reset-dates'));
         $insertedCount = Card::getQuery()->insertIgnore($toInsert);
         $updatedCount = Card::getQuery()->upsert($toInsert) / 2;
         $this->output->writeln(sprintf(

@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import;
 
+use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
+use Carbon\CarbonImmutable;
 
 /**
  * Converts a CSV reader to database rows for importing cards.
@@ -17,8 +19,10 @@ class BasicImportCsvFilterer
         $this->setAutoCreator = $setAutoCreator;
     }
 
-    public function toDatabaseRows(iterable $reader): \Traversable
+    public function toDatabaseRows(iterable $reader, $resetDates = false): array
     {
+        $ret = [];
+        $dateFormat = (new Card())->getDateFormat();
         foreach ($reader as $csvRow) {
             $id = $csvRow[CsvColumns::ID];
             if (!preg_match('/^[A-Z]{2}-\d{4}$/', $id)) {
@@ -47,7 +51,13 @@ class BasicImportCsvFilterer
             $dbRow['sp'] = (int) $csvRow[CsvColumns::SP];
             $dbRow['dmg'] = (int) $csvRow[CsvColumns::DMG];
             $dbRow['ability_type'] = CsvValueInterpreter::getAbilityType($csvRow);
-            yield $dbRow;
+            if ($resetDates) {
+                $now = (new CarbonImmutable())->format($dateFormat);
+                $dbRow['created_at'] = $now;
+                $dbRow['updated_at'] = $now;
+            }
+            $ret[] = $dbRow;
         }
+        return $ret;
     }
 }

@@ -22,6 +22,8 @@ class Card extends Model
 
     protected $with = ['translations'];
 
+    protected $dateFormat = 'Y-m-d H:i:s.u';
+
     public function getId(): string
     {
         return $this->getAttribute('id');
