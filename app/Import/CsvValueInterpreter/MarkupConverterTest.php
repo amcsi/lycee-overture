@@ -27,7 +27,7 @@ class MarkupConverterTest extends TestCase
                 '[雪月花宙日無]',
             ],
             [
-                '[OrderStep:[D1]]',
+                '[Order Step:[D1]]',
                 '[オーダーステップ:[D1]]',
             ],
             'with tap' => [

@@ -135,7 +135,7 @@ class CsvValueInterpreterTest extends TestCase
             'Non-cost colon' => [
                 [
                     'ability_cost' => '[Continuous]',
-                    'ability_description' => 'このキャラと同列の味方キャラ全ては[OrderChange:[0]]を得る。',
+                    'ability_description' => 'このキャラと同列の味方キャラ全ては[Order Change:[0]]を得る。',
                     'comments' => '',
                 ],
                 '[常時] このキャラと同列の味方キャラ全ては[オーダーチェンジ:[0]]を得る。',

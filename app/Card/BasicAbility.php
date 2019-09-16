@@ -48,7 +48,7 @@ class BasicAbility
         $flippedConstants = array_flip((new \ReflectionClass(static::class))->getConstants());
         return array_map(
             function ($basicAbilityId) use ($flippedConstants) {
-                return Str::studly(strtolower($flippedConstants[$basicAbilityId]));
+                return str_replace('_', ' ', Str::title(strtolower($flippedConstants[$basicAbilityId])));
             },
             self::$japaneseMap
         );

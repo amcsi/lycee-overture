@@ -84,8 +84,8 @@ class AutoTranslatorTest extends TestCase
                 'このキャラは[アグレッシブ]を得る。',
             ],
             'gaining multiple abilities' => [
-                'This character gains [Aggressive][OrderStep:[0]].',
-                'このキャラは[Aggressive][OrderStep:[0]]を得る。',
+                'This character gains [Aggressive][Order Step:[0]].',
+                'このキャラは[Aggressive][Order Step:[0]]を得る。',
             ],
             'ally gaining abilities' => [
                 '{1 ally character} gains [オーダーステップ:[無]][サイドステップ:[無]].',
