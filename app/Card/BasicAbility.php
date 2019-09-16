@@ -18,12 +18,14 @@ class BasicAbility
     public const SIDE_STEP = 1;
     public const ORDER_STEP = 2;
     public const SUPPORTER = 8;
+    public const PENALTY = 13;
     public const AGGRESSIVE = 16;
     public const ORDER_CHANGE = 18;
     public const ENGAGE = 19;
     public const RECOVERY = 20;
     public const LEADER = 21;
     public const ASSIST = 22;
+    public const GUTS = 23;
 
     private static $japaneseMap = [
         'アグレッシブ' => self::AGGRESSIVE,
@@ -31,11 +33,13 @@ class BasicAbility
         'サイドステップ' => self::SIDE_STEP,
         'オーダーステップ' => self::ORDER_STEP,
         'サポーター' => self::SUPPORTER,
+        'ペナルティ' => self::PENALTY,
         'オーダーチェンジ' => self::ORDER_CHANGE,
         'エンゲージ' => self::ENGAGE,
         'リカバリー' => self::RECOVERY,
         'リーダー' => self::LEADER,
         'アシスト' => self::ASSIST,
+        'ガッツ' => self::GUTS,
     ];
 
     public static function getJapaneseToMarkup(): array
