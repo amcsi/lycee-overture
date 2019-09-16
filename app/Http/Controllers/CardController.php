@@ -18,12 +18,12 @@ class CardController extends Controller
 
         $builder = $builderFactory->createBuilderWithQuery($locale, $request->query());
 
-        if ($locale !== Locale::JAPANESE && !$request->query('noTranslatedFirst')) {
+        if ($locale !== Locale::JAPANESE && $request->query('translatedFirst')) {
             // Bring forward cards with fewer kanjis (i.e. fewer untranslated bits).
             // Of course this is only necessary if the locale is non-Japanese.
             $builder->orderBy('t.kanji_count', 'asc');
         }
-        $builder->orderBy($request->get('sort', 'id'), $request->get('desc') ? 'desc' : 'asc');
+        $builder->orderBy($request->get('sort', 'created_at'), 'desc');
         $cards = $builder->paginate($limit);
 
         return $this->response->paginator($cards, $cardTransformer);

@@ -142,13 +142,13 @@ const debouncedChangeRoute = debounce(($router, query) => {
         }, {}),
       translatedFirst: {
         get() {
-          return !this.$route.query.noTranslatedFirst;
+          return !!this.$route.query.translatedFirst;
         },
         set(translatedFirst) {
           const query = { ...this.$route.query };
-          delete query.noTranslatedFirst;
-          if (!translatedFirst) {
-            query.noTranslatedFirst = 1;
+          delete query.translatedFirst;
+          if (translatedFirst) {
+            query.translatedFirst = 1;
           }
           this.$router.push({ query });
         },

@@ -77,7 +77,7 @@ export default {
     },
     async loadNewestCardDate({ commit }) {
       const createdOn =
-        (await listCards({ sort: 'created_at', desc: 1, limit: 1 })).data[0].created_at;
+        (await listCards({ sort: 'created_at', limit: 1 })).data[0].created_at;
       commit('CARDS_SET_NEWEST_DATE', new Date(createdOn));
     },
   },
