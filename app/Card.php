@@ -7,6 +7,9 @@ use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @method getTranslation($locale = null, $withFallback = null): CardTranslation
+ */
 class Card extends Model
 {
     use Translatable;

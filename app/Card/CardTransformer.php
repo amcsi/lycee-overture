@@ -5,7 +5,7 @@ namespace amcsi\LyceeOverture\Card;
 
 use amcsi\LyceeOverture\Api\GenericTransformers\DateTimeTransformer;
 use amcsi\LyceeOverture\Card;
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\I18n\Locale;
 use League\Fractal\TransformerAbstract;
 
 class CardTransformer extends TransformerAbstract
@@ -23,8 +23,6 @@ class CardTransformer extends TransformerAbstract
 
     public function transform(Card $card)
     {
-        /** @var CardTranslation $cardTranslation */
-        $cardTranslation = $card->getTranslation();
         return [
             'id' => $card->id,
             'type' => $card->getType(),
@@ -35,7 +33,9 @@ class CardTransformer extends TransformerAbstract
             'sp' => $card->sp,
             'element' => self::getElementMarkup($card),
             'cost' => self::getCostMarkup($card),
-            'translation' => $this->cardTranslationTransformer->transform($cardTranslation),
+            'translation' => \App::getLocale() !== Locale::JAPANESE ?
+                $this->cardTranslationTransformer->transform($card->getTranslation()) : null,
+            'japanese' => $this->cardTranslationTransformer->transform($card->getTranslation('ja')),
             'created_at' => $this->dateTimeTransformer->transform($card->created_at),
         ];
     }
