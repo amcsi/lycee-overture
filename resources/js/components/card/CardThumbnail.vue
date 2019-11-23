@@ -1,14 +1,13 @@
 <template>
     <div class="card-thumbnail-container">
         <!-- Only open the image url in a new page if the thumbnail had already been clicked on before mouseleave -->
-        <a target="_blank" rel="nofollow" :href="largerImage ? imageUrl : null">
+        <a target="_blank" rel="nofollow" :href="largerImage ? imageUrl : null" @click="click">
             <CardImage
                 :id="id"
                 :height="150"
                 :cloudinary-height="150"
                 @mouseenter.native="mouseEnter"
                 @mouseleave.native="mouseLeave"
-                @click.native="click"
                 style="cursor: pointer;"
             />
         </a>
@@ -98,11 +97,13 @@
         this.largerImage = false;
       },
       click(event) {
-        if (!this.largerImage) {
-          // Because of Vue 2.6+ macrotasks, we need to prevent default, because a click handler would appear on the
-          // parent before event bubbling begins that we _don't_ want triggered with this click.
-          event.preventDefault();
+        event.stopPropagation();
+        if (this.largerImage) {
+          // The tag should be an <a> with an href; just go to that link.
+          return;
         }
+        event.preventDefault();
+
         this.largerImage = true;
         this.$nextTick(() => {
           this.setupPopper();
