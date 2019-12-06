@@ -34,7 +34,8 @@ class ImportAllCommand extends Command
         $this->call(ImportBasicCardsCommand::COMMAND);
         $this->call(ImportTextsCommand::COMMAND);
 
-        if ($this->option('translations')) {
+        $doTranslationSteps = $this->option('translations');
+        if ($doTranslationSteps) {
             try {
                 $this->call(DownloadTranslations::COMMAND);
             } catch (\Throwable $exception) {
@@ -48,6 +49,15 @@ class ImportAllCommand extends Command
         if ($this->option('images')) {
             $this->call(ImageDownloadCommand::COMMAND, ['--new-only' => true]);
             $this->call(ImageUploadCommand::COMMAND, ['--new-only' => true]);
+        }
+
+        if ($doTranslationSteps) {
+            try {
+                $this->call(UploadTranslations::COMMAND);
+            } catch (\Throwable $exception) {
+                // Log the warning, but continue execution, because this step is optional.
+                Log::warning((string) $exception);
+            }
         }
 
         $this->output->text(
