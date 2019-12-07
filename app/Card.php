@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @method getTranslation($locale = null, $withFallback = null): CardTranslation
+ * @method CardTranslation getTranslation($locale = null, $withFallback = null)
  */
 class Card extends Model
 {

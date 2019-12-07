@@ -40,6 +40,9 @@ class FilesystemsCopier
         }
 
         if ($this->src === $this->dst) {
+            if ($this->dst->exists($dstPath)) {
+                $this->dst->delete($dstPath);
+            }
             $this->src->copy($srcPath, $dstPath);
         } else {
             throw new \LogicException('Copying across filesystems is not supported yet.');

@@ -40,7 +40,7 @@ class CardTransformer extends TransformerAbstract
         ];
     }
 
-    private static function getElementMarkup(Card $card): string
+    public static function getElementMarkup(Card $card): string
     {
         $coloredElements = Element::getElementKeys();
         $elementsMarkup = '';
@@ -56,7 +56,7 @@ class CardTransformer extends TransformerAbstract
         return $elementsMarkup;
     }
 
-    private static function getCostMarkup(Card $card): string
+    public static function getCostMarkup(Card $card): string
     {
         $markup = '';
         $elements = Element::getElementToMarkupMap();
