@@ -24,4 +24,14 @@
         <label>Starting</label>
         <visibletoowner>yes</visibletoowner>
     </gamezone>
+
+
+    <deckzone>
+        <label>Deck</label>
+        <shuffle>yes</shuffle>
+    </deckzone>
+
+    <deckzone>
+        <label>Starting</label>
+    </deckzone>
 </plugin>
