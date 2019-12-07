@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b86ace061e6878b77a4e36fa3ad98bd4",
+    "content-hash": "4d1155cb880041e0975fd207a5574628",
     "packages": [
         {
             "name": "beyondcode/laravel-self-diagnosis",
@@ -350,6 +350,7 @@
                 "laravel",
                 "translation"
             ],
+            "abandoned": "astrotomic/laravel-translatable",
             "time": "2019-02-28T08:12:22+00:00"
         },
         {
@@ -2132,28 +2133,35 @@
         },
         {
             "name": "nikic/iter",
-            "version": "v1.6.0",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/iter.git",
-                "reference": "fed36b417ea93fe9b4b7cb2e2abf98d91092564c"
+                "reference": "1417341030a43fba0764486f7ad49ccc7b76e73f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/iter/zipball/fed36b417ea93fe9b4b7cb2e2abf98d91092564c",
-                "reference": "fed36b417ea93fe9b4b7cb2e2abf98d91092564c",
+                "url": "https://api.github.com/repos/nikic/iter/zipball/1417341030a43fba0764486f7ad49ccc7b76e73f",
+                "reference": "1417341030a43fba0764486f7ad49ccc7b76e73f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.0"
+                "php": "^7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0|~5.0"
+                "phpunit/phpunit": "~7.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
             "autoload": {
                 "files": [
-                    "src/bootstrap.php"
+                    "src/iter.func.php",
+                    "src/iter.php",
+                    "src/iter.rewindable.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2172,7 +2180,7 @@
                 "generator",
                 "iterator"
             ],
-            "time": "2017-11-10T22:56:03+00:00"
+            "time": "2019-05-12T20:50:16+00:00"
         },
         {
             "name": "nikic/php-parser",

@@ -27,7 +27,7 @@
     "league/flysystem-memory": "^1.0",
     "league/fractal": "^0.17.0",
     "mbilbille/jpnforphp": "^0.7.0",
-    "nikic/iter": "^1.6",
+    "nikic/iter": "^2.0",
     "php-http/curl-client": "^1.7",
     "rollbar/rollbar-laravel": "^4.0",
     "swooletw/laravel-swoole": "^2.4",
