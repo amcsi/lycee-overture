@@ -1,0 +1,27 @@
+<plugin>
+    <gamezone>
+        <label>Hand</label>
+        <visibletoowner>yes</visibletoowner>
+    </gamezone>
+
+    <gamezone>
+        <label>Deck</label>
+    </gamezone>
+
+    <gamezone>
+        <label>Graveyard</label>
+        <visibletoowner>yes</visibletoowner>
+        <visibletoothers>yes</visibletoothers>
+    </gamezone>
+
+    <gamezone>
+        <label>Removed</label>
+        <visibletoowner>yes</visibletoowner>
+        <visibletoothers>yes</visibletoothers>
+    </gamezone>
+
+    <gamezone>
+        <label>Starting</label>
+        <visibletoowner>yes</visibletoowner>
+    </gamezone>
+</plugin>
