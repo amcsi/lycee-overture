@@ -95,4 +95,55 @@
         <label>Next Turn</label>
         <kind>NEXTTURN</kind>
     </generalfunction>
+
+
+    <cardfunction>
+        <label>Untap</label>
+        <kind>MAKERIGHT0DEGREES</kind>
+        <includeasbutton>yes</includeasbutton>
+    </cardfunction>
+    <cardfunction>
+        <label>Tap</label>
+        <kind>MAKERIGHT90DEGREES</kind>
+        <includeasbutton>yes</includeasbutton>
+    </cardfunction>
+    <cardfunction>
+        <label>Supported-1</label>
+        <kind>REMOVECOUNTER</kind>
+        <color>green</color>
+        <includeasbutton>yes</includeasbutton>
+    </cardfunction>
+    <cardfunction>
+        <label>Supported+1</label>
+        <kind>ADDCOUNTER</kind>
+        <color>green</color>
+        <includeasbutton>yes</includeasbutton>
+        <PositionX>.75</PositionX>
+        <PositionY>.04</PositionY>
+    </cardfunction>
+    <cardfunction>
+        <label>Edit Note</label>
+        <kind>EDITNOTE</kind>
+        <includeasbutton>yes</includeasbutton>
+        <PositionX>.4</PositionX>
+        <PositionY>.95</PositionY>
+    </cardfunction>
+    <cardfunction>
+        <label>Turn Over</label>
+        <kind>TURNOVER</kind>
+        <includeasbutton>yes</includeasbutton>
+    </cardfunction>
+    <cardfunction>
+        <label>Doesn't Turn</label>
+        <kind>TOGGLETURNALLIMMUNITY</kind>
+    </cardfunction>
+    <cardfunction>
+        <label>Take Control</label>
+        <kind>CHANGEOWNER</kind>
+    </cardfunction>
+    <cardfunction>
+        <label>Clear</label>
+        <kind>CLEARCARD</kind>
+        <includeasbutton>yes</includeasbutton>
+    </cardfunction>
 </plugin>
