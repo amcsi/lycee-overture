@@ -45,4 +45,54 @@
     <phase>
         <label>End</label>
     </phase>
+
+
+    <generalfunction>
+        <label>Untap All</label>
+        <kind>ALLYOURCARDSMAKERIGHT0DEGREES</kind>
+        <includeasbutton>yes</includeasbutton>
+    </generalfunction>
+    <generalfunction>
+        <label>Draw</label>
+        <kind>DRAWCARD</kind>
+        <includeasbutton>yes</includeasbutton>
+    </generalfunction>
+    <generalfunction>
+        <label>Previous Phase</label>
+        <kind>PREVIOUSPHASE</kind>
+    </generalfunction>
+    <generalfunction>
+        <label>Next Phase</label>
+        <kind>NEXTPHASE</kind>
+    </generalfunction>
+    <generalfunction>
+        <label>Discard From Deck</label>
+        <kind>TRANSFERCARD</kind>
+        <sourcegamezone>Deck</sourcegamezone>
+        <destinationgamezone>Graveyard</destinationgamezone>
+    </generalfunction>
+    <generalfunction>
+        <label>Flip Coin</label>
+        <kind>FLIPCOIN</kind>
+    </generalfunction>
+    <generalfunction>
+        <label>Roll</label>
+        <kind>ROLLD6</kind>
+    </generalfunction>
+    <generalfunction>
+        <label>Spawn Card</label>
+        <kind>SPAWNCARD</kind>
+    </generalfunction>
+    <generalfunction>
+        <label>Tap All</label>
+        <kind>ALLYOURCARDSMAKERIGHT90DEGREES</kind>
+    </generalfunction>
+    <generalfunction>
+        <label>Previous Turn</label>
+        <kind>PEREVIOUSTURN</kind>
+    </generalfunction>
+    <generalfunction>
+        <label>Next Turn</label>
+        <kind>NEXTTURN</kind>
+    </generalfunction>
 </plugin>
