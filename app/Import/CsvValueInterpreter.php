@@ -7,6 +7,7 @@ use amcsi\LyceeOverture\Card\AbilityType;
 use amcsi\LyceeOverture\Card\Element;
 use amcsi\LyceeOverture\Card\Type;
 use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
+use Illuminate\Support\Str;
 
 /**
  * Interprets values from csv rows.
@@ -34,7 +35,7 @@ class CsvValueInterpreter
         $elementKeys = Element::getElementKeys();
         $elementsCell = $csvRow[CsvColumns::ELEMENTS];
         foreach (Element::getColoredElementMap() as $elementString => $elementId) {
-            if (str_contains($elementsCell, $elementString)) {
+            if (Str::contains($elementsCell, $elementString)) {
                 $return[$elementKeys[$elementId]] = true;
             }
         }
