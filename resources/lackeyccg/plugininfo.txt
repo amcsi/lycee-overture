@@ -34,4 +34,15 @@
     <deckzone>
         <label>Starting</label>
     </deckzone>
+
+
+    <phase>
+        <label>Start</label>
+    </phase>
+    <phase>
+        <label>Main</label>
+    </phase>
+    <phase>
+        <label>End</label>
+    </phase>
 </plugin>
