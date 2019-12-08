@@ -27,17 +27,17 @@ class BuildLackeyCommand extends Command
     {
         $lackeyResourcesPath = __DIR__ . '/../../../resources/lackeyccg';
 
-        $dstBasePath = __DIR__ . '/../../../storage/lackey';
-        $dstPath = "$dstBasePath/lycee-lackeyccg-en-only-translated";
+        $dstPath = 'lycee-lackeyccg-en-only-translated';
 
         $adapter = Storage::drive('localRoot');
-        $copier = new FilesystemsCopier($adapter, $adapter);
+        $dstAdapter = Storage::drive('public');
+        $copier = new FilesystemsCopier($adapter, $dstAdapter);
 
         $copier->copyCached($lackeyResourcesPath, $dstPath);
 
         // Card data.
-        $fileObject = new \SplTempFileObject();
-        $writer = Writer::createFromFileObject($fileObject);
+        $tempnam = tempnam('', sys_get_temp_dir());
+        $writer = Writer::createFromPath($tempnam);
         $writer->setDelimiter("\t");
         $definitions = [
             'Name' => fn(Card $card) => $card->id,
@@ -76,12 +76,7 @@ class BuildLackeyCommand extends Command
                 ->filter(fn(Card $card) => !$card->getTranslation()->kanji_count) // Exclude ones not fully translated.
                 ->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
         );
-        $fileObject->rewind();
-        $f = try_fopen("$dstPath/sets/carddata.txt", 'wb');
-        foreach ($fileObject as $row) {
-            fwrite($f, $row);
-        }
-        fclose($f);
+        $dstAdapter->putStream("$dstPath/sets/carddata.txt", try_fopen($tempnam, 'rb'));
 
         /** @var Card $card */
         foreach (Card::query()->cursor() as $card) {
