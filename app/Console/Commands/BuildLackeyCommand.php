@@ -14,7 +14,9 @@ use function GuzzleHttp\Psr7\try_fopen;
 
 class BuildLackeyCommand extends Command
 {
-    protected $signature = 'lycee:build-lackey';
+    public const COMMAND = 'lycee:build-lackey';
+
+    protected $signature = self::COMMAND;
 
     protected $description = 'Builds plugins for LackeyCCG';
 
