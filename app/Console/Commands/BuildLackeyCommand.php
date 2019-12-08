@@ -27,7 +27,8 @@ class BuildLackeyCommand extends Command
     {
         $lackeyResourcesPath = __DIR__ . '/../../../resources/lackeyccg';
 
-        $dstPath = 'lycee-lackeyccg-en-only-translated';
+        $pluginFolderName = 'lycee-lackeyccg-en-only-translated';
+        $dstPath = $pluginFolderName;
 
         $adapter = Storage::drive('localRoot');
         $dstAdapter = Storage::drive('public');
@@ -91,6 +92,37 @@ class BuildLackeyCommand extends Command
                     $translation->ability_name,
                 ]
             );
+        }
+
+        // plugininfo.txt
+
+        $updateListFirstRowToday = sprintf("%s\t%s", $pluginFolderName, date('m-d-Y'));
+        $lastUpdateListContents = $dstAdapter->exists("$dstPath/updatelist.txt") ?
+            $dstAdapter->read("$dstPath/updatelist.txt") :
+            $updateListFirstRowToday;
+
+        $lastUpdateListFirstLine = strtok($lastUpdateListContents, "\n");
+        // We try to use the last plugintext.txt's date if possible, in case the contents would end up the same.
+        $dateText = explode("\t", $lastUpdateListFirstLine)[1];
+
+        $newUpdateListContents = '';
+        $newUpdateListContents .= "$pluginFolderName\t$dateText\n";
+
+        $pluginInfoBasePath = "plugins/$pluginFolderName";
+        $fileList = [
+            'sets/carddata.txt' => Storage::url("$dstPath/sets/carddata.txt"),
+        ];
+        foreach ($fileList as $pluginFileRelativePath => $url) {
+            $newUpdateListContents .= "$pluginInfoBasePath/$pluginFileRelativePath\t$url\t-1\n";
+        }
+        if ($lastUpdateListContents !== $newUpdateListContents) {
+            // The contents did not end up the same. So let's replace the first line to show today's date instead.
+            $newUpdateListContents = str_replace(
+                $lastUpdateListFirstLine,
+                $updateListFirstRowToday,
+                $newUpdateListContents
+            );
+            $dstAdapter->put("$dstPath/updatelist.txt", $newUpdateListContents);
         }
     }
 }
