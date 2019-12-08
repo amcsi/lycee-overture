@@ -140,19 +140,19 @@ class BuildLackeyCommand extends Command
 
             // version.txt
             $versionFileContents = $adapter->read("$lackeyResourcesPath/version.dist.xml");
-            $versionFileContents = str_replace(':date', date('Ymd'), $versionFileContents);
-            $versionFileContents = str_replace(':versionUrl', e($versionFileUrl), $versionFileContents);
+            $versionFileContents = str_replace(':date:', date('Ymd'), $versionFileContents);
+            $versionFileContents = str_replace(':versionUrl:', e($versionFileUrl), $versionFileContents);
             $versionFileContents = str_replace(
-                ':updateListUrl',
-                e(Storage::url("$dstPath/updatelist.txt")),
+                ':updateListUrl:',
+                e($getPublicUrl('updatelist.txt')),
                 $versionFileContents
             );
             // Try to ensure updating plugin can work multiple times a day by using the message as a cache buster.
-            $versionFileContents = str_replace(':dateWithTime', e(date('Y-m-d H:i:s')), $versionFileContents);
+            $versionFileContents = str_replace(':dateWithTime:', e(date('Y-m-d H:i:s')), $versionFileContents);
 
             $dstAdapter->put("$dstPath/version.txt", $versionFileContents);
         }
 
-        // Version.txt
+        $this->info('Lackey build successful.');
     }
 }
