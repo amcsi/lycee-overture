@@ -110,6 +110,7 @@ class BuildLackeyCommand extends Command
 
         $pluginInfoBasePath = "plugins/$pluginFolderName";
         $fileList = [
+            'plugininfo.txt' => Storage::url("$dstPath/plugininfo.txt"),
             'sets/carddata.txt' => Storage::url("$dstPath/sets/carddata.txt"),
         ];
         foreach ($fileList as $pluginFileRelativePath => $url) {
