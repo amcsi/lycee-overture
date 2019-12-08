@@ -1,0 +1,9 @@
+<version>
+
+    <lastupdateYYMMDD>:date</lastupdateYYMMDD>
+    <quality>HIGH</quality>
+    <versionurl>:versionUrl</versionurl>
+    <updateurl>:updateListUrl</updateurl>
+    <message>Latest update (:dateWithTime)</message>
+
+</version>

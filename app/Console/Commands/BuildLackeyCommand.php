@@ -109,9 +109,13 @@ class BuildLackeyCommand extends Command
         $newUpdateListContents .= "$pluginFolderName\t$dateText\n";
 
         $pluginInfoBasePath = "plugins/$pluginFolderName";
+        $appUrl = env('APP_URL');
+        $getPublicUrl = fn($path) => $appUrl . Storage::url("$dstPath/$path");
+        $versionFileUrl = $getPublicUrl('version.txt');
         $fileList = [
-            'plugininfo.txt' => Storage::url("$dstPath/plugininfo.txt"),
-            'sets/carddata.txt' => Storage::url("$dstPath/sets/carddata.txt"),
+            'plugininfo.txt' => $getPublicUrl('plugininfo.txt'),
+            'version.txt' => $versionFileUrl,
+            'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
         ];
         foreach ($fileList as $pluginFileRelativePath => $url) {
             $newUpdateListContents .= "$pluginInfoBasePath/$pluginFileRelativePath\t$url\t-1\n";
@@ -131,6 +135,22 @@ class BuildLackeyCommand extends Command
                 $newUpdateListContents
             );
             $dstAdapter->put("$dstPath/updatelist.txt", $newUpdateListContents);
+
+            // version.txt
+            $versionFileContents = $adapter->read("$lackeyResourcesPath/version.dist.xml");
+            $versionFileContents = str_replace(':date', date('Ymd'), $versionFileContents);
+            $versionFileContents = str_replace(':versionUrl', e($versionFileUrl), $versionFileContents);
+            $versionFileContents = str_replace(
+                ':updateListUrl',
+                e(Storage::url("$dstPath/updatelist.txt")),
+                $versionFileContents
+            );
+            // Try to ensure updating plugin can work multiple times a day by using the message as a cache buster.
+            $versionFileContents = str_replace(':dateWithTime', e(date('Y-m-d H:i:s')), $versionFileContents);
+
+            $dstAdapter->put("$dstPath/version.txt", $versionFileContents);
         }
+
+        // Version.txt
     }
 }
