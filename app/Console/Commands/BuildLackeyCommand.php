@@ -72,7 +72,9 @@ class BuildLackeyCommand extends Command
         ];
         $writer->insertOne(array_keys($definitions));
         $writer->insertAll(
-            Card::cursor()->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
+            Card::cursor()
+                ->filter(fn(Card $card) => !$card->getTranslation()->kanji_count) // Exclude ones not fully translated.
+                ->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
         );
         $fileObject->rewind();
         $f = try_fopen("$dstPath/sets/carddata.txt", 'wb');
