@@ -10,7 +10,7 @@ php artisan config:cache
 php artisan view:cache
 
 # Do the import tasks (in the background).
-php artisan lycee:import-all --translations --images &
+php artisan lycee:import-all --translations --images --lackey &
 
 # Start nginx.
 nginx

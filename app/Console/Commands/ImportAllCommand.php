@@ -14,6 +14,7 @@ class ImportAllCommand extends Command
 
     protected $signature = self::COMMAND .
     ' {--images : Also download images from website and upload to cloudinary}' .
+    ' {--lackey : Build LackeyCCG plugin(s)}' .
     ' {--translations : Also download manual translations from OneSky}' .
     ' {--no-cache : Do not use cache for downloading the CSV}';
 
@@ -40,6 +41,14 @@ class ImportAllCommand extends Command
                 $this->call(DownloadTranslations::COMMAND);
             } catch (\Throwable $exception) {
                 // Log the warning, but continue execution, because this step is optional.
+                Log::warning((string) $exception);
+            }
+        }
+
+        if ($this->option('lackey')) {
+            try {
+                $this->call(BuildLackeyCommand::COMMAND);
+            } catch (\Throwable $exception) {
                 Log::warning((string) $exception);
             }
         }
