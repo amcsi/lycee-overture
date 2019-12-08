@@ -102,7 +102,7 @@ class BuildLackeyCommand extends Command
 
         $copier->transformCached(
             storage_path('images/original-cards'),
-            "$dstPath/sets/setimage/cards",
+            "$dstPath/sets/setimages/cards",
             function ($imageFile) {
                 $newImageFile = pathinfo($imageFile, PATHINFO_FILENAME) . '.jpg';
                 // Flysystem cuts off the leading slash.
