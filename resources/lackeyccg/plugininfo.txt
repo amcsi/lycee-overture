@@ -21,7 +21,7 @@
     </gamezone>
 
     <gamezone>
-        <label>Starting</label>
+        <label>Leader</label>
         <visibletoowner>yes</visibletoowner>
     </gamezone>
 
@@ -32,7 +32,7 @@
     </deckzone>
 
     <deckzone>
-        <label>Starting</label>
+        <label>Leader</label>
     </deckzone>
 
 
