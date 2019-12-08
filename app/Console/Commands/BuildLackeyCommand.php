@@ -115,6 +115,13 @@ class BuildLackeyCommand extends Command
         foreach ($fileList as $pluginFileRelativePath => $url) {
             $newUpdateListContents .= "$pluginInfoBasePath/$pluginFileRelativePath\t$url\t-1\n";
         }
+        $newUpdateListContents .= "\n";
+        $newUpdateListContents .= "CardGeneralURLs:\n";
+        $newUpdateListContents .= sprintf(
+            "https://res.cloudinary.com/%s/image/upload/h_520/\n",
+            config('cloudinary.defaults.cloud_name')
+        );
+
         if ($lastUpdateListContents !== $newUpdateListContents) {
             // The contents did not end up the same. So let's replace the first line to show today's date instead.
             $newUpdateListContents = str_replace(
