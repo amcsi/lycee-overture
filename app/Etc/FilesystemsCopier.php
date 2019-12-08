@@ -34,7 +34,13 @@ class FilesystemsCopier
             return;
         }
 
-        if ($this->dst->exists($dstPath) && $this->src->lastModified($srcPath) <= $this->dst->lastModified($dstPath)) {
+        if (
+            $this->dst->exists($dstPath) &&
+            (
+                $this->src->lastModified($srcPath) <= $this->dst->lastModified($dstPath) || // Source path not newer.
+                $this->src->read($srcPath) === $this->dst->read($dstPath) // Same contents.
+            )
+        ) {
             return;
         }
 
