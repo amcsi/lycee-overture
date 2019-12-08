@@ -30,7 +30,7 @@ class BuildLackeyCommand extends Command
         $lackeyResourcesPath = __DIR__ . '/../../../resources/lackeyccg';
 
         $pluginFolderName = 'lycee-lackeyccg-en-only-translated';
-        $dstPath = $pluginFolderName;
+        $dstPath = "lackey/$pluginFolderName";
 
         $adapter = Storage::drive('localRoot');
         $dstAdapter = Storage::drive('public');
