@@ -1,0 +1,107 @@
+<plugin>
+
+<pluginversion>2.0</pluginversion>
+
+
+<pluginname>harrypotter</pluginname>
+
+
+
+
+<deckzone>
+	<label>Deck</label>
+	<shuffle>yes</shuffle>
+	<gamezonetoloadto>Deck</gamezonetoloadto>
+</deckzone>
+
+
+<deckzone>
+	<label>Starting</label>
+		<gamezonetoloadto>Starting</gamezonetoloadto>
+</deckzone>
+
+
+
+<gamezone>
+	<label>Hand</label>
+
+	<visibletoowner>yes</visibletoowner>
+		<visibletoothers>no</visibletoothers>
+</gamezone>
+
+<gamezone>
+	<label>Deck</label>
+
+	<visibletoowner>no</visibletoowner>
+		<visibletoothers>no</visibletoothers>
+</gamezone>
+
+<gamezone>
+	<label>Discard</label>
+		<visibletoowner>yes</visibletoowner>
+
+	<visibletoothers>yes</visibletoothers>
+</gamezone>
+
+<gamezone>
+	<label>Starting</label>
+
+	<visibletoowner>yes</visibletoowner>
+
+	<visibletoothers>yes</visibletoothers>
+</gamezone>
+
+
+<phase><label>Draw</label></phase>
+
+<phase><label>Damage</label></phase>
+
+<phase><label>Actions</label></phase>
+
+<phase><label>End</label></phase>
+
+
+
+<generalfunction><label>Draw</label><kind>DRAWCARD</kind><includeasbutton>yes</includeasbutton></generalfunction>
+
+<generalfunction><label>Damage</label><kind>TRANSFERCARD</kind><includeasbutton>yes</includeasbutton>
+	<sourcegamezone>Deck</sourcegamezone>
+	<destinationgamezone>Discard</destinationgamezone></generalfunction>
+<generalfunction><label>Draw to Table</label><kind>DRAWCARDTOTABLE</kind><includeasbutton>yes</includeasbutton></generalfunction>
+<generalfunction><label>Previous Phase</label><kind>PREVIOUSPHASE</kind><includeasbutton>no</includeasbutton></generalfunction>
+
+<generalfunction><label>Next Phase</label><kind>NEXTPHASE</kind><includeasbutton>no</includeasbutton></generalfunction>
+
+<generalfunction><label>Roll</label><kind>ROLLD6</kind><includeasbutton>no</includeasbutton></generalfunction>
+
+<generalfunction><label>Spawn Card</label><kind>SPAWNCARD</kind><includeasbutton>no</includeasbutton></generalfunction>
+
+<generalfunction><label>Next Turn</label><kind>NEXTTURN</kind><includeasbutton>no</includeasbutton></generalfunction>
+
+<generalfunction><label>Roll D20</label><kind>ROLLD20</kind><includeasbutton>no</includeasbutton></generalfunction>
+
+<generalfunction><label>Previous Turn</label><kind>PEREVIOUSTURN</kind><includeasbutton>no</includeasbutton></generalfunction>
+
+<generalfunction><label>Flip Coin</label><kind>FLIPCOIN</kind><includeasbutton>no</includeasbutton></generalfunction>
+
+
+
+<cardfunction><label>Unturn</label><kind>MAKERIGHT0DEGREES</kind><includeasbutton>no</includeasbutton></cardfunction>
+<cardfunction><label>Turn Sideways</label><kind>MAKERIGHT90DEGREES</kind><includeasbutton>no</includeasbutton></cardfunction>
+<cardfunction><label>Green-1</label><kind>REMOVECOUNTERGREEN</kind><includeasbutton>no</includeasbutton></cardfunction>
+<cardfunction><label>Green+1</label><kind>ADDCOUNTERGREEN</kind><includeasbutton>no</includeasbutton><PositionX>.75</PositionX><PositionY>.04</PositionY></cardfunction>
+
+<cardfunction><label>Red-1</label><kind>REMOVECOUNTERRED</kind><includeasbutton>no</includeasbutton></cardfunction>
+<cardfunction><label>Red+1</label><kind>ADDCOUNTERRED</kind><includeasbutton>no</includeasbutton><PositionX>.5</PositionX><PositionY>.04</PositionY></cardfunction>
+
+<cardfunction><label>Edit Note</label><kind>EDITNOTE</kind><includeasbutton>no</includeasbutton><PositionX>.4</PositionX><PositionY>.95</PositionY></cardfunction>
+<cardfunction><label>Turn Over</label><kind>TURNOVER</kind><includeasbutton>no</includeasbutton></cardfunction>
+
+
+<cardfunction><label>Take Control</label><kind>CHANGEOWNER</kind><includeasbutton>no</includeasbutton></cardfunction>
+<cardfunction><label>Hover</label><kind>HOVER</kind><includeasbutton>no</includeasbutton></cardfunction>
+<cardfunction><label>Clear</label><kind>CLEARCARD</kind><includeasbutton>no</includeasbutton></cardfunction>
+
+
+
+</plugin>

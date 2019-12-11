@@ -1,0 +1,101 @@
+<packdefinitions version="1.0">
+
+<pack>
+	<packtitle>100 Lessons</packtitle>
+	<packkind>Lessons</packkind>
+	<packdoubles>yes</packdoubles>
+	<chance>
+		<kind><qty>20</qty><crit><field>Name</field><eval>IS</eval><data>Care of Magical Creatures</data></crit></kind>
+		<kind><qty>20</qty><crit><field>Name</field><eval>IS</eval><data>Transfiguration</data></crit></kind>
+		<kind><qty>20</qty><crit><field>Name</field><eval>IS</eval><data>Charms</data></crit></kind>
+		<kind><qty>20</qty><crit><field>Name</field><eval>IS</eval><data>Potions</data></crit></kind>
+		<kind><qty>20</qty><crit><field>Name</field><eval>IS</eval><data>Quidditch</data></crit></kind>
+	</chance>
+</pack>
+
+<pack>
+	<packtitle>Random Wizard or Witch</packtitle>
+	<chance>
+		<prob>70</prob>
+		<kind><qty>1</qty><crit><field>Type</field><eval>CONTAINS</eval><data>Wizard</data></crit></kind>
+	</chance>
+	<chance>
+		<prob>30</prob>
+		<kind><qty>1</qty><crit><field>Type</field><eval>CONTAINS</eval><data>Witch</data></crit></kind>
+	</chance>
+</pack>
+
+<pack>
+	<packtitle>All Sets Booster</packtitle>
+	<packkind>Booster</packkind>
+	<chance>
+		<kind><qty>1</qty><crit><field>Rarity</field><eval>IS</eval><data>R</data></crit></kind>
+		<kind><qty>2</qty><crit><field>Rarity</field><eval>IS</eval><data>U</data></crit></kind>
+		<kind><qty>6</qty><crit><field>Rarity</field><eval>IS</eval><data>C</data></crit>
+                                 <crit><field>Type</field><eval>DOESNTCONTAIN</eval><data>Lesson</data></crit></kind>
+	</chance>
+</pack>
+
+<pack>
+	<packtitle>Chamber of Secrets Booster</packtitle>
+	<packkind>Booster</packkind>
+	<packimage>boosterchamber</packimage>
+	<packcommoncrit><field>Set</field><eval>IS</eval><data>Chamber_of_Secrets</data></packcommoncrit>
+	<chance>
+		<kind><qty>1</qty><crit><field>Rarity</field><eval>IS</eval><data>R</data></crit></kind>
+		<kind><qty>2</qty><crit><field>Rarity</field><eval>IS</eval><data>U</data></crit></kind>
+		<kind><qty>6</qty><crit><field>Rarity</field><eval>IS</eval><data>C</data></crit></kind>
+	</chance>
+</pack>
+
+<pack>
+	<packtitle>Adventures at Hogwarts Booster</packtitle>
+	<packkind>Booster</packkind>
+	<packimage>boosteradventures</packimage>
+	<packcommoncrit><field>Set</field><eval>IS</eval><data>Adventures_at_Hogwarts</data></packcommoncrit>
+	<chance>
+		<kind><qty>1</qty><crit><field>Rarity</field><eval>IS</eval><data>R</data></crit></kind>
+		<kind><qty>2</qty><crit><field>Rarity</field><eval>IS</eval><data>U</data></crit></kind>
+		<kind><qty>6</qty><crit><field>Rarity</field><eval>IS</eval><data>C</data></crit></kind>
+	</chance>
+</pack>
+
+<pack>
+	<packtitle>Diagon Alley Booster</packtitle>
+	<packkind>Booster</packkind>
+	<packimage>boosterdiagon</packimage>
+	<packcommoncrit><field>Set</field><eval>IS</eval><data>Diagon_Alley</data></packcommoncrit>
+	<chance>
+		<kind><qty>1</qty><crit><field>Rarity</field><eval>IS</eval><data>R</data></crit></kind>
+		<kind><qty>2</qty><crit><field>Rarity</field><eval>IS</eval><data>U</data></crit></kind>
+		<kind><qty>6</qty><crit><field>Rarity</field><eval>IS</eval><data>C</data></crit></kind>
+	</chance>
+</pack>
+
+<pack>
+	<packtitle>Quidditch Cup Booster</packtitle>
+	<packkind>Booster</packkind>
+	<packimage>boosterquidditch</packimage>
+	<packcommoncrit><field>Set</field><eval>IS</eval><data>Quidditch_Cup</data></packcommoncrit>
+	<chance>
+		<kind><qty>1</qty><crit><field>Rarity</field><eval>IS</eval><data>R</data></crit></kind>
+		<kind><qty>2</qty><crit><field>Rarity</field><eval>IS</eval><data>U</data></crit></kind>
+		<kind><qty>6</qty><crit><field>Rarity</field><eval>IS</eval><data>C</data></crit>
+                                 <crit><field>Type</field><eval>DOESNTCONTAIN</eval><data>Lesson</data></crit></kind>
+	</chance>
+</pack>
+
+<pack>
+	<packtitle>Base Set Booster</packtitle>
+	<packkind>Booster</packkind>
+	<packimage>boosterbaseset</packimage>
+	<packcommoncrit><field>Set</field><eval>IS</eval><data>Base_Set</data></packcommoncrit>
+	<chance>
+		<kind><qty>1</qty><crit><field>Rarity</field><eval>IS</eval><data>R</data></crit></kind>
+		<kind><qty>2</qty><crit><field>Rarity</field><eval>IS</eval><data>U</data></crit></kind>
+		<kind><qty>6</qty><crit><field>Rarity</field><eval>IS</eval><data>C</data></crit>
+                                 <crit><field>Type</field><eval>DOESNTCONTAIN</eval><data>Lesson</data></crit></kind>
+	</chance>
+</pack>
+
+</packdefinitions>
