@@ -40,6 +40,7 @@ class ImportAllCommand extends Command
             try {
                 $this->call(DownloadTranslations::COMMAND);
             } catch (\Throwable $exception) {
+                $this->warn((string) $exception);
                 // Log the warning, but continue execution, because this step is optional.
                 Log::warning((string) $exception);
             }

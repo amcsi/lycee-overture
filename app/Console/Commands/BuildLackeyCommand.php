@@ -6,11 +6,13 @@ namespace amcsi\LyceeOverture\Console\Commands;
 use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Card\CardTransformer;
 use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Etc\FilesystemsCopier;
 use amcsi\LyceeOverture\Etc\LackeyHasher;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
+use Symfony\Component\Stopwatch\Stopwatch;
 use function GuzzleHttp\Psr7\try_fopen;
 
 class BuildLackeyCommand extends Command
@@ -28,6 +30,9 @@ class BuildLackeyCommand extends Command
 
     public function handle()
     {
+        $stopwatchEvent = (new Stopwatch())->start('download-translations');
+        $this->output->text('Started building plugin for LackeyCCG.');
+
         $lackeyResourcesPath = __DIR__ . '/../../../resources/lackeyccg';
 
         $pluginFolderName = 'lycee-lackeyccg-en-only-translated';
@@ -155,6 +160,9 @@ class BuildLackeyCommand extends Command
             $dstAdapter->put("$dstPath/version.txt", $versionFileContents);
         }
 
-        $this->info('Lackey build successful.');
+
+        $this->output->text(
+            'Finished building plugin for LackeyCCG in ' . Profiling::stopwatchToHuman($stopwatchEvent->stop())
+        );
     }
 }
