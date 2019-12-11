@@ -30,7 +30,12 @@ class LackeyHasher
         do {
             $f1 = $f2;
             $char = fgetc($fp);
-            $ord = is_string($char) ? ord($char) : -1;
+
+            $ord = is_string($char) ?
+                ord($char) :
+                -1;
+            $ord = $ord > 127 ? -256 + $ord : $ord;
+
             assert(is_int($ord));
             $f2 = ftell($fp);
             if ($ord !== 10 && $ord !== 13) {

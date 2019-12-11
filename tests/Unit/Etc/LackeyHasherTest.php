@@ -21,8 +21,8 @@ class LackeyHasherTest extends TestCase
         return [
             [350485, __DIR__ . '/350485.txt'],
             [372237, __DIR__ . '/372237.txt'],
-            [-20265, 'http://pottertradingcardgame.webs.com/boosterchamber.jpg'],
-            [-8196, 'http://pottertradingcardgame.webs.com/boosterbaseset.jpg'],
+            [-20265, __DIR__ . '/-20265.jpg'],
+            [-8196, __DIR__ . '/-8196.jpg'],
         ];
     }
 }
