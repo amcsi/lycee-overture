@@ -7,6 +7,7 @@ use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Card\CardTransformer;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Etc\FilesystemsCopier;
+use amcsi\LyceeOverture\Etc\LackeyHasher;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
@@ -120,7 +121,8 @@ class BuildLackeyCommand extends Command
             'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
         ];
         foreach ($fileList as $pluginFileRelativePath => $url) {
-            $newUpdateListContents .= "$pluginInfoBasePath/$pluginFileRelativePath\t$url\t-1\n";
+            $hash = LackeyHasher::hashFile($url);
+            $newUpdateListContents .= "$pluginInfoBasePath/$pluginFileRelativePath\t$url\t$hash\n";
         }
         $newUpdateListContents .= "\n";
         $newUpdateListContents .= "CardGeneralURLs:\n";
