@@ -125,8 +125,10 @@ class BuildLackeyCommand extends Command
             'version.txt' => $versionFileUrl,
             'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
         ];
+        $appUrl = config('app.url');
+        $appLocalUrl = config('app.localUrl');
         foreach ($fileList as $pluginFileRelativePath => $url) {
-            $hash = LackeyHasher::hashFile($url);
+            $hash = LackeyHasher::hashFile(str_replace($appUrl, $appLocalUrl, $url));
             $newUpdateListContents .= "$pluginInfoBasePath/$pluginFileRelativePath\t$url\t$hash\n";
         }
         $newUpdateListContents .= "\n";
