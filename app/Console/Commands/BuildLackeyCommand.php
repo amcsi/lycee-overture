@@ -125,6 +125,10 @@ class BuildLackeyCommand extends Command
             'version.txt' => $versionFileUrl,
             'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
             'bot.jpg' => 'https://cdn.discordapp.com/attachments/477535411871416332/652989736847409152/dummy_card_3.png',
+            'decks/Brave_Sword_X_Blaze_Soul_1.0_Starter.dek' => $getPublicUrl(
+                'decks/Brave_Sword_X_Blaze_Soul_1.0_Starter.dek'
+            ),
+            'decks/Yuzusoft_1.0_Starter.dek' => $getPublicUrl('decks/Yuzusoft_1.0_Starter.dek'),
         ];
         if (!$dstAdapter->exists("$dstPath/version.txt")) {
             // The version.txt file must exist so we can hash it.

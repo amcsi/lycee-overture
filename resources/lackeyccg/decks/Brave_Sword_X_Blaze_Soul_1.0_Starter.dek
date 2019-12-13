@@ -1,0 +1,67 @@
+<deck version="0.8">
+	<meta>
+		<game>lycee-overture-translated</game>
+	</meta>
+	<superzone name="Deck">
+		<card><name id="LO-0150">LO-0150</name><set>cards</set></card>
+		<card><name id="LO-0150">LO-0150</name><set>cards</set></card>
+		<card><name id="LO-0150">LO-0150</name><set>cards</set></card>
+		<card><name id="LO-0150">LO-0150</name><set>cards</set></card>
+		<card><name id="LO-0154">LO-0154</name><set>cards</set></card>
+		<card><name id="LO-0154">LO-0154</name><set>cards</set></card>
+		<card><name id="LO-0154">LO-0154</name><set>cards</set></card>
+		<card><name id="LO-0154">LO-0154</name><set>cards</set></card>
+		<card><name id="LO-0162">LO-0162</name><set>cards</set></card>
+		<card><name id="LO-0162">LO-0162</name><set>cards</set></card>
+		<card><name id="LO-0164">LO-0164</name><set>cards</set></card>
+		<card><name id="LO-0164">LO-0164</name><set>cards</set></card>
+		<card><name id="LO-0164">LO-0164</name><set>cards</set></card>
+		<card><name id="LO-0164">LO-0164</name><set>cards</set></card>
+		<card><name id="LO-0209">LO-0209</name><set>cards</set></card>
+		<card><name id="LO-0209">LO-0209</name><set>cards</set></card>
+		<card><name id="LO-0209">LO-0209</name><set>cards</set></card>
+		<card><name id="LO-0209">LO-0209</name><set>cards</set></card>
+		<card><name id="LO-0216">LO-0216</name><set>cards</set></card>
+		<card><name id="LO-0216">LO-0216</name><set>cards</set></card>
+		<card><name id="LO-0216">LO-0216</name><set>cards</set></card>
+		<card><name id="LO-0216">LO-0216</name><set>cards</set></card>
+		<card><name id="LO-0217">LO-0217</name><set>cards</set></card>
+		<card><name id="LO-0217">LO-0217</name><set>cards</set></card>
+		<card><name id="LO-0217">LO-0217</name><set>cards</set></card>
+		<card><name id="LO-0217">LO-0217</name><set>cards</set></card>
+		<card><name id="LO-0223">LO-0223</name><set>cards</set></card>
+		<card><name id="LO-0223">LO-0223</name><set>cards</set></card>
+		<card><name id="LO-0223">LO-0223</name><set>cards</set></card>
+		<card><name id="LO-0223">LO-0223</name><set>cards</set></card>
+		<card><name id="LO-0225">LO-0225</name><set>cards</set></card>
+		<card><name id="LO-0225">LO-0225</name><set>cards</set></card>
+		<card><name id="LO-0225">LO-0225</name><set>cards</set></card>
+		<card><name id="LO-0225">LO-0225</name><set>cards</set></card>
+		<card><name id="LO-0227">LO-0227</name><set>cards</set></card>
+		<card><name id="LO-0227">LO-0227</name><set>cards</set></card>
+		<card><name id="LO-0229">LO-0229</name><set>cards</set></card>
+		<card><name id="LO-0229">LO-0229</name><set>cards</set></card>
+		<card><name id="LO-0239">LO-0239</name><set>cards</set></card>
+		<card><name id="LO-0239">LO-0239</name><set>cards</set></card>
+		<card><name id="LO-0239">LO-0239</name><set>cards</set></card>
+		<card><name id="LO-0238">LO-0238</name><set>cards</set></card>
+		<card><name id="LO-0238">LO-0238</name><set>cards</set></card>
+		<card><name id="LO-0238">LO-0238</name><set>cards</set></card>
+		<card><name id="LO-0261">LO-0261</name><set>cards</set></card>
+		<card><name id="LO-0261">LO-0261</name><set>cards</set></card>
+		<card><name id="LO-0261">LO-0261</name><set>cards</set></card>
+		<card><name id="LO-0261">LO-0261</name><set>cards</set></card>
+		<card><name id="LO-0262">LO-0262</name><set>cards</set></card>
+		<card><name id="LO-0262">LO-0262</name><set>cards</set></card>
+		<card><name id="LO-0262">LO-0262</name><set>cards</set></card>
+		<card><name id="LO-0262">LO-0262</name><set>cards</set></card>
+		<card><name id="LO-0264">LO-0264</name><set>cards</set></card>
+		<card><name id="LO-0264">LO-0264</name><set>cards</set></card>
+		<card><name id="LO-0264">LO-0264</name><set>cards</set></card>
+		<card><name id="LO-0264">LO-0264</name><set>cards</set></card>
+		<card><name id="LO-0263">LO-0263</name><set>cards</set></card>
+		<card><name id="LO-0263">LO-0263</name><set>cards</set></card>
+		<card><name id="LO-0263">LO-0263</name><set>cards</set></card>
+		<card><name id="LO-0263">LO-0263</name><set>cards</set></card>
+	</superzone>
+</deck>
