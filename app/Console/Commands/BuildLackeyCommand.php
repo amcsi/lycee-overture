@@ -125,6 +125,7 @@ class BuildLackeyCommand extends Command
             'version.txt' => $versionFileUrl,
             'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
             'bot.jpg' => 'https://cdn.discordapp.com/attachments/477535411871416332/652989736847409152/dummy_card_3.png',
+            'sets/setimages/general/cardback.jpg' => 'https://cdn.discordapp.com/attachments/477535411871416332/652989736847409152/dummy_card_3.png',
             'decks/Brave_Sword_X_Blaze_Soul_1.0_Starter.dek' => $getPublicUrl(
                 'decks/Brave_Sword_X_Blaze_Soul_1.0_Starter.dek'
             ),
@@ -142,7 +143,7 @@ class BuildLackeyCommand extends Command
         $newUpdateListContents .= "\n";
         $newUpdateListContents .= "CardGeneralURLs:\n";
         $newUpdateListContents .= sprintf(
-            "https://res.cloudinary.com/%s/image/upload/h_520/cards/\n",
+            "https://res.cloudinary.com/%s/image/upload/w_281/cards/\n",
             config('cloudinary.defaults.cloud_name')
         );
 
