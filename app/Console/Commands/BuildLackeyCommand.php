@@ -126,10 +126,13 @@ class BuildLackeyCommand extends Command
             'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
             'bot.jpg' => 'https://cdn.discordapp.com/attachments/477535411871416332/652989736847409152/dummy_card_3.png',
         ];
-        $appUrl = config('app.url');
-        $appLocalUrl = config('app.localUrl');
+        if (!$dstAdapter->exists("$dstPath/version.txt")) {
+            // The version.txt file must exist so we can hash it.
+            $dstAdapter->copy("$dstPath/version.dist.xml", "$dstPath/version.txt");
+        }
+
         foreach ($fileList as $pluginFileRelativePath => $url) {
-            $hash = LackeyHasher::hashFile(str_replace($appUrl, $appLocalUrl, $url));
+            $hash = self::hashFile($url);
             $newUpdateListContents .= "$pluginInfoBasePath/$pluginFileRelativePath\t$url\t$hash\n";
         }
         $newUpdateListContents .= "\n";
@@ -140,14 +143,6 @@ class BuildLackeyCommand extends Command
         );
 
         if ($lastUpdateListContents !== $newUpdateListContents) {
-            // The contents did not end up the same. So let's replace the first line to show today's date instead.
-            $newUpdateListContents = str_replace(
-                $lastUpdateListFirstLine,
-                $updateListFirstRowToday,
-                $newUpdateListContents
-            );
-            $dstAdapter->put("$dstPath/updatelist.txt", $newUpdateListContents);
-
             // version.txt
             $versionFileContents = $adapter->read("$lackeyResourcesPath/version.dist.xml");
             $versionFileContents = str_replace(':date:', date('Ymd'), $versionFileContents);
@@ -161,11 +156,35 @@ class BuildLackeyCommand extends Command
             $versionFileContents = str_replace(':dateWithTime:', e(date('Y-m-d H:i:s')), $versionFileContents);
 
             $dstAdapter->put("$dstPath/version.txt", $versionFileContents);
-        }
 
+            // The contents did not end up the same. So let's replace the first line to show today's date instead.
+            $newUpdateListContents = str_replace(
+                $lastUpdateListFirstLine,
+                $updateListFirstRowToday,
+                $newUpdateListContents
+            );
+            // Update the version.txt hash to express that the version changed.
+            $newUpdateListContents = preg_replace(
+                sprintf("/\\b(?<=%s\t).*$/m", preg_quote($versionFileUrl, '/')),
+                self::hashFile($versionFileUrl),
+                $newUpdateListContents,
+                -1,
+                $count
+            );
+            $dstAdapter->put("$dstPath/updatelist.txt", $newUpdateListContents);
+        }
 
         $this->output->text(
             'Finished building plugin for LackeyCCG in ' . Profiling::stopwatchToHuman($stopwatchEvent->stop())
         );
+    }
+
+    private static function hashFile(string $file): int
+    {
+        $appUrl = config('app.url');
+        $appLocalUrl = config('app.localUrl');
+        // Replace remote URL with local version.
+        $hashUrl = str_replace($appUrl, $appLocalUrl, $file);
+        return LackeyHasher::hashFile($hashUrl);
     }
 }
