@@ -104,7 +104,7 @@ class BuildLackeyCommand extends Command
 
         // plugininfo.txt
 
-        $updateListFirstRowToday = sprintf("%s\t%s", $pluginFolderName, date('m-d-Y'));
+        $updateListFirstRowToday = sprintf("%s\t%s", $pluginFolderName, date('m-d-y'));
         $lastUpdateListContents = $dstAdapter->exists("$dstPath/updatelist.txt") ?
             $dstAdapter->read("$dstPath/updatelist.txt") :
             $updateListFirstRowToday;
