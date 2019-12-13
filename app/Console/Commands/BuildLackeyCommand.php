@@ -135,7 +135,7 @@ class BuildLackeyCommand extends Command
         $newUpdateListContents .= "\n";
         $newUpdateListContents .= "CardGeneralURLs:\n";
         $newUpdateListContents .= sprintf(
-            "https://res.cloudinary.com/%s/image/upload/h_520/\n",
+            "https://res.cloudinary.com/%s/image/upload/h_520/cards/\n",
             config('cloudinary.defaults.cloud_name')
         );
 
