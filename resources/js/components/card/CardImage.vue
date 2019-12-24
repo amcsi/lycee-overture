@@ -1,11 +1,11 @@
 <template>
-    <img :src="src" :height="height" :width="width" />
+    <img :src="src" :height="height" :width="width" :style="style" />
 </template>
 
 <script>
-  import { assembleCloudinaryImageUrl } from '../../utils/image';
+import { assembleCloudinaryImageUrl } from '../../utils/image';
 
-  /** @class CardImage */
+/** @class CardImage */
   export default {
     name: 'CardImage',
     props: {
@@ -20,6 +20,12 @@
       cloudinaryHeight: {
         type: Number,
         default: false,
+      },
+      style: {
+        type: Object,
+        default() {
+          return {};
+        },
       },
     },
     computed: {

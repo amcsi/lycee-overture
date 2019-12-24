@@ -20,6 +20,7 @@
             :id="id"
             :height="height"
             :cloudinary-height="150"
+            :style="{'pointer-events': 'none'}"
         />
 
         <CardImage
@@ -29,34 +30,35 @@
             :id="id"
             :height="height"
             :cloudinary-height="height"
+            :style="{'pointer-events': 'none'}"
         />
     </div>
 </template>
 
 <script>
-  import Popper from 'popper.js';
-  import { assembleCloudinaryImageUrl } from '../../utils/image';
-  import CardImage from './CardImage';
+import Popper from 'popper.js';
+import { assembleCloudinaryImageUrl } from '../../utils/image';
+import CardImage from './CardImage';
 
-  /** @class CardThumbnail */
-  export default {
-    name: 'CardThumbnail',
-    data() {
-      return {
-        largerImage: false,
-        revealImageOverlay: false,
-      };
+/** @class CardThumbnail */
+export default {
+  name: 'CardThumbnail',
+  data() {
+    return {
+      largerImage: false,
+      revealImageOverlay: false,
+    };
+  },
+  props: {
+    id: {
+      type: String,
+      required: true,
     },
-    props: {
-      id: {
-        type: String,
-        required: true,
-      },
-    },
-    components: { CardImage },
-    computed: {
-      height() {
-        return this.largerImage ? 520 : 300;
+  },
+  components: { CardImage },
+  computed: {
+    height() {
+      return this.largerImage ? 520 : 300;
       },
       imageUrl() {
         return assembleCloudinaryImageUrl(this.id, { cloudinaryHeight: this.height });
