@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Etc;
 
-use Dingo\Api\Exception\ResourceException;
 use Illuminate\Support\Facades\Log;
 use function GuzzleHttp\Psr7\try_fopen;
 
@@ -18,7 +17,7 @@ class LackeyHasher
     {
         try {
             $fp = try_fopen($filename, 'rb');
-        } catch (ResourceException $exception) {
+        } catch (\RuntimeException $exception) {
             Log::warning((string) $exception);
             return 0;
         }
