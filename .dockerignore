@@ -18,9 +18,7 @@ public/css/app.css
 # Docker specific
 .git
 bootstrap/cache/*
-storage/app/*
-storage/framework/*
-storage/logs/*
+storage/*
 data/generated_images
 
 # For swoole
