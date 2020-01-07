@@ -18,6 +18,7 @@ class BasicAbility
     public const SIDE_STEP = 1;
     public const ORDER_STEP = 2;
     public const SUPPORTER = 8;
+    public const BONUS = 12;
     public const PENALTY = 13;
     public const AGGRESSIVE = 16;
     public const ORDER_CHANGE = 18;
@@ -33,6 +34,7 @@ class BasicAbility
         'サイドステップ' => self::SIDE_STEP,
         'オーダーステップ' => self::ORDER_STEP,
         'サポーター' => self::SUPPORTER,
+        'ボーナス' => self::BONUS,
         'ペナルティ' => self::PENALTY,
         'オーダーチェンジ' => self::ORDER_CHANGE,
         'エンゲージ' => self::ENGAGE,
