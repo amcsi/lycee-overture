@@ -1,5 +1,5 @@
 <template>
-    <img :src="src" :height="height" :width="width" :style="style" />
+    <img :src="src" :height="height" :width="width" :style="styles" />
 </template>
 
 <script>
@@ -21,7 +21,7 @@ import { assembleCloudinaryImageUrl } from '../../utils/image';
         type: Number,
         default: false,
       },
-      style: {
+      styles: {
         type: Object,
         default() {
           return {};

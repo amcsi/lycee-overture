@@ -44,7 +44,6 @@
             </li>
             <li>{{ $t('rules.rowsAndColumns.point2') }}</li>
             <li>{{ $t('rules.rowsAndColumns.point3') }}</li>
-            <li>{{ $t('rules.rowsAndColumns.point4') }}</li>
         </ul>
 
         <h2>{{ $t('rules.hand.title') }}</h2>

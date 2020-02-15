@@ -20,7 +20,7 @@
             :id="id"
             :height="height"
             :cloudinary-height="150"
-            :style="{'pointer-events': 'none'}"
+            :styles="{'pointer-events': 'none'}"
         />
 
         <CardImage
@@ -30,7 +30,7 @@
             :id="id"
             :height="height"
             :cloudinary-height="height"
-            :style="{'pointer-events': 'none'}"
+            :styles="{'pointer-events': 'none'}"
         />
     </div>
 </template>

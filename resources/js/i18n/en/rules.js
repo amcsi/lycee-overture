@@ -54,6 +54,7 @@ export default {
   },
   eventCard: {
     title: 'Event Card',
+    imageAlt: 'Event card with numbered dots in different locations',
     description1: 'Event cards are used from the hand to activate effects that can change the course of the game.',
     description2: 'After use, event cards are discarded (place in discard pile)',
     effect: 'Effect',
@@ -61,6 +62,7 @@ export default {
   },
   itemCard: {
     title: 'Item Card',
+    imageAlt: 'Item card with numbered dots in different locations',
     description1: 'Item cards are used from the hand, and can be equipped on to characters on the field.',
     description2: 'Equipped cards remain active while equipped.',
     point1: '※ Only 1 Item Card can be equipped on to each character.',
