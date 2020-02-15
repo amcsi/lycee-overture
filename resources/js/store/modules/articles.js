@@ -11,9 +11,9 @@ export default {
     },
   },
   actions: {
-    async loadArticles({ commit }) {
+    async loadArticles({ commit }, limit) {
       commit('SET_ARTICLES', null);
-      const articles = await listArticles();
+      const articles = await listArticles(limit);
       commit('SET_ARTICLES', articles || undefined);
     },
   },

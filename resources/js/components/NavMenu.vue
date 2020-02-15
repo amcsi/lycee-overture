@@ -3,6 +3,9 @@
         <el-menu-item index="/" route="/">
             <a href="/" @click.prevent>{{ $t('nav.welcome') }}</a>
         </el-menu-item>
+        <el-menu-item index="/news" route="/news">
+            <a href="/news" @click.prevent>{{ $t('nav.news') }}</a>
+        </el-menu-item>
         <el-menu-item index="/rules" route="/rules">
             <a href="/rules" @click.prevent>{{ $t('nav.rules') }}</a>
         </el-menu-item>

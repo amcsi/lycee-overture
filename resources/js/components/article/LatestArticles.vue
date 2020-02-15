@@ -1,11 +1,9 @@
 <template>
     <section v-loading="articles === null">
-        <h3>Latest news</h3>
-
-        <article v-for="{ title, content, date } in articles">
+        <article v-for="{ title, content, date_gmt } in articles">
             <div>
                 <h4>{{ title.rendered }}</h4> -
-                <time :datetime="date">{{ date | formatDate }}</time>
+                <time :datetime="date_gmt + 'Z'">{{ date_gmt + 'Z' | formatDate }}</time>
             </div>
 
             <div v-html="content.rendered">
@@ -20,18 +18,21 @@
 import { mapActions, mapState } from 'vuex';
 
 /** @class LatestArticles */
-  export default {
-    name: 'LatestArticles',
-    computed: {
-      ...mapState('articles', ['articles']),
-    },
-    methods: {
-      ...mapActions('articles', ['loadArticles']),
-    },
-    created() {
-      this.loadArticles();
-    },
-  };
+export default {
+  name: 'LatestArticles',
+  props: {
+    limit: Number,
+  },
+  computed: {
+    ...mapState('articles', ['articles']),
+  },
+  methods: {
+    ...mapActions('articles', ['loadArticles']),
+  },
+  created() {
+    this.loadArticles(this.limit);
+  },
+};
 </script>
 
 <style scoped>

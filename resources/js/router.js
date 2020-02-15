@@ -4,6 +4,7 @@
 
 import VueRouter from 'vue-router';
 import Layout from './pages/Layout';
+import NewsPage from './pages/NewsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 /**
@@ -43,6 +44,11 @@ const router = new VueRouter({
         {
           path: '/', component: IndexPage, meta: {
             title,
+          },
+        },
+        {
+          path: '/news', component: NewsPage, meta: {
+            title: `${title} - News`,
           },
         },
         {
