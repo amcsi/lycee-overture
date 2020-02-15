@@ -2,12 +2,13 @@
     <section v-loading="articles === null">
         <h3>Latest news</h3>
 
-        <article v-for="{ title, html, created_at } in articles">
+        <article v-for="{ title, content, date } in articles">
             <div>
-                <h4>{{ title }}</h4> - <time :datetime="created_at">{{ created_at | formatDate }}</time>
+                <h4>{{ title.rendered }}</h4> -
+                <time :datetime="date">{{ date | formatDate }}</time>
             </div>
 
-            <div v-html="html">
+            <div v-html="content.rendered">
 
             </div>
         </article>
@@ -16,9 +17,9 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
-  /** @class LatestArticles */
+/** @class LatestArticles */
   export default {
     name: 'LatestArticles',
     computed: {
