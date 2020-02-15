@@ -15,6 +15,7 @@ use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
@@ -60,6 +61,9 @@ class AutoTranslateCommand extends Command
         $beforeEnglishFullTranslationCount = $translationCoverageChecker->countFullyTranslated();
 
         \Eloquent::unguard();
+
+        $progressBar = new ProgressBar($this->output, $cardCount, 1);
+        $progressBar->start();
 
         $updatedNowThreshold = Carbon::now()->subSecond(3);
 
@@ -120,7 +124,9 @@ class AutoTranslateCommand extends Command
             if ($englishCard->updated_at > $updatedNowThreshold) {
                 ++$updatedCount;
             }
+            $progressBar->advance();
         }
+        $progressBar->clear();
 
         $this->output->writeln("Finished auto translation of cards. Updated: $updatedCount");
 
