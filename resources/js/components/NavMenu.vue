@@ -1,13 +1,13 @@
 <template>
     <el-menu router mode="horizontal" :default-active="$route.path">
-        <el-menu-item index="/">
-            <router-link to="/">{{ $t('nav.welcome') }}</router-link>
+        <el-menu-item index="/" route="/">
+            <a href="/" @click.prevent>{{ $t('nav.welcome') }}</a>
         </el-menu-item>
-        <el-menu-item index="/rules">
-            <router-link to="/rules">{{ $t('nav.rules') }}</router-link>
+        <el-menu-item index="/rules" route="/rules">
+            <a href="/rules" @click.prevent>{{ $t('nav.rules') }}</a>
         </el-menu-item>
-        <el-menu-item index="/cards">
-            <router-link to="/cards">{{ $t('nav.cardList') }}</router-link>
+        <el-menu-item index="/cards" route="/cards">
+            <a href="/cards" @click.prevent>{{ $t('nav.cardList') }}</a>
         </el-menu-item>
 
         <li class="language-links">
