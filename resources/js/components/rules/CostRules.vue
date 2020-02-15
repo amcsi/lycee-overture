@@ -26,7 +26,10 @@
         </p>
 
         <p>
-            <img src="https://lycee-tcg.com/rule/images/index_4_img2.png" :alt="$t('rules.costExample.imageAlt')" />
+            <cloudinary-fetch-img
+                src="https://lycee-tcg.com/rule/images/index_4_img2.png"
+                :alt="$t('rules.costExample.imageAlt')"
+            />
         </p>
 
         <h2>{{ $t('rules.howToSummon.title') }}</h2>
@@ -36,7 +39,10 @@
         </p>
 
         <p>
-            <img src="https://lycee-tcg.com/rule/images/index_4_img3.png" :alt="$t('rules.howToSummon.imageAlt')" />
+            <cloudinary-fetch-img
+                src="https://lycee-tcg.com/rule/images/index_4_img3.png"
+                :alt="$t('rules.howToSummon.imageAlt')"
+            />
         </p>
 
         <el-card class="card">
@@ -140,15 +146,16 @@
 </template>
 
 <script>
-  import CardText from '../card/CardText';
-  import AnatomyRow from './AnatomyRow';
-  import ImageWithAnatomy from './ImageWithAnatomy';
+import CardText from '../card/CardText';
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
+import AnatomyRow from './AnatomyRow';
+import ImageWithAnatomy from './ImageWithAnatomy';
 
-  /** @class CostRules */
-  export default {
-    name: 'CostRules',
-    components: { CardText, AnatomyRow, ImageWithAnatomy },
-  };
+/** @class CostRules */
+export default {
+  name: 'CostRules',
+  components: { CloudinaryFetchImg, CardText, AnatomyRow, ImageWithAnatomy },
+};
 </script>
 
 <style scoped lang="scss">

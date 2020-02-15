@@ -10,7 +10,10 @@
         </ul>
 
         <p>
-            <img src="https://lycee-tcg.com/rule/images/index_3_img.jpg" :alt="$t('rules.field.imageAlt')" />
+            <cloudinary-fetch-img
+                src="https://lycee-tcg.com/rule/images/index_3_img.jpg"
+                :alt="$t('rules.field.imageAlt')"
+            />
         </p>
 
         <h2>{{ $t('rules.graveyard.title') }}</h2>
@@ -54,10 +57,13 @@
 </template>
 
 <script>
-  /** @class FieldRules */
-  export default {
-    name: 'FieldRules',
-  };
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
+
+/** @class FieldRules */
+export default {
+  name: 'FieldRules',
+  components: { CloudinaryFetchImg },
+};
 </script>
 
 <style scoped>

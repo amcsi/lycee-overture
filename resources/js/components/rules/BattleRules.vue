@@ -105,7 +105,7 @@
 
         <p>The result of the battle differs depending on whether there is a defending character or not.</p>
 
-        <img src="https://lycee-tcg.com/rule/images/index_7_img1.png" />
+        <cloudinary-fetch-img src="https://lycee-tcg.com/rule/images/index_7_img1.png" />
 
         <h4>[If there is a defending character]</h4>
 
@@ -151,7 +151,7 @@
         <h4>[When there is support declared]</h4>
 
         <div class="card-image-with-numbered-bullets-on-side">
-            <img src="https://lycee-tcg.com/rule/images/index_7_img3.png" />
+            <cloudinary-fetch-img src="https://lycee-tcg.com/rule/images/index_7_img3.png" />
             <ol>
                 <li>
                     A player declares an attack during his turn.<br />
@@ -188,10 +188,13 @@
 </template>
 
 <script>
-  /** @class BattleRules */
-  export default {
-    name: 'BattleRules',
-  };
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
+
+/** @class BattleRules */
+export default {
+  name: 'BattleRules',
+  components: { CloudinaryFetchImg },
+};
 </script>
 
 <style scoped>

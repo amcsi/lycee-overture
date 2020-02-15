@@ -2,7 +2,7 @@
     <tr>
         <td class="number-and-name-column">
             <div class="number-and-name-container">
-                <img
+                <cloudinary-fetch-img
                     :src="numberImageUrl"
                     :alt="number"
                 />
@@ -19,29 +19,32 @@
 </template>
 
 <script>
-  /** @class AnatomyRow */
-  export default {
-    name: 'AnatomyRow',
-    props: {
-      number: {
-        type: [Number, String],
-        required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-      },
-      onlyName: Boolean,
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
+
+/** @class AnatomyRow */
+export default {
+  name: 'AnatomyRow',
+  components: { CloudinaryFetchImg },
+  props: {
+    number: {
+      type: [Number, String],
+      required: true,
     },
-    computed: {
-      numberImageUrl() {
-        return this.onlyName ?
-          // Blue.
-          `https://lycee-tcg.com/rule/images/index_4_number${this.number}.jpg` :
-          // Red.
-          `https://lycee-tcg.com/rule/images/index_2_number${this.number}.jpg`
-          ;
-      },
+    name: {
+      type: String,
+      required: true,
+    },
+    onlyName: Boolean,
+  },
+  computed: {
+    numberImageUrl() {
+      return this.onlyName ?
+        // Blue.
+        `https://lycee-tcg.com/rule/images/index_4_number${this.number}.jpg` :
+        // Red.
+        `https://lycee-tcg.com/rule/images/index_2_number${this.number}.jpg`
+        ;
+    },
     },
   };
 </script>

@@ -7,7 +7,7 @@
             These are "basic abilities" and give various effects to to characters.
         </p>
 
-        <img src="https://lycee-tcg.com/rule/images/index_8_img1.png" />
+        <cloudinary-fetch-img src="https://lycee-tcg.com/rule/images/index_8_img1.png" />
 
         <table>
             <tr>
@@ -125,13 +125,14 @@
 </template>
 
 <script>
-  import CardText from '../card/CardText';
+import CardText from '../card/CardText';
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
 
-  /** @class BasicAbilityRules */
-  export default {
-    name: 'BasicAbilityRules',
-    components: { CardText },
-  };
+/** @class BasicAbilityRules */
+export default {
+  name: 'BasicAbilityRules',
+  components: { CloudinaryFetchImg, CardText },
+};
 </script>
 
 <style scoped>

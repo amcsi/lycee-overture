@@ -1,6 +1,6 @@
 <template>
     <div class="anatomy-container">
-        <img :src="src" :alt="alt" />
+        <cloudinary-fetch-img :src="src" :alt="alt" />
         <AnatomyTable>
             <slot></slot>
         </AnatomyTable>
@@ -8,23 +8,24 @@
 </template>
 
 <script>
-  import AnatomyTable from './AnatomyTable';
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
+import AnatomyTable from './AnatomyTable';
 
-  /** @class ImageWithAnatomy */
-  export default {
-    name: 'ImageWithAnatomy',
-    components: { AnatomyTable },
-    props: {
-      src: {
-        type: String,
-        required: true,
-      },
-      alt: {
-        type: String,
-        required: true,
-      },
+/** @class ImageWithAnatomy */
+export default {
+  name: 'ImageWithAnatomy',
+  components: { CloudinaryFetchImg, AnatomyTable },
+  props: {
+    src: {
+      type: String,
+      required: true,
     },
-  };
+    alt: {
+      type: String,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
