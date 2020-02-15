@@ -19,7 +19,7 @@ class BasicImportCsvFilterer
         $this->setAutoCreator = $setAutoCreator;
     }
 
-    public function toDatabaseRows(iterable $reader, $resetDates = false): array
+    public function toDatabaseRows(iterable $reader): array
     {
         $ret = [];
         $dateFormat = (new Card())->getDateFormat();
@@ -51,11 +51,9 @@ class BasicImportCsvFilterer
             $dbRow['sp'] = (int) $csvRow[CsvColumns::SP];
             $dbRow['dmg'] = (int) $csvRow[CsvColumns::DMG];
             $dbRow['ability_type'] = CsvValueInterpreter::getAbilityType($csvRow);
-            if ($resetDates) {
-                $now = (new CarbonImmutable())->format($dateFormat);
-                $dbRow['created_at'] = $now;
-                $dbRow['updated_at'] = $now;
-            }
+            $now = (new CarbonImmutable())->format($dateFormat);
+            $dbRow['created_at'] = $now;
+            $dbRow['updated_at'] = $now;
             $ret[] = $dbRow;
         }
         return $ret;

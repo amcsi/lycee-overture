@@ -23,13 +23,27 @@ class ImportBasicCardsCommand extends Command
         /** @var Reader $reader */
         $reader = Reader::createFromPath(storage_path(ImportConstants::CSV_PATH));
         $reader = array_reverse(iterator_to_array($reader)); // Reverse to ensure that newer cards have newer dates.
-        $toInsert = app(BasicImportCsvFilterer::class)->toDatabaseRows($reader, (bool) $this->option('reset-dates'));
+        $toInsert = app(BasicImportCsvFilterer::class)->toDatabaseRows($reader);
         $insertedCount = Card::getQuery()->insertIgnore($toInsert);
-        $updatedCount = Card::getQuery()->upsert($toInsert) / 2;
-        $this->output->writeln(sprintf(
-            'Finished import of basic card data. Inserted: %s, Updated: %s',
-            $insertedCount,
-            $updatedCount
-        ));
+
+        $toUpdate = $this->option('reset-dates') ?
+            $toInsert :
+            array_map(
+                function (array $row) {
+                    // Do not re-apply creation and update dates if we are not resetting them.
+                    unset($row['created_at'], $row['updated_at']);
+                    return $row;
+                },
+                $toInsert
+            );
+
+        $updatedCount = Card::getQuery()->upsert($toUpdate) / 2;
+        $this->output->writeln(
+            sprintf(
+                'Finished import of basic card data. Inserted: %s, Updated: %s',
+                $insertedCount,
+                $updatedCount
+            )
+        );
     }
 }
