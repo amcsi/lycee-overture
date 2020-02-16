@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\CommentTranslator;
 
-use Tests\Unit\LyceeOverture\I18n\SetTranslator\BrandTranslator;
+use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
 
 /**
  * For translating comments on the cards.
@@ -12,7 +12,7 @@ class CommentTranslator
 {
     private $brandTranslator;
 
-    public function __construct(BrandTranslator $brandTranslator)
+    public function __construct(SetTranslator $brandTranslator)
     {
         $this->brandTranslator = $brandTranslator;
     }

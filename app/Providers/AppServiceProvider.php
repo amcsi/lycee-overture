@@ -9,6 +9,7 @@ use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
 use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
+use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
@@ -19,6 +20,7 @@ use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 use amcsi\LyceeOverture\Set;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\Repository;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
@@ -108,8 +110,16 @@ class AppServiceProvider extends ServiceProvider
 
         $app->singleton(Transliterator::class, \Closure::fromCallable([TransliteratorFactory::class, 'getInstance']));
 
-        $app->when(SetAutoCreator::class)->needs('$sets')->give(function () use ($app) {
-            return $app->get(Set::class)->all();
-        });
+        $app->when(SetAutoCreator::class)->needs('$sets')->give(
+            function () use ($app) {
+                return $app->get(Set::class)->all();
+            }
+        );
+
+        $app->when(SetTranslator::class)->needs('$setTranslations')->give(
+            function () use ($app) {
+                return $app->get(Translator::class)->get('sets');
+            }
+        );
     }
 }

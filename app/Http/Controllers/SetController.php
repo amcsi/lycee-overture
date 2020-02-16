@@ -10,7 +10,11 @@ class SetController extends Controller
 {
     public function index(SetTransformer $setTransformer)
     {
-        $cardSets = Set::orderBy('name_en')->get();
+        $cardSets = Set::all();
+        $locale = \App::getLocale();
+        $cardSets = $cardSets->toBase()->sort(
+            fn(Set $set1, Set $set2) => $set1->getFullName($locale) <=> $set2->getFullName($locale)
+        );
         return $this->response->collection($cardSets, $setTransformer);
     }
 }

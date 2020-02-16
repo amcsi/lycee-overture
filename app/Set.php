@@ -12,7 +12,10 @@ class Set extends Model
 
     public function getFullName(string $locale): string
     {
-        $name = $locale === Locale::JAPANESE ? $this->name_ja : $this->name_en;
+        $transKey = "sets.{$this->name_ja}";
+        $name = $locale === Locale::JAPANESE || ($translated = trans($transKey)) === $transKey ?
+            $this->name_ja :
+            $translated;
 
         return sprintf('%s %s', $name, $this->version);
     }

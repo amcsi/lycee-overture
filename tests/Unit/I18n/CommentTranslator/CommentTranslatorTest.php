@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Tests\Unit\I18n\CommentTranslator;
 
 use amcsi\LyceeOverture\I18n\CommentTranslator\CommentTranslator;
+use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
 use PHPUnit\Framework\TestCase;
-use Tests\Unit\LyceeOverture\I18n\SetTranslator\BrandTranslator;
 
 class CommentTranslatorTest extends TestCase
 {
@@ -14,7 +14,12 @@ class CommentTranslatorTest extends TestCase
      */
     public function testTranslate($expected, $input)
     {
-        self::assertSame($expected, (new CommentTranslator(new BrandTranslator()))->translate($input));
+        self::assertSame(
+            $expected,
+            (new CommentTranslator(
+                new SetTranslator(require __DIR__ . '/../../../../resources/lang/en/sets.php')
+            ))->translate($input)
+        );
     }
 
     public function provideTranslate()
@@ -35,6 +40,10 @@ class CommentTranslatorTest extends TestCase
             [
                 'Deck restriction: Yuzusoft',
                 '構築制限:ゆずソフト',
+            ],
+            [
+                'Deck restriction: Oshiro Project: RE',
+                '構築制限:御城プロジェクト：ＲＥ',
             ],
         ];
     }
