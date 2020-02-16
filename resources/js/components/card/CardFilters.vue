@@ -45,6 +45,10 @@
             <el-input class="card-id-input" v-model="name" />
         </el-form-item>
 
+        <el-form-item :label="$t('cardFilters.cardText')">
+            <el-input class="card-id-input" v-model="text" />
+        </el-form-item>
+
         <div style="clear: both;"></div>
 
         <el-form-item>
@@ -78,6 +82,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
     { name: 'set' },
     { name: 'cardId', debouncing: true },
     { name: 'name', debouncing: true },
+    { name: 'text', debouncing: true },
   ];
   /** @class CardFilters */
   export default {
