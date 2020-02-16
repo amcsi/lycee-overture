@@ -197,6 +197,12 @@ class AutoTranslator
         $autoTranslated = MoveCharacter::autoTranslate($autoTranslated);
         $autoTranslated = Equip::autoTranslate($autoTranslated);
 
+        $autoTranslated = preg_replace_callback(
+            '/^' . Subject::getUncapturedRegex() . '$/m',
+            ['self', 'subjectReplaceCallback'],
+            $autoTranslated
+        );
+
         // Fix spaces before brackets
         $autoTranslated = preg_replace('/(?<=\w)[\[{(]/', ' $0', $autoTranslated);
         // Condense multiple spaces into one; trim.
@@ -234,5 +240,10 @@ class AutoTranslator
             ($charCounts[$leftBrace] ?? 0) + ($charCounts[$leftSquareBracket] ?? 0),
             ($charCounts[$rightBrace] ?? 0) + ($charCounts[$rightSquareBracket] ?? 0),
         ];
+    }
+
+    private static function subjectReplaceCallback($match)
+    {
+        return Subject::autoTranslateStrict($match[0]);
     }
 }
