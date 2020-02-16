@@ -88,14 +88,9 @@ const debouncedChangeRoute = debounce(($router, query) => {
   export default {
     name: 'CardFilters',
     data() {
-      const filterData = {};
-      for (let { name } of filterConfig) {
-        filterData[name] = this.$route.query[name] || '';
-      }
-
       return {
-        filterData,
-      };
+        filterData: {},
+      }
     },
     computed: {
       ...mapState('cardSets', {
@@ -178,6 +173,19 @@ const debouncedChangeRoute = debounce(($router, query) => {
         });
         delete query.page;
         this.$router.push({ query });
+      },
+    },
+    watch: {
+      $route: {
+        immediate: true,
+        handler() {
+          const filterData = {};
+          for (let { name } of filterConfig) {
+            filterData[name] = this.$route.query[name] || '';
+          }
+
+          this.filterData = filterData;
+        },
       },
     },
   };
