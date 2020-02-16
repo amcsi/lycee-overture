@@ -13,6 +13,7 @@ return [
     '千年戦争アイギス' => 'Millennium War Aigis',
     'メロンブックス' => 'Melonbooks',
     'アクアプラス' => 'Aquaplus',
-    'とある魔術の禁書目録Ⅲ' => 'Toaru Majutsu no Index',
+    'とある魔術の禁書目録' => 'Toaru Majutsu no Index',
+    'とある魔術の禁書目録Ⅲ' => 'Toaru Majutsu no Index III',
     '御城プロジェクト：ＲＥ' => 'Oshiro Project: RE',
 ];
