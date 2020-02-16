@@ -24,6 +24,7 @@ const store = new Vuex.Store({
   },
   state: {
     startedInitialTasks: false,
+    isLocaleJapanese: window.locale === 'ja',
   },
   mutations: {
     STARTED_INITIAL_TASKS(state) {
@@ -43,9 +44,11 @@ const store = new Vuex.Store({
         ]);
       }
     },
-    async listCardsAndFetchStatistics({ dispatch }, query) {
+    async listCardsAndFetchStatistics({ dispatch, state }, query) {
       const listCardsPromise = dispatch('cards/listCards', query);
-      dispatch('statistics/fetchStatistics', query);
+      if (!state.isLocaleJapanese) {
+        dispatch('statistics/fetchStatistics', query);
+      }
       return listCardsPromise;
     },
   },

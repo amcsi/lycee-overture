@@ -8,7 +8,7 @@
                     ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
                     Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
                 </span>
-                <span v-else v-loading="true">&nbsp;</span>
+                <span v-else-if="!isLocaleJapanese" v-loading="true">&nbsp;</span>
             </h3>
 
             <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
@@ -29,28 +29,33 @@ import CardListItem from './card/CardListItem';
 import Paginator from './common/Paginator';
 
 /** @class CardList */
-  export default {
-    components: { CardListItem, Paginator },
-    computed: {
-      ...mapState({
-        cardsLoading: state => state.cards.listLoading,
-        cards: state => state.cards.list,
-        statistics: state => state.statistics.statistics,
-      }),
+export default {
+  components: { CardListItem, Paginator },
+  data() {
+    return {
+      isLocaleJapanese: window.locale === 'ja',
+    };
+  },
+  computed: {
+    ...mapState({
+      cardsLoading: state => state.cards.listLoading,
+      cards: state => state.cards.list,
+      statistics: state => state.statistics.statistics,
+    }),
+  },
+  methods: {
+    pageChange(page) {
+      const query = { ...this.$route.query, page };
+      this.$router.push({ query });
     },
-    methods: {
-      pageChange(page) {
-        const query = { ...this.$route.query, page };
-        this.$router.push({ query });
-      },
-      getPercentOfRatio(ratio) {
-        return new Intl.NumberFormat({
-          maximumFractionDigits: 3,
-          style: 'percent',
-        }).format(ratio * 100) + '%';
-      },
+    getPercentOfRatio(ratio) {
+      return new Intl.NumberFormat({
+        maximumFractionDigits: 3,
+        style: 'percent',
+      }).format(ratio * 100) + '%';
     },
-  };
+  },
+};
 </script>
 
 <style scoped lang="scss">
