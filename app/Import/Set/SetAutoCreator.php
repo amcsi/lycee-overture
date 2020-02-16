@@ -29,13 +29,8 @@ class SetAutoCreator
             $return = $this->sets[$fullNameJa]->id;
         } elseif (strlen($fullNameJa) >= 3) {
             // Create a new set.
-            $parts = explode(' ', $fullNameJa);
-            $version = '';
-            if (count($parts) > 1) {
-                // The last component of the full name is the version.
-                $version = array_pop($parts);
-            }
-            $nameJa = implode(' ', $parts);
+
+            [$nameJa, $version] = SetNameExtracter::extract($fullNameJa);
 
             $attributes = [
                 'name_ja' => $nameJa,
@@ -44,8 +39,9 @@ class SetAutoCreator
                 'brand' => '',
             ];
 
-            if ($setMatchingNameJa = $this->sets->first(function (Set $set) use ($nameJa) {
-                return $set->name_ja === $nameJa;
+            if ($setMatchingNameJa = $this->sets->first(
+                function (Set $set) use ($nameJa) {
+                    return $set->name_ja === $nameJa;
             })) {
                 // There is an existing set with the same name, but different version.
                 // Take the English translation and brand from there.
