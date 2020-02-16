@@ -60,7 +60,7 @@
                 filters</a>
         </el-form-item>
 
-        <router-link :to="{path: 'cards/print', query: $route.query }" v-if="1 <= totalCards && totalCards <= 60">
+        <router-link :to="{path: 'cards/print', query: $route.query }" v-if="showPrintLink">
             <i class="fa fa-print"></i>
             Print view
         </router-link>
@@ -90,6 +90,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
     data() {
       return {
         filterData: {},
+        isLocaleJapanese: window.locale === 'ja',
       }
     },
     computed: {
@@ -162,6 +163,9 @@ const debouncedChangeRoute = debounce(($router, query) => {
           value: brand || '-1',
           label: brand || '(Unknown or no brand)',
         }));
+      },
+      showPrintLink() {
+        return !this.isLocaleJapanese && 1 <= this.totalCards && this.totalCards <= 60;
       },
     },
     methods: {
