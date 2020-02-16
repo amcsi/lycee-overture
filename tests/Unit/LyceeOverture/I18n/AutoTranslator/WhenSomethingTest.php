@@ -44,6 +44,10 @@ class WhenSomethingTest extends TestCase
                 '破棄したとき',
             ],
             [
+                'when removed from play',
+                '除外したとき',
+            ],
+            [
                 'when an ally character gets engaged',
                 '味方キャラがエンゲージ登場している場合',
             ],

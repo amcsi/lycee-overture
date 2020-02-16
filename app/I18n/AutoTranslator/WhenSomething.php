@@ -42,6 +42,7 @@ class WhenSomething
         );
         $text = str_replace('味方キャラがエンゲージ登場している場合', 'when an ally character gets engaged', $text);
         $text = preg_replace('/\b破棄したとき/u', 'when destroyed', $text);
+        $text = preg_replace('/\b除外したとき/u', 'when removed from play', $text);
 
         // When $subject gets destroyed or moves.
         $text = preg_replace_callback(
