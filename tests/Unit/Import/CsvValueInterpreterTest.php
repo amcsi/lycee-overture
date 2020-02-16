@@ -173,6 +173,14 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[装備制限] Something.',
             ],
+            'equip restriction alternative form' => [
+                [
+                    'ability_cost' => "[Equip Restriction]\n[Continuous]",
+                    'ability_description' => "[sun]キャラ\nこのキャラにＡＰ＋１・ＤＰ－１する。",
+                    'comments' => '',
+                ],
+                '装備制限:[日]キャラ<br />[常時] このキャラにＡＰ＋１・ＤＰ－１する。',
+            ],
             'congratulations' => [
                 [
                     'ability_cost' => '',

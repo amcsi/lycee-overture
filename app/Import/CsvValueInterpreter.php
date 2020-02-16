@@ -76,7 +76,7 @@ class CsvValueInterpreter
     {
         $comments = '';
 
-        $abilityTypesRegex = '\[(' . implode('|', array_keys(AbilityType::getJapaneseMap())) . ')]';
+        $abilityTypesRegex = '(?:\[(' . implode('|', array_keys(AbilityType::getJapaneseMap())) . ')]|装備制限:)';
         $abilityJapaneseToMarkupMap = AbilityType::getJapaneseToMarkup();
         // Split by effects
         $pattern = "/$abilityTypesRegex(?:(?!$abilityTypesRegex).)*/";
@@ -94,6 +94,9 @@ class CsvValueInterpreter
         $abilityTypeAndCosts = [];
 
         foreach ($matches as [$ability]) {
+            // Alternative form of ability type: "<ability type>: <ability>".
+            $ability = preg_replace('/^(\S*):(.*)/', '[$1] $2', $ability);
+
             $ability = MarkupConverter::convert($ability);
             // Type and cost.
             $abilityTypeAndCostComponents = [];
