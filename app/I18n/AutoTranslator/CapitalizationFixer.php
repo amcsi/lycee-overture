@@ -16,7 +16,7 @@ class CapitalizationFixer
         $abilityTypesRegex = '\[(?:' . implode('|', AbilityType::getJapaneseToMarkup()) . ')]';
         $pattern = "/($abilityTypesRegex(?: \[.*?:)?) (((?!$abilityTypesRegex).)*)/";
         return preg_replace_callback(
-            '/(^[a-z]|(?:\.\s*)[a-z])/',
+            '/(^[a-z]|(?:\.\s+)[a-z])(?!ttp)/',
             ['self', 'uppercaseCallback'],
             trim(preg_replace_callback($pattern, ['self', 'callback'], $text, PREG_SET_ORDER))
         );

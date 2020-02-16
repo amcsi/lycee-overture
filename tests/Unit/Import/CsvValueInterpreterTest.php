@@ -173,6 +173,14 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[装備制限] Something.',
             ],
+            'congratulations' => [
+                [
+                    'ability_cost' => '',
+                    'ability_description' => 'Congratulations!!',
+                    'comments' => "※このカードは「ラッキーカードキャンペーン」の当たりカードです。キャンペーンの詳細は以下をご確認ください。\nhttps://lycee-tcg.com/lucky/\n※このカードは能力を持たないキャラとしてゲームで使用できます。",
+                ],
+                'Congratulations!! <br />※このカードは「ラッキーカードキャンペーン」の当たりカードです。キャンペーンの詳細は以下をご確認ください。 <br />https://lycee-tcg.com/lucky/ <br />※このカードは能力を持たないキャラとしてゲームで使用できます。',
+            ],
         ];
     }
 }

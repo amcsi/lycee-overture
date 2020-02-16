@@ -135,6 +135,7 @@ class CsvValueInterpreter
                 1
             );
             $ability = str_ireplace('<br />', "\n", $ability);
+            $comments = preg_replace('/\s*<br \/>/i', "\n", $comments);
             // Deck restriction comments.
             $ability = preg_replace_callback(
                 '/\n(構築制限:.*)$/i',
@@ -164,7 +165,7 @@ class CsvValueInterpreter
 
         $parts = [
             'ability_cost' => implode("\n", $abilityTypeAndCosts),
-            'ability_description' => $abilities,
+            'ability_description' => trim($abilities),
             'comments' => $comments,
         ];
 

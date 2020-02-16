@@ -45,5 +45,6 @@ export default function(text = '') {
   text = text.replace(/\[(Activate|Trigger|Continuous)]/g, abilityTypeCallback);
   text = text.replace(/\[D([1-4])]/g, discardCallback);
   text = text.replace(/{(.*?)}/g, `<span class="target">$1</span>`);
+  text = text.replace(/\n/g, '<br>');
   return text;
 }
