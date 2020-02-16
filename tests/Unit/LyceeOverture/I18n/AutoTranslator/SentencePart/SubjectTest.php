@@ -151,6 +151,10 @@ class SubjectTest extends TestCase
                 ' 4 or more enemy characters',
                 '相手キャラが4体以上',
             ],
+            'all your characters in target column' => [
+                ' all characters {in 1 column}',
+                '{列1つ}のキャラ全て',
+            ],
         ];
     }
 }

@@ -11,7 +11,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\RegexHelper;
 class Subject
 {
     // language=regexp
-    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(破棄したカード|キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG|EX))+))?(が?(\d)[体枚](?:以(上|下))?|全て)?';
+    private const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加|{列1つ}の)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(破棄したカード|キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG|EX))+))?(が?(\d)[体枚](?:以(上|下))?|全て)?';
     private const REGEX_COMPOUND_AND_OR = '[subject](と|または)[subject]';
     private const REGEX_COMPOUND_ADJACENT = '[subject]に隣接した[subject]';
 
@@ -72,7 +72,7 @@ class Subject
 
         $something = '';
         $target = next($matches); // The {target} if any.
-        $battlingOrGraveyard = next($matches); // Graveyard card, or battling character.
+        $battlingOrGraveyardOrTargetColumn = next($matches); // Graveyard card, or battling character.
         $whosGraveyard = next($matches);
 
         $sameColumnOrRow = next($matches);
@@ -238,8 +238,10 @@ class Subject
                 }
             }
             $inSomewhere = '';
-            if ($battlingOrGraveyard) {
-                if ($battlingOrGraveyard === 'バトル参加') {
+            if ($battlingOrGraveyardOrTargetColumn) {
+                if ($battlingOrGraveyardOrTargetColumn === '{列1つ}の') {
+                    $inSomewhere = ' {in 1 column}';
+                } elseif ($battlingOrGraveyardOrTargetColumn === 'バトル参加') {
                     $inSomewhere = ' participating in battle';
                 } else {
                     switch ($whosGraveyard) {
@@ -322,7 +324,7 @@ class Subject
         if ($text[-1] === '}') {
             // For: {Enemy character} => {Enemy character's}
             return preg_replace_callback(
-                '/\{(.*)}$/',
+                '/{(.*)}$/',
                 function (array $matches) {
                     return '{' . self::posessivize($matches[1]) . '}';
                 },
