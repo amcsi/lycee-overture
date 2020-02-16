@@ -9,7 +9,7 @@
     </gamezone>
 
     <gamezone>
-        <label>Graveyard</label>
+        <label>Discard Pile</label>
         <visibletoowner>yes</visibletoowner>
         <visibletoothers>yes</visibletoothers>
     </gamezone>
@@ -69,7 +69,7 @@
         <label>Discard From Deck</label>
         <kind>TRANSFERCARD</kind>
         <sourcegamezone>Deck</sourcegamezone>
-        <destinationgamezone>Graveyard</destinationgamezone>
+        <destinationgamezone>Discard Pile</destinationgamezone>
     </generalfunction>
     <generalfunction>
         <label>Flip Coin</label>

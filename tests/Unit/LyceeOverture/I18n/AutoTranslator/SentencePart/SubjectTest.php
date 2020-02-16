@@ -71,20 +71,20 @@ class SubjectTest extends TestCase
                 ' 1  item',
                 'アイテム1枚',
             ],
-            "1 character in the graveyard" => [
-                ' 1  character in the graveyard',
+            "1 character in the Discard Pile" => [
+                ' 1  character in the Discard Pile',
                 'ゴミ箱のキャラ1体',
             ],
-            "1 of your events in the graveyard" => [
-                ' 1  event in your graveyard',
+            "1 of your events in the Discard Pile" => [
+                ' 1  event in your Discard Pile',
                 '自分のゴミ箱のイベント1枚',
             ],
-            "that character in the graveyard" => [
-                ' that character in the graveyard',
+            "that character in the Discard Pile" => [
+                ' that character in the Discard Pile',
                 'ゴミ箱のそのキャラ',
             ],
-            "opponent's graveyard" => [
-                ' 2  events in your opponent\'s graveyard',
+            "opponent's Discard Pile" => [
+                ' 2  events in your opponent\'s Discard Pile',
                 '相手のゴミ箱のイベント2枚',
             ],
             "this character's SP" => [
@@ -100,23 +100,23 @@ class SubjectTest extends TestCase
                 'このキャラのSPとAP',
             ],
             'quoted noun' => [
-                ' 1  "稲生滸" in your graveyard',
+                ' 1  "稲生滸" in your Discard Pile',
                 '自分のゴミ箱の「稲生滸」1体',
             ],
             'gt/lt noun' => [
-                ' 1  <稲生滸> in your graveyard',
+                ' 1  <稲生滸> in your Discard Pile',
                 '自分のゴミ箱の<稲生滸>1体',
             ],
             'quoted noun with another noun' => [
-                ' 1  <稲生滸> character in your graveyard',
+                ' 1  <稲生滸> character in your Discard Pile',
                 '自分のゴミ箱の<稲生滸>キャラ1体',
             ],
             'quoted 2' => [
                 ' 1 ally <継続> character',
                 '味方<継続>キャラ1体',
             ],
-            'graveyard and cost combination' => [
-                ' 1  character in your graveyard with a cost of 2 or less',
+            'Discard Pile and cost combination' => [
+                ' 1  character in your Discard Pile with a cost of 2 or less',
                 '自分のゴミ箱のコストが2点以下のキャラ1体',
             ],
             'battling character' => [

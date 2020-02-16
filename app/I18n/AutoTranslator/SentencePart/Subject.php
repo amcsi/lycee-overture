@@ -244,13 +244,13 @@ class Subject
                 } else {
                     switch ($whosGraveyard) {
                         case '自分の':
-                            $inSomewhere = ' in your graveyard';
+                            $inSomewhere = ' in your Discard Pile';
                             break;
                         case '相手の':
-                            $inSomewhere = " in your opponent's graveyard";
+                            $inSomewhere = " in your opponent's Discard Pile";
                             break;
                         case '':
-                            $inSomewhere = ' in the graveyard';
+                            $inSomewhere = ' in the Discard Pile';
                             break;
                         default:
                             throw new \LogicException("Unexpected whosGraveyard: $whosGraveyard");

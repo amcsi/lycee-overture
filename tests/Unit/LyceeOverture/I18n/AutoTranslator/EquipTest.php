@@ -20,8 +20,8 @@ class EquipTest extends TestCase
     {
         return [
             [
-                'equip {1 item in your graveyard} to {1 character}',
-                '{1 item in your graveyard}を{1 character}に装備する',
+                'equip {1 item in your Discard Pile} to {1 character}',
+                '{1 item in your Discard Pile}を{1 character}に装備する',
             ],
         ];
     }
