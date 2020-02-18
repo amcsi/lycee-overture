@@ -67,7 +67,7 @@
             <CardText :text="$t('rules.howToSummon.discard2Box')" />
         </div>
 
-        <p>{{ $t('rules.howToSummon.box.or') }} ...</p>
+        <p>{{ $t('rules.howToSummon.box.or') }}...</p>
 
         <div class="discard1-box">
             ②
