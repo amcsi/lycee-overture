@@ -150,7 +150,7 @@ export default {
     description: 'Cards with Basic Ability [Assist] can be used to pay for the cost of characters of the same Type. If done so, it pays for ANY element of your choosing (limited to the discarded card\'s EX).',
   },
   flowOfGameRules: {
-    navTitle: 'Flow of the game',
+    navTitle: 'Flow of the Game',
     title: 'Purpose and flow of the game (preparation before game start)',
   },
   turnRulesTitle: 'Turn',
