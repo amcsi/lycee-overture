@@ -6,7 +6,7 @@
             </p>
 
             <p>Note that when printing: turn on "Background Images/graphics" in the printing options to include the
-                options!</p>
+                icons!</p>
 
             <p>It's recommended to print in color.</p>
 
