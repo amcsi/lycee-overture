@@ -155,5 +155,5 @@ export default {
   },
   turnRulesTitle: 'Turn',
   battleRulesTitle: 'Battle',
-  basicAbilityRulesTitle: 'Basic Abilities and Chaining',
+  basicAbilityRulesTitle: 'Basic Abilities and the Stack',
 };
