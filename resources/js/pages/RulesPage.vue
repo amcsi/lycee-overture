@@ -30,7 +30,7 @@
                 <el-menu-item index="/rules/battle">
                     <span v-t="'rules.battleRulesTitle'"></span>
                 </el-menu-item>
-                <el-menu-item index="/rules/basic-abilities-and-chaining">
+                <el-menu-item index="/rules/basic-abilities-and-the-stack">
                     <span v-t="'rules.basicAbilityRulesTitle'"></span>
                 </el-menu-item>
             </el-menu>
