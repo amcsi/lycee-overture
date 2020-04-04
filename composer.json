@@ -29,7 +29,7 @@
     "mbilbille/jpnforphp": "^0.7.0",
     "nikic/iter": "^2.0",
     "php-http/curl-client": "^1.7",
-    "rollbar/rollbar-laravel": "^5.0",
+    "rollbar/rollbar-laravel": "^6.0",
     "swooletw/laravel-swoole": "^2.4",
     "symfony/stopwatch": "^4.1"
   },
