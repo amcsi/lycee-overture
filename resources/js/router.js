@@ -96,7 +96,7 @@ const router = new VueRouter({
               },
             },
             {
-              path: 'basic-abilities-and-chaining',
+              path: 'basic-abilities-and-the-stack',
               component() {
                 return import(/* webpackChunkName: "rules" */ './components/rules/BasicAbilityRules');
               },
