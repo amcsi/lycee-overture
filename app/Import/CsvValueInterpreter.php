@@ -66,7 +66,7 @@ class CsvValueInterpreter
         if (isset($map[$match])) {
             return $map[$match];
         }
-        throw new \InvalidArgumentException("Unknown ability type: $match");
+        return 0;
     }
 
     /**
