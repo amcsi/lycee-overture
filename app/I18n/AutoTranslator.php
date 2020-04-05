@@ -62,9 +62,8 @@ class AutoTranslator
         // Also replace − (weird alternative dash).
         $autoTranslated = preg_replace('/[ー−](\d)/u', '-$1', $autoTranslated);
 
-        // Targets appearing between square instead of curly brackets (tsk-tsk original website creators).
-        // But only in the beginning of the text, and just for a single card's sake -.-
-        $autoTranslated = preg_replace("/^\\[($subjectRegex)]/u", '{$1}', $autoTranslated, -1, $count);
+        // Since about 2020 April, the Lycee CSV shows all targets in square brackets.
+        $autoTranslated = preg_replace("/\\[($subjectRegex)]/u", '{$1}', $autoTranslated, -1, $count);
 
         $autoTranslated = OneOffs::autoTranslate($autoTranslated);
 

@@ -89,19 +89,19 @@ class AutoTranslatorTest extends TestCase
             ],
             'ally gaining abilities' => [
                 '{1 ally character} gains [オーダーステップ:[無]][サイドステップ:[無]].',
-                '{味方キャラ1体}は[オーダーステップ:[無]][サイドステップ:[無]]を得る.',
+                '[味方キャラ1体]は[オーダーステップ:[無]][サイドステップ:[無]]を得る.',
             ],
             'opponent losing abilities' => [
                 '{1 enemy character} loses [アグレッシブ] until the end of the turn.',
-                '{相手キャラ１体}はターン終了時まで[アグレッシブ]を失う。',
+                '[相手キャラ１体]はターン終了時まで[アグレッシブ]を失う。',
             ],
             'ally getting stat changes' => [
                 '{1 ally character} gets SP+1.',
-                '{味方キャラ1体}にSP+1する.',
+                '[味方キャラ1体]にSP+1する.',
             ],
             'enemy getting stat changes' => [
                 '{1 enemy character} gets SP-1.',
-                '{相手キャラ1体}にSP-1する.',
+                '[相手キャラ1体]にSP-1する.',
             ],
             'enemy getting stat changes (no target)' => [
                 '1 enemy character gets DP-1.',
@@ -109,19 +109,19 @@ class AutoTranslatorTest extends TestCase
             ],
             'compound target gets stat changes; separated target logic' => [
                 '{1 ally "Furukonpu" character} gets AP+1, DP+1.',
-                '{味方「フルコンプ」キャラ１体}にＡＰ＋１・ＤＰ＋１する。',
+                '[味方「フルコンプ」キャラ１体]にＡＰ＋１・ＤＰ＋１する。',
             ],
             'target gets stat changes' => [
                 '{1 character} gets DMG-2.',
-                '{キャラ1体}にDMG-2する.',
+                '[キャラ1体]にDMG-2する.',
             ],
             'ー character' => [
                 '{1 character} gets DMG-2.',
-                '{キャラ1体}にDMGー2する.',
+                '[キャラ1体]にDMGー2する.',
             ],
             '− character' => [
                 '{1 character} gets DMG-2.',
-                '{キャラ1体}にDMG−2する.',
+                '[キャラ1体]にDMG−2する.',
             ],
             'subject appearing as square brackets' => [
                 '{1 character} gets DMG-2.',
@@ -177,7 +177,7 @@ class AutoTranslatorTest extends TestCase
             ],
             'two stat changes' => [
                 '{1 ally untapped AF character} gets DMG-1. This character gets DMG+1.',
-                '{未行動の味方ＡＦキャラ１体}にＤＭＧ－１する。このキャラにＤＭＧ＋１する。',
+                '[未行動の味方ＡＦキャラ１体]にＤＭＧ－１する。このキャラにＤＭＧ＋１する。',
             ],
             'when opponent destroyed by your effect' => [
                 'When an opponent character is destroyed by use of your effects',
@@ -201,7 +201,7 @@ class AutoTranslatorTest extends TestCase
             ],
             'move' => [
                 'Move {a character} to {an ally field}.',
-                '{キャラ}を{味方フィールド}に移動する。',
+                '[キャラ]を[味方フィールド]に移動する。',
             ],
             'resources getting provided' => [
                 'Use during your opponent\'s turn. Discard 2 cards from the top of your deck. When destroyed, you get [moon][moon].',
@@ -213,7 +213,7 @@ class AutoTranslatorTest extends TestCase
             ],
             'equipping' => [
                 'Use during your turn. Do not use during battle. Equip {1 item in your Discard Pile} to {1 character}. This effect can be used only once while this card is on the field.',
-                '自ターン中に使用する。バトル中に使用できない。{自分のゴミ箱のアイテム１枚}を{キャラ１体}に装備する。この能力は失われる。',
+                '自ターン中に使用する。バトル中に使用できない。[自分のゴミ箱のアイテム１枚]を[キャラ１体]に装備する。この能力は失われる。',
             ],
             'once per turn cards of the same name' => [
                 'This effect can only be used once per turn by cards of the same number',
@@ -245,7 +245,7 @@ class AutoTranslatorTest extends TestCase
             ],
             'until the end of the turn cannot be destroyed by battle 2' => [
                 "Until the end of the turn {1 ally character} cannot be destroyed by battle",
-                'ターン終了時まで{味方キャラ１体}はダウンしない',
+                'ターン終了時まで[味方キャラ１体]はダウンしない',
             ],
             'Put 1 card from your hand on the top of your deck' => [
                 'Put 1 card from your hand on the top of your deck',
@@ -273,7 +273,7 @@ class AutoTranslatorTest extends TestCase
             ],
             'summon for free' => [
                 'Summon {1 character} without paying its cost.',
-                '{キャラ1体}を無償で登場する。',
+                '[キャラ1体]を無償で登場する。',
             ],
             'once per turn or battle' => [
                 'This effect can only be used 1 time during the game.',
