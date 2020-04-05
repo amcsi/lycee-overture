@@ -88,6 +88,8 @@ return [
             'handler' => \Rollbar\Laravel\MonologHandler::class,
             'access_token' => env('ROLLBAR_SERVER_TOKEN'),
             'level' => 'debug',
+            // Args in stack traces result in 413 status errors from Rollbar for too large payload.
+            'local_vars_dump' => false,
         ],
     ],
 
