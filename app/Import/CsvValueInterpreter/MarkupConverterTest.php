@@ -34,6 +34,14 @@ class MarkupConverterTest extends TestCase
                 '[T][snow][moon][flower][space][sun][star]',
                 '[T雪月花宙日無]',
             ],
+            'cost ability type' => [
+                '[Cost]',
+                '[コスト]',
+            ],
+            'other characters in the markup' => [
+                '[コストが２点以下のＡＦキャラ１体]',
+                '[コストが２点以下のＡＦキャラ１体]',
+            ],
         ];
     }
 }

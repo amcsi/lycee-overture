@@ -28,7 +28,7 @@ class MarkupConverter
         $abilityTypesRegex = implode('|', array_keys(AbilityType::getJapaneseMap()));
 
         $text = preg_replace_callback(
-            "/\\[($abilityTypesRegex)/u",
+            "/\\[($abilityTypesRegex)]/u",
             ['self', 'abilityTypeCallback'],
             $text
         );
@@ -57,6 +57,6 @@ class MarkupConverter
     private static function abilityTypeCallback(array $matches)
     {
         $markupMap = AbilityType::getJapaneseToMarkup();
-        return '[' . $markupMap[$matches[1]];
+        return '[' . $markupMap[$matches[1]] . ']';
     }
 }
