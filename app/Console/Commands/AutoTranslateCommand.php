@@ -17,6 +17,7 @@ use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Stopwatch\Stopwatch;
+use function GuzzleHttp\Psr7\try_fopen;
 
 /**
  * Attempts translations from Japanese description text based on patterns.
@@ -24,9 +25,9 @@ use Symfony\Component\Stopwatch\Stopwatch;
 class AutoTranslateCommand extends Command
 {
     public const COMMAND = 'lycee:auto-translate';
-    public const AUTO_TRANSLATE_FIELDS = ['ability_description', 'ability_cost', 'basic_abilities', 'comments'];
+    public const AUTO_TRANSLATE_FIELDS = ['basic_abilities', 'ability_description', 'ability_cost', 'comments'];
 
-    protected $signature = self::COMMAND;
+    protected $signature = self::COMMAND . ' {--dump-to-file}';
     protected $description = 'Attempts translations from Japanese description text based on patterns.';
 
     public function handle(
@@ -44,14 +45,25 @@ class AutoTranslateCommand extends Command
         /** @var CardTranslation[] $japaneseCards */
         $japaneseCards = $japaneseBuilder->get();
 
+        $fileDumpPath = sprintf(storage_path('dump/autoTranslate/%s.txt'), date('Y-m-d--His'));
+        if (!@mkdir($concurrentDirectory = dirname($fileDumpPath), 0775, true) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+        }
+        $dumpFile = $this->option('dump-to-file') ?
+            try_fopen($fileDumpPath, 'wb') :
+            null;
+        $propertiesToDump = ['card_id', 'name', 'ability_name', 'character_type', ...self::AUTO_TRANSLATE_FIELDS];
+
         $englishCards = $cardTranslation->newQuery()
             ->where('locale', Locale::ENGLISH)
             ->get()
-            ->keyBy(function (
-                CardTranslation $cardTranslation
-            ) {
-                return $cardTranslation->card_id;
-            });
+            ->keyBy(
+                function (
+                    CardTranslation $cardTranslation
+                ) {
+                    return $cardTranslation->card_id;
+                }
+            );
 
         // By default the english japanese character count is the same as the Japanese (untranslated).
         $cardCount = $japaneseBuilder->count();
@@ -117,13 +129,24 @@ class AutoTranslateCommand extends Command
 
                 $englishCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($englishCard);
             }
-            $englishCard = CardTranslation::updateOrCreate([
-                'card_id' => $englishCard['card_id'],
-                'locale' => $englishCard['locale'],
-            ], $englishCard);
+            $englishCard = CardTranslation::updateOrCreate(
+                [
+                    'card_id' => $englishCard['card_id'],
+                    'locale' => $englishCard['locale'],
+                ],
+                $englishCard
+            );
             if ($englishCard->updated_at > $updatedNowThreshold) {
                 ++$updatedCount;
             }
+
+            if ($dumpFile) {
+                foreach ($propertiesToDump as $property) {
+                    fwrite($dumpFile, "$property: $englishCard[$property]\n");
+                }
+                fwrite($dumpFile, "\n");
+            }
+
             $progressBar->advance();
         }
         $progressBar->clear();
