@@ -118,17 +118,19 @@ class AutoTranslateCommand extends Command
                     // Retain the original Japanese text in case of an exception.
                     $englishCard[$key] = $japaneseCard->$key;
                 }
-                // Manual translations for names, types etc.
-                $englishCard['name'] = $nameTranslator->tryTranslateName($japaneseCard['name']);
-                $englishCard['name'] = $kanjiTranslator->translate($englishCard['name']);
-                $englishCard['ability_name'] = $nameTranslator->tryTranslateName($japaneseCard['ability_name']);
-                $englishCard['character_type'] = $nameTranslator->tryTranslateCharacterType(
-                    $japaneseCard['character_type']
-                );
-                $englishCard['comments'] = $commentTranslator->translate($japaneseCard['comments']);
-
-                $englishCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($englishCard);
             }
+
+            // Manual translations for names, types etc.
+            $englishCard['name'] = $nameTranslator->tryTranslateName($japaneseCard['name']);
+            $englishCard['name'] = $kanjiTranslator->translate($englishCard['name']);
+            $englishCard['ability_name'] = $nameTranslator->tryTranslateName($japaneseCard['ability_name']);
+            $englishCard['character_type'] = $nameTranslator->tryTranslateCharacterType(
+                $japaneseCard['character_type']
+            );
+            $englishCard['comments'] = $commentTranslator->translate($japaneseCard['comments']);
+
+            $englishCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($englishCard);
+
             $englishCard = CardTranslation::updateOrCreate(
                 [
                     'card_id' => $englishCard['card_id'],
