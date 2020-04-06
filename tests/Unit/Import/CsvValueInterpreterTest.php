@@ -189,6 +189,22 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 'Congratulations!! <br />※このカードは「ラッキーカードキャンペーン」の当たりカードです。キャンペーンの詳細は以下をご確認ください。 <br />https://lycee-tcg.com/lucky/ <br />※このカードは能力を持たないキャラとしてゲームで使用できます。',
             ],
+            'accommodate new CSV format 2020-04' => [
+                [
+                    'ability_cost' => '',
+                    'ability_description' => '[相手キャラ１体]にＳＰ－２する。',
+                    'comments' => '',
+                ],
+                '[相手キャラ１体]にＳＰ－２する。',
+            ],
+            'event text with markup' => [
+                [
+                    'ability_cost' => '',
+                    'ability_description' => 'Bla bla bla [sun]',
+                    'comments' => '',
+                ],
+                'Bla bla bla [日]',
+            ],
         ];
     }
 }

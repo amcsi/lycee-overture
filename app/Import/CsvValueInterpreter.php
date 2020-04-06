@@ -58,7 +58,7 @@ class CsvValueInterpreter
 
     public static function getAbilityType(array $csvRow): int
     {
-        if (!preg_match('/^\[([^]]+)\]/', $csvRow[CsvColumns::ABILITY], $matches)) {
+        if (!preg_match('/^\[([^]]+)]/', $csvRow[CsvColumns::ABILITY], $matches)) {
             return 0;
         }
         $match = $matches[1];
@@ -74,104 +74,70 @@ class CsvValueInterpreter
      */
     public static function getAbilityPartsFromAbility(string $ability): array
     {
-        $comments = '';
 
-        $abilityTypesRegex = '(?:\[(' . implode('|', array_keys(AbilityType::getJapaneseMap())) . ')]|装備制限:)';
-        $abilityJapaneseToMarkupMap = AbilityType::getJapaneseToMarkup();
-        // Split by effects
-        $pattern = "/$abilityTypesRegex(?:(?!$abilityTypesRegex).)*/";
-        preg_match_all($pattern, $ability, $matches, PREG_SET_ORDER);
+        $abilityRows = preg_split("/\s*\n\s*|\s*<br ?\/>\s*/i", $ability);
 
-        if (!$matches) {
-            // If there were no matches for different ability types, then either there's no ability, or this is not
-            // a character. So just use the entire text as the abilities.
-            $matches = [[$ability]];
-        }
-
-        $abilities = '';
+        $abilityTypeAndCostRegexPart = sprintf(
+            "^(\[(?:%s)] )(?:(\[.*])+:)?",
+            implode('|', array_keys(AbilityType::getJapaneseMap()))
+        );
 
         // Contains types and costs. Each one is on the same line (\n) as the ability description it belongs to.
         $abilityTypeAndCosts = [];
+        $abilityDescriptions = [];
+        $comments = [];
 
-        foreach ($matches as [$ability]) {
+        foreach ($abilityRows as $abilityRow) {
+            if (preg_match('/^(?:※|構築制限:|https?:\/\/)/u', $abilityRow)) {
+                $comments[] = $abilityRow;
+                continue;
+            }
+
             // Alternative form of ability type: "<ability type>: <ability>".
-            $ability = preg_replace('/^(\S*):(.*)/', '[$1] $2', $ability);
+            $abilityRow = preg_replace('/^(\S*):(.*)/', '[$1] $2', $abilityRow);
 
-            $ability = MarkupConverter::convert($ability);
-            // Type and cost.
-            $abilityTypeAndCostComponents = [];
+            if (preg_match("/$abilityTypeAndCostRegexPart(.*)/u", $abilityRow, $matches)) {
+                $abilityTypeAndCosts[] = MarkupConverter::convert(trim($matches[1] . $matches[2]));
 
-            // Get the ability type.
-            $ability = preg_replace_callback(
-                '/^(\[[^\]]*\])\s*/',
-                function ($matches) use (&$abilityTypeAndCostComponents) {
-                    $abilityTypeAndCostComponents[] = $matches[1];
-                },
-                $ability,
-                1
-            );
+                $description = MarkupConverter::convert(trim($matches[3]));
+
+                // Normalize description.
+                $description = preg_replace(
+                    sprintf(
+                        '/%s(.*?)%s/',
+                        preg_quote('<span style=color:#FFCC00;font-weight:bold;>', '/'),
+                        preg_quote('</span>', '/')
+                    ),
+                    '{$1}',
+                    $description
+                );
+
+                // Comments in description.
+                preg_match('/^(.*?)(※.*)?$/u', $description, $_matches);
+                $description = $_matches[1];
+                $capturedComments = $_matches[2] ?? null;
+
+                $abilityDescriptions[] = $description;
+
+                if ($capturedComments) {
+                    preg_match_all('/※.*/u', $capturedComments, $__matches, PREG_SET_ORDER);
+                    /** @noinspection SlowArrayOperationsInLoopInspection */
+                    $comments = array_merge($comments, $__matches[0]);
+                }
 
 
-            $ability = preg_replace_callback(
-                "/^$abilityTypesRegex/",
-                function (array $matches) use ($abilityJapaneseToMarkupMap) {
-                    return '[' . $abilityJapaneseToMarkupMap[$matches[1]] . ']';
-                },
-                $ability
-            );
+                continue;
+            }
 
-            $ability = preg_replace_callback(
-                '/^((?:\[[^\]]+\])+):/u',
-                function ($matches) use (&$abilityTypeAndCostComponents) {
-                    $abilityTypeAndCostComponents[] = $matches[1];
-                },
-                $ability,
-                1
-            );
-            // Comments
-            $ability = preg_replace_callback(
-                '/※.*$/',
-                function ($matches) use (&$comments) {
-                    $comments .= $matches[0];
-                },
-                $ability,
-                1
-            );
-            $ability = str_ireplace('<br />', "\n", $ability);
-            $comments = preg_replace('/\s*<br \/>/i', "\n", $comments);
-            // Deck restriction comments.
-            $ability = preg_replace_callback(
-                '/\n(構築制限:.*)$/i',
-                function ($matches) use (&$comments) {
-                    $comments .= $matches[1];
-                },
-                $ability,
-                1
-            );
-
-            // Normalize description.
-            $ability = preg_replace(
-                sprintf(
-                    '/%s(.*?)%s/',
-                    preg_quote('<span style=color:#FFCC00;font-weight:bold;>', '/'),
-                    preg_quote('</span>', '/')
-                ),
-                '{$1}',
-                $ability
-            );
-
-            // Type and cost should be separated by spaces.
-            $abilityTypeAndCosts[] = implode(' ', $abilityTypeAndCostComponents);
-
-            $abilities .= $ability;
+            // Fall back to adding this row as a description.
+            $abilityTypeAndCosts[] = '';
+            $abilityDescriptions[] = MarkupConverter::convert($abilityRow);
         }
 
-        $parts = [
+        return [
             'ability_cost' => implode("\n", $abilityTypeAndCosts),
-            'ability_description' => trim($abilities),
-            'comments' => $comments,
+            'ability_description' => implode("\n", $abilityDescriptions),
+            'comments' => implode("\n", $comments),
         ];
-
-        return $parts;
     }
 }
