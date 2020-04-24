@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Import\Set;
 
-use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 use amcsi\LyceeOverture\Set;
 use PHPUnit\Framework\TestCase;
 use Tests\Tools\SetAutoCreatorStubber;
@@ -32,7 +31,6 @@ class SetAutoCreatorTest extends TestCase
 
         $setModel->expects()->forceCreate([
             'name_ja' => 'something',
-            'name_en' => 'something',
             'brand' => '',
             'version' => '1.0'
         ])->andReturn((new Set())->forceFill(['id' => 3, 'name_ja' => 'something', 'version' => '1.0']));
@@ -51,7 +49,6 @@ class SetAutoCreatorTest extends TestCase
 
         $setModel->expects()->forceCreate([
             'name_ja' => 'メロンブックス',
-            'name_en' => 'メロンブックス',
             'brand' => '',
             'version' => ''
         ])->andReturn((new Set())->forceFill(['id' => 3, 'name_ja' => 'メロンブックス', 'version' => '']));
@@ -68,7 +65,6 @@ class SetAutoCreatorTest extends TestCase
 
         $setModel->expects()->forceCreate([
             'name_ja' => 'オーガスト',
-            'name_en' => 'August', // This should be copied from August 1.0
             'brand' => 'AUG', // This should be copied from August 1.0
             'version' => '2.0'
         ])->andReturn((new Set())->forceFill(['id' => 3]));

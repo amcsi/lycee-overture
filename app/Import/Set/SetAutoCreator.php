@@ -44,7 +44,6 @@ class SetAutoCreator
 
             $attributes = [
                 'name_ja' => $nameJa,
-                'name_en' => $nameJa,
                 'version' => $version,
                 'brand' => '',
             ];
@@ -54,8 +53,7 @@ class SetAutoCreator
                     return $set->name_ja === $nameJa;
                 })) {
                 // There is an existing set with the same name, but different version.
-                // Take the English translation and brand from there.
-                $attributes['name_en'] = $setMatchingNameJa->name_en;
+                // Take the brand from there.
                 $attributes['brand'] = $setMatchingNameJa->brand;
             }
 
