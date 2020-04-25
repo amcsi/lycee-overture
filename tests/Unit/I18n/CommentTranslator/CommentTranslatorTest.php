@@ -17,7 +17,7 @@ class CommentTranslatorTest extends TestCase
         self::assertSame(
             $expected,
             (new CommentTranslator(
-                new SetTranslator(require __DIR__ . '/../../../../resources/lang/en/sets.php')
+                new SetTranslator((require __DIR__ . '/../../../../config/lycee.php')['sets'])
             ))->translate($input)
         );
     }

@@ -8,46 +8,10 @@ use Illuminate\Support\Arr;
 
 class BrandMapper
 {
-    private static $brands = [
-        'AIG' => [ // Aigis
-            '千年戦争アイギス',
-        ],
-        'AQP' => [ // AquaPlus
-            'アクアプラス',
-        ],
-        'AUG' => [ // August
-            'オーガスト',
-        ],
-        'BXB' => [ // Brave Sword X Blaze Soul
-            'ブレイブソード×ブレイズソウル',
-        ],
-        'FGO' => [
-            'Fate/Grand Order',
-        ],
-        'GUP' => [ // Girls & Panzer
-            'ガールズ＆パンツァー最終章',
-            'ガールズ＆パンツァー戦車道大作戦！',
-        ],
-        'KHP' => [ // Kamihime Project
-            '神姫PROJECT',
-        ],
-        'NEX' => [ // Nexton
-            'ネクストン',
-        ],
-        'OSP' => [ // Oshiro Project: RE
-            '御城プロジェクト：ＲＥ',
-        ],
-        'TOA' => [ // Toaru Majutsu no Index
-            'とある魔術の禁書目録Ⅲ',
-        ],
-        'VA' => [ // Visual Arts
-            'ビジュアルアーツ',
-        ],
-        'YUZ' => [ // Yuzusoft
-            'ゆずソフト',
-        ],
-    ];
-
+    /**
+     * @var array|null Brand abbreviations are the keys, and values are an array of English set names part of the brand.
+     */
+    private static $brands;
     private static $setNameJaToBrandMap;
 
     private Set $setModel;
@@ -66,13 +30,28 @@ class BrandMapper
     {
         if (!self::$setNameJaToBrandMap) {
             self::$setNameJaToBrandMap = [];
-            foreach (self::$brands as $brand => $setNames) {
+            foreach (self::getBrands() as $brand => $setNames) {
                 foreach ($setNames as $setNameJa) {
                     self::$setNameJaToBrandMap[$setNameJa] = $brand;
                 }
             }
         }
         return self::$setNameJaToBrandMap;
+    }
+
+    private static function getBrands()
+    {
+        if (!self::$brands) {
+            $setNameEnJaMap = array_flip(config('lycee.sets'));
+            self::$brands = array_map(
+                fn($englishSetNames) => array_map(
+                    fn($setNameEn) => $setNameEnJaMap[$setNameEn] ?? $setNameEn,
+                    $englishSetNames
+                ),
+                config('lycee.brands')
+            );
+        }
+        return self::$brands;
     }
 
     /**
@@ -82,7 +61,7 @@ class BrandMapper
     {
         $setNamesArrays = [];
         foreach ($brands as $brand) {
-            $setNamesArrays[] = self::$brands[$brand] ?? null;
+            $setNamesArrays[] = self::getBrands()[$brand] ?? null;
         }
         $setNames = Arr::flatten($setNamesArrays);
 
@@ -95,7 +74,7 @@ class BrandMapper
     public function fetchSetIdsOfUnknownBrands()
     {
         $setNamesArrays = [];
-        foreach (self::$brands as $setNames) {
+        foreach (self::getBrands() as $setNames) {
             $setNamesArrays[] = $setNames;
         }
         $setNames = Arr::flatten($setNamesArrays);
