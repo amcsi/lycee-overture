@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\CardTranslation;
-use amcsi\LyceeOverture\Import\ImportConstants;
+use amcsi\LyceeOverture\Import\CsvIterator;
 use amcsi\LyceeOverture\Import\TextImportTextExtractor;
 use Illuminate\Console\Command;
-use League\Csv\Reader;
 
 class ImportTextsCommand extends Command
 {
@@ -16,19 +15,20 @@ class ImportTextsCommand extends Command
     protected $signature = self::COMMAND;
     protected $description = 'Imports the japanese texts from the CSV';
     private $textImportTextExtractor;
+    private CsvIterator $csvIterator;
 
-    public function __construct(TextImportTextExtractor $textImportTextExtractor)
+    public function __construct(TextImportTextExtractor $textImportTextExtractor, CsvIterator $csvIterator)
     {
         parent::__construct();
         $this->textImportTextExtractor = $textImportTextExtractor;
+        $this->csvIterator = $csvIterator;
     }
 
     public function handle()
     {
         $this->output->writeln('Started import of japanese texts.');
 
-        $reader = Reader::createFromPath(storage_path(ImportConstants::CSV_PATH));
-        $rows = iterator_to_array($this->textImportTextExtractor->toDatabaseRows($reader));
+        $rows = iterator_to_array($this->textImportTextExtractor->toDatabaseRows($this->csvIterator->getIterator()));
         $insertedCount = CardTranslation::getQuery()->insertIgnore($rows);
         $updatedCount = CardTranslation::getQuery()->upsert($rows) / 2;
 

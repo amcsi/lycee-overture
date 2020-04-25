@@ -5,9 +5,8 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Import\BasicImportCsvFilterer;
-use amcsi\LyceeOverture\Import\ImportConstants;
+use amcsi\LyceeOverture\Import\CsvIterator;
 use Illuminate\Console\Command;
-use League\Csv\Reader;
 
 class ImportBasicCardsCommand extends Command
 {
@@ -17,13 +16,18 @@ class ImportBasicCardsCommand extends Command
     ' {--reset-dates : Resets all cards\' creation the dates, making newer cards have later dates}';
     protected $description = 'Imports the basic data of cards (excluding text)';
 
+    private CsvIterator $csvIterator;
+
+    public function __construct(CsvIterator $csvIterator)
+    {
+        parent::__construct();
+        $this->csvIterator = $csvIterator;
+    }
+
     public function handle()
     {
         $this->output->writeln('Starting import of basic card data.');
-        /** @var Reader $reader */
-        $reader = Reader::createFromPath(storage_path(ImportConstants::CSV_PATH));
-        $reader = array_reverse(iterator_to_array($reader)); // Reverse to ensure that newer cards have newer dates.
-        $toInsert = app(BasicImportCsvFilterer::class)->toDatabaseRows($reader);
+        $toInsert = app(BasicImportCsvFilterer::class)->toDatabaseRows($this->csvIterator->getIterator());
         $insertedCount = Card::getQuery()->insertIgnore($toInsert);
 
         $toUpdate = $this->option('reset-dates') ?
