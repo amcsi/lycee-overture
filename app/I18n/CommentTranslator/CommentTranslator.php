@@ -10,11 +10,11 @@ use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
  */
 class CommentTranslator
 {
-    private $brandTranslator;
+    private $setTranslator;
 
-    public function __construct(SetTranslator $brandTranslator)
+    public function __construct(SetTranslator $setTranslator)
     {
-        $this->brandTranslator = $brandTranslator;
+        $this->setTranslator = $setTranslator;
     }
 
     public function translate(string $text): string
@@ -34,6 +34,6 @@ class CommentTranslator
 
     private function deckRestrictionCallback(array $matches): string
     {
-        return 'Deck restriction: ' . trim($this->brandTranslator->translate($matches[1]));
+        return 'Deck restriction: ' . trim($this->setTranslator->translate($matches[1]));
     }
 }

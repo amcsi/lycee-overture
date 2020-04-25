@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import\Set;
 
-use amcsi\LyceeOverture\I18n\SetTranslator\BrandTranslations;
 use amcsi\LyceeOverture\Set;
 use Illuminate\Support\Collection;
 
@@ -27,16 +26,7 @@ class SetAutoCreator
         $return = null;
         if (isset($this->sets[$fullNameJa])) {
             // There is a matching set.
-            $set = $this->sets[$fullNameJa];
-
-            $brandMapping = BrandTranslations::$mappings[$set->name_ja] ?? null;
-            if ($brandMapping && $this->sets[$fullNameJa]->brand !== $brandMapping) {
-                // Update the brand since.
-                $set->brand = $brandMapping;
-                $set->save();
-            }
-
-            $return = $set->id;
+            $return = $this->sets[$fullNameJa]->id;
         } elseif (strlen($fullNameJa) >= 3) {
             // Create a new set.
 
@@ -45,17 +35,7 @@ class SetAutoCreator
             $attributes = [
                 'name_ja' => $nameJa,
                 'version' => $version,
-                'brand' => '',
             ];
-
-            if ($setMatchingNameJa = $this->sets->first(
-                function (Set $set) use ($nameJa) {
-                    return $set->name_ja === $nameJa;
-                })) {
-                // There is an existing set with the same name, but different version.
-                // Take the brand from there.
-                $attributes['brand'] = $setMatchingNameJa->brand;
-            }
 
             $newSet = $this->setModel->forceCreate($attributes);
             $this->setSetsAndKeyByFullName($this->sets->push($newSet));

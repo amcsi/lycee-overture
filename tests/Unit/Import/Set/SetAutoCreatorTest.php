@@ -31,7 +31,6 @@ class SetAutoCreatorTest extends TestCase
 
         $setModel->expects()->forceCreate([
             'name_ja' => 'something',
-            'brand' => '',
             'version' => '1.0'
         ])->andReturn((new Set())->forceFill(['id' => 3, 'name_ja' => 'something', 'version' => '1.0']));
 
@@ -49,7 +48,6 @@ class SetAutoCreatorTest extends TestCase
 
         $setModel->expects()->forceCreate([
             'name_ja' => 'メロンブックス',
-            'brand' => '',
             'version' => ''
         ])->andReturn((new Set())->forceFill(['id' => 3, 'name_ja' => 'メロンブックス', 'version' => '']));
 
@@ -65,7 +63,6 @@ class SetAutoCreatorTest extends TestCase
 
         $setModel->expects()->forceCreate([
             'name_ja' => 'オーガスト',
-            'brand' => 'AUG', // This should be copied from August 1.0
             'version' => '2.0'
         ])->andReturn((new Set())->forceFill(['id' => 3]));
 

@@ -11,10 +11,12 @@ use Illuminate\Database\Query\JoinClause;
 class CardBuilderFactory
 {
     private $card;
+    private BrandMapper $brandMapper;
 
-    public function __construct(Card $card)
+    public function __construct(Card $card, BrandMapper $brandMapper)
     {
         $this->card = $card;
+        $this->brandMapper = $brandMapper;
     }
 
     public function createBuilderWithQuery(string $locale, array $query): Builder
@@ -40,21 +42,22 @@ class CardBuilderFactory
             );
         }
 
+        if (($brand = $query['brand'] ?? null)) {
+            if ($brand === '-1') {
+                // Unknown/no brand.
+                $setIds = $this->brandMapper->fetchSetIdsOfUnknownBrands();
+            } else {
+                $setIds = $this->brandMapper->fetchSetIdsByBrands((array) $query['brand']);
+            }
+            $query['set'] = ($query['set'] ?? null) ? array_intersect($setIds, (array) $query['set']) : $setIds;
+        }
+
         if (($set = $query['set'] ?? null)) {
             if ($set === '-1') {
                 $builder->whereNull('set_id');
             } else {
                 $builder->whereIn('set_id', (array) $set);
             }
-        }
-
-        if (($brand = $query['brand'] ?? null)) {
-            if ($brand === '-1') {
-                // Unknown/no brand.
-                $brand = '';
-            }
-            $builder->join('sets', 'sets.id', '=', 'cards.set_id');
-            $builder->whereIn('brand', (array) $brand);
         }
 
         if ($name = (string) ($query['name'] ?? null)) {

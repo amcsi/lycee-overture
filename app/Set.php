@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture;
 
+use amcsi\LyceeOverture\Card\BrandMapper;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,5 +19,10 @@ class Set extends Model
             $translated;
 
         return sprintf('%s %s', $name, $this->version);
+    }
+
+    public function getBrandAttribute()
+    {
+        return BrandMapper::getBrand($this->name_ja);
     }
 }

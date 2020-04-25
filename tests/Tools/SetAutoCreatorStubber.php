@@ -18,13 +18,11 @@ class SetAutoCreatorStubber
         $set = new Set();
         $set->id = 1;
         $set->name_ja = 'オーガスト';
-        $set->brand = 'AUG';
         $set->version = '1.0';
         $sets[] = $set;
         $set = new Set();
         $set->id = 2;
         $set->name_ja = 'Fate/Grand Order';
-        $set->brand = 'FGO';
         $set->version = '2.0';
         $sets[] = $set;
         $sets = new Collection($sets);
