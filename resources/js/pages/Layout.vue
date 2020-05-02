@@ -7,6 +7,7 @@
             <router-view></router-view>
         </el-main>
         <el-footer height="auto">
+            <hr />
             <p>Created by
                 <ExternalLink href="https://www.szeremi.org/">Attila Szeremi</ExternalLink>
                 . Drop me an email at

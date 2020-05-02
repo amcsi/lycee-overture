@@ -32,6 +32,7 @@ const CardListPrintPage = loadingizeAsyncComponent(() => import ('./pages/CardLi
 const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage'));
 const RulesPage = loadingizeAsyncComponent(() => import(/* webpackChunkName: "rules" */ './pages/RulesPage'));
 const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
+const HelpTranslatePage = loadingizeAsyncComponent(() => import ('./pages/HelpTranslatePage'));
 
 const title = 'Lycee Overture TCG Translations';
 
@@ -102,6 +103,11 @@ const router = new VueRouter({
               },
             },
           ],
+        },
+        {
+          path: '/help-translate', component: HelpTranslatePage, meta: {
+            title: `${title} - Help Translate`,
+          },
         },
         {
           path: '/cards', component: CardListPage, meta: {

@@ -21,6 +21,10 @@
                 <img src="../../images/flags/jp.png" alt="日本語" title="日本語" />
             </a>
         </li>
+
+        <el-menu-item style="float: right" index="/help-translate" route="/help-translate">
+            <a href="/help-translate" @click.prevent>Help Translate</a>
+        </el-menu-item>
     </el-menu>
 </template>
 
