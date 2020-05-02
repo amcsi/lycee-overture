@@ -23,6 +23,7 @@
     "guzzlehttp/psr7": "^1.5",
     "laravel/framework": "7.*",
     "laravel/tinker": "^2.0",
+    "laravel/ui": "^2.0",
     "league/csv": "^9.1",
     "league/flysystem-memory": "^1.0",
     "league/fractal": "^0.17.0",
