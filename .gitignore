@@ -18,3 +18,4 @@ yarn-error.log
 /storage/dump/
 /public/mix-manifest.json
 /_ide_helper_models.php
+.phpunit.result.cache
