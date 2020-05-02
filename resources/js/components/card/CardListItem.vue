@@ -30,16 +30,25 @@
                     </span>
                 </div>
                 <div class="stats-and-stuff">
-                    <CardText class="element" :text="card.element" />
-                    <span class="stat ex">{{ card.ex }} EX</span>
-                    <template v-if="isCharacter">
-                        <span class="stat dmg">{{ card.dmg }} DMG</span>
-                        <span class="stat ap">{{ card.ap }} AP</span>
-                        <span class="stat dp">{{ card.dp }} DP</span>
-                        <span class="stat sp">{{ card.sp }} SP</span>
-                    </template>
-                    Cost:
-                    <CardText class="cost" :text="card.cost" />
+                    <div style="display: flex">
+                        <div>
+                            <CardText class="element" :text="card.element" />
+                            <span class="stat ex">{{ card.ex }} EX</span>
+                            <template v-if="isCharacter">
+                                <span class="stat dmg">{{ card.dmg }} DMG</span>
+                                <span class="stat ap">{{ card.ap }} AP</span>
+                                <span class="stat dp">{{ card.dp }} DP</span>
+                                <span class="stat sp">{{ card.sp }} SP</span>
+                            </template>
+                            Cost:
+                            <CardText class="cost" :text="card.cost" />
+                        </div>
+                        <div style="flex: 1" />
+                        <div>
+                            <router-link :to="{ path: '/cards', query: {set: card.set.id} }">{{card.set.full_name}}</router-link>
+                            <router-link :to="{ path: '/cards', query: {brand: card.set.brand} }">[{{card.set.brand}}]</router-link>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-description" v-if="hasCardDescription">
                     <CardDescription :translation="cardText" />

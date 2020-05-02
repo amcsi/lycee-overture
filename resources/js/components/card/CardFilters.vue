@@ -185,7 +185,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
         handler() {
           const filterData = {};
           for (let { name } of filterConfig) {
-            filterData[name] = this.$route.query[name] || '';
+            filterData[name] = String(this.$route.query[name] || '');
           }
 
           this.filterData = filterData;

@@ -17,6 +17,7 @@ class CardController extends Controller
         $limit = min(100, $request->get('limit', 10));
 
         $builder = $builderFactory->createBuilderWithQuery($locale, $request->query());
+        $builder->with('set');
 
         if ($locale !== Locale::JAPANESE && $request->query('translatedFirst')) {
             // Bring forward cards with fewer kanjis (i.e. fewer untranslated bits).

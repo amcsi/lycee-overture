@@ -12,18 +12,21 @@ class CardTransformer extends TransformerAbstract
 {
     private $cardTranslationTransformer;
     private $dateTimeTransformer;
+    private $setTransformer;
 
     public function __construct(
         CardTranslationTransformer $cardTranslationTransformer,
-        DateTimeTransformer $dateTimeTransformer
+        DateTimeTransformer $dateTimeTransformer,
+        SetTransformer $setTransformer
     ) {
         $this->cardTranslationTransformer = $cardTranslationTransformer;
         $this->dateTimeTransformer = $dateTimeTransformer;
+        $this->setTransformer = $setTransformer;
     }
 
     public function transform(Card $card)
     {
-        return [
+        $ret = [
             'id' => $card->id,
             'type' => $card->getType(),
             'ex' => $card->ex,
@@ -38,6 +41,10 @@ class CardTransformer extends TransformerAbstract
             'japanese' => $this->cardTranslationTransformer->transform($card->getTranslation('ja')),
             'created_at' => $this->dateTimeTransformer->transform($card->created_at),
         ];
+        if ($card->relationLoaded('set')) {
+            $ret['set'] = $this->setTransformer->transform($card->set);
+        }
+        return $ret;
     }
 
     public static function getElementMarkup(Card $card): string

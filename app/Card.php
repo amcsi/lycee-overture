@@ -5,7 +5,7 @@ namespace amcsi\LyceeOverture;
 
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method CardTranslation getTranslation($locale = null, $withFallback = null)
@@ -37,8 +37,8 @@ class Card extends Model
         return $this->getAttribute('type');
     }
 
-    public function set(): HasOne
+    public function set(): BelongsTo
     {
-        return $this->hasOne(Set::class);
+        return $this->belongsTo(Set::class);
     }
 }
