@@ -51,7 +51,7 @@
     ],
     "psr-4": {
       "amcsi\\LyceeOverture\\": "app/",
-      "database\\migrations\\tools\\": "database/migrations/tools/"
+      "database\\tools\\": "database/tools/"
     }
   },
   "autoload-dev": {
