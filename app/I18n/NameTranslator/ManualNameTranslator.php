@@ -36,22 +36,41 @@ class ManualNameTranslator
 
     public function tryToTranslateCharacterTypeExact(string $quoted): string
     {
-        return $this->translations[Locale::ENGLISH]['translation'][OneSkyClient::CHARACTER_TYPES][$quoted] ?? $quoted;
+        return $this->getTranslation($quoted, [OneSkyClient::CHARACTER_TYPES]);
     }
 
     public function tryToTranslateNameExact(string $quoted): string
     {
-        return $this->translations[Locale::ENGLISH]['translation'][OneSkyClient::NAMES][$quoted] ??
-            $this->translations[Locale::ENGLISH]['translation'][OneSkyClient::ABILITY_NAMES][$quoted] ??
-            $quoted;
+        return $this->getTranslation($quoted, [OneSkyClient::NAMES, OneSkyClient::ABILITY_NAMES]);
+    }
+
+    /**
+     * @param string $quoted The name/type to translate.
+     * @param array $textTypes The order of which text types to look in for translations.
+     * @return string
+     */
+    private function getTranslation(string $quoted, array $textTypes): string
+    {
+        return self::doSeparatedByPunctuation(
+            $quoted,
+            function ($part) use ($textTypes) {
+                foreach ($textTypes as $textType) {
+                    if (($translation = $this->translations[Locale::ENGLISH]['translation'][$textType][$part] ?? null)) {
+                        return $translation;
+                    }
+                }
+
+                return $part;
+            }
+        );
     }
 
     /**
      * Does an action on a string such that it first gets split by certain Japanese punctuation characters.
      * This is so that parts of translations could be reusable e.g. Saber／Arutoria Pendoragon.
      */
-    public static function doSeparatedByPunctuation(string $input, callable $callable): array
+    public static function doSeparatedByPunctuation(string $input, callable $callable): string
     {
-        return array_map(fn(string $part) => $callable($part), preg_split('/[／・]/u', $input));
+        return preg_replace_callback('/[^／・]+/u', fn(array $matches) => $callable($matches[0]), $input);
     }
 }
