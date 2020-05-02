@@ -9,14 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ConfigureTrustedProxiesTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         Request::setTrustedHosts([]);
         Request::setTrustedProxies([], -1);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Request::setTrustedHosts([]);
         Request::setTrustedProxies([], -1);
