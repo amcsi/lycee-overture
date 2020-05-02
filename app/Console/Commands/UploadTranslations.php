@@ -6,6 +6,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
+use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use Illuminate\Console\Command;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -24,25 +25,29 @@ class UploadTranslations extends Command
 
         $typesFromDb = CardTranslation::where('locale', 'ja')
             ->select(['character_type', 'name', 'ability_name'])->get();
-        $types = [];
-        $names = [];
-        $abilityNames = [];
+
+        $textsByTextType = ['character_type' => [], 'name' => [], 'ability_name' => []];
+
         foreach ($typesFromDb as $typeFromDb) {
-            $type = $typeFromDb->character_type;
-            $name = $typeFromDb->name;
-            $abilityName = $typeFromDb->ability_name;
-            if (JapaneseCharacterCounter::countJapaneseCharacters($type)) {
-                $types[$type] = $type;
-            }
-            if (JapaneseCharacterCounter::countJapaneseCharacters($name)) {
-                $names[$name] = $name;
-            }
-            if (JapaneseCharacterCounter::countJapaneseCharacters($abilityName)) {
-                $abilityNames[$abilityName] = $abilityName;
+            foreach ($textsByTextType as $textType => $_) {
+                $text = $typeFromDb->$textType;
+                // Upload each (punctuation) component of the text separately.
+                ManualNameTranslator::doSeparatedByPunctuation(
+                    $text,
+                    static function (string $part) use (&$textsByTextType, &$textType) {
+                        if (JapaneseCharacterCounter::countJapaneseCharacters($part)) {
+                            $textsByTextType[$textType][$part] = $part;
+                        }
+                    }
+                );
             }
         }
 
-        app(OneSkyClient::class)->uploadNamesAndTypes($types, $names, $abilityNames);
+        app(OneSkyClient::class)->uploadNamesAndTypes(
+            $textsByTextType['character_type'],
+            $textsByTextType['name'],
+            $textsByTextType['ability_name']
+        );
 
         $this->output->text(
             "Finished uploading translations to OneSky in " . Profiling::stopwatchToHuman($stopwatchEvent->stop())
