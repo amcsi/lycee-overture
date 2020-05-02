@@ -34,22 +34,12 @@ class ManualNameTranslator
         $this->translations = $translations;
     }
 
-    public function tryToTranslateCharacterTypeExact(string $quoted): string
-    {
-        return $this->getTranslation($quoted, [OneSkyClient::CHARACTER_TYPES]);
-    }
-
-    public function tryToTranslateNameExact(string $quoted): string
-    {
-        return $this->getTranslation($quoted, [OneSkyClient::NAMES, OneSkyClient::ABILITY_NAMES]);
-    }
-
     /**
      * @param string $quoted The name/type to translate.
      * @param array $textTypes The order of which text types to look in for translations.
      * @return string
      */
-    private function getTranslation(string $quoted, array $textTypes): string
+    public function tryToTranslate(string $quoted, array $textTypes): string
     {
         return self::doSeparatedByPunctuation(
             $quoted,

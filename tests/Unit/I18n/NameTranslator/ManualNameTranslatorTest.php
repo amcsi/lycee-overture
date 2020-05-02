@@ -13,7 +13,7 @@ class ManualNameTranslatorTest extends TestCase
     public function testNotFoundTranslationShouldJustReturnSameText()
     {
         $instance = self::createInstance();
-        self::assertSame('asdf', $instance->tryToTranslateCharacterTypeExact('asdf'));
+        self::assertSame('asdf', $instance->tryToTranslate('asdf', [OneSkyClient::CHARACTER_TYPES]));
     }
 
     public static function createInstance()
@@ -40,12 +40,15 @@ class ManualNameTranslatorTest extends TestCase
     public function testTryToTranslateCharacterTypeExact()
     {
         $instance = self::createInstance();
-        self::assertSame('se', $instance->tryToTranslateCharacterTypeExact('セ'));
+        self::assertSame('se', $instance->tryToTranslate('セ', [OneSkyClient::CHARACTER_TYPES]));
     }
 
     public function testNameTranslationByPunctuationComponent()
     {
         $instance = self::createInstance();
-        self::assertSame('i／baa・i', $instance->tryToTranslateNameExact('イ／バー・イ'));
+        self::assertSame(
+            'i／baa・i',
+            $instance->tryToTranslate('イ／バー・イ', [OneSkyClient::NAMES, OneSkyClient::ABILITY_NAMES])
+        );
     }
 }
