@@ -44,9 +44,13 @@
                             <CardText class="cost" :text="card.cost" />
                         </div>
                         <div style="flex: 1" />
-                        <div>
-                            <router-link :to="{ path: '/cards', query: {set: card.set.id} }">{{card.set.full_name}}</router-link>
-                            <router-link :to="{ path: '/cards', query: {brand: card.set.brand} }">[{{card.set.brand}}]</router-link>
+                        <div v-if="card.set">
+                            <router-link :to="{ path: '/cards', query: {set: card.set.id} }">
+                                {{card.set.full_name}}
+                            </router-link>
+                            <router-link :to="{ path: '/cards', query: {brand: card.set.brand} }">
+                                [{{card.set.brand}}]
+                            </router-link>
                         </div>
                     </div>
                 </div>

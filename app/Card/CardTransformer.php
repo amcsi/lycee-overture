@@ -41,7 +41,7 @@ class CardTransformer extends TransformerAbstract
             'japanese' => $this->cardTranslationTransformer->transform($card->getTranslation('ja')),
             'created_at' => $this->dateTimeTransformer->transform($card->created_at),
         ];
-        if ($card->relationLoaded('set')) {
+        if ($card->relationLoaded('set') && $card->set) {
             $ret['set'] = $this->setTransformer->transform($card->set);
         }
         return $ret;
