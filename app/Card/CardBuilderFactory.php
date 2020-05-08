@@ -13,6 +13,10 @@ class CardBuilderFactory
     private $card;
     private BrandMapper $brandMapper;
 
+    /**
+     * @param Card|Builder $card
+     * @param BrandMapper $brandMapper
+     */
     public function __construct(Card $card, BrandMapper $brandMapper)
     {
         $this->card = $card;
@@ -66,7 +70,9 @@ class CardBuilderFactory
                     $like = '%' . self::escapeLike($name) . '%';
                     $whereBuilder
                         ->where('t.name', 'LIKE', $like)
-                        ->orWhere('t.ability_name', 'LIKE', $like);
+                        ->orWhere('t.ability_name', 'LIKE', $like)
+                        ->orWhere('t.character_type', 'LIKE', $like)
+                    ;
                 }
             );
         }
