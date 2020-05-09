@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\Card\AbilityType;
+use amcsi\LyceeOverture\Card\Element;
 
 class CapitalizationFixer
 {
@@ -15,8 +16,15 @@ class CapitalizationFixer
 
         $abilityTypesRegex = '\[(?:' . implode('|', AbilityType::getJapaneseToMarkup()) . ')]';
         $pattern = "/($abilityTypesRegex(?: \[.*?:)?) (((?!$abilityTypesRegex).)*)/";
+
+        // We don't want elements like [sun] to be capitalized.
+        // TODO: possibly remove this once a refactor is made to not translate markup for Japanese locales in advance,
+        // and potentially be able to translate markup later in the auto translate logic than fixCapitalization.
+        $elementsRegex = implode('|', Element::getElementToMarkupMap());
+        $notFollowedByElementAndClosingBracket = "(?!($elementsRegex)\])";
+
         return preg_replace_callback(
-            '/(^[a-z]|(?:\.\s+)[a-z])(?!ttp)/m',
+            "/((?:\\.\\s+|^|\\[){$notFollowedByElementAndClosingBracket}[a-z](?!ttp))/m",
             ['self', 'uppercaseCallback'],
             trim(preg_replace_callback($pattern, ['self', 'callback'], $text, PREG_SET_ORDER))
         );
