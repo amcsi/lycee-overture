@@ -20,6 +20,10 @@ const japaneseAbilityTypeMap = {
   '手札宣言': 'Hand Activate',
 };
 
+const abbreviations = {
+  'Hand Activate': 'Hand Act.',
+};
+
 const japaneseAbilityTypeRegex = /\[(宣言|誘発|常時|コスト|手札宣言)]/g;
 
 /**
@@ -57,7 +61,10 @@ function discardCallback(match, contents) {
 function abilityTypeCallback(match, contents) {
   const englishAbilityType = japaneseAbilityTypeMap[contents] || contents;
   const cls = englishAbilityType.toLowerCase().replace(' ', '-');
-  return `<span class="ict">[</span><span class="card-ability-type-${cls}">${contents}</span><span class="ict">]</span>`;
+  const text = abbreviations[contents] || contents;
+  return (
+    `<span class="ict">[</span><span class="card-ability-type-${cls}">${text}</span><span class="ict">]</span>`
+  );
 }
 
 /**
