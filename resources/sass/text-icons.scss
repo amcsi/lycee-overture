@@ -20,23 +20,17 @@ $abilityTypeColors: (
 
   $icons: 0 tap star snow moon flower space sun;
 
-  $abilityTypes: activate continuous trigger;
-
   @each $icon in $icons {
     &-#{$icon} {
+      //noinspection CssUnknownTarget
       background-image: url(../images/text-icons/#{$icon}.svg);
     }
   }
 
   @for $i from 1 through 4 {
     &-d#{$i} {
+      //noinspection CssUnknownTarget
       background-image: url(../images/text-icons/d#{$i}.svg);
-    }
-  }
-
-  @each $icon in $abilityTypes {
-    &-#{$icon} {
-      background-image: url(../images/text-icons/#{$icon}-en.svg);
     }
   }
 }

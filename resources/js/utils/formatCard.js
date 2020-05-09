@@ -54,13 +54,10 @@ function discardCallback(match, contents) {
   return getIcon('d' + contents, match);
 }
 
-function japaneseAbilityTypeCallback(match, contents) {
-  const cls = japaneseAbilityTypeMap[contents].toLowerCase().replace(' ', '-');
-  return `<span class="ict">[</span><span class="card-ability-type-${cls}">${contents}</span><span class="ict">]</span>`;
-}
-
 function abilityTypeCallback(match, contents) {
-  return getIcon(contents.toLowerCase(), match, true);
+  const englishAbilityType = japaneseAbilityTypeMap[contents] || contents;
+  const cls = englishAbilityType.toLowerCase().replace(' ', '-');
+  return `<span class="ict">[</span><span class="card-ability-type-${cls}">${contents}</span><span class="ict">]</span>`;
 }
 
 /**
@@ -83,8 +80,8 @@ export default function(text = '') {
   text = text.replace(/\[T]/g, getIcon('tap'));
   text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, simpleCallback);
   text = text.replace(/\[([T無雪月花宙日]+)]/g, japaneseElementsCallback);
-  text = text.replace(/\[(Activate|Trigger|Continuous)]/g, abilityTypeCallback);
-  text = text.replace(japaneseAbilityTypeRegex, japaneseAbilityTypeCallback);
+  text = text.replace(/\[(Activate|Trigger|Continuous|Cost|Hand Activate)]/g, abilityTypeCallback);
+  text = text.replace(japaneseAbilityTypeRegex, abilityTypeCallback);
   text = text.replace(/\[D([1-4])]/g, discardCallback);
   text = text.replace(/{(.*?)}/g, `<span class="target">$1</span>`);
   text = text.replace(/\n/g, '<br>');
