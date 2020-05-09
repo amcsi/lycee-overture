@@ -199,6 +199,7 @@ import CardThumbnail from './CardThumbnail';
     .card-description {
         border-top: 1px dashed #a4a4a4;
         padding-top: .5rem;
+        line-height: 1.4;
     }
 
     .language-selector {
