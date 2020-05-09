@@ -5,7 +5,6 @@ namespace amcsi\LyceeOverture\Import;
 
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
-use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 
 /**
  * Extracts text to columns in the import
@@ -29,7 +28,7 @@ class TextImportTextExtractor
                 // Fix basic abilities that were forgotten to be wrapped in brackets from the official website.
                 $rawBasicAbilities = "[$rawBasicAbilities]";
             }
-            $dbRow['basic_abilities'] = MarkupConverter::convert($rawBasicAbilities);
+            $dbRow['basic_abilities'] = $rawBasicAbilities;
             $dbRow['ability_name'] = $csvRow[CsvColumns::ABILITY_NAME];
             foreach (CsvValueInterpreter::getAbilityPartsFromAbility($csvRow[CsvColumns::ABILITY]) as $dbKey => $val) {
                 $dbRow[$dbKey] = $val;

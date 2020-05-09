@@ -6,7 +6,6 @@ namespace amcsi\LyceeOverture\Import;
 use amcsi\LyceeOverture\Card\AbilityType;
 use amcsi\LyceeOverture\Card\Element;
 use amcsi\LyceeOverture\Card\Type;
-use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 use Illuminate\Support\Str;
 
 /**
@@ -97,9 +96,9 @@ class CsvValueInterpreter
             $abilityRow = preg_replace('/^(\S*):(.*)/', '[$1] $2', $abilityRow);
 
             if (preg_match("/$abilityTypeAndCostRegexPart(.*)/u", $abilityRow, $matches)) {
-                $abilityTypeAndCosts[] = MarkupConverter::convert(trim($matches[1] . $matches[2]));
+                $abilityTypeAndCosts[] = trim($matches[1] . $matches[2]);
 
-                $description = MarkupConverter::convert(trim($matches[3]));
+                $description = trim($matches[3]);
 
                 // Normalize description.
                 $description = preg_replace(
@@ -131,7 +130,7 @@ class CsvValueInterpreter
 
             // Fall back to adding this row as a description.
             $abilityTypeAndCosts[] = '';
-            $abilityDescriptions[] = MarkupConverter::convert($abilityRow);
+            $abilityDescriptions[] = $abilityRow;
         }
 
         return [
