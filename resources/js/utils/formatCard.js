@@ -10,6 +10,18 @@ const japaneseIconMap = {
   '日': 'sun',
 };
 
+//noinspection NonAsciiCharacters
+const japaneseAbilityTypeMap = {
+  '宣言': 'Activate',
+  '誘発': 'Trigger',
+  '常時': 'Continuous',
+  'コスト': 'Cost',
+  '装備制限': 'Equip Restriction',
+  '手札宣言': 'Hand Activate',
+};
+
+const japaneseAbilityTypeRegex = /\[(宣言|誘発|常時|コスト|手札宣言)]/g;
+
 /**
  * @param name
  * @param text The hidden text for when copy-pasting.
@@ -42,6 +54,11 @@ function discardCallback(match, contents) {
   return getIcon('d' + contents, match);
 }
 
+function japaneseAbilityTypeCallback(match, contents) {
+  const cls = japaneseAbilityTypeMap[contents].toLowerCase().replace(' ', '-');
+  return `<span class="ict">[</span><span class="card-ability-type-${cls}">${contents}</span><span class="ict">]</span>`;
+}
+
 function abilityTypeCallback(match, contents) {
   return getIcon(contents.toLowerCase(), match, true);
 }
@@ -67,6 +84,7 @@ export default function(text = '') {
   text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, simpleCallback);
   text = text.replace(/\[([T無雪月花宙日]+)]/g, japaneseElementsCallback);
   text = text.replace(/\[(Activate|Trigger|Continuous)]/g, abilityTypeCallback);
+  text = text.replace(japaneseAbilityTypeRegex, japaneseAbilityTypeCallback);
   text = text.replace(/\[D([1-4])]/g, discardCallback);
   text = text.replace(/{(.*?)}/g, `<span class="target">$1</span>`);
   text = text.replace(/\n/g, '<br>');

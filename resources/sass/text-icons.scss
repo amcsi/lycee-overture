@@ -1,3 +1,11 @@
+$abilityTypeColors: (
+        activate: #0163b1,
+        trigger: #dc3888,
+        continuous: #01a299,
+        cost: #ec5009,
+        hand-activate: #d9000a,
+);
+
 .card-text-icon {
   display: inline-block;
   width: 1em;
@@ -29,6 +37,20 @@
   @each $icon in $abilityTypes {
     &-#{$icon} {
       background-image: url(../images/text-icons/#{$icon}-en.svg);
+    }
+  }
+}
+
+.card-ability-type {
+  @each $abilityType, $color in $abilityTypeColors {
+    &-#{$abilityType} {
+      padding: 0.1rem 0.3rem;
+      font-size: 0.9em;
+      background-color: $color;
+      position: relative;
+      top: -.1em;
+      color: white;
+      border-radius: 0.2rem;
     }
   }
 }
