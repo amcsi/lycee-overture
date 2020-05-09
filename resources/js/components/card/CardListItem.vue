@@ -32,9 +32,7 @@
                     </div>
                     <div style="flex: 1" />
                     <div style="position: relative; top: 0.2rem">
-                        <span class="rarity">
-                        {{card.rarity}}
-                    </span>
+                        <span class="rarity">{{card.rarity}}</span>
                     </div>
                 </div>
                 <div class="stats-and-stuff">
@@ -65,26 +63,30 @@
                 <div class="card-description" v-if="hasCardDescription">
                     <CardDescription :translation="cardText" />
                 </div>
+                <div class="show-when-hovering" style="text-align: right">
+                    <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
+                </div>
             </div>
         </div>
     </el-card>
 </template>
 
 <script>
+import ExternalLink from '../common/ExternalLink';
 import CardDescription from './CardDescription';
 import CardText from './CardText';
 import CardThumbnail from './CardThumbnail';
 
 /** @class CardListItem */
   export default {
-    name: 'CardListItem',
-    components: { CardText, CardDescription, CardThumbnail },
-    props: {
-      card: {
-        type: Object,
-        required: true,
-      },
+  name: 'CardListItem',
+  components: { ExternalLink, CardText, CardDescription, CardThumbnail },
+  props: {
+    card: {
+      type: Object,
+      required: true,
     },
+  },
   data() {
     return {
       localLocale: null,
@@ -117,6 +119,13 @@ import CardThumbnail from './CardThumbnail';
       },
       showLanguageSelectors() {
         return !!this.card.translation;
+      },
+      rulingsLink() {
+        let link = `https://lycee-tcg.com/faq/?word=${this.card.id}`;
+        if (this.localLocale !== 'ja') {
+          link = `https://translate.google.com/translate?sl=ja&tl=en&u=${encodeURI(link)}`;
+        }
+        return link;
       },
     },
   created() {
@@ -228,6 +237,14 @@ import CardThumbnail from './CardThumbnail';
 
         &:not(.active) {
             opacity: 0.25;
+        }
+    }
+
+    .show-when-hovering {
+        visibility: hidden;
+
+        .card-list-item:hover & {
+            visibility: visible;
         }
     }
 </style>

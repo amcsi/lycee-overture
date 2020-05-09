@@ -1,5 +1,5 @@
 <template>
-    <a target="_blank" rel="noopener" :href="href">
+    <a target="_blank" rel="nofollow noopener" :href="href">
         <slot></slot>
     </a>
 </template>
