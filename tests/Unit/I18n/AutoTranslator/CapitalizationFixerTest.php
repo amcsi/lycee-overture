@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Unit\LyceeOverture\I18n\AutoTranslator;
+namespace Tests\Unit\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\CapitalizationFixer;
 use PHPUnit\Framework\TestCase;
@@ -34,6 +34,10 @@ class CapitalizationFixerTest extends TestCase
             'ignore activate cost' => [
                 '[Activate] [T][sun]: As. As.',
                 '[Activate] [T][sun]: as. as.',
+            ],
+            'newlines before' => [
+                "Something\nSomething",
+                "something\nsomething",
             ],
         ];
     }
