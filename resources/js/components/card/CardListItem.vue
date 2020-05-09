@@ -1,24 +1,6 @@
 <template>
     <el-card class="card-list-item">
         <div class="card-list-item-inner">
-            <div class="language-selector" v-if="showLanguageSelectors">
-                <span
-                    class="language-link clickable"
-                    tabindex="0"
-                    :class="{ active: localLocale !== 'ja' }"
-                    @click="localLocale = 'en'"
-                >
-                    <img src="../../../images/flags/gb.png" alt="English" title="English" />
-                </span>
-                <span
-                    class="language-link clickable"
-                    tabindex="0"
-                    :class="{ active: localLocale === 'ja' }"
-                    @click="localLocale = 'ja'"
-                >
-                    <img src="../../../images/flags/jp.png" alt="日本語" title="日本語" />
-                </span>
-            </div>
             <CardThumbnail class="card-thumbnail" :id="card.id" />
             <div class="card-details">
                 <div class="names-and-type">
@@ -31,7 +13,7 @@
                         </span>
                     </div>
                     <div style="flex: 1" />
-                    <div style="position: relative; top: 0.2rem">
+                    <div>
                         <span class="rarity">{{card.rarity}}</span>
                     </div>
                 </div>
@@ -63,8 +45,27 @@
                 <div class="card-description" v-if="hasCardDescription">
                     <CardDescription :translation="cardText" />
                 </div>
+                <div style="flex: 1" />
                 <div class="show-when-hovering" style="text-align: right">
                     <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
+                    <span v-if="showLanguageSelectors">
+                        <span
+                            class="language-link clickable"
+                            tabindex="0"
+                            :class="{ active: localLocale !== 'ja' }"
+                            @click="localLocale = 'en'"
+                        >
+                            <img src="../../../images/flags/gb.png" alt="English" title="English" />
+                        </span>
+                                <span
+                                    class="language-link clickable"
+                                    tabindex="0"
+                                    :class="{ active: localLocale === 'ja' }"
+                                    @click="localLocale = 'ja'"
+                                >
+                            <img src="../../../images/flags/jp.png" alt="日本語" title="日本語" />
+                        </span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -144,6 +145,7 @@ import CardThumbnail from './CardThumbnail';
     .card-list-item-inner {
         display: flex;
         flex-direction: row;
+        justify-content: stretch;
     }
 
     .card-thumbnail {
@@ -154,6 +156,9 @@ import CardThumbnail from './CardThumbnail';
 
     .card-details {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
     }
 
     .names-and-type {
