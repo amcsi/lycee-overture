@@ -24,7 +24,7 @@ class CapitalizationFixer
         $notFollowedByElementAndClosingBracket = "(?!($elementsRegex)\])";
 
         return preg_replace_callback(
-            "/((?:\\.\\s+|^|\\[){$notFollowedByElementAndClosingBracket}[a-z](?!ttp))/m",
+            "/((?:\\.\\s+|^\\s*|\\[){$notFollowedByElementAndClosingBracket}[a-z](?!ttp))/m",
             ['self', 'uppercaseCallback'],
             trim(preg_replace_callback($pattern, ['self', 'callback'], $text, PREG_SET_ORDER))
         );

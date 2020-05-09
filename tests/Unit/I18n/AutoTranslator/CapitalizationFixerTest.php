@@ -39,6 +39,10 @@ class CapitalizationFixerTest extends TestCase
                 "Something\nSomething",
                 "something\nsomething",
             ],
+            'newlines with spaces' => [
+                "Something\n Something",
+                "something\n something",
+            ],
             'costs' => [
                 "[Penalty:[Draw 1 card.]]",
                 "[Penalty:[draw 1 card.]]",
