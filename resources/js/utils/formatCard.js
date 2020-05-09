@@ -1,5 +1,15 @@
 import { escape } from './html';
 
+//noinspection NonAsciiCharacters
+const japaneseIconMap = {
+  '無': 'star',
+  '雪': 'snow',
+  '月': 'moon',
+  '花': 'flower',
+  '宙': 'space',
+  '日': 'sun',
+};
+
 /**
  * @param name
  * @param text The hidden text for when copy-pasting.
@@ -13,6 +23,19 @@ function getIcon(name, text, long) {
 
 function simpleCallback(match, contents) {
   return getIcon(contents, match);
+}
+
+/**
+ * Multiple elements next to each other are all enclosed with a single pair of square brackets.
+ * For copy-ability, they need to be enclosed with invisible copiable brackets.
+ */
+function japaneseElementsCallback(match, contents) {
+  const iconsString = contents.split('').map(japaneseElementChar => getIcon(
+    japaneseElementChar === 'T' ? 'tap' : japaneseIconMap[japaneseElementChar],
+    japaneseElementChar,
+  )).join('');
+
+  return `<span class=ict>[</span>${iconsString}<span class="ict">]</span>`;
 }
 
 function discardCallback(match, contents) {
@@ -42,6 +65,7 @@ export default function(text = '') {
   });
   text = text.replace(/\[T]/g, getIcon('tap'));
   text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, simpleCallback);
+  text = text.replace(/\[([T無雪月花宙日]+)]/g, japaneseElementsCallback);
   text = text.replace(/\[(Activate|Trigger|Continuous)]/g, abilityTypeCallback);
   text = text.replace(/\[D([1-4])]/g, discardCallback);
   text = text.replace(/{(.*?)}/g, `<span class="target">$1</span>`);

@@ -36,3 +36,9 @@
 .card-text-icon-long {
   width: 2em;
 }
+
+// Invisible copiable text.
+.ict {
+  position: absolute;
+  left: -10000px;
+}
