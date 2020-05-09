@@ -155,6 +155,14 @@ class SubjectTest extends TestCase
                 ' all characters {in 1 column}',
                 '{列1つ}のキャラ全て',
             ],
+            'correct article' => [
+                ' an event',
+                'イベント',
+            ],
+            'japanese kanji counted for determining article' => [
+                ' a [雪] event',
+                '[雪]イベント',
+            ],
         ];
     }
 }

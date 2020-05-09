@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture\Import\CsvValueInterpreter;
+namespace Tests\Unit\Import\CsvValueInterpreter;
 
+use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 use PHPUnit\Framework\TestCase;
 
 class MarkupConverterTest extends TestCase
@@ -41,6 +42,36 @@ class MarkupConverterTest extends TestCase
             'other characters in the markup' => [
                 '[コストが２点以下のＡＦキャラ１体]',
                 '[コストが２点以下のＡＦキャラ１体]',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider provideNormalizeBrackets
+     */
+    public function testNormalizeBrackets($expected, $input): void
+    {
+        self::assertSame($expected, MarkupConverter::normalizeBrackets($input));
+    }
+
+    public function provideNormalizeBrackets(): array
+    {
+        return [
+            [
+                '',
+                '',
+            ],
+            [
+                '[雪]',
+                '[雪]',
+            ],
+            [
+                '[T][雪][月][花][宙][日][無]',
+                '[T雪月花宙日無]',
+            ],
+            'full-width T' => [
+                '[Ｔ][宙][宙]',
+                '[Ｔ宙宙]',
             ],
         ];
     }

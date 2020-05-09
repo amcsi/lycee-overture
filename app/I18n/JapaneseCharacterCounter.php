@@ -10,9 +10,15 @@ use amcsi\LyceeOverture\Console\Commands\AutoTranslateCommand;
  */
 class JapaneseCharacterCounter
 {
+    public const KANJI_REGEX_RANGE = '\x{4E00}-\x{9FBF}';
+    public const HIRAGANA_REGEX_RANGE = '\x{3040}-\x{309F}';
+    public const KATAKANA_REGEX_RANGE = '\x{30A0}-\x{30FF}';
+    public const JAPANESE_LETTERS_RANGES = self::KANJI_REGEX_RANGE . self::HIRAGANA_REGEX_RANGE . self::KATAKANA_REGEX_RANGE;
+
     public static function countJapaneseCharacters($string): int
     {
-        return mb_strlen(preg_replace('/[^\x{4E00}-\x{9FBF}\x{3040}-\x{309F}\x{30A0}-\x{30FF}]/u', '', $string));
+        $japaneseLettersRanges = self::JAPANESE_LETTERS_RANGES;
+        return mb_strlen(preg_replace("/[^$japaneseLettersRanges]/u", '', $string));
     }
 
     public static function countJapaneseCharactersForDbRow(array $dbRow): int

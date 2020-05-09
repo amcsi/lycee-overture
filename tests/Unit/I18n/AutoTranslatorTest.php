@@ -56,12 +56,12 @@ class AutoTranslatorTest extends TestCase
                 '..ときこのキャラにＡＰ＋２・ＤＰ＋２する。',
             ],
             [
-                'This [花] character gets SP+1.',
+                'This [flower] character gets SP+1.',
                 'この[花]キャラにＳＰ＋１する。',
             ],
             [
                 'This [sun] character gets AP+1, DP-1.',
-                'この[sun]キャラにＡＰ＋１・ＤＰ－１する。',
+                'この[日]キャラにＡＰ＋１・ＤＰ－１する。',
             ],
             [
                 'When an ally character is summoned, this character gets AP+1, DP+1.',
@@ -73,26 +73,26 @@ class AutoTranslatorTest extends TestCase
             ],
             'all your [sun] characters get stats' => [
                 'All your [sun] characters get AP+1, DP+1, DMG+1.',
-                '味方[sun]キャラ全てにAP+1, DP+1, DMG+1する。',
+                '味方[日]キャラ全てにAP+1, DP+1, DMG+1する。',
             ],
             'all enemy characters get stats' => [
                 'All enemy characters get AP+1, DP+1, DMG+1.',
                 '相手キャラ全てにAP+1, DP+1, DMG+1する。',
             ],
             'gaining abilities' => [
-                'This character gains [アグレッシブ].',
+                'This character gains [Aggressive].',
                 'このキャラは[アグレッシブ]を得る。',
             ],
             'gaining multiple abilities' => [
                 'This character gains [Aggressive][Order Step:[0]].',
-                'このキャラは[Aggressive][Order Step:[0]]を得る。',
+                'このキャラは[アグレッシブ][オーダーステップ:[0]]を得る。',
             ],
             'ally gaining abilities' => [
-                '{1 ally character} gains [オーダーステップ:[無]][サイドステップ:[無]].',
+                '{1 ally character} gains [Order Step:[star]][Side Step:[star]].',
                 '[味方キャラ1体]は[オーダーステップ:[無]][サイドステップ:[無]]を得る.',
             ],
             'opponent losing abilities' => [
-                '{1 enemy character} loses [アグレッシブ] until the end of the turn.',
+                '{1 enemy character} loses [Aggressive] until the end of the turn.',
                 '[相手キャラ１体]はターン終了時まで[アグレッシブ]を失う。',
             ],
             'ally getting stat changes' => [
@@ -133,7 +133,7 @@ class AutoTranslatorTest extends TestCase
             ],
             'multiline subject' => [
                 "カード名に「孫」を含む<呉>キャラ\n this character gets AP+1, DP+1, DMG+1. This character gains [Bonus:[Your opponent discards 1 card from the top of their deck.]]. \nこのキャラが場を離れたとき, ゴミ箱のこのアイテムを味方キャラ1体に無償で装備する.",
-                "カード名に「孫」を含む＜呉＞キャラ\nこのキャラにＡＰ＋１・ＤＰ＋１・ＤＭＧ＋１する。このキャラは[Bonus:[相手のデッキを１枚破棄する。]]を得る。\nこのキャラが場を離れたとき、ゴミ箱のこのアイテムを味方キャラ１体に無償で装備する。",
+                "カード名に「孫」を含む＜呉＞キャラ\nこのキャラにＡＰ＋１・ＤＰ＋１・ＤＭＧ＋１する。このキャラは[ボーナス:[相手のデッキを１枚破棄する。]]を得る。\nこのキャラが場を離れたとき、ゴミ箱のこのアイテムを味方キャラ１体に無償で装備する。",
             ],
             'use during your turn' => [
                 'Use during your turn.',
@@ -209,7 +209,7 @@ class AutoTranslatorTest extends TestCase
             ],
             'resources getting provided' => [
                 'Use during your opponent\'s turn. Discard 2 cards from the top of your deck. When destroyed, you get [moon][moon].',
-                '相手ターン中に使用する。自分のデッキを２枚破棄する。破棄したとき、[moon][moon]を発生する。',
+                '相手ターン中に使用する。自分のデッキを２枚破棄する。破棄したとき、[月月]を発生する。',
             ],
             'when your opponent activates an ability' => [
                 'Use when your opponent activates an ability.',
@@ -257,7 +257,7 @@ class AutoTranslatorTest extends TestCase
             ],
             'Can defend despite tapped' => [
                 'All your [flower] characters can defend even while tapped.',
-                '味方[flower]キャラ全ては、行動済みでも防御キャラに指定できる。',
+                '味方[花]キャラ全ては、行動済みでも防御キャラに指定できる。',
             ],
             'This character can defend despite tapped' => [
                 'This character can defend even while tapped.',

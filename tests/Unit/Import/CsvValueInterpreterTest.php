@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture\Import;
+namespace Tests\Unit\Import;
 
 use amcsi\LyceeOverture\Card\Element;
 use amcsi\LyceeOverture\Card\Type;
+use amcsi\LyceeOverture\Import\CsvColumns;
+use amcsi\LyceeOverture\Import\CsvValueInterpreter;
 use PHPUnit\Framework\TestCase;
 
 class CsvValueInterpreterTest extends TestCase
@@ -110,7 +112,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             [
                 [
-                    'ability_cost' => '[Activate] [T][このキャラを破棄する]',
+                    'ability_cost' => '[宣言] [T][このキャラを破棄する]',
                     'ability_description' => '{相手ＡＦキャラ１体}を手札に入れる。',
                     'comments' => '※このキャラは別番号の同名キャラとは別に４枚までデッキに入れることができる。',
                 ],
@@ -118,15 +120,15 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'Two colons in ability' => [
                 [
-                    'ability_cost' => '[Activate] [sun][sun]',
-                    'ability_description' => '{味方キャラ１体}は[Step:[0]]を得る。',
+                    'ability_cost' => '[宣言] [日日]',
+                    'ability_description' => '{味方キャラ１体}は[ステップ:[0]]を得る。',
                     'comments' => '',
                 ],
                 '[宣言] [日日]:{味方キャラ１体}は[ステップ:[0]]を得る。',
             ],
             'tap included' => [
                 [
-                    'ability_cost' => '[Activate] [T][sun][sun]',
+                    'ability_cost' => '[宣言] [T日日]',
                     'ability_description' => '{味方キャラ１体}は...',
                     'comments' => '',
                 ],
@@ -134,15 +136,15 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'Non-cost colon' => [
                 [
-                    'ability_cost' => '[Continuous]',
-                    'ability_description' => 'このキャラと同列の味方キャラ全ては[Order Change:[0]]を得る。',
+                    'ability_cost' => '[常時]',
+                    'ability_description' => 'このキャラと同列の味方キャラ全ては[オーダーチェンジ:[0]]を得る。',
                     'comments' => '',
                 ],
                 '[常時] このキャラと同列の味方キャラ全ては[オーダーチェンジ:[0]]を得る。',
             ],
             'normalizing span to target' => [
                 [
-                    'ability_cost' => '[Activate] [sun]',
+                    'ability_cost' => '[宣言] [日]',
                     'ability_description' => '{味方キャラ１体}にＡＰ＋１する。',
                     'comments' => '',
                 ],
@@ -150,7 +152,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             '<br /> comments' => [
                 [
-                    'ability_cost' => '[Trigger]',
+                    'ability_cost' => '[誘発]',
                     'ability_description' => 'このキャラにサポートをしたとき、このキャラを未行動にする。',
                     'comments' => '構築制限:ゆずソフト,ゆずソフト 1.0,へいろー',
                 ],
@@ -158,7 +160,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'two effects' => [
                 [
-                    'ability_cost' => "[Continuous]\n[Activate] [star][star][star]",
+                    'ability_cost' => "[常時]\n[宣言] [無無無]",
                     'ability_description' => 'このキャラにＤＭＧ－２する。' . "\n" .
                         '相手ターン中に使用する。このアイテムを除外する。',
                     'comments' => '',
@@ -167,7 +169,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'equip restriction' => [
                 [
-                    'ability_cost' => '[Equip Restriction]',
+                    'ability_cost' => '[装備制限]',
                     'ability_description' => 'Something.',
                     'comments' => '',
                 ],
@@ -175,8 +177,8 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'equip restriction alternative form' => [
                 [
-                    'ability_cost' => "[Equip Restriction]\n[Continuous]",
-                    'ability_description' => "[sun]キャラ\nこのキャラにＡＰ＋１・ＤＰ－１する。",
+                    'ability_cost' => "[装備制限]\n[常時]",
+                    'ability_description' => "[日]キャラ\nこのキャラにＡＰ＋１・ＤＰ－１する。",
                     'comments' => '',
                 ],
                 '装備制限:[日]キャラ<br />[常時] このキャラにＡＰ＋１・ＤＰ－１する。',
@@ -200,7 +202,7 @@ class CsvValueInterpreterTest extends TestCase
             'event text with markup' => [
                 [
                     'ability_cost' => '',
-                    'ability_description' => 'Bla bla bla [sun]',
+                    'ability_description' => 'Bla bla bla [日]',
                     'comments' => '',
                 ],
                 'Bla bla bla [日]',

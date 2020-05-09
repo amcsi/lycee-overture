@@ -14,7 +14,8 @@ class MarkupConverter
 {
     public static function convert(string $text): string
     {
-        $text = preg_replace_callback('/\[([T雪月花宙日無]+)\]/u', ['self', 'elementCallback'], $text);
+        $text = self::normalizeBrackets($text);
+        $text = preg_replace_callback('/\[([雪月花宙日無])]/u', ['self', 'elementCallback'], $text);
 
         $japaneseToMarkup = BasicAbility::getJapaneseToMarkup();
         $japaneseBasicAbilitiesRegex = implode('|', array_keys($japaneseToMarkup));
@@ -36,16 +37,19 @@ class MarkupConverter
         return $text;
     }
 
+    public static function normalizeBrackets($input)
+    {
+        return preg_replace_callback('/\[([TＴ雪月花宙日無]{2,})]/u', ['self', 'normalizeBracketsCallback'], $input);
+    }
+
+    private static function normalizeBracketsCallback(array $matches)
+    {
+        return implode('', array_map(fn($char) => "[$char]", mb_str_split($matches[1])));
+    }
+
     private static function elementCallback(array $matches)
     {
-        $elements = preg_split('//u', $matches[1], -1, PREG_SPLIT_NO_EMPTY);
-        $markupMap = Element::getElementToMarkupMap();
-        // Include 'T' for tap.
-        $markupMap['T'] = 'T';
-        foreach ($elements as $key => $value) {
-            $elements[$key] = "[$markupMap[$value]]";
-        }
-        return implode('', $elements);
+        return '[' . Element::getElementToMarkupMap()[$matches[1]] . ']';
     }
 
     private static function basicAbilityCallback(array $matches)

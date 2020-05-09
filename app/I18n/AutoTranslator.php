@@ -20,6 +20,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator\StatChanges;
 use amcsi\LyceeOverture\I18n\AutoTranslator\Target;
 use amcsi\LyceeOverture\I18n\AutoTranslator\TurnAndBattle;
 use amcsi\LyceeOverture\I18n\AutoTranslator\WhenSomething;
+use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 
 /**
  * Auto-translates parts of Japanese text.
@@ -40,6 +41,9 @@ class AutoTranslator
 
     public function autoTranslate(string $japaneseText): string
     {
+        // This needs to be done before counting the brackets to ensure the bracket count matches up in the end.
+        $japaneseText = MarkupConverter::normalizeBrackets($japaneseText);
+
         $bracketCounts = self::countBrackets($japaneseText);
         $subjectRegex = Subject::getUncapturedRegex();
         $turnAndBattleRegex = TurnAndBattle::getUncapturedRegex();
@@ -211,6 +215,8 @@ class AutoTranslator
 
         // Fix capitalization.
         $autoTranslated = CapitalizationFixer::fixCapitalization($autoTranslated);
+
+        $autoTranslated = MarkupConverter::convert($autoTranslated);
 
         if (self::countBrackets($autoTranslated) !== $bracketCounts) {
             throw new \LogicException("Bracket count mismatch.\nOriginal: $japaneseText\nTranslated: $autoTranslated");
