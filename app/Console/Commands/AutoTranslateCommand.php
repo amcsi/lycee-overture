@@ -87,25 +87,12 @@ class AutoTranslateCommand extends Command
         // but only ones that haven't been manually translated.
         foreach ($japaneseCards as $japaneseCard) {
             $cardId = $japaneseCard->card_id;
-            $japaneseCardAsArray = $japaneseCard->toArray();
             $englishCard = $englishCards->get($cardId) ?
                 // Update based on the existing English card data.
-                $englishCards->get($cardId)->toArray() :
-                // Work with the Japanese card then.
-                $japaneseCardAsArray;
+                $englishCards[$cardId] :
+                // Create a new English card based on the Japanese one.
+                $japaneseCard->replicate()->setAttribute('locale', Locale::ENGLISH);
 
-            // Fill in only missing values. This ensures anything manually translated would not get overwritten, but
-            // new properties would get copied over.
-            foreach ($japaneseCardAsArray as $field => $value) {
-                if (empty($englishCard[$field])) {
-                    $englishCard[$field] = $value;
-                }
-            }
-
-            // Strip these properties.
-            unset($englishCard['id'], $englishCard['created_at'], $englishCard['updated_at']);
-
-            $englishCard['locale'] = Locale::ENGLISH;
             // Iterate the auto-translatable fields.
             foreach (self::AUTO_TRANSLATE_FIELDS as $key) {
                 try {
@@ -129,15 +116,12 @@ class AutoTranslateCommand extends Command
             );
             $englishCard['comments'] = $commentTranslator->translate($japaneseCard['comments']);
 
-            $englishCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($englishCard);
-
-            $englishCard = CardTranslation::updateOrCreate(
-                [
-                    'card_id' => $englishCard['card_id'],
-                    'locale' => $englishCard['locale'],
-                ],
-                $englishCard
+            $englishCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow(
+                $englishCard->toArray()
             );
+
+            $englishCard->save();
+
             if ($englishCard->updated_at > $updatedNowThreshold) {
                 ++$updatedCount;
             }
