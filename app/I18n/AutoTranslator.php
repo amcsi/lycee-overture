@@ -197,7 +197,7 @@ class AutoTranslator
         $autoTranslated = Equip::autoTranslate($autoTranslated);
 
         $autoTranslated = preg_replace_callback(
-            '/^' . Subject::getUncapturedRegex() . '$/m',
+            '/^' . Subject::getUncapturedRegex() . '$/um',
             ['self', 'subjectReplaceCallback'],
             $autoTranslated
         );

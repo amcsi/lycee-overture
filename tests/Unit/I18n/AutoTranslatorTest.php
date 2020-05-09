@@ -131,6 +131,10 @@ class AutoTranslatorTest extends TestCase
                 'このキャラを除く all your characters get AP+1, DP+1, DMG+1.',
                 'このキャラを除く味方キャラ全てにＡＰ＋１・ＤＰ＋１・ＤＭＧ＋１する。',
             ],
+            'multiline subject' => [
+                "カード名に「孫」を含む<呉>キャラ\n this character gets AP+1, DP+1, DMG+1. This character gains [Bonus:[your opponent discards 1 card from the top of their deck.]]. \nこのキャラが場を離れたとき, ゴミ箱のこのアイテムを味方キャラ1体に無償で装備する.",
+                "カード名に「孫」を含む＜呉＞キャラ\nこのキャラにＡＰ＋１・ＤＰ＋１・ＤＭＧ＋１する。このキャラは[Bonus:[相手のデッキを１枚破棄する。]]を得る。\nこのキャラが場を離れたとき、ゴミ箱のこのアイテムを味方キャラ１体に無償で装備する。",
+            ],
             'use during your turn' => [
                 'Use during your turn.',
                 '自ターン中に使用する. ',
