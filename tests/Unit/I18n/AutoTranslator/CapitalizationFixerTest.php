@@ -27,14 +27,6 @@ class CapitalizationFixerTest extends TestCase
                 'As. As.',
                 'as. as.',
             ],
-            'ignore effect type' => [
-                '[Continuous] As. As.',
-                '[Continuous] as. as.',
-            ],
-            'ignore activate cost' => [
-                '[Activate] [T][sun]: As. As.',
-                '[Activate] [T][sun]: as. as.',
-            ],
             'newlines before' => [
                 "Something\nSomething",
                 "something\nsomething",
