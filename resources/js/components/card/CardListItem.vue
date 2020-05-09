@@ -22,12 +22,20 @@
             <CardThumbnail class="card-thumbnail" :id="card.id" />
             <div class="card-details">
                 <div class="names-and-type">
-                    <span class="card-id">{{ card.id }}</span>
-                    <span class="card-name">{{ cardText.name }}</span>
-                    <span v-if="isCharacter">
-                        - <span class="card-ability-name">{{ cardText.ability_name }}</span>
-                        <span class="card-character-type" v-if="characterType">- Type: {{ cardText.character_type || '-' }}</span>
+                    <div>
+                        <span class="card-id">{{ card.id }}</span>
+                        <span class="card-name">{{ cardText.name }}</span>
+                        <span v-if="isCharacter">
+                            - <span class="card-ability-name">{{ cardText.ability_name }}</span>
+                            <span class="card-character-type" v-if="characterType">- Type: {{ cardText.character_type || '-' }}</span>
+                        </span>
+                    </div>
+                    <div style="flex: 1" />
+                    <div style="position: relative; top: 0.2rem">
+                        <span class="rarity">
+                        {{card.rarity}}
                     </span>
+                    </div>
                 </div>
                 <div class="stats-and-stuff">
                     <div style="display: flex">
@@ -140,6 +148,8 @@ import CardThumbnail from './CardThumbnail';
     }
 
     .names-and-type {
+        display: flex;
+        align-items: center;
         margin-bottom: .5rem;
         color: gray;
     }

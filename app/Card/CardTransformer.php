@@ -36,6 +36,7 @@ class CardTransformer extends TransformerAbstract
             'sp' => $card->sp,
             'element' => self::getElementMarkup($card),
             'cost' => self::getCostMarkup($card),
+            'rarity' => $card->rarity,
             'translation' => \App::getLocale() !== Locale::JAPANESE ?
                 $this->cardTranslationTransformer->transform($card->getTranslation()) : null,
             'japanese' => $this->cardTranslationTransformer->transform($card->getTranslation('ja')),
