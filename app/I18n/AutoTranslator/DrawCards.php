@@ -3,14 +3,22 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\Spanish\EsDrawCards;
+use amcsi\LyceeOverture\I18n\Locale;
+
 /**
  * Auto-translate drawing cards.
  */
 class DrawCards
 {
-    public static function autoTranslate(string $text): string
+    private const REGEX = '/(相手は)?(\d)枚ドロー(する|できる)/u';
+
+    public static function autoTranslate(string $text, string $locale = null): string
     {
-        return preg_replace_callback('/(相手は)?(\d)枚ドロー(する|できる)/', ['self', 'callback'], $text);
+        if ($locale === Locale::SPANISH) {
+            return preg_replace_callback(self::REGEX, [EsDrawCards::class, 'callback'], $text);
+        }
+        return preg_replace_callback(self::REGEX, ['self', 'callback'], $text);
     }
 
     private static function callback(array $matches): string
