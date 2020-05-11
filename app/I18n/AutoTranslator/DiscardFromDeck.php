@@ -3,14 +3,22 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\Spanish\EsDiscardFromDeck;
+use amcsi\LyceeOverture\I18n\Locale;
+
 /**
  * Discarding cards from the deck
  */
 class DiscardFromDeck
 {
-    public static function autoTranslate(string $text): string
+    const REGEX = '/(自分|相手)のデッキを(\d)枚破棄する/u';
+
+    public static function autoTranslate(string $text, string $locale = null): string
     {
-        return preg_replace_callback('/(自分|相手)のデッキを(\d)枚破棄する/', ['self', 'callback'], $text);
+        if ($locale === Locale::SPANISH) {
+            return preg_replace_callback(self::REGEX, [EsDiscardFromDeck::class, 'callback'], $text);
+        }
+        return preg_replace_callback(self::REGEX, ['self', 'callback'], $text);
     }
 
     private static function callback(array $matches): string
