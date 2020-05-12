@@ -163,14 +163,14 @@ class EsSubject
             if ($all) {
                 switch ($subject) {
                     case '味方':
-                        $text = "todos tus$something {$noun}s";
+                        $text = "todos tus {$noun}s{$something}";
                         break;
                     case '相手':
-                        $text = "todos$something enemigos {$noun}s";
+                        $text = "todos {$noun}s enemigos$something";
                         break;
                     case '':
                         // Unknown
-                        $text = "todos$something {$noun}s";
+                        $text = "todos {$noun}s$something";
                         break;
                     default:
                         throw new \LogicException("Unexpected all subject: $subject");
