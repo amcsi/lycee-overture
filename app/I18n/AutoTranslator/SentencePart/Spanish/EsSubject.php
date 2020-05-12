@@ -1,21 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart;
+namespace amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Spanish;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\RegexHelper;
+use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 
 /**
  * Subregex for the subject of the sentence.
  */
-class Subject
+class EsSubject
 {
-    // language=regexp
-    public const REGEX = '\{([^}]*)}|(?:((自分の|相手の)?ゴミ箱の|バトル参加|{列1つ}の)?((この|その)キャラと同(列|オーダー)の)?(未行動の|(コスト|EX|DP|AP|SP|DMG)が(\d)点?(以下|以上)?の)?(?:(味方|相手|対象の|対戦|この|その)の?)?((?:[<「].*?[>」]|\[.+?\])*|AF|DF))?(破棄したカード|キャラ|アイテム|イベント|フィールド|[<「].*?[>」]|\{.*})(?:の((?:と?(?:AP|DP|SP|DMG|EX))+))?(が?(\d)[体枚](?:以(上|下))?|全て)?';
-    public const REGEX_COMPOUND_AND_OR = '[subject](と|または)[subject]';
-    public const REGEX_COMPOUND_ADJACENT = '[subject]に隣接した[subject]';
-
     private $subjectText;
 
     /**
@@ -31,31 +27,31 @@ class Subject
 
     /**
      * @param string $subjectPart String with just the subject.
-     * @return self
+     * @return \amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject
      */
     public static function createInstance(string $subjectPart): self
     {
-        if (preg_match('/^' . self::getCompoundRegexFor(self::REGEX_COMPOUND_AND_OR) . '$/u', $subjectPart, $matches)) {
-            $andOr = $matches[2] === 'と' ? 'and' : 'or';
+        if (preg_match('/^' . self::getCompoundRegexFor(Subject::REGEX_COMPOUND_AND_OR) . '$/u', $subjectPart, $matches)) {
+            $andOr = $matches[2] === 'と' ? 'y' : 'o';
             return new self(
                 sprintf(
                     '%s %s%s',
                     self::autoTranslateStrict($matches[1]),
                     $andOr,
                     self::autoTranslateStrict($matches[3])
-                ), $andOr === 'and'
+                ), $andOr === 'y'
             );
         }
 
         if (preg_match(
-            '/^' . self::getCompoundRegexFor(self::REGEX_COMPOUND_ADJACENT) . '$/u',
+            '/^' . self::getCompoundRegexFor(Subject::REGEX_COMPOUND_ADJACENT) . '$/u',
             $subjectPart,
             $matches
         )) {
             $mainSubject = self::createInstance($matches[2]);
             return new self(
                 sprintf(
-                    '%s adjacent to%s',
+                    '%s adyacente a%s',
                     $mainSubject->getSubjectText(),
                     self::autoTranslateStrict($matches[1])
                 ), $mainSubject->plural()
@@ -64,7 +60,7 @@ class Subject
 
         // Compound subjects end above here.
 
-        if (!preg_match('/^(?:' . self::REGEX . ')$/u', $subjectPart, $matches)) {
+        if (!preg_match('/^(?:' . Subject::REGEX . ')$/u', $subjectPart, $matches)) {
             // This static method expects subject substrings that already match self::getUncapturedRegex().
             throw new \InvalidArgumentException(
                 "Subject part does not strictly match regular expression: $subjectPart"
@@ -90,19 +86,19 @@ class Subject
             if ($adjectiveSource === '未行動の') {
                 // Tapped.
 
-                $something .= ' untapped';
+                $something .= ' enderzado';
             } else {
                 // Cost/stat restriction.
 
-                $nounOfRestriction = $statForRestrictionSource === 'コスト' ? 'cost' : $statForRestrictionSource;
+                $nounOfRestriction = $statForRestrictionSource === 'コスト' ? 'costo' : $statForRestrictionSource;
 
-                $adjective = "with a $nounOfRestriction of $costAmountSource";
+                $adjective = "con un $nounOfRestriction de $costAmountSource";
                 if ($upToOrUnderSource) {
                     $upToOrUnder = mb_substr($upToOrUnderSource, -1);
                     if ($upToOrUnder === '下') {
-                        $adjective .= ' or less';
+                        $adjective .= ' o menos';
                     } elseif ($upToOrUnder === '上') {
-                        $adjective .= ' or more';
+                        $adjective .= ' o más';
                     } else {
                         throw new \UnexpectedValueException("Unexpected upToOrUnder: $upToOrUnder");
                     }
@@ -121,19 +117,19 @@ class Subject
         $forceNoArticle = false; // Set to true if a/an should definitely not be placed.
         switch ($noun) {
             case 'キャラ':
-                $noun = 'character';
+                $noun = 'personaje';
                 break;
             case 'アイテム':
-                $noun = 'item';
+                $noun = 'articulo';
                 break;
             case 'イベント':
-                $noun = 'event';
+                $noun = 'evento';
                 break;
             case 'フィールド':
-                $noun = 'field';
+                $noun = 'campo';
                 break;
             case '破棄したカード':
-                $noun = 'discarded card';
+                $noun = 'carta descartado';
                 $forceNoArticle = true;
                 break;
             case false:
@@ -167,14 +163,14 @@ class Subject
             if ($all) {
                 switch ($subject) {
                     case '味方':
-                        $text = "all your$something {$noun}s";
+                        $text = "todos tus$something {$noun}s";
                         break;
                     case '相手':
-                        $text = "all$something enemy {$noun}s";
+                        $text = "todos$something enemigos {$noun}s";
                         break;
                     case '':
                         // Unknown
-                        $text = "all$something {$noun}s";
+                        $text = "todos$something {$noun}s";
                         break;
                     default:
                         throw new \LogicException("Unexpected all subject: $subject");
@@ -184,43 +180,36 @@ class Subject
                 $nounPlural = false;
                 switch ($subject) {
                     case '味方':
-                        $text = 'ally';
+                        $text = 'aliado';
                         if (!$howMany) {
-                            $text = 'an ally';
+                            $text = 'un aliado';
                         }
                         break;
                     case '相手':
-                        $text = 'enemy';
+                        $text = 'enemigo';
                         if (!$howMany) {
-                            $text = 'an enemy';
+                            $text = 'un enemigo';
                         }
                         break;
                     case 'この':
-                        $text = 'this';
+                        $text = 'este';
                         break;
                     case 'その':
-                        $text = 'that';
+                        $text = 'ese';
                         break;
                     // (target supported)
                     case '対象の':
-                        $text = 'that';
+                        $text = 'ese';
                         break;
                     case '対戦':
-                        $text = 'opposing';
+                        $text = 'opuesto';
                         break;
                     case '':
                         // Unknown
                         $text = '';
                         if (!$howMany && !$forceNoArticle) {
-                            // Check the $something and the $noun to determine which indefinite article to use.
-                            // Default to 'a' by using a fake 'b' as the fallback string.
-                            $articleVowelCheck = preg_replace(
-                                '/[^\w' . JapaneseCharacterCounter::JAPANESE_LETTERS_RANGES . ']/u',
-                                '',
-                                $something . $noun . 'b'
-                            )[0];
-
-                            $text = preg_match('/[aeiou]/i', $articleVowelCheck) ? 'an' : 'a';
+                            // TODO: gender
+                            $text = 'un';
                         }
                         break;
                     default:
@@ -235,7 +224,7 @@ class Subject
                 if ($howMany) {
                     $howManyOrMore = $howMany;
                     if ($howManyOrMoreLessSource) {
-                        $howManyOrMore .= ' ' . ($howManyOrMoreLessSource === '上' ? 'or more' : 'or less');
+                        $howManyOrMore .= ' ' . ($howManyOrMoreLessSource === '上' ? 'o más' : 'o menos');
                     }
                     $text = "$howManyOrMore $text$something {$noun}";
                 } else {
@@ -245,19 +234,19 @@ class Subject
             $inSomewhere = '';
             if ($battlingOrGraveyardOrTargetColumn) {
                 if ($battlingOrGraveyardOrTargetColumn === '{列1つ}の') {
-                    $inSomewhere = ' {in 1 column}';
+                    $inSomewhere = ' {en 1 columna}';
                 } elseif ($battlingOrGraveyardOrTargetColumn === 'バトル参加') {
-                    $inSomewhere = ' participating in battle';
+                    $inSomewhere = ' participando en batalla';
                 } else {
                     switch ($whosGraveyard) {
                         case '自分の':
-                            $inSomewhere = ' in your Discard Pile';
+                            $inSomewhere = ' en tu Pila de Descartes';
                             break;
                         case '相手の':
-                            $inSomewhere = " in your opponent's Discard Pile";
+                            $inSomewhere = " en la Pila de Descartes de tu adversario";
                             break;
                         case '':
-                            $inSomewhere = ' in the Discard Pile';
+                            $inSomewhere = ' en la Pila de Descartes';
                             break;
                         default:
                             throw new \LogicException("Unexpected whosGraveyard: $whosGraveyard");
@@ -266,19 +255,19 @@ class Subject
                 }
             }
             if ($sameColumnOrRow) {
-                $whose = $whoseColumnOrRow === 'この' ? 'this' : 'that';
-                $columnOrRow = $columnOrRowSource === '列' ? 'column' : 'row';
-                $inSomewhere .= " in the same $columnOrRow as $whose character";
+                $whose = $whoseColumnOrRow === 'この' ? 'este' : 'ese';
+                $columnOrRow = $columnOrRowSource === '列' ? 'columna' : 'fila';
+                $inSomewhere .= " en la misma $columnOrRow de $whose personaje";
             }
             $text = " $text$inSomewhere$additionalAdjective";
 
             if ($itsStatsSource) {
                 // ...'s DP/SP/AP
-                $itsStatsText = str_replace('と', ' and ', $itsStatsSource);
-                $plural = strpos($itsStatsText, ' and ') !== false;
+                $itsStatsText = str_replace('と', ' y ', $itsStatsSource);
+                $plural = strpos($itsStatsText, ' y ') !== false;
 
                 $text = self::posessivize(
-                        (new Subject((new self($text, $plural))->getSubjectText(), false))
+                        (new self((new self($text, $plural))->getSubjectText(), false))
                             ->getSubjectText()
                     ) . " $itsStatsText";
             }
@@ -300,12 +289,12 @@ class Subject
 
     public static function getUncapturedRegex(): string
     {
-        $uncapturedRegex = RegexHelper::uncapture(self::REGEX);
+        $uncapturedRegex = RegexHelper::uncapture(Subject::REGEX);
 
         return sprintf(
             '(?:%s|%s|%s)',
-            RegexHelper::uncapture(self::getCompoundRegexFor(self::REGEX_COMPOUND_AND_OR)),
-            RegexHelper::uncapture(self::getCompoundRegexFor(self::REGEX_COMPOUND_ADJACENT)),
+            RegexHelper::uncapture(self::getCompoundRegexFor(Subject::REGEX_COMPOUND_AND_OR)),
+            RegexHelper::uncapture(self::getCompoundRegexFor(Subject::REGEX_COMPOUND_ADJACENT)),
             $uncapturedRegex
         );
 
@@ -350,7 +339,7 @@ class Subject
      */
     private static function getCompoundRegexFor(string $compoundReplacable): string
     {
-        $subjectRegex = RegexHelper::uncapture(self::REGEX);
+        $subjectRegex = RegexHelper::uncapture(Subject::REGEX);
         return str_replace('[subject]', "($subjectRegex)", $compoundReplacable);
     }
 
