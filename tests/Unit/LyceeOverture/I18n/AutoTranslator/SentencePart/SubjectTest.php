@@ -60,7 +60,7 @@ class SubjectTest extends TestCase
                 'DPが2以下の味方キャラ1体',
             ],
             'with DP restriction exact' => [
-                ' 1  character with a DP of 3',
+                ' 1 character with a DP of 3',
                 'DPが3のキャラ1体',
             ],
             "character's DP" => [
@@ -68,15 +68,15 @@ class SubjectTest extends TestCase
                 'そのキャラのSP',
             ],
             "1 item with sheet (枚) kanji" => [
-                ' 1  item',
+                ' 1 item',
                 'アイテム1枚',
             ],
             "1 character in the Discard Pile" => [
-                ' 1  character in the Discard Pile',
+                ' 1 character in the Discard Pile',
                 'ゴミ箱のキャラ1体',
             ],
             "1 of your events in the Discard Pile" => [
-                ' 1  event in your Discard Pile',
+                ' 1 event in your Discard Pile',
                 '自分のゴミ箱のイベント1枚',
             ],
             "that character in the Discard Pile" => [
@@ -84,7 +84,7 @@ class SubjectTest extends TestCase
                 'ゴミ箱のそのキャラ',
             ],
             "opponent's Discard Pile" => [
-                ' 2  events in your opponent\'s Discard Pile',
+                ' 2 events in your opponent\'s Discard Pile',
                 '相手のゴミ箱のイベント2枚',
             ],
             "this character's SP" => [
@@ -92,7 +92,7 @@ class SubjectTest extends TestCase
                 'このキャラのSP',
             ],
             " discarded card's EX" => [
-                "  discarded card's EX",
+                " discarded card's EX",
                 '破棄したカードのEX',
             ],
             "this character's SP and AP" => [
@@ -100,15 +100,15 @@ class SubjectTest extends TestCase
                 'このキャラのSPとAP',
             ],
             'quoted noun' => [
-                ' 1  "稲生滸" in your Discard Pile',
+                ' 1 "稲生滸" in your Discard Pile',
                 '自分のゴミ箱の「稲生滸」1体',
             ],
             'gt/lt noun' => [
-                ' 1  <稲生滸> in your Discard Pile',
+                ' 1 <稲生滸> in your Discard Pile',
                 '自分のゴミ箱の<稲生滸>1体',
             ],
             'quoted noun with another noun' => [
-                ' 1  <稲生滸> character in your Discard Pile',
+                ' 1 <稲生滸> character in your Discard Pile',
                 '自分のゴミ箱の<稲生滸>キャラ1体',
             ],
             'quoted 2' => [
@@ -116,11 +116,11 @@ class SubjectTest extends TestCase
                 '味方<継続>キャラ1体',
             ],
             'Discard Pile and cost combination' => [
-                ' 1  character in your Discard Pile with a cost of 2 or less',
+                ' 1 character in your Discard Pile with a cost of 2 or less',
                 '自分のゴミ箱のコストが2点以下のキャラ1体',
             ],
             'battling character' => [
-                ' 1  character participating in battle',
+                ' 1 character participating in battle',
                 'バトル参加キャラ1体',
             ],
             'enemy item' => [
@@ -144,7 +144,7 @@ class SubjectTest extends TestCase
                 'このキャラまたはそのキャラ',
             ],
             'compound subject adjacent' => [
-                ' 1  character adjacent to this character',
+                ' 1 character adjacent to this character',
                 'このキャラに隣接したキャラ1体',
             ],
             '4 or more enemy characters' => [

@@ -163,6 +163,7 @@ class Subject
         $howMany = next($matches);
         $howManyOrMoreLessSource = next($matches);
         $plural = false;
+        $hasArticle = false;
         if (!$target) {
             if ($all) {
                 switch ($subject) {
@@ -186,22 +187,20 @@ class Subject
                     case '味方':
                         $text = 'ally';
                         if (!$howMany) {
-                            $text = 'an ally';
+                            $hasArticle = true;
                         }
                         break;
                     case '相手':
                         $text = 'enemy';
                         if (!$howMany) {
-                            $text = 'an enemy';
+                            $hasArticle = true;
                         }
                         break;
                     case 'この':
                         $text = 'this';
                         break;
                     case 'その':
-                        $text = 'that';
-                        break;
-                    // (target supported)
+                        // (target supported)
                     case '対象の':
                         $text = 'that';
                         break;
@@ -212,15 +211,7 @@ class Subject
                         // Unknown
                         $text = '';
                         if (!$howMany && !$forceNoArticle) {
-                            // Check the $something and the $noun to determine which indefinite article to use.
-                            // Default to 'a' by using a fake 'b' as the fallback string.
-                            $articleVowelCheck = preg_replace(
-                                '/[^\w' . JapaneseCharacterCounter::JAPANESE_LETTERS_RANGES . ']/u',
-                                '',
-                                $something . $noun . 'b'
-                            )[0];
-
-                            $text = preg_match('/[aeiou]/i', $articleVowelCheck) ? 'an' : 'a';
+                            $hasArticle = true;
                         }
                         break;
                     default:
@@ -232,14 +223,13 @@ class Subject
                 if ($noun && $nounPlural) {
                     $noun = "${noun}s";
                 }
+                $text = self::assembleText($text, $hasArticle, $something, $noun);
                 if ($howMany) {
                     $howManyOrMore = $howMany;
                     if ($howManyOrMoreLessSource) {
                         $howManyOrMore .= ' ' . ($howManyOrMoreLessSource === '上' ? 'or more' : 'or less');
                     }
-                    $text = "$howManyOrMore $text$something {$noun}";
-                } else {
-                    $text = "$text$something {$noun}";
+                    $text = "$howManyOrMore $text";
                 }
             }
             $inSomewhere = '';
@@ -366,5 +356,23 @@ class Subject
                 break;
         }
         return $quoted;
+    }
+
+    private static function assembleText(string $text, bool $hasArticle, string $something, string $noun): string
+    {
+        $article = '';
+        if ($hasArticle) {
+            // Check the $something and the $noun to determine which indefinite article to use.
+            // Default to 'a' by using a fake 'b' as the fallback string.
+            $articleVowelCheck = preg_replace(
+                '/[^\w' . JapaneseCharacterCounter::JAPANESE_LETTERS_RANGES . ']/u',
+                '',
+                $text . $something . $noun . 'b'
+            )[0];
+
+            $article = preg_match('/[aeiou]/i', $articleVowelCheck) ? 'an' : 'a';
+        }
+
+        return trim(preg_replace('/ {2,}/', ' ', sprintf('%s %s%s %s', $article, $text, $something, $noun)));
     }
 }

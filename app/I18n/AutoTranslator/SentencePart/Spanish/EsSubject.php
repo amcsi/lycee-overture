@@ -5,7 +5,6 @@ namespace amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Spanish;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\RegexHelper;
 use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
-use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 
 /**
  * Subregex for the subject of the sentence.
@@ -31,29 +30,29 @@ class EsSubject
      */
     public static function createInstance(string $subjectPart): self
     {
-        if (preg_match('/^' . self::getCompoundRegexFor(Subject::REGEX_COMPOUND_AND_OR) . '$/u', $subjectPart, $matches)) {
+        if (preg_match('/^' . static::getCompoundRegexFor(Subject::REGEX_COMPOUND_AND_OR) . '$/u', $subjectPart, $matches)) {
             $andOr = $matches[2] === 'と' ? 'y' : 'o';
             return new self(
                 sprintf(
                     '%s %s%s',
-                    self::autoTranslateStrict($matches[1]),
+                    static::autoTranslateStrict($matches[1]),
                     $andOr,
-                    self::autoTranslateStrict($matches[3])
+                    static::autoTranslateStrict($matches[3])
                 ), $andOr === 'y'
             );
         }
 
         if (preg_match(
-            '/^' . self::getCompoundRegexFor(Subject::REGEX_COMPOUND_ADJACENT) . '$/u',
+            '/^' . static::getCompoundRegexFor(Subject::REGEX_COMPOUND_ADJACENT) . '$/u',
             $subjectPart,
             $matches
         )) {
-            $mainSubject = self::createInstance($matches[2]);
-            return new self(
+            $mainSubject = static::createInstance($matches[2]);
+            return new static(
                 sprintf(
                     '%s adyacente a%s',
                     $mainSubject->getSubjectText(),
-                    self::autoTranslateStrict($matches[1])
+                    static::autoTranslateStrict($matches[1])
                 ), $mainSubject->plural()
             );
         }
@@ -61,7 +60,7 @@ class EsSubject
         // Compound subjects end above here.
 
         if (!preg_match('/^(?:' . Subject::REGEX . ')$/u', $subjectPart, $matches)) {
-            // This static method expects subject substrings that already match self::getUncapturedRegex().
+            // This static method expects subject substrings that already match static::getUncapturedRegex().
             throw new \InvalidArgumentException(
                 "Subject part does not strictly match regular expression: $subjectPart"
             );
@@ -92,7 +91,7 @@ class EsSubject
 
                 $nounOfRestriction = $statForRestrictionSource === 'コスト' ? 'costo' : $statForRestrictionSource;
 
-                $adjective = "con un $nounOfRestriction de $costAmountSource";
+                $adjective = "con $nounOfRestriction de $costAmountSource";
                 if ($upToOrUnderSource) {
                     $upToOrUnder = mb_substr($upToOrUnderSource, -1);
                     if ($upToOrUnder === '下') {
@@ -110,7 +109,7 @@ class EsSubject
         $subject = next($matches); // Ally or Enemy in Japanese (or '')
         $typeSource = next($matches); // e.g. [sun] <- characters, "quoted"
         if ($typeSource) {
-            $typeSource = self::replaceIfQuoted($typeSource); // If <quoted>.
+            $typeSource = static::replaceIfQuoted($typeSource); // If <quoted>.
             $something .= " $typeSource";
         }
         $noun = next($matches);
@@ -144,7 +143,7 @@ class EsSubject
                     case '<':
                     case '「':
                         // Replace Japanese quotes with English ones.
-                        $noun = self::replaceIfQuoted($noun);
+                        $noun = static::replaceIfQuoted($noun);
                         break;
                     default:
                         throw new \LogicException("Unexpected noun: $noun");
@@ -159,6 +158,8 @@ class EsSubject
         $howMany = next($matches);
         $howManyOrMoreLessSource = next($matches);
         $plural = false;
+        $text = '';
+        $articleOrPronoun = false;
         if (!$target) {
             if ($all) {
                 switch ($subject) {
@@ -182,24 +183,22 @@ class EsSubject
                     case '味方':
                         $text = 'aliado';
                         if (!$howMany) {
-                            $text = 'un aliado';
+                            $articleOrPronoun = true;
                         }
                         break;
                     case '相手':
                         $text = 'enemigo';
                         if (!$howMany) {
-                            $text = 'un enemigo';
+                            $articleOrPronoun = true;
                         }
                         break;
                     case 'この':
-                        $text = 'este';
+                        $articleOrPronoun = 'este';
                         break;
                     case 'その':
-                        $text = 'ese';
-                        break;
-                    // (target supported)
+                        // (target supported)
                     case '対象の':
-                        $text = 'ese';
+                        $articleOrPronoun = 'ese';
                         break;
                     case '対戦':
                         $text = 'opuesto';
@@ -208,8 +207,7 @@ class EsSubject
                         // Unknown
                         $text = '';
                         if (!$howMany && !$forceNoArticle) {
-                            // TODO: gender
-                            $text = 'un';
+                            $articleOrPronoun = true;
                         }
                         break;
                     default:
@@ -221,14 +219,13 @@ class EsSubject
                 if ($noun && $nounPlural) {
                     $noun = "${noun}s";
                 }
+                $text = static::assembleText($text, $articleOrPronoun, $something, $noun, $nounPlural);
                 if ($howMany) {
                     $howManyOrMore = $howMany;
                     if ($howManyOrMoreLessSource) {
                         $howManyOrMore .= ' ' . ($howManyOrMoreLessSource === '上' ? 'o más' : 'o menos');
                     }
-                    $text = "$howManyOrMore $text$something {$noun}";
-                } else {
-                    $text = "$text$something {$noun}";
+                    $text = "$howManyOrMore $text";
                 }
             }
             $inSomewhere = '';
@@ -266,10 +263,12 @@ class EsSubject
                 $itsStatsText = str_replace('と', ' y ', $itsStatsSource);
                 $plural = strpos($itsStatsText, ' y ') !== false;
 
-                $text = self::posessivize(
-                        (new self((new self($text, $plural))->getSubjectText(), false))
-                            ->getSubjectText()
-                    ) . " $itsStatsText";
+                $text = static::posessivize(
+                    (new self((new self($text, $plural))->getSubjectText(), false))
+                        ->getSubjectText()
+                    ,
+                    $itsStatsText
+                );
             }
         } else {
             if ($target[-1] === 's') {
@@ -284,7 +283,7 @@ class EsSubject
 
     public static function autoTranslateStrict(string $subject): string
     {
-        return Subject::createInstance($subject)->getSubjectText();
+        return static::createInstance($subject)->getSubjectText();
     }
 
     public static function getUncapturedRegex(): string
@@ -293,8 +292,8 @@ class EsSubject
 
         return sprintf(
             '(?:%s|%s|%s)',
-            RegexHelper::uncapture(self::getCompoundRegexFor(Subject::REGEX_COMPOUND_AND_OR)),
-            RegexHelper::uncapture(self::getCompoundRegexFor(Subject::REGEX_COMPOUND_ADJACENT)),
+            RegexHelper::uncapture(static::getCompoundRegexFor(Subject::REGEX_COMPOUND_AND_OR)),
+            RegexHelper::uncapture(static::getCompoundRegexFor(Subject::REGEX_COMPOUND_ADJACENT)),
             $uncapturedRegex
         );
 
@@ -313,23 +312,20 @@ class EsSubject
     /**
      * Makes the passed text into the possessive form.
      */
-    public static function posessivize(string $text): string
+    public static function posessivize(string $text, string $indirectObject): string
     {
         if ($text[-1] === '}') {
             // For: {Enemy character} => {Enemy character's}
             return preg_replace_callback(
                 '/{(.*)}$/',
-                function (array $matches) {
-                    return '{' . self::posessivize($matches[1]) . '}';
+                function (array $matches) use ($indirectObject) {
+                    return '{' . static::posessivize($matches[1], $indirectObject) . '}';
                 },
                 $text
             );
         }
-        return $text . (
-            $text[-1] === 's' ?
-                $text . "'" : // Already ends' with an s
-                "'s"
-            ); // end's.
+
+        return " el $indirectObject de$text";
     }
 
     /**
@@ -355,5 +351,35 @@ class EsSubject
                 break;
         }
         return $quoted;
+    }
+
+    /**
+     * @param string $text
+     * @param bool|string $articleOrPronoun
+     * @param string $something
+     * @param string $noun
+     * @return string
+     */
+    private static function assembleText(
+        string $text,
+        $articleOrPronoun,
+        string $something,
+        string $noun,
+        bool $nounPlural
+    ): string
+    {
+        if ($articleOrPronoun === true) {
+            // TODO gender.
+            $articleOrPronoun = 'un';
+        }
+
+        $adjectives = array_filter(array_map('trim', [$text, $something]));
+
+        if ($nounPlural) {
+            $adjectives = array_map(fn($word) => "{$word}s", $adjectives);
+        }
+        $adjectivesString = implode(' y ', $adjectives);
+
+        return trim(preg_replace('/ {2,}/', ' ', sprintf('%s %s %s', $articleOrPronoun, $noun, $adjectivesString)));
     }
 }
