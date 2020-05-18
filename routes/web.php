@@ -12,7 +12,6 @@ declare(strict_types=1);
 |
 */
 
-/** @noinspection PhpUndefinedMethodInspection */
 Auth::routes();
 
 Route::get(
@@ -29,6 +28,7 @@ Route::get(
             'apiBaseUrl' => "$appUrl/api",
             'cloudinaryCloudName' => config('cloudinary.defaults.cloud_name'),
             'rollbarToken' => env('ROLLBAR_CLIENT_TOKEN'),
+            'gitSha1' => env('GIT_SHA1'),
             'environment' => config('app.env'),
         ];
         return view('spa', ['jsVars' => $vars]);

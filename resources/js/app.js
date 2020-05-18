@@ -71,7 +71,7 @@ const rollbar = Rollbar.init({
   payload: {
     client: {
       javascript: {
-        code_version: '1.0'
+        code_version: window.vars.gitSha1,
       }
     }
   }

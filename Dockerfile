@@ -84,5 +84,9 @@ RUN php artisan storage:link
 # https://github.com/wallabag/wallabag/issues/1845#issuecomment-205726683
 RUN chmod a+rw database/
 
+# Get the GIT_SHA1 from outside (as a build arg).
+ARG GIT_SHA1
+ENV GIT_SHA1 $GIT_SHA1
+
 CMD ["bin/start.sh"]
 
