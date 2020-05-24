@@ -99,6 +99,8 @@ class CardBuilderFactory
                                 $like = '%' . self::escapeLike($text) . '%';
                                 $whereBuilder
                                     ->where('t.ability_description', 'LIKE', $like)
+                                    ->orWhere('t.ability_cost', 'LIKE', $like)
+                                    ->orWhere('t.pre_comments', 'LIKE', $like)
                                     ->orWhere('t.comments', 'LIKE', $like);
                             }
                         );
