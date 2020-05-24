@@ -23,17 +23,10 @@ class CardBuilderFactory
         $this->brandMapper = $brandMapper;
     }
 
-    public function createBuilderWithQuery(string $locale, array $query): Builder
+    public function createBuilderWithQuery(string $locale, array $query, $forceLoadTranslation = false): Builder
     {
         /** @var Builder $builder */
-        $builder = $this->card->select(['cards.*'])
-            ->leftJoin(
-                'card_translations as t',
-                function (JoinClause $join) use ($locale) {
-                    $join->on('cards.id', '=', 't.card_id')
-                        ->where('t.locale', '=', $locale);
-                }
-            );
+        $builder = $this->card->select(['cards.*']);
 
         if ($deck = ($query['deck'] ?? null)) {
             $builder->join(
@@ -71,19 +64,45 @@ class CardBuilderFactory
                     $whereBuilder
                         ->where('t.name', 'LIKE', $like)
                         ->orWhere('t.ability_name', 'LIKE', $like)
-                        ->orWhere('t.character_type', 'LIKE', $like)
-                    ;
+                        ->orWhere('t.character_type', 'LIKE', $like);
                 }
             );
         }
 
-        if ($text = (string) ($query['text'] ?? null)) {
-            $builder->where(
-                function (Builder $whereBuilder) use ($text) {
-                    $like = '%' . self::escapeLike($text) . '%';
-                    $whereBuilder
-                        ->where('t.ability_description', 'LIKE', $like)
-                        ->orWhere('t.comments', 'LIKE', $like);
+        $name = (string) ($query['name'] ?? null);
+        $text = (string) ($query['text'] ?? null);
+
+        // Load some translations for text search or kanji counting?
+        if ($forceLoadTranslation || $name !== '' || $text !== '') {
+            $builder->join(
+                'card_translations as t',
+                function (JoinClause $join) use ($locale, $text, $name) {
+                    // Base join condition.
+                    $join->on('cards.id', '=', 't.card_id')
+                        ->where('t.locale', '=', $locale);
+
+                    // Additional search conditions.
+                    if ($name) {
+                        $join->where(
+                            function (JoinClause $whereBuilder) use ($name) {
+                                $like = '%' . self::escapeLike($name) . '%';
+                                $whereBuilder
+                                    ->where('t.name', 'LIKE', $like)
+                                    ->orWhere('t.ability_name', 'LIKE', $like)
+                                    ->orWhere('t.character_type', 'LIKE', $like);
+                            }
+                        );
+                    }
+                    if ($text) {
+                        $join->where(
+                            function (JoinClause $whereBuilder) use ($text) {
+                                $like = '%' . self::escapeLike($text) . '%';
+                                $whereBuilder
+                                    ->where('t.ability_description', 'LIKE', $like)
+                                    ->orWhere('t.comments', 'LIKE', $like);
+                            }
+                        );
+                    }
                 }
             );
         }

@@ -75,6 +75,6 @@ class TranslationCoverageChecker
 
     private function getBuilder(string $locale, array $query): Builder
     {
-        return $this->cardBuilderFactory->createBuilderWithQuery($locale, $query);
+        return $this->cardBuilderFactory->createBuilderWithQuery($locale, $query, true);
     }
 }
