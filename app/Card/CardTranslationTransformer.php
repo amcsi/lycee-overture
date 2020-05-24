@@ -14,6 +14,7 @@ class CardTranslationTransformer extends TransformerAbstract
             'name' => $cardTranslation->name,
             'ability_name' => $cardTranslation->ability_name,
             'basic_abilities' => $cardTranslation->basic_abilities,
+            'pre_comments' => $cardTranslation->pre_comments,
             'ability_cost' => $cardTranslation->ability_cost,
             'ability_description' => $cardTranslation->ability_description,
             'comments' => $cardTranslation->comments,

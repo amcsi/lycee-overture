@@ -17,11 +17,20 @@
                             class="basic-abilities"
                             :text="card.translation.basic_abilities"
                         />
+                        <CardText
+                            v-if="card.translation.pre_comments"
+                            class="comments"
+                            :text="card.translation.pre_comments"
+                        />
                         <span v-for="[abilityCost, abilityDescription] in abilities">
                             <CardText v-if="abilityCost" class="ability-cost" :text="abilityCost" />
                             <CardText class="ability-description" :text="abilityDescription" />
                         </span>
-                        <CardText v-if="card.translation.comments" class="comments" :text="card.translation.comments" />
+                        <CardText
+                            v-if="card.translation.comments"
+                            class="comments"
+                            :text="card.translation.comments"
+                        />
                     </span>
                 </div>
                 <div style="color: grey; font-style: italic;">
@@ -37,28 +46,28 @@
 </template>
 
 <script>
-  import CardImage from './CardImage';
-  import CardText from './CardText';
+import CardImage from './CardImage';
+import CardText from './CardText';
 
-  /**
-   * Represents a card to print
-   *
-   * @class CardPrint
-   **/
-  export default {
-    name: 'CardPrint',
-    components: { CardText, CardImage },
-    props: [
-      'card',
-      'withImages',
-    ],
-    computed: {
-      abilities() {
-        const abilityCostsSplit = this.card.translation.ability_cost.split('\n');
-        const abilityDescriptionsSplit = this.card.translation.ability_description.split('\n');
-        const ret = [];
-        abilityDescriptionsSplit.forEach((abilityDescription, i) => {
-          if (!abilityDescription || abilityDescription.trim() === '-') {
+/**
+ * Represents a card to print
+ *
+ * @class CardPrint
+ **/
+export default {
+  name: 'CardPrint',
+  components: { CardText, CardImage },
+  props: [
+    'card',
+    'withImages',
+  ],
+  computed: {
+    abilities() {
+      const abilityCostsSplit = this.card.translation.ability_cost.split('\n');
+      const abilityDescriptionsSplit = this.card.translation.ability_description.split('\n');
+      const ret = [];
+      abilityDescriptionsSplit.forEach((abilityDescription, i) => {
+        if (!abilityDescription || abilityDescription.trim() === '-') {
             // Skip ability; no description.
             return;
           }

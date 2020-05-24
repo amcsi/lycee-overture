@@ -5,6 +5,9 @@
             class="basic-abilities"
             :text="translation.basic_abilities"
         ></CardText>
+        <div v-if="translation.pre_comments" class="comments">
+            <CardText :text="translation.pre_comments" />
+        </div>
         <div v-for="[abilityCost, abilityDescription] in abilities">
             <CardText v-if="abilityCost" class="ability-cost" :text="abilityCost" />
             <CardText class="ability-description" :text="abilityDescription" />
@@ -16,9 +19,9 @@
 </template>
 
 <script>
-  import CardText from './CardText';
+import CardText from './CardText';
 
-  /** @class CardDescription */
+/** @class CardDescription */
   export default {
     name: 'CardDescription',
     components: { CardText },

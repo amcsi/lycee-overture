@@ -96,6 +96,7 @@ class CsvValueInterpreterTest extends TestCase
         return [
             [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '',
                     'ability_description' => '',
                     'comments' => '',
@@ -104,6 +105,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '',
                     'ability_description' => '-',
                     'comments' => '',
@@ -112,6 +114,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '[宣言] [T][このキャラを破棄する]',
                     'ability_description' => '{相手ＡＦキャラ１体}を手札に入れる。',
                     'comments' => '※このキャラは別番号の同名キャラとは別に４枚までデッキに入れることができる。',
@@ -120,6 +123,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'Two colons in ability' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '[宣言] [日日]',
                     'ability_description' => '{味方キャラ１体}は[ステップ:[0]]を得る。',
                     'comments' => '',
@@ -128,6 +132,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'tap included' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '[宣言] [T日日]',
                     'ability_description' => '{味方キャラ１体}は...',
                     'comments' => '',
@@ -136,6 +141,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'Non-cost colon' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '[常時]',
                     'ability_description' => 'このキャラと同列の味方キャラ全ては[オーダーチェンジ:[0]]を得る。',
                     'comments' => '',
@@ -144,6 +150,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'normalizing span to target' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '[宣言] [日]',
                     'ability_description' => '{味方キャラ１体}にＡＰ＋１する。',
                     'comments' => '',
@@ -152,6 +159,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             '<br /> comments' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '[誘発]',
                     'ability_description' => 'このキャラにサポートをしたとき、このキャラを未行動にする。',
                     'comments' => '構築制限:ゆずソフト,ゆずソフト 1.0,へいろー',
@@ -160,6 +168,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'two effects' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => "[常時]\n[宣言] [無無無]",
                     'ability_description' => 'このキャラにＤＭＧ－２する。' . "\n" .
                         '相手ターン中に使用する。このアイテムを除外する。',
@@ -169,22 +178,25 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'equip restriction' => [
                 [
-                    'ability_cost' => '[装備制限]',
-                    'ability_description' => 'Something.',
+                    'pre_comments' => '装備制限:Something.',
+                    'ability_cost' => '',
+                    'ability_description' => '',
                     'comments' => '',
                 ],
                 '[装備制限] Something.',
             ],
             'equip restriction alternative form' => [
                 [
-                    'ability_cost' => "[装備制限]\n[常時]",
-                    'ability_description' => "[日]キャラ\nこのキャラにＡＰ＋１・ＤＰ－１する。",
+                    'pre_comments' => '装備制限:[日]キャラ',
+                    'ability_cost' => "[常時]",
+                    'ability_description' => "このキャラにＡＰ＋１・ＤＰ－１する。",
                     'comments' => '',
                 ],
                 '装備制限:[日]キャラ<br />[常時] このキャラにＡＰ＋１・ＤＰ－１する。',
             ],
             'congratulations' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '',
                     'ability_description' => 'Congratulations!!',
                     'comments' => "※このカードは「ラッキーカードキャンペーン」の当たりカードです。キャンペーンの詳細は以下をご確認ください。\nhttps://lycee-tcg.com/lucky/\n※このカードは能力を持たないキャラとしてゲームで使用できます。",
@@ -193,6 +205,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'accommodate new CSV format 2020-04' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '',
                     'ability_description' => '[相手キャラ１体]にＳＰ－２する。',
                     'comments' => '',
@@ -201,6 +214,7 @@ class CsvValueInterpreterTest extends TestCase
             ],
             'event text with markup' => [
                 [
+                    'pre_comments' => '',
                     'ability_cost' => '',
                     'ability_description' => 'Bla bla bla [日]',
                     'comments' => '',

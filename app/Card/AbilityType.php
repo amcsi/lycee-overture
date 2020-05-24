@@ -9,8 +9,7 @@ class AbilityType
     public const TRIGGER = 2;// Pink
     public const CONTINUOUS = 3;// Green
     public const COST = 4; // Orange
-    public const EQUIP_RESTRICTION = 5; // No color
-    public const HAND_ACTIVATE = 6; // Red
+    public const HAND_ACTIVATE = 5; // Red
 
     public static function getJapaneseMap(): array
     {
@@ -19,7 +18,6 @@ class AbilityType
             '誘発' => self::TRIGGER,
             '常時' => self::CONTINUOUS,
             'コスト' => self::COST,
-            '装備制限' => self::EQUIP_RESTRICTION,
             '手札宣言' => self::HAND_ACTIVATE,
         ];
     }
@@ -37,8 +35,6 @@ class AbilityType
                         return 'Continuous';
                     case self::COST:
                         return 'Cost';
-                    case self::EQUIP_RESTRICTION:
-                        return 'Equip Restriction';
                     case self::HAND_ACTIVATE:
                         return 'Hand Activate';
                     default:

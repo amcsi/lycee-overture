@@ -7,6 +7,7 @@ use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\I18n\AutoTranslator;
 use amcsi\LyceeOverture\I18n\CommentTranslator\CommentTranslator;
+use amcsi\LyceeOverture\I18n\CommentTranslator\PreCommentTranslator;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
@@ -25,7 +26,13 @@ use function GuzzleHttp\Psr7\try_fopen;
 class AutoTranslateCommand extends Command
 {
     public const COMMAND = 'lycee:auto-translate';
-    public const AUTO_TRANSLATE_FIELDS = ['basic_abilities', 'ability_description', 'ability_cost', 'comments'];
+    public const AUTO_TRANSLATE_FIELDS = [
+        'basic_abilities',
+        'pre_comments',
+        'ability_description',
+        'ability_cost',
+        'comments',
+    ];
 
     protected $signature = self::COMMAND . ' {--dump-to-file}';
     protected $description = 'Attempts translations from Japanese description text based on patterns.';
@@ -36,6 +43,7 @@ class AutoTranslateCommand extends Command
         AutoTranslator $autoTranslator,
         NameTranslator $nameTranslator,
         CommentTranslator $commentTranslator,
+        PreCommentTranslator $preCommentTranslator,
         KanjiTranslator $kanjiTranslator
     ) {
         $stopwatchEvent = (new Stopwatch())->start('auto-translate-command');
@@ -110,6 +118,7 @@ class AutoTranslateCommand extends Command
             // Manual translations for names, types etc.
             $englishCard['name'] = $nameTranslator->tryTranslateName($japaneseCard['name']);
             $englishCard['name'] = $kanjiTranslator->translate($englishCard['name']);
+            $englishCard['pre_comments'] = $preCommentTranslator->translate($japaneseCard['pre_comments']);
             $englishCard['ability_name'] = $nameTranslator->tryTranslateName($japaneseCard['ability_name']);
             $englishCard['character_type'] = $nameTranslator->tryTranslateCharacterType(
                 $japaneseCard['character_type']

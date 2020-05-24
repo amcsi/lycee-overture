@@ -85,15 +85,18 @@ class CsvValueInterpreter
         $abilityTypeAndCosts = [];
         $abilityDescriptions = [];
         $comments = [];
+        $preComments = [];
 
         foreach ($abilityRows as $abilityRow) {
+            if (preg_match('/^(?:(?:装備制限:|\[装備制限])\s*)(.*)/u', $abilityRow, $matches)) {
+                $preComments[] = "装備制限:$matches[1]";
+                continue;
+            }
+
             if (preg_match('/^(?:※|構築制限:|https?:\/\/)/u', $abilityRow)) {
                 $comments[] = $abilityRow;
                 continue;
             }
-
-            // Alternative form of ability type: "<ability type>: <ability>".
-            $abilityRow = preg_replace('/^(\S*):(.*)/', '[$1] $2', $abilityRow);
 
             if (preg_match("/$abilityTypeAndCostRegexPart(.*)/u", $abilityRow, $matches)) {
                 $abilityTypeAndCosts[] = trim($matches[1] . $matches[2]);
@@ -134,6 +137,7 @@ class CsvValueInterpreter
         }
 
         return [
+            'pre_comments' => implode("\n", $preComments),
             'ability_cost' => implode("\n", $abilityTypeAndCosts),
             'ability_description' => implode("\n", $abilityDescriptions),
             'comments' => implode("\n", $comments),
