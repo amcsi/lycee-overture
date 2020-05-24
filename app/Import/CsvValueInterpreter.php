@@ -77,7 +77,7 @@ class CsvValueInterpreter
         $abilityRows = preg_split("/\s*\n\s*|\s*<br ?\/>\s*/i", $ability);
 
         $abilityTypeAndCostRegexPart = sprintf(
-            "^(\[(?:%s)] )(?:(\[.*])+:)?",
+            "^(\[(?:%s)]) ?(?:(\[.*])+:)?",
             implode('|', array_keys(AbilityType::getJapaneseMap()))
         );
 
@@ -99,7 +99,7 @@ class CsvValueInterpreter
             }
 
             if (preg_match("/$abilityTypeAndCostRegexPart(.*)/u", $abilityRow, $matches)) {
-                $abilityTypeAndCosts[] = trim($matches[1] . $matches[2]);
+                $abilityTypeAndCosts[] = trim($matches[1] . ' ' . $matches[2]);
 
                 $description = trim($matches[3]);
 

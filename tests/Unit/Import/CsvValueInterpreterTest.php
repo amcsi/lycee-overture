@@ -130,6 +130,15 @@ class CsvValueInterpreterTest extends TestCase
                 ],
                 '[宣言] [日日]:{味方キャラ１体}は[ステップ:[0]]を得る。',
             ],
+            'No space between ability type and rest of effect' => [
+                [
+                    'pre_comments' => '',
+                    'ability_cost' => '[宣言] [日日]',
+                    'ability_description' => '{味方キャラ１体}は[ステップ:[0]]を得る。',
+                    'comments' => '',
+                ],
+                '[宣言][日日]:{味方キャラ１体}は[ステップ:[0]]を得る。',
+            ],
             'tap included' => [
                 [
                     'pre_comments' => '',
