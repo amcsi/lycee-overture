@@ -7,4 +7,6 @@ class Locale
 {
     public const JAPANESE = 'ja';
     public const ENGLISH = 'en';
+
+    public const ENGLISH_AUTO = 'en-auto';
 }

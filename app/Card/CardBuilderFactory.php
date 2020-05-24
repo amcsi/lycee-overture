@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Card;
 
 use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Query\JoinClause;
@@ -74,37 +76,49 @@ class CardBuilderFactory
 
         // Load some translations for text search or kanji counting?
         if ($forceLoadTranslation || $name !== '' || $text !== '') {
+            $nameColumns = ['name', 'ability_name', 'character_type'];
+            $textColumns = ['ability_description', 'ability_cost', 'pre_comments', 'comments'];
+
             $builder->join(
                 'card_translations as t',
-                function (JoinClause $join) use ($locale, $text, $name) {
+                function (JoinClause $join) use ($text, $name, $nameColumns, $textColumns, $locale) {
+                    // The locales we want to look at.
+                    $locales = [$locale];
+                    if ($locale !== Locale::JAPANESE) {
+                        $locales[] = "$locale-auto";
+                    }
                     // Base join condition.
-                    $join->on('cards.id', '=', 't.card_id')
-                        ->where('t.locale', '=', $locale);
+                    $join->on('cards.id', '=', 't.card_id')->whereIn('locale', $locales);
 
                     // Additional search conditions.
                     if ($name) {
                         $join->where(
-                            function (JoinClause $whereBuilder) use ($name) {
+                            function (JoinClause $whereBuilder) use ($name, $nameColumns) {
                                 $like = '%' . self::escapeLike($name) . '%';
-                                $whereBuilder
-                                    ->where('t.name', 'LIKE', $like)
-                                    ->orWhere('t.ability_name', 'LIKE', $like)
-                                    ->orWhere('t.character_type', 'LIKE', $like);
+                                foreach ($nameColumns as $column) {
+                                    $whereBuilder->orWhere("t.$column", 'LIKE', $like);
+                                }
                             }
                         );
                     }
                     if ($text) {
                         $join->where(
-                            function (JoinClause $whereBuilder) use ($text) {
+                            function (JoinClause $whereBuilder) use ($text, $textColumns) {
                                 $like = '%' . self::escapeLike($text) . '%';
-                                $whereBuilder
-                                    ->where('t.ability_description', 'LIKE', $like)
-                                    ->orWhere('t.ability_cost', 'LIKE', $like)
-                                    ->orWhere('t.pre_comments', 'LIKE', $like)
-                                    ->orWhere('t.comments', 'LIKE', $like);
+                                foreach ($textColumns as $column) {
+                                    $whereBuilder->orWhere("t.$column", 'LIKE', $like);
+                                }
                             }
                         );
                     }
+                }
+            );
+            // Prefer fully translated over auto translated.
+            $builder->joinSub(
+                CardTranslation::select('card_id', \DB::raw('MIN(locale) as preferred_locale'))->groupBy('card_id'),
+                't2',
+                function (JoinClause $join) {
+                    $join->on('t.card_id', '=', 't2.card_id')->on('t.locale', '=', 't2.preferred_locale');
                 }
             );
         }

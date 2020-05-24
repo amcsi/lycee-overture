@@ -14,8 +14,9 @@ use Tests\DatabaseTestCase;
 class TranslationCoverageCheckerTest extends DatabaseTestCase
 {
     private $cardTranslation1Ja;
-    private $cardTranslation1En;
+    private $cardTranslation1EnAuto;
     private $cardTranslation2Ja;
+    private $cardTranslation2EnAuto;
     private $cardTranslation2En;
 
     public function setUp(): void
@@ -37,13 +38,17 @@ class TranslationCoverageCheckerTest extends DatabaseTestCase
             $defaultProperties,
             ['locale' => Locale::JAPANESE, 'kanji_count' => 10, 'card_id' => $card1->id]
         ));
-        $this->cardTranslation1En = CardTranslation::forceCreate(array_replace(
+        $this->cardTranslation1EnAuto = CardTranslation::forceCreate(array_replace(
             $defaultProperties,
-            ['locale' => Locale::ENGLISH, 'kanji_count' => 6, 'card_id' => $card1->id]
+            ['locale' => Locale::ENGLISH_AUTO, 'kanji_count' => 6, 'card_id' => $card1->id]
         ));
         $this->cardTranslation2Ja = CardTranslation::forceCreate(array_replace(
             $defaultProperties,
             ['locale' => Locale::JAPANESE, 'kanji_count' => 20, 'card_id' => $card2->id]
+        ));
+        $this->cardTranslation2EnAuto = CardTranslation::forceCreate(array_replace(
+            $defaultProperties,
+            ['locale' => Locale::ENGLISH_AUTO, 'kanji_count' => 10, 'card_id' => $card2->id]
         ));
         $this->cardTranslation2En = CardTranslation::forceCreate(array_replace(
             $defaultProperties,
@@ -64,7 +69,8 @@ class TranslationCoverageCheckerTest extends DatabaseTestCase
         float $kanjiRemovalRatio,
         float $fullyTranslatedRatio,
         int $translatedCards,
-        int $totalCards
+        int $totalCards,
+        string $message = ''
     ): void {
         self::assertSame([
             'kanji_removal_ratio' => $kanjiRemovalRatio,
@@ -72,12 +78,13 @@ class TranslationCoverageCheckerTest extends DatabaseTestCase
             'translated_cards' => $translatedCards,
             'total_cards' => $totalCards,
         ],
-            (new StatisticsTransformer())->transform($statistics));
+            (new StatisticsTransformer())->transform($statistics),
+            $message);
     }
 
     public function testNoEnglishTranslations(): void
     {
-        CardTranslation::whereLocale(Locale::ENGLISH)->delete();
+        CardTranslation::whereIn('locale', [Locale::ENGLISH, Locale::ENGLISH_AUTO])->delete();
         $statistics = app(TranslationCoverageChecker::class)->calculateStatistics([]);
         // Total cards should be 0, because when calculating statistics of cards when searching (text),
         // those filters would need to be applied to the English version of cards.
@@ -92,16 +99,16 @@ class TranslationCoverageCheckerTest extends DatabaseTestCase
 
     public function testFullyTranslated(): void
     {
-        $this->cardTranslation1En->kanji_count = 0;
-        $this->cardTranslation1En->save();
+        $this->cardTranslation1EnAuto->kanji_count = 0;
+        $this->cardTranslation1EnAuto->save();
         $statistics = app(TranslationCoverageChecker::class)->calculateStatistics([]);
         self::assertStatistics($statistics, 1, 1, 2, 2);
     }
 
     public function testWithSearch(): void
     {
-        $this->cardTranslation1En->name = 'Not fully translated';
-        $this->cardTranslation1En->save();
+        $this->cardTranslation1EnAuto->name = 'Not fully translated';
+        $this->cardTranslation1EnAuto->save();
         $statistics = app(TranslationCoverageChecker::class)->calculateStatistics(['name' => 'Not fully translated']);
         self::assertStatistics($statistics, 1 - 6 / 10, 0, 0, 1);
     }
@@ -112,5 +119,17 @@ class TranslationCoverageCheckerTest extends DatabaseTestCase
         $this->cardTranslation2En->save();
         $statistics = app(TranslationCoverageChecker::class)->calculateStatistics(['name' => 'Bob']);
         self::assertStatistics($statistics, 1, 1, 1, 1);
+        $en2Auto = $this->cardTranslation2EnAuto;
+        $newEn2Auto = $en2Auto->replicate();
+        $en2Auto->delete();
+        $newEn2Auto->save();
+        self::assertStatistics(
+            $statistics,
+            1,
+            1,
+            1,
+            1,
+            'The statistics should stay the same even if the order changes'
+        );
     }
 }

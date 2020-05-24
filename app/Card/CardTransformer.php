@@ -26,6 +26,7 @@ class CardTransformer extends TransformerAbstract
 
     public function transform(Card $card)
     {
+        $locale = \App::getLocale();
         $ret = [
             'id' => $card->id,
             'type' => $card->getType(),
@@ -37,8 +38,10 @@ class CardTransformer extends TransformerAbstract
             'element' => self::getElementMarkup($card),
             'cost' => self::getCostMarkup($card),
             'rarity' => $card->rarity,
-            'translation' => \App::getLocale() !== Locale::JAPANESE ?
-                $this->cardTranslationTransformer->transform($card->getTranslation()) : null,
+            'translation' => $locale !== Locale::JAPANESE ?
+                $this->cardTranslationTransformer->transform(
+                    $card->getTranslation($locale) ?: $card->getTranslation("$locale-auto")
+                ) : null,
             'japanese' => $this->cardTranslationTransformer->transform($card->getTranslation('ja')),
             'created_at' => $this->dateTimeTransformer->transform($card->created_at),
         ];

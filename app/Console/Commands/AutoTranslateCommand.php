@@ -62,8 +62,9 @@ class AutoTranslateCommand extends Command
             null;
         $propertiesToDump = ['card_id', 'name', 'ability_name', 'character_type', ...self::AUTO_TRANSLATE_FIELDS];
 
+        $locale = Locale::ENGLISH . '-auto';
         $englishCards = $cardTranslation->newQuery()
-            ->where('locale', Locale::ENGLISH)
+            ->where('locale', $locale)
             ->get()
             ->keyBy(
                 function (
@@ -99,7 +100,7 @@ class AutoTranslateCommand extends Command
                 // Update based on the existing English card data.
                 $englishCards[$cardId] :
                 // Create a new English card based on the Japanese one.
-                $japaneseCard->replicate()->setAttribute('locale', Locale::ENGLISH);
+                $japaneseCard->replicate()->setAttribute('locale', $locale);
 
             // Iterate the auto-translatable fields.
             foreach (self::AUTO_TRANSLATE_FIELDS as $key) {
