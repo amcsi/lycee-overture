@@ -19,14 +19,27 @@ class QueryLogToResponseAdder
         $content =& $event->content;
         // Need to check that the response is an API response.
         if (is_array($content)) {
-            $content['debug'] = array_map(
-                function (array $logEntry) {
-                    $logEntry['sql'] = self::getBoundSql($logEntry['query'], $logEntry['bindings']);
-                    return $logEntry;
-                },
-                \DB::getQueryLog()
-            );
+            $content['debug'] = self::getQueryLog();
         }
+    }
+
+    /**
+     * Gets the query log, but with sql placeholders pre-bound.
+     * @param bool $onlyBound If true, do not include the unbound queries.
+     * @return array|array[]
+     */
+    public static function getQueryLog($onlyBound = true)
+    {
+        return array_map(
+            function (array $logEntry) use ($onlyBound) {
+                $logEntry['sql'] = self::getBoundSql($logEntry['query'], $logEntry['bindings']);
+                if ($onlyBound) {
+                    unset($logEntry['query'], $logEntry['bindings']);
+                }
+                return $logEntry;
+            },
+            \DB::getQueryLog()
+        );
     }
 
     private static function getBoundSql(string $unboundSql, array $bindings)
