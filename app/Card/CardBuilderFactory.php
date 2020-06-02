@@ -75,7 +75,11 @@ class CardBuilderFactory
         $text = (string) ($query['text'] ?? null);
 
         // Load some translations for text search or kanji counting?
-        if ($forceLoadTranslation || $name !== '' || $text !== '') {
+        $shouldLoadTranslation = $forceLoadTranslation ||
+            $name !== '' ||
+            $text !== '' ||
+            ($locale !== Locale::JAPANESE && ($query['translatedFirst'] ?? null));
+        if ($shouldLoadTranslation) {
             $nameColumns = ['name', 'ability_name', 'character_type'];
             $textColumns = ['ability_description', 'ability_cost', 'pre_comments', 'comments'];
 
