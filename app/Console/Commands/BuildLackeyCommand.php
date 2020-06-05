@@ -52,10 +52,10 @@ class BuildLackeyCommand extends Command
             'Name' => fn(Card $card) => $card->id,
             'Set' => fn() => 'cards',
             'ImageFile' => fn(Card $card) => $card->id,
-            'Actual Name' => fn(Card $card) => $card->getTranslation()->name,
-            'Ability Name' => fn(Card $card) => $card->getTranslation()->ability_name,
-            'Character Type' => fn(Card $card) => $card->getTranslation()->character_type,
-            'Comments' => fn(Card $card) => $card->getTranslation()->comments,
+            'Actual Name' => fn(Card $card) => $card->getBestTranslation()->name,
+            'Ability Name' => fn(Card $card) => $card->getBestTranslation()->ability_name,
+            'Character Type' => fn(Card $card) => $card->getBestTranslation()->character_type,
+            'Comments' => fn(Card $card) => $card->getBestTranslation()->comments,
             'EX' => fn(Card $card) => $card->ex,
             'Element' => fn(Card $card) => CardTransformer::getElementMarkup($card),
             'Cost' => fn(Card $card) => CardTransformer::getCostMarkup($card),
@@ -63,9 +63,9 @@ class BuildLackeyCommand extends Command
             'AP' => fn(Card $card) => $card->ap,
             'DP' => fn(Card $card) => $card->dp,
             'SP' => fn(Card $card) => $card->sp,
-            'Basic Abilities' => fn(Card $card) => $card->getTranslation()->basic_abilities,
+            'Basic Abilities' => fn(Card $card) => $card->getBestTranslation()->basic_abilities,
             'Special Abilities' => function (Card $card) {
-                $translation = $card->getTranslation();
+                $translation = $card->getBestTranslation();
                 $costs = explode("\n", $translation->ability_cost);
                 $descriptions = explode("\n", $translation->ability_description);
                 $ret = '';
@@ -82,7 +82,8 @@ class BuildLackeyCommand extends Command
         $writer->insertOne(array_keys($definitions));
         $writer->insertAll(
             Card::cursor()
-                ->filter(fn(Card $card) => !$card->getTranslation()->kanji_count) // Exclude ones not fully translated.
+                ->filter(fn(Card $card
+                ) => !$card->getBestTranslation()->kanji_count) // Exclude ones not fully translated.
                 ->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
         );
         $dstAdapter->putStream("$dstPath/sets/carddata.txt", try_fopen($tempnam, 'rb'));
@@ -90,7 +91,7 @@ class BuildLackeyCommand extends Command
         /** @var Card $card */
         foreach (Card::query()->cursor() as $card) {
             /** @var CardTranslation $translation */
-            $translation = $card->getTranslation();
+            $translation = $card->getBestTranslation();
             $writer->insertOne(
                 [
                     $card->id,

@@ -39,9 +39,8 @@ class CardTransformer extends TransformerAbstract
             'cost' => self::getCostMarkup($card),
             'rarity' => $card->rarity,
             'translation' => $locale !== Locale::JAPANESE ?
-                $this->cardTranslationTransformer->transform(
-                    $card->getTranslation($locale) ?: $card->getTranslation("$locale-auto")
-                ) : null,
+                $this->cardTranslationTransformer->transform($card->getBestTranslation()) :
+                null,
             'japanese' => $this->cardTranslationTransformer->transform($card->getTranslation('ja')),
             'created_at' => $this->dateTimeTransformer->transform($card->created_at),
         ];
@@ -56,6 +55,7 @@ class CardTransformer extends TransformerAbstract
         $coloredElements = Element::getElementKeys();
         $elementsMarkup = '';
         foreach ($coloredElements as $element) {
+            /** @noinspection PhpVariableVariableInspection */
             if ($card->$element) {
                 $elementsMarkup .= "[$element]";
             }

@@ -41,4 +41,13 @@ class Card extends Model
     {
         return $this->belongsTo(Set::class);
     }
+
+    /**
+     * Gets the translation preferring the current locale and falling back to the auto-translated variant.
+     */
+    public function getBestTranslation(): CardTranslation
+    {
+        $locale = $this->locale();
+        return $this->getTranslation($locale) ?: $this->getTranslation("$locale-auto");
+    }
 }
