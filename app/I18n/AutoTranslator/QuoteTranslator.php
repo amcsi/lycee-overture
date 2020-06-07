@@ -38,6 +38,6 @@ class QuoteTranslator
 
     public function nameCallback(array $matches): string
     {
-        return $this->nameTranslator->tryTranslateName($matches[0]);
+        return $this->nameTranslator->tryTranslateName($matches[0], true);
     }
 }
