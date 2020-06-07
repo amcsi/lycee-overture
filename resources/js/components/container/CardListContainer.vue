@@ -32,8 +32,11 @@ import CardFilters from '../card/CardFilters';
       }),
     },
     watch: {
-      async '$route.query'() {
-        await this.listCardsAndFetchStatistics(this.$route.query);
+      '$route.query': {
+        immediate: true,
+        async handler() {
+          await this.listCardsAndFetchStatistics(this.$route.query);
+        },
       },
     },
   };

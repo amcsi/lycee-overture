@@ -5,6 +5,7 @@ export default {
   state: {
     listLoading: false,
     list: null,
+    lastParams: false, // Cache key to avoid unnecessary API calls.
     loadedInitial: false,
     lastPrintParams: false, // Cache key to avoid unnecessary API calls.
     printListLoading: null,
@@ -35,16 +36,27 @@ export default {
     CARDS_PRINT_SET_LAST_PARAMS(state, stringifiedParams) {
       state.lastPrintParams = stringifiedParams;
     },
+    CARDS_SET_LAST_PARAMS(state, stringifiedParams) {
+      state.lastParams = stringifiedParams;
+    },
     CARDS_SET_NEWEST_DATE(state, newestDate) {
       state.newestDate = newestDate;
     },
   },
   actions: {
-    async listCards({ commit }, query) {
+    async listCards({ commit, state }, query) {
+      const stringifiedParams = JSON.stringify(query);
+
+      if (stringifiedParams === state.lastParams) {
+        // Nothing to do.
+        return;
+      }
+
       commit('CARDS_LOADING');
       try {
         const cards = await listCards(query);
         commit('CARDS_LOADED', cards);
+        commit('CARDS_SET_LAST_PARAMS', stringifiedParams);
       } catch (e) {
         commit('CARDS_LOADING_FAILED');
         throw e;
