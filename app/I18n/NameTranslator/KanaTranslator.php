@@ -20,11 +20,6 @@ class KanaTranslator
 
     public function translate(string $text): string
     {
-        if (strpos($text, '／') !== false) {
-            // Perform the translation separately per slash separation.
-            return implode('／', array_map([$this, 'translate'], explode('／', $text)));
-        }
-
         if (!Analyzer::hasKana($text)) {
             // No hiragana or katakana to translate.
             return $text;

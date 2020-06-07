@@ -29,10 +29,6 @@ class KanaTranslatorTest extends TestCase
                 'Kuraara',
                 'クラーラ',
             ],
-            'separators' => [
-                'Ruuraa／Jannu Daruku',
-                'ルーラー／ジャンヌ・ダルク',
-            ],
             'hiragana' => [
                 'Oryou',
                 'おりょう',
@@ -40,10 +36,6 @@ class KanaTranslatorTest extends TestCase
             'do not translate mixtures' => [
                 '天使の力',
                 '天使の力',
-            ],
-            'do translate the translatable parts if separated by slashes' => [
-                '天使の力／Kuraara',
-                '天使の力／クラーラ',
             ],
             'foreign katakana' => [
                 'Vareiriivuvetu',

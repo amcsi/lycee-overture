@@ -20,11 +20,6 @@ class KanjiTranslator
 
     public function translate(string $text): string
     {
-        if (strpos($text, '／') !== false) {
-            // Perform the translation separately per slash separation.
-            return implode('／', array_map([$this, 'translate'], explode('／', $text)));
-        }
-
         // Only attempt to translate if the text has kanji, but does not have katakana or latin letters.
         $hasKanjiOrHiragana = Analyzer::hasKanji($text);
         if ($hasKanjiOrHiragana && !Analyzer::hasKatakana($text) && !Analyzer::hasLatinLetters($text)) {

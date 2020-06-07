@@ -40,11 +40,6 @@ class KanjiTranslatorTest extends TestCase
                 '左衛門佐',
                 ['Isuzu Hana'],
             ],
-            'Kanji names separated by slashes' => [
-                'Isuzu Hana／Isuzu Hana',
-                '左衛門佐／左衛門佐',
-                ['Isuzu Hana', 'Isuzu Hana'],
-            ],
             'Contains katakana' => [
                 '左衛門佐チ',
                 '左衛門佐チ',

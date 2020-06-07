@@ -5,6 +5,7 @@ namespace Tests\Unit\I18n\NameTranslator;
 
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\KanaTranslator;
+use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
@@ -48,7 +49,7 @@ class NameTranslatorTest extends TestCase
                     ],
                 ],
             ]
-        ), $this->kanaTranslator);
+        ), $this->kanaTranslator, \Mockery::mock(KanjiTranslator::class));
     }
 
     public function testTryToTranslateCharacterTypeExact()

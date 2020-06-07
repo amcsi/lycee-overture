@@ -17,21 +17,30 @@ class NameTranslator
 
     private $punctuationSearch;
     private $punctuationReplace;
+    private KanjiTranslator $kanjiTranslator;
 
-    public function __construct(ManualNameTranslator $manualNameTranslator, KanaTranslator $kanaTranslator)
-    {
+    public function __construct(
+        ManualNameTranslator $manualNameTranslator,
+        KanaTranslator $kanaTranslator,
+        KanjiTranslator $kanjiTranslator
+    ) {
         $this->manualNameTranslator = $manualNameTranslator;
         $this->kanaTranslator = $kanaTranslator;
         $this->punctuationSearch = array_keys(self::$punctuationTranslationMap);
         $this->punctuationReplace = array_values(self::$punctuationTranslationMap);
+        $this->kanjiTranslator = $kanjiTranslator;
     }
 
     /**
      * Tries to translate a card's name. First tries using the manual translations, then tries using the kana converter.
      */
-    public function tryTranslateName(string $untranslated): string
+    public function tryTranslateName(string $untranslated, bool $useKanjiNameTranslation = false): string
     {
-        return $this->tryTranslate($untranslated, [OneSkyClient::NAMES, OneSkyClient::ABILITY_NAMES]);
+        return $this->tryTranslate(
+            $untranslated,
+            [OneSkyClient::NAMES, OneSkyClient::ABILITY_NAMES],
+            $useKanjiNameTranslation
+        );
     }
 
     /**
@@ -46,14 +55,18 @@ class NameTranslator
      * Tries to translate a card's name/type. First tries using the manual translations, then tries using the kana
      * converter.
      */
-    private function tryTranslate(string $untranslated, $textTypes): string
+    private function tryTranslate(string $untranslated, $textTypes, bool $useKanjiNameTranslation = false): string
     {
         $translated = self::doSeparatedByPunctuation(
             $untranslated,
-            function (string $untranslated) use ($textTypes) {
+            function (string $untranslated) use ($textTypes, $useKanjiNameTranslation) {
                 $translated = $this->manualNameTranslator->tryToTranslate($untranslated, $textTypes);
                 if ($translated === $untranslated) {
+                    // Try to translate katakana.
                     $translated = $this->kanaTranslator->translate($untranslated);
+                }
+                if ($translated === $untranslated && $useKanjiNameTranslation) {
+                    $translated = $this->kanjiTranslator->translate($untranslated);
                 }
 
                 return $translated;

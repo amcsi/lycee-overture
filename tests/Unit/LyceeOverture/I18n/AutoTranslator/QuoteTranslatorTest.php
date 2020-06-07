@@ -9,6 +9,7 @@ use amcsi\LyceeOverture\I18n\NameTranslator\KanaTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use PHPUnit\Framework\TestCase;
+use Tests\Tools\TestUtils;
 
 class QuoteTranslatorTest extends TestCase
 {
@@ -40,7 +41,8 @@ class QuoteTranslatorTest extends TestCase
             (new QuoteTranslator(
                 new NameTranslator(
                     new ManualNameTranslator($translations),
-                    new KanaTranslator(TransliteratorFactory::getInstance())
+                    new KanaTranslator(TransliteratorFactory::getInstance()),
+                    TestUtils::createKanjiTranslator()
                 )
             ))->autoTranslate('asdf ＜魔剣＞ asdf 「lol」 hey 「lol2」')
         );
