@@ -18,6 +18,11 @@ export default {
 
       return list.map(({ brand }) => brand).filter(filterByUnique);
     },
+    brandsMarkupRegexp(state, { brands }) {
+      const pattern = `\\[(${brands.join('|')})]`;
+      console.info({ pattern });
+      return new RegExp(pattern);
+    },
   },
   mutations: {
     SETS_LOADING(state) {

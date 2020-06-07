@@ -36,9 +36,10 @@
                             <router-link :to="{ path: '/cards', query: {set: card.set.id} }">
                                 {{card.set.full_name}}
                             </router-link>
-                            <router-link :to="{ path: '/cards', query: {brand: card.set.brand} }">
-                                [{{card.set.brand}}]
-                            </router-link>
+                            <router-link
+                                :to="{ path: '/cards', query: {brand: card.set.brand} }"
+                                v-html="formattedBrand"
+                            />
                         </div>
                     </div>
                 </div>
@@ -73,13 +74,14 @@
 </template>
 
 <script>
+import formatCardMixin from '../../utils/formatCardMixin';
 import ExternalLink from '../common/ExternalLink';
 import CardDescription from './CardDescription';
 import CardText from './CardText';
 import CardThumbnail from './CardThumbnail';
 
 /** @class CardListItem */
-  export default {
+export default {
   name: 'CardListItem',
   components: { ExternalLink, CardText, CardDescription, CardThumbnail },
   props: {
@@ -88,51 +90,57 @@ import CardThumbnail from './CardThumbnail';
       required: true,
     },
   },
+  mixins: [formatCardMixin],
   data() {
     return {
       localLocale: null,
     };
   },
-    computed: {
-      isCharacter() {
-        return this.card.type === 0;
-      },
-      characterType() {
-        if (!this.isCharacter) {
-          return '';
-        }
-        const characterType = this.cardText.character_type.trim();
-        if (characterType.length <= 1) {
-          // Empty or just a dash; return empty string.
-          return '';
-        }
-        return characterType;
-      },
-      hasCardDescription() {
-        const translation = this.cardText;
-        return translation.ability_cost.trim().length > 1 || translation.ability_description.trim().length > 1 || translation.comments.trim().length > 1;
-      },
-      cardText() {
-        if (!this.card.translation) {
-          return this.card.japanese;
-        }
-        return this.localLocale === 'ja' ? this.card.japanese : this.card.translation;
-      },
-      showLanguageSelectors() {
-        return !!this.card.translation;
-      },
-      rulingsLink() {
-        let link = `https://lycee-tcg.com/faq/?word=${this.card.id}`;
-        if (this.localLocale !== 'ja') {
-          link = `https://translate.google.com/translate?sl=ja&tl=en&u=${encodeURI(link)}`;
-        }
-        return link;
-      },
+  computed: {
+    isCharacter() {
+      return this.card.type === 0;
     },
+    characterType() {
+      if (!this.isCharacter) {
+        return '';
+      }
+      const characterType = this.cardText.character_type.trim();
+      if (characterType.length <= 1) {
+        // Empty or just a dash; return empty string.
+        return '';
+      }
+      return characterType;
+    },
+    hasCardDescription() {
+      const translation = this.cardText;
+      return translation.ability_cost.trim().length > 1
+        || translation.ability_description.trim().length > 1 || translation.comments.trim().length
+        > 1;
+    },
+    cardText() {
+      if (!this.card.translation) {
+        return this.card.japanese;
+      }
+      return this.localLocale === 'ja' ? this.card.japanese : this.card.translation;
+    },
+    showLanguageSelectors() {
+      return !!this.card.translation;
+    },
+    rulingsLink() {
+      let link = `https://lycee-tcg.com/faq/?word=${this.card.id}`;
+      if (this.localLocale !== 'ja') {
+        link = `https://translate.google.com/translate?sl=ja&tl=en&u=${encodeURI(link)}`;
+      }
+      return link;
+    },
+    formattedBrand() {
+      return this.formatBrands(`[${this.card.set.brand}]`);
+    },
+  },
   created() {
     this.localLocale = this.card.translation ? 'en' : 'ja';
   },
-  };
+};
 </script>
 
 <style scoped lang="scss">

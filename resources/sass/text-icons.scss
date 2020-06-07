@@ -58,3 +58,14 @@ $abilityTypeColors: (
   position: absolute;
   left: -10000px;
 }
+
+.brand {
+  position: relative;
+  top: -.1em;
+  background-color: black;
+  color: white;
+  font-size: 0.8em;
+  border-radius: 1em;
+  padding: 0.1em 0.3em;
+  font-weight: bold;
+}

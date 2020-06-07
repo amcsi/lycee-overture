@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import formatCardText from '../../utils/formatCard';
+import formatCardMixin from '../../utils/formatCardMixin';
 
 /**
    * Card text with card markup e.g. '[T][star][0]'.
@@ -11,20 +11,21 @@ import formatCardText from '../../utils/formatCard';
    * @class CardText
    **/
   export default {
-    name: 'CardText',
-    props: {
-      text: String,
+  name: 'CardText',
+  props: {
+    text: String,
+  },
+  mixins: [formatCardMixin],
+  computed: {
+    formattedText() {
+      return this.formatCardText(this.text);
     },
-    computed: {
-      formattedText() {
-        return formatCardText(this.text);
-      },
-    },
-    methods: {
-      onClick($event) {
-        if ($event.target.dataset.key === 'name') {
-          // Handle click on a name.
-          const query = { name: $event.target.dataset.value };
+  },
+  methods: {
+    onClick($event) {
+      if ($event.target.dataset.key === 'name') {
+        // Handle click on a name.
+        const query = { name: $event.target.dataset.value };
           this.$router.push({ query });
         }
       },

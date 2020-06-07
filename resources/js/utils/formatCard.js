@@ -67,6 +67,14 @@ function abilityTypeCallback(match, contents) {
   );
 }
 
+export function formatBrands(text = '', brandsRegexp) {
+  return text.replace(brandsRegexp, brandsCallback);
+}
+
+function brandsCallback(match, contents) {
+  return `<span class="ict">[</span><span class="brand">${contents}</span><span class="ict">]</span>`;
+}
+
 /**
  * Formats card text to use pretty icons and stuff.
  */
