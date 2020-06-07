@@ -3,9 +3,9 @@
 </template>
 
 <script>
-  import formatCardText from '../../utils/formatCard';
+import formatCardText from '../../utils/formatCard';
 
-  /**
+/**
    * Card text with card markup e.g. '[T][star][0]'.
    *
    * @class CardText
@@ -24,9 +24,7 @@
       onClick($event) {
         if ($event.target.dataset.key === 'name') {
           // Handle click on a name.
-          const query = { ...this.$route.query };
-          delete query.page;
-          query.name = $event.target.dataset.value;
+          const query = { name: $event.target.dataset.value };
           this.$router.push({ query });
         }
       },
