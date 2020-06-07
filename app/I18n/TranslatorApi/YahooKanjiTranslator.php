@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\TranslatorApi;
 
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
+use Carbon\CarbonImmutable;
 use Illuminate\Contracts\Cache\Repository;
 
 class YahooKanjiTranslator implements TranslatorInterface
@@ -27,8 +28,7 @@ class YahooKanjiTranslator implements TranslatorInterface
                 // Couldn't be translated with the translation service.
                 return $text;
             }
-            $expiry = 60 * 24 * 30 * 12; // 1 year.
-            $this->cache->put($text, $translated, $expiry);
+            $this->cache->put($text, $translated, CarbonImmutable::now()->addYear());
         }
 
         $words = explode(' ', trim($translated));
