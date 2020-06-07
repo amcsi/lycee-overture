@@ -48,12 +48,28 @@ class NameTranslator
      */
     private function tryTranslate(string $untranslated, $textTypes): string
     {
-        $translated = $this->manualNameTranslator->tryToTranslate($untranslated, $textTypes);
-        if ($translated === $untranslated) {
-            $translated = $this->kanaTranslator->translate($untranslated);
-        }
+        $translated = self::doSeparatedByPunctuation(
+            $untranslated,
+            function (string $untranslated) use ($textTypes) {
+                $translated = $this->manualNameTranslator->tryToTranslate($untranslated, $textTypes);
+                if ($translated === $untranslated) {
+                    $translated = $this->kanaTranslator->translate($untranslated);
+                }
+
+                return $translated;
+            }
+        );
 
         // Romanize some punctuation.
         return str_replace($this->punctuationSearch, $this->punctuationReplace, $translated);
+    }
+
+    /**
+     * Does an action on a string such that it first gets split by certain Japanese punctuation characters.
+     * This is so that parts of translations could be reusable e.g. Saber／Arutoria Pendoragon.
+     */
+    public static function doSeparatedByPunctuation(string $input, callable $callable): string
+    {
+        return preg_replace_callback('/[^／・]+/u', fn(array $matches) => $callable($matches[0]), $input);
     }
 }

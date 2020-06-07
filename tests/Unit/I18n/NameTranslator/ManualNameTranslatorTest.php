@@ -42,13 +42,4 @@ class ManualNameTranslatorTest extends TestCase
         $instance = self::createInstance();
         self::assertSame('se', $instance->tryToTranslate('セ', [OneSkyClient::CHARACTER_TYPES]));
     }
-
-    public function testNameTranslationByPunctuationComponent()
-    {
-        $instance = self::createInstance();
-        self::assertSame(
-            'i／baa・i',
-            $instance->tryToTranslate('イ／バー・イ', [OneSkyClient::NAMES, OneSkyClient::ABILITY_NAMES])
-        );
-    }
 }

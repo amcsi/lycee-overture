@@ -6,7 +6,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
-use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
+use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use Illuminate\Console\Command;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -30,9 +30,10 @@ class UploadTranslations extends Command
 
         foreach ($typesFromDb as $typeFromDb) {
             foreach ($textsByTextType as $textType => $_) {
+                /** @noinspection PhpVariableVariableInspection */
                 $text = $typeFromDb->$textType;
                 // Upload each (punctuation) component of the text separately.
-                ManualNameTranslator::doSeparatedByPunctuation(
+                NameTranslator::doSeparatedByPunctuation(
                     $text,
                     static function (string $part) use (&$textsByTextType, &$textType) {
                         if (JapaneseCharacterCounter::countJapaneseCharacters($part)) {

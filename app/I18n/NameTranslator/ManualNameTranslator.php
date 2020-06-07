@@ -41,26 +41,12 @@ class ManualNameTranslator
      */
     public function tryToTranslate(string $quoted, array $textTypes): string
     {
-        return self::doSeparatedByPunctuation(
-            $quoted,
-            function ($part) use ($textTypes) {
-                foreach ($textTypes as $textType) {
-                    if (($translation = $this->translations[Locale::ENGLISH]['translation'][$textType][$part] ?? null)) {
-                        return $translation;
-                    }
-                }
-
-                return $part;
+        foreach ($textTypes as $textType) {
+            if (($translation = $this->translations[Locale::ENGLISH]['translation'][$textType][$quoted] ?? null)) {
+                return $translation;
             }
-        );
-    }
+        }
 
-    /**
-     * Does an action on a string such that it first gets split by certain Japanese punctuation characters.
-     * This is so that parts of translations could be reusable e.g. Saber／Arutoria Pendoragon.
-     */
-    public static function doSeparatedByPunctuation(string $input, callable $callable): string
-    {
-        return preg_replace_callback('/[^／・]+/u', fn(array $matches) => $callable($matches[0]), $input);
+        return $quoted;
     }
 }
