@@ -24,7 +24,7 @@ class WhenSupportingTest extends TestCase
                 'キャラでこのキャラにサポートをしたとき',
             ],
             'getting certain character supported by certain character' => [
-                'when an "Ankou Team" character gets supported by this character',
+                'when an 「Ankou Team」 character gets supported by this character',
                 'このキャラで「Ankou Team」キャラにサポートをしたとき',
             ],
         ];

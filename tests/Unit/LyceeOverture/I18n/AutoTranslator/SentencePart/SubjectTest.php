@@ -100,7 +100,7 @@ class SubjectTest extends TestCase
                 'このキャラのSPとAP',
             ],
             'quoted noun' => [
-                ' 1  "稲生滸" in your Discard Pile',
+                ' 1  「稲生滸」 in your Discard Pile',
                 '自分のゴミ箱の「稲生滸」1体',
             ],
             'gt/lt noun' => [

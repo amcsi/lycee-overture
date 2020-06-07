@@ -10,13 +10,24 @@ namespace amcsi\LyceeOverture\I18n\AutoTranslator;
  */
 class FullWidthCharacters
 {
+    /**
+     * Does not transform quotes.
+     */
     public static function translateFullWidthCharacters(string $input): string
     {
         $autoTranslated = $input;
-        $autoTranslated = preg_replace_callback('/[\x{FF01}-\x{FF5D}]/u', function ($match) {
-            $ascii = ord($match[0][2]);
-            return chr($ascii - 96);
-        }, $autoTranslated);
+        $autoTranslated = preg_replace_callback('/[\x{FF01}-\x{FF5D}]/u',
+            function ($match) {
+                $ascii = ord($match[0][2]);
+                return chr($ascii - 96);
+            },
+            $autoTranslated);
         return $autoTranslated;
     }
+
+    public static function transformQuotes(string $input): string
+    {
+        return preg_replace('/[「」]/u', '"', $input);
+    }
+
 }

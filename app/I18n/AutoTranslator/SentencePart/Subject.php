@@ -114,7 +114,6 @@ class Subject
         $subject = next($matches); // Ally or Enemy in Japanese (or '')
         $typeSource = next($matches); // e.g. [sun] <- characters, "quoted"
         if ($typeSource) {
-            $typeSource = self::replaceIfQuoted($typeSource); // If <quoted>.
             $something .= " $typeSource";
         }
         $noun = next($matches);
@@ -147,8 +146,7 @@ class Subject
                         break;
                     case '<':
                     case '「':
-                        // Replace Japanese quotes with English ones.
-                        $noun = self::replaceIfQuoted($noun);
+                        // Quote.
                         break;
                     default:
                         throw new \LogicException("Unexpected noun: $noun");
@@ -352,19 +350,5 @@ class Subject
     {
         $subjectRegex = RegexHelper::uncapture(self::REGEX);
         return str_replace('[subject]', "($subjectRegex)", $compoundReplacable);
-    }
-
-    private static function replaceIfQuoted(string $quoted): string
-    {
-        switch (mb_substr($quoted, 0, 1)) {
-            case '<':
-                // Leave it as it is.
-                break;
-            case '「':
-                // Replace Japanese quotes with English ones.
-                $quoted = str_replace(['「', '」'], '"', $quoted);
-                break;
-        }
-        return $quoted;
     }
 }

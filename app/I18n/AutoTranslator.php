@@ -218,6 +218,9 @@ class AutoTranslator
 
         $autoTranslated = MarkupConverter::convert($autoTranslated);
 
+        // Now transform quote characters.
+        $autoTranslated = FullWidthCharacters::transformQuotes($autoTranslated);
+
         if (self::countBrackets($autoTranslated) !== $bracketCounts) {
             throw new \LogicException("Bracket count mismatch.\nOriginal: $japaneseText\nTranslated: $autoTranslated");
         }
