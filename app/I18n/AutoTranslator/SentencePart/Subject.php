@@ -168,7 +168,7 @@ class Subject
                         $text = "all your$something {$noun}s";
                         break;
                     case '相手':
-                        $text = "all$something enemy {$noun}s";
+                        $text = "all$something opponent {$noun}s";
                         break;
                     case '':
                         // Unknown
@@ -188,9 +188,9 @@ class Subject
                         }
                         break;
                     case '相手':
-                        $text = 'enemy';
+                        $text = 'opponent';
                         if (!$howMany) {
-                            $text = 'an enemy';
+                            $text = 'an opponent';
                         }
                         break;
                     case 'この':

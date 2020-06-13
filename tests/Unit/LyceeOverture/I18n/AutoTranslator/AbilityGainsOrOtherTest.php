@@ -30,7 +30,7 @@ class AbilityGainsOrOtherTest extends TestCase
                 'このキャラを破棄する.',
             ],
             [
-                ' discard 1 enemy character.',
+                ' discard 1 opponent character.',
                 '相手キャラ1体を破棄する.',
             ],
             [
@@ -70,7 +70,7 @@ class AbilityGainsOrOtherTest extends TestCase
                 'このキャラを除外する.',
             ],
             ' your opponent discards 1 of his characters' => [
-                ' your opponent discards 1 enemy character',
+                ' your opponent discards 1 opponent character',
                 '相手は相手キャラ1体を破棄する',
             ],
         ];

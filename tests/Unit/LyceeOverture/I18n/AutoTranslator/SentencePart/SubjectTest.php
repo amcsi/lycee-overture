@@ -124,7 +124,7 @@ class SubjectTest extends TestCase
                 'バトル参加キャラ1体',
             ],
             'enemy item' => [
-                ' 1 enemy item',
+                ' 1 opponent item',
                 '相手のアイテム1枚',
             ],
             'same row' => [
@@ -148,7 +148,7 @@ class SubjectTest extends TestCase
                 'このキャラに隣接したキャラ1体',
             ],
             '4 or more enemy characters' => [
-                ' 4 or more enemy characters',
+                ' 4 or more opponent characters',
                 '相手キャラが4体以上',
             ],
             'all your characters in target column' => [

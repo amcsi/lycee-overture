@@ -28,12 +28,12 @@ class StatChangesTest extends TestCase
                 '..とき対戦キャラにAP+2またはDP+2する.',
             ],
             [
-                "  {Enemy character's} AP and DP become 0.",
-                '{Enemy character}のAPとDPを0にする.',
+                "  {Opponent character's} AP and DP become 0.",
+                '{Opponent character}のAPとDPを0にする.',
             ],
             'optional making 0' => [
-                "  {Enemy character's} AP and DP can become 0.",
-                '{Enemy character}のAPとDPを0にできる.',
+                "  {Opponent character's} AP and DP can become 0.",
+                '{Opponent character}のAPとDPを0にできる.',
             ],
             [
                 "の a character's DMG becomes 4.",
@@ -56,8 +56,8 @@ class StatChangesTest extends TestCase
                 'このキャラにAP+[このキャラのSP]する.',
             ],
             'stats become this characters stats' => [
-                "  {Enemy character's} AP and DP become [this character's SP].",
-                '{Enemy character}のAPとDPを[このキャラのSP]にする.',
+                "  {Opponent character's} AP and DP become [this character's SP].",
+                '{Opponent character}のAPとDPを[このキャラのSP]にする.',
             ],
         ];
     }

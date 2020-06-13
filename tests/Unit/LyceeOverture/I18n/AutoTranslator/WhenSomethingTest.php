@@ -108,7 +108,7 @@ class WhenSomethingTest extends TestCase
                 'キャラがアイテムを装備している場合',
             ],
             'when there are 4 or more subjects' => [
-                'when there are 4 or more enemy characters on the field',
+                'when there are 4 or more opponent characters on the field',
                 '相手キャラが4体以上の場合',
             ],
             'by xy effect' => [

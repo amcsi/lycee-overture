@@ -68,7 +68,7 @@ class AutoTranslatorTest extends TestCase
                 '味方[日]キャラ全てにAP+1, DP+1, DMG+1する。',
             ],
             'all enemy characters get stats' => [
-                'All enemy characters get AP+1, DP+1, DMG+1.',
+                'All opponent characters get AP+1, DP+1, DMG+1.',
                 '相手キャラ全てにAP+1, DP+1, DMG+1する。',
             ],
             'gaining abilities' => [
@@ -84,7 +84,7 @@ class AutoTranslatorTest extends TestCase
                 '[味方キャラ1体]は[オーダーステップ:[無]][サイドステップ:[無]]を得る.',
             ],
             'opponent losing abilities' => [
-                '{1 enemy character} loses [Aggressive] until the end of the turn.',
+                '{1 opponent character} loses [Aggressive] until the end of the turn.',
                 '[相手キャラ１体]はターン終了時まで[アグレッシブ]を失う。',
             ],
             'ally getting stat changes' => [
@@ -92,11 +92,11 @@ class AutoTranslatorTest extends TestCase
                 '[味方キャラ1体]にSP+1する.',
             ],
             'enemy getting stat changes' => [
-                '{1 enemy character} gets SP-1.',
+                '{1 opponent character} gets SP-1.',
                 '[相手キャラ1体]にSP-1する.',
             ],
             'enemy getting stat changes (no target)' => [
-                '1 enemy character gets DP-1.',
+                '1 opponent character gets DP-1.',
                 '相手キャラ1体にDP-1する.',
             ],
             'compound target gets stat changes; separated target logic' => [
