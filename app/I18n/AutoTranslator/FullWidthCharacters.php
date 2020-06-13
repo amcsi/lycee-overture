@@ -27,7 +27,7 @@ class FullWidthCharacters
 
     public static function transformQuotes(string $input): string
     {
-        return preg_replace('/[「」]/u', '"', $input);
+        return str_replace(['「', '」'], ['“', '”'], $input);
     }
 
 }

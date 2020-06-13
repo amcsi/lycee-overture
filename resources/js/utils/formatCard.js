@@ -82,7 +82,8 @@ export default function(text = '') {
   text = text
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
-  text = text.replace(/"(.*?)"/g, (_, name) => {
+  text = text.replace(/([“「])(.*?)([」”])/g, (_, opening, name, closing) => {
+    // Make quotes into links.
     // Get the same string, but it made into a link with a new name filter.
 
     const url = new URL(document.location);
@@ -90,7 +91,7 @@ export default function(text = '') {
     params.set('name', name);
     const href = url.toString();
     const safeName = escape(name);
-    return `<a href="${href}" data-key="name" data-value="${safeName}">"${safeName}"</a>`;
+    return `<a href="${href}" data-key="name" data-value="${safeName}">${opening}${safeName}${closing}</a>`;
   });
   text = text.replace(/\[T]/g, getIcon('tap'));
   text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, simpleCallback);
