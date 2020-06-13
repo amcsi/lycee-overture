@@ -70,6 +70,7 @@ $description = 'This is a website in progress with the goal of translating the t
 </head>
 <body>
 @yield('content')
+@yield('afterContent')
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </body>
 </html>

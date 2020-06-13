@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Http\Middleware;
 
@@ -18,7 +19,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            return redirect()->intended('/cards');
         }
 
         return $next($request);

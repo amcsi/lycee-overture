@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Http\Controllers\Auth;
 
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/cards';
 
     /**
      * Create a new controller instance.
