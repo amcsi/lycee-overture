@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            // TODO: migrate away from Dingo API, because it doesn't take these into account.
             'throttle:60,1',
             'bindings',
         ],

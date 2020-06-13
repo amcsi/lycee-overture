@@ -8,6 +8,7 @@ use amcsi\LyceeOverture\Http\Controllers\SetController;
 use amcsi\LyceeOverture\Http\Controllers\StatisticsController;
 use Dingo\Api\Routing\Router;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,15 +29,18 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version(
     'v1',
     function (Router $api) {
-        $api->group(
-            ['prefix' => 'cards'],
+        $api->group(['middleware' => EnsureFrontendRequestsAreStateful::class],
             function (Router $api) {
-                $api->resource('/', CardController::class, ['only' => ['index']]);
-            }
-        );
-        $api->get('/card-sets', CardSetController::class . '@index');
-        $api->get('/sets', SetController::class . '@index');
-        $api->get('/statistics', StatisticsController::class . '@index');
-        $api->get('/articles', ArticleController::class . '@index');
+                $api->group(
+                    ['prefix' => 'cards'],
+                    function (Router $api) {
+                        $api->resource('/', CardController::class, ['only' => ['index']]);
+                    }
+                );
+                $api->get('/card-sets', CardSetController::class . '@index');
+                $api->get('/sets', SetController::class . '@index');
+                $api->get('/statistics', StatisticsController::class . '@index');
+                $api->get('/articles', ArticleController::class . '@index');
+            });
     }
 );

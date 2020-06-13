@@ -22,6 +22,7 @@
     "guzzlehttp/guzzle": "^6.3",
     "guzzlehttp/psr7": "^1.5",
     "laravel/framework": "7.*",
+    "laravel/sanctum": "^2.4",
     "laravel/tinker": "^2.0",
     "laravel/ui": "^2.0",
     "league/csv": "^9.1",
