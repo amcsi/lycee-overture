@@ -22,19 +22,19 @@ class AbilityGainsOrOtherTest extends TestCase
     {
         return [
             [
-                ' destroy opposing character.',
+                ' discard opposing character.',
                 '対戦キャラを破棄する.',
             ],
             [
-                ' destroy this character.',
+                ' discard this character.',
                 'このキャラを破棄する.',
             ],
             [
-                ' destroy 1 enemy character.',
+                ' discard 1 enemy character.',
                 '相手キャラ1体を破棄する.',
             ],
             [
-                ' destroy 1 ally character.',
+                ' discard 1 ally character.',
                 '味方キャラ1体を破棄する.',
             ],
             [
@@ -69,8 +69,8 @@ class AbilityGainsOrOtherTest extends TestCase
                 ' remove this character from play.',
                 'このキャラを除外する.',
             ],
-            ' your opponent destroys 1 of his characters' => [
-                ' your opponent destroys 1 enemy character',
+            ' your opponent discards 1 of his characters' => [
+                ' your opponent discards 1 enemy character',
                 '相手は相手キャラ1体を破棄する',
             ],
         ];

@@ -66,7 +66,7 @@ export default {
     description1: 'Item cards are used from the hand, and can be equipped on to characters on the field.',
     description2: 'Equipped cards remain active while equipped.',
     point1: '※ Only 1 Item Card can be equipped on to each character.',
-    point2: '※ When the equipped character leaves the field, destroy the equipped Item Card.',
+    point2: '※ When the equipped character leaves the field, discard the equipped Item Card.',
     effectDescription: 'The effect the equipped character gains.',
   },
   boardRulesTitle: 'Board',
@@ -79,7 +79,7 @@ export default {
   },
   graveyard: {
     title: 'Discard Pile',
-    description1: 'This is where discarded and destroyed cards go.',
+    description1: 'This is where discarded cards go.',
     description2: 'The discard pile is shown face-up; both players can check each others\' discard pile at any time.',
   },
   deck: {

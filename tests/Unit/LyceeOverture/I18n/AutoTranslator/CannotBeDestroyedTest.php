@@ -20,7 +20,7 @@ class CannotBeDestroyedTest extends TestCase
     {
         return [
             ' that character cannot be destroyed by battle until the end of the turn' => [
-                ' that character cannot be destroyed by battle until the end of the turn',
+                ' that character cannot be downed by battle until the end of the turn',
                 'そのキャラはターン終了時までダウンしない',
             ],
         ];

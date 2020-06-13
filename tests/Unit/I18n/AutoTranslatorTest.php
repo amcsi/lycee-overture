@@ -176,11 +176,11 @@ class AutoTranslatorTest extends TestCase
                 '[未行動の味方ＡＦキャラ１体]にＤＭＧ－１する。このキャラにＤＭＧ＋１する。',
             ],
             'when opponent destroyed by your effect' => [
-                'When an opponent character is destroyed by use of your effects',
+                'When an opponent character is discarded by use of your effects',
                 '自分の効果によって相手キャラを破棄したとき',
             ],
             'when destroyed from engage summon' => [
-                'When this character is destroyed due to Engage summon',
+                'When this character is discarded due to Engage summon',
                 'このキャラをエンゲージ登場によって破棄したとき',
             ],
             'this effect is lost' => [
@@ -200,7 +200,7 @@ class AutoTranslatorTest extends TestCase
                 '[キャラ]を[味方フィールド]に移動する。',
             ],
             'resources getting provided' => [
-                'Use during your opponent\'s turn. Discard 2 cards from the top of your deck. When destroyed, you get [moon][moon].',
+                'Use during your opponent\'s turn. Discard 2 cards from the top of your deck. When discarded, you get [moon][moon].',
                 '相手ターン中に使用する。自分のデッキを２枚破棄する。破棄したとき、[月月]を発生する。',
             ],
             'when your opponent activates an ability' => [
@@ -236,11 +236,11 @@ class AutoTranslatorTest extends TestCase
                 'バトルを中断する',
             ],
             'until the end of the turn cannot be destroyed by battle' => [
-                "This character cannot be destroyed by battle until the end of the turn",
+                "This character cannot be downed by battle until the end of the turn",
                 'このキャラはターン終了時までダウンしない',
             ],
             'until the end of the turn cannot be destroyed by battle 2' => [
-                "Until the end of the turn {1 ally character} cannot be destroyed by battle",
+                "Until the end of the turn {1 ally character} cannot be downed by battle",
                 'ターン終了時まで[味方キャラ１体]はダウンしない',
             ],
             'Put 1 card from your hand on the top of your deck' => [

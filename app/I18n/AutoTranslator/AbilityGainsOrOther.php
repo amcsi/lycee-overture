@@ -67,7 +67,7 @@ class AbilityGainsOrOther
         }
         switch ($state) {
             case '破棄':
-                $doesAction = "{$beforeText}destroy$verbS [subject]";
+                $doesAction = "{$beforeText}discard$verbS [subject]";
                 break;
             case '未行動に':
                 $doesAction = "{$beforeText}untap$verbS [subject]";

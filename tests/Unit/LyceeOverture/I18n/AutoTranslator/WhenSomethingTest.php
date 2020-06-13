@@ -40,7 +40,7 @@ class WhenSomethingTest extends TestCase
                 '行動済みにしたとき',
             ],
             [
-                'when destroyed',
+                'when discarded',
                 '破棄したとき',
             ],
             [
@@ -51,8 +51,8 @@ class WhenSomethingTest extends TestCase
                 'when an ally character gets engaged',
                 '味方キャラがエンゲージ登場している場合',
             ],
-            'when destroyed (generic over subjects)' => [
-                'when an ally character gets destroyed',
+            'when discarded (generic over subjects)' => [
+                'when an ally character gets discarded',
                 '味方キャラを破棄したとき',
             ],
             'when moves (generic over subjects)' => [
@@ -112,7 +112,7 @@ class WhenSomethingTest extends TestCase
                 '相手キャラが4体以上の場合',
             ],
             'by xy effect' => [
-                'when an ally character gets destroyed by your effect',
+                'when an ally character gets discarded by your effect',
                 '自分の効果で味方キャラを破棄したとき',
             ],
         ];

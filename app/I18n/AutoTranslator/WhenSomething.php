@@ -22,12 +22,12 @@ class WhenSomething
         $text = str_replace('行動済みにしたとき', 'when tapped', $text);
         $text = str_replace(
             '自分の効果によって相手キャラを破棄したとき',
-            'when an opponent character is destroyed by use of your effects',
+            'when an opponent character is discarded by use of your effects',
             $text
         );
         $text = str_replace(
             'このキャラをエンゲージ登場によって破棄したとき',
-            'when this character is destroyed due to Engage summon',
+            'when this character is discarded due to Engage summon',
             $text
         );
         $text = str_replace(
@@ -41,7 +41,7 @@ class WhenSomething
             $text
         );
         $text = str_replace('味方キャラがエンゲージ登場している場合', 'when an ally character gets engaged', $text);
-        $text = preg_replace('/\b破棄したとき/u', 'when destroyed', $text);
+        $text = preg_replace('/\b破棄したとき/u', 'when discarded', $text);
         $text = preg_replace('/\b除外したとき/u', 'when removed from play', $text);
 
         // When $subject gets destroyed or moves.
@@ -56,7 +56,7 @@ class WhenSomething
 
                 switch ($actionSource) {
                     case 'を破棄したとき':
-                        $actionText = "get$thirdPersonPlaceholder destroyed";
+                        $actionText = "get$thirdPersonPlaceholder discarded";
                         break;
                     case 'が移動したとき':
                         $actionText = "move$thirdPersonPlaceholder";

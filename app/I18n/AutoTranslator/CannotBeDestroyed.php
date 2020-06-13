@@ -24,7 +24,7 @@ class CannotBeDestroyed
     public static function callback(array $matches): Action
     {
         $turnAndBattleSource = next($matches);
-        $action = 'cannot be destroyed by battle';
+        $action = 'cannot be downed by battle';
         if ($turnAndBattleSource) {
             $action .= ' ' . TurnAndBattle::autoTranslate($turnAndBattleSource);
         }
