@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('afterContent')
+@section('beforeContent')
     <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
