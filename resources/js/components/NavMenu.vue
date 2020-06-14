@@ -25,10 +25,17 @@
         <el-menu-item style="float: right" index="/help-translate" route="/help-translate">
             <a href="/help-translate" @click.prevent>Help Translate</a>
         </el-menu-item>
+        <a class="el-menu-item" v-if="authDetails" style="float: right" href="/logout">
+            Log out
+        </a>
+        <li class="el-menu-item" v-if="authDetails" style="float: right">
+            Welcome, <strong>{{ authDetails.name }}!</strong>
+        </li>
     </el-menu>
 </template>
 
 <script>
+
 function getLocaleChangeUrl(vueComponent, locale) {
   let url = vueComponent.$route.fullPath;
   url += url.indexOf('?') >= 0 ? '&' : '?';
@@ -42,6 +49,7 @@ function getLocaleChangeUrl(vueComponent, locale) {
     data() {
       return {
         locale: window.locale,
+        authDetails: window.vars.auth,
       };
     },
     computed: {
@@ -50,6 +58,11 @@ function getLocaleChangeUrl(vueComponent, locale) {
       },
       jaHref() {
         return getLocaleChangeUrl(this, 'ja');
+      },
+    },
+    methods: {
+      logout() {
+        window.location.push('/logout');
       },
     },
   };
