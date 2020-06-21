@@ -29,11 +29,20 @@ class CardResource extends JsonResource
             'cost' => self::getCostMarkup($card),
             'rarity' => $card->rarity,
             'translation' => $locale !== Locale::JAPANESE ?
-                new CardTranslationResource($card->getBestTranslation()) :
+                new CardTranslationResource(($card->getBestTranslation())) :
                 null,
             'japanese' => new CardTranslationResource($card->getTranslation('ja')),
             'created_at' => $card->created_at,
             'set' => new SetResource($this->whenLoaded('set')),
+            'auto_translation' => new CardTranslationResource(
+                $this->when(
+                    $locale !== Locale::JAPANESE && \Auth::check() && $card->hasTranslation($locale),
+                    function () use ($card, $locale) {
+                        // If logged in, provide the auto-translation for comparison on the FE.
+                        return $card->getTranslation("$locale-auto");
+                    }
+                )
+            ),
         ];
     }
 

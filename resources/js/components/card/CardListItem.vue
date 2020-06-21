@@ -49,9 +49,14 @@
                 </div>
                 <div class="card-description" v-if="hasCardDescription">
                     <CardDescription :translation="cardText" />
+                    <CardTranslator v-if="translateMode" :card="card" :id="this.card.id" />
                 </div>
                 <div style="flex: 1" />
                 <div class="show-when-hovering" style="text-align: right">
+                    <span v-if="user">
+                        <span class="clickable" @click="translateMode = !translateMode">{{translateMode ? 'Collapse' : ''}} Suggest Translation</span>
+                        -
+                    </span>
                     <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
                     <span v-if="showLanguageSelectors">
                         <span
@@ -78,17 +83,19 @@
 </template>
 
 <script>
+import { mapComputed } from '../../store/storeUtils';
 import formatCardMixin from '../../utils/formatCardMixin';
 import ExternalLink from '../common/ExternalLink';
 import CardDescription from './CardDescription';
 import CardText from './CardText';
 import CardThumbnail from './CardThumbnail';
 import StatValue from './StatValue';
+import CardTranslator from './CardTranslator';
 
 /** @class CardListItem */
 export default {
   name: 'CardListItem',
-  components: { StatValue, ExternalLink, CardText, CardDescription, CardThumbnail },
+  components: { StatValue, ExternalLink, CardText, CardDescription, CardThumbnail, CardTranslator },
   props: {
     card: {
       type: Object,
@@ -99,11 +106,15 @@ export default {
   data() {
     return {
       localLocale: null,
+      translateMode: false,
     };
   },
   computed: {
     isCharacter() {
       return this.card.type === 0;
+    },
+    isLocaleJapanese() {
+      return this.localLocale === 'ja';
     },
     characterType() {
       if (!this.isCharacter) {
@@ -126,14 +137,14 @@ export default {
       if (!this.card.translation) {
         return this.card.japanese;
       }
-      return this.localLocale === 'ja' ? this.card.japanese : this.card.translation;
+      return this.isLocaleJapanese ? this.card.japanese : this.card.translation;
     },
     showLanguageSelectors() {
       return !!this.card.translation;
     },
     rulingsLink() {
       let link = `https://lycee-tcg.com/faq/?word=${this.card.id}`;
-      if (this.localLocale !== 'ja') {
+      if (!this.isLocaleJapanese) {
         link = `https://translate.google.com/translate?sl=ja&tl=en&u=${encodeURI(link)}`;
       }
       return link;
@@ -141,6 +152,7 @@ export default {
     formattedBrand() {
       return this.formatBrands(`[${this.card.set.brand}]`);
     },
+    ...mapComputed('auth', ['user']),
   },
   created() {
     this.localLocale = this.card.translation ? 'en' : 'ja';
@@ -149,6 +161,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import 'resources/sass/variables';
 
     .card-list-item {
         position: relative;
@@ -253,5 +266,9 @@ export default {
 
     .gaps > * {
         margin-right: 0.25rem;
+    }
+
+    .clickable {
+        color: $link-color;
     }
 </style>

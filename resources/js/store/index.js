@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import articles from './modules/articles';
+import auth from './modules/auth';
 import cards from './modules/cards';
 import cardSets from './modules/cardSets';
 import sets from './modules/sets';
@@ -17,6 +18,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {
     articles,
+    auth,
     cards,
     cardSets,
     sets,
