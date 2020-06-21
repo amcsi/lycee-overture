@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('/user',
         return $request->user();
     });
 
-Route::apiResource('/cards', CardController::class, ['only' => 'index']);
+Route::apiResource('/cards', CardController::class, ['only' => ['index', 'show']]);
 Route::get('/card-sets', [CardSetController::class, 'index']);
 Route::get('/sets', [SetController::class, 'index']);
 Route::get('/statistics', [StatisticsController::class, 'index']);
