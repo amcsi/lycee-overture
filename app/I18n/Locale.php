@@ -9,4 +9,6 @@ class Locale
     public const ENGLISH = 'en';
 
     public const ENGLISH_AUTO = 'en-auto';
+
+    public const TRANSLATION_LOCALES = [self::ENGLISH];
 }

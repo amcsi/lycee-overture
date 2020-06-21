@@ -6,7 +6,7 @@ use amcsi\LyceeOverture\Http\Controllers\CardController;
 use amcsi\LyceeOverture\Http\Controllers\CardSetController;
 use amcsi\LyceeOverture\Http\Controllers\SetController;
 use amcsi\LyceeOverture\Http\Controllers\StatisticsController;
-use Illuminate\Http\Request;
+use amcsi\LyceeOverture\Http\Controllers\SuggestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +19,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user',
-    function (Request $request) {
-        return $request->user();
-    });
-
 Route::apiResource('/cards', CardController::class, ['only' => ['index', 'show']]);
 Route::get('/card-sets', [CardSetController::class, 'index']);
 Route::get('/sets', [SetController::class, 'index']);
 Route::get('/statistics', [StatisticsController::class, 'index']);
 Route::get('/articles', [ArticleController::class, 'index']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('suggestions', SuggestionController::class, ['only' => ['store']]);
+});
