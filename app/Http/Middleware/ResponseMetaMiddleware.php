@@ -1,26 +1,35 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture\Api;
+namespace amcsi\LyceeOverture\Http\Middleware;
 
-use Dingo\Api\Event\ResponseWasMorphed;
+use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Adds DB query log to the response (except on production).
- */
-class QueryLogToResponseAdder
+class ResponseMetaMiddleware
 {
-    public function handle(ResponseWasMorphed $event)
+    public function handle($request, Closure $next)
     {
+        /** @var Response $response */
+        $response = $next($request);
+
         if (!config('app.debug')) {
-            return;
+            return $response;
         }
-        $content =& $event->content;
-        // Need to check that the response is an API response.
-        if (is_array($content)) {
-            $content['debug'] = self::getQueryLog();
+
+        if ($response instanceof JsonResponse) {
+            $json = $response->getData(true);
+            $json['debug'] = self::getQueryLog();
+            $response->setJson(json_encode($json, JSON_THROW_ON_ERROR));
+        } elseif ($response->headers->get('Content-Type') === 'application/json') {
+            $json = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+            $json['debug'] = self::getQueryLog();
+            $response->setContent(json_encode($json, JSON_THROW_ON_ERROR));
         }
+
+        return $response;
     }
 
     /**

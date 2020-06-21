@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Providers;
 
-use amcsi\LyceeOverture\Api\QueryLogToResponseAdder;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -16,9 +16,6 @@ class EventServiceProvider extends ServiceProvider
         'amcsi\LyceeOverture\Events\Event' => [
             'amcsi\LyceeOverture\Listeners\EventListener',
         ],
-        'Dingo\Api\Event\ResponseWasMorphed' => [
-            QueryLogToResponseAdder::class,
-        ]
     ];
 
     /**
