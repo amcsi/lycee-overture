@@ -18,17 +18,21 @@
                     </div>
                 </div>
                 <div class="stats-and-stuff">
-                    <div style="display: flex">
-                        <div>
+                    <div class="flex-center">
+                        <div class="flex-center gaps">
                             <CardText class="element" :text="card.element" />
-                            <span class="stat ex">{{ card.ex }} EX</span>
+                            <StatValue type="ex" :value="card.ex" />
                             <template v-if="isCharacter">
-                                <span class="stat dmg">{{ card.dmg }} DMG</span>
-                                <span class="stat ap">{{ card.ap }} AP</span>
-                                <span class="stat dp">{{ card.dp }} DP</span>
-                                <span class="stat sp">{{ card.sp }} SP</span>
+                                <StatValue
+                                    type="dmg"
+                                    :value="card.dmg"
+                                    style="margin-left: 0.75rem"
+                                />
+                                <StatValue type="ap" :value="card.ap" />
+                                <StatValue type="dp" :value="card.dp" />
+                                <StatValue type="sp" :value="card.sp" />
                             </template>
-                            Cost:
+                            <span style="margin-left: 0.75rem">Cost:</span>
                             <CardText class="cost" :text="card.cost" />
                         </div>
                         <div style="flex: 1" />
@@ -79,11 +83,12 @@ import ExternalLink from '../common/ExternalLink';
 import CardDescription from './CardDescription';
 import CardText from './CardText';
 import CardThumbnail from './CardThumbnail';
+import StatValue from './StatValue';
 
 /** @class CardListItem */
 export default {
   name: 'CardListItem',
-  components: { ExternalLink, CardText, CardDescription, CardThumbnail },
+  components: { StatValue, ExternalLink, CardText, CardDescription, CardThumbnail },
   props: {
     card: {
       type: Object,
@@ -208,26 +213,6 @@ export default {
         }
     }
 
-    .ex {
-        background-color: #333333;
-    }
-
-    .dmg {
-        background-color: rgba(0, 128, 0, 1);
-    }
-
-    .ap {
-        background-color: rgba(255, 0, 0, 1);
-    }
-
-    .dp {
-        background-color: rgba(0, 0, 255, 1);
-    }
-
-    .sp {
-        background-color: rgb(255, 146, 35);
-    }
-
     .card-description {
         border-top: 1px dashed #a4a4a4;
         padding-top: .5rem;
@@ -259,5 +244,14 @@ export default {
         .card-list-item:hover & {
             visibility: visible;
         }
+    }
+
+    .flex-center {
+        display: flex;
+        align-items: center;
+    }
+
+    .gaps > * {
+        margin-right: 0.25rem;
     }
 </style>

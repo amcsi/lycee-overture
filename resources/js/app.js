@@ -24,6 +24,7 @@ import {
   Switch,
   Table,
   TableColumn,
+  Tag,
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import Rollbar from 'rollbar';
@@ -57,6 +58,7 @@ Vue.component(Select.name, Select);
 Vue.component(Switch.name, Switch);
 Vue.component(Table.name, Table);
 Vue.component(TableColumn.name, TableColumn);
+Vue.component(Tag.name, Tag);
 Vue.use(Loading.directive);
 
 //noinspection JSUnusedGlobalSymbols
