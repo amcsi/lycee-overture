@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Providers;
 
@@ -53,7 +54,6 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api')
             ->middleware('api')
-            ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
     }
 

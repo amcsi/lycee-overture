@@ -2,8 +2,8 @@
     <div>
         <div v-if="cards">
             <h3>
-                Total: {{ cards.meta.pagination.total }}.
-                <span v-if="statistics" v-show="!cardsLoading && cards.meta.pagination.total > 0">
+                Total: {{ cards.meta.total }}.
+                <span v-if="statistics" v-show="!cardsLoading && cards.meta.total > 0">
                     Fully translated: {{ statistics.translated_cards }}
                     ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
                     Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
@@ -11,13 +11,13 @@
                 <span v-else-if="!isLocaleJapanese" v-loading="true">&nbsp;</span>
             </h3>
 
-            <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
+            <Paginator :pagination="cards.meta" @page-change="pageChange" />
 
             <div class="card-list" v-loading="cardsLoading">
                 <CardListItem v-for="card in cards.data" :card="card" :key="card.id"></CardListItem>
             </div>
 
-            <Paginator :pagination="cards.meta.pagination" @page-change="pageChange" />
+            <Paginator :pagination="cards.meta" @page-change="pageChange" />
         </div>
         <div v-else v-loading="cardsLoading" style="height: 300px;"></div>
     </div>

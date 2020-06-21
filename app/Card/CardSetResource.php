@@ -5,12 +5,16 @@ namespace amcsi\LyceeOverture\Card;
 
 use amcsi\LyceeOverture\CardSet;
 use amcsi\LyceeOverture\I18n\Locale;
-use League\Fractal\TransformerAbstract;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class CardSetTransformer extends TransformerAbstract
+/**
+ * @property CardSet $resource
+ */
+class CardSetResource extends JsonResource
 {
-    public function transform(CardSet $cardSet): array
+    public function toArray($request): array
     {
+        $cardSet = $this->resource;
         return [
             'id' => $cardSet->id,
             'name' => \App::getLocale() === Locale::JAPANESE ? $cardSet->name_ja : $cardSet->name_en,

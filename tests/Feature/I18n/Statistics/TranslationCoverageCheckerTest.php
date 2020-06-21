@@ -6,7 +6,7 @@ namespace Tests\Feature\I18n\Statistics;
 use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Etc\Statistics;
-use amcsi\LyceeOverture\Etc\StatisticsTransformer;
+use amcsi\LyceeOverture\Etc\StatisticsResource;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
 use Tests\DatabaseTestCase;
@@ -78,7 +78,7 @@ class TranslationCoverageCheckerTest extends DatabaseTestCase
             'translated_cards' => $translatedCards,
             'total_cards' => $totalCards,
         ],
-            (new StatisticsTransformer())->transform($statistics),
+            (new StatisticsResource($statistics))->toArray(null),
             $message);
     }
 

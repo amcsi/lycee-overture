@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Http\Controllers;
 
 use amcsi\LyceeOverture\Card\CardBuilderFactory;
-use amcsi\LyceeOverture\Card\CardTransformer;
+use amcsi\LyceeOverture\Card\CardResource;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
-    public function index(CardTransformer $cardTransformer, Request $request, CardBuilderFactory $builderFactory)
+    public function index(Request $request, CardBuilderFactory $builderFactory)
     {
         $locale = \App::getLocale();
 
@@ -27,6 +27,6 @@ class CardController extends Controller
         $builder->orderBy($request->get('sort', 'created_at'), 'desc');
         $cards = $builder->paginate($limit);
 
-        return $this->response->paginator($cards, $cardTransformer);
+        return CardResource::collection($cards);
     }
 }

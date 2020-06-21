@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\Card;
-use amcsi\LyceeOverture\Card\CardTransformer;
+use amcsi\LyceeOverture\Card\CardResource;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Etc\FilesystemsCopier;
@@ -57,8 +57,8 @@ class BuildLackeyCommand extends Command
             'Character Type' => fn(Card $card) => $card->getBestTranslation()->character_type,
             'Comments' => fn(Card $card) => $card->getBestTranslation()->comments,
             'EX' => fn(Card $card) => $card->ex,
-            'Element' => fn(Card $card) => CardTransformer::getElementMarkup($card),
-            'Cost' => fn(Card $card) => CardTransformer::getCostMarkup($card),
+            'Element' => fn(Card $card) => CardResource::getElementMarkup($card),
+            'Cost' => fn(Card $card) => CardResource::getCostMarkup($card),
             'DMG' => fn(Card $card) => $card->dmg,
             'AP' => fn(Card $card) => $card->ap,
             'DP' => fn(Card $card) => $card->dp,

@@ -15,7 +15,6 @@
     "beyondcode/laravel-self-diagnosis": "^1.0.2",
     "cakephp/chronos": "^1.1",
     "cloudinary/cloudinary_php": "^1.10",
-    "dingo/api": "^3.0",
     "doctrine/dbal": "^2.8",
     "erusev/parsedown": "^1.7",
     "fideloper/proxy": "^4.0",

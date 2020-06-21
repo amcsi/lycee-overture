@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Http\Controllers;
 
-use amcsi\LyceeOverture\Card\CardSetTransformer;
+use amcsi\LyceeOverture\Card\CardSetResource;
 use amcsi\LyceeOverture\CardSet;
 
 class CardSetController extends Controller
 {
-    public function index(CardSetTransformer $cardSetTransformer)
+    public function index()
     {
         $cardSets = CardSet::orderBy('name_en')->get();
-        return $this->response->collection($cardSets, $cardSetTransformer);
+        return CardSetResource::collection($cardSets);
     }
 }

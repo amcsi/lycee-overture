@@ -4,12 +4,16 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Card;
 
 use amcsi\LyceeOverture\CardTranslation;
-use League\Fractal\TransformerAbstract;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class CardTranslationTransformer extends TransformerAbstract
+/**
+ * @property CardTranslation $resource
+ */
+class CardTranslationResource extends JsonResource
 {
-    public function transform(CardTranslation $cardTranslation)
+    public function toArray($request)
     {
+        $cardTranslation = $this->resource;
         return [
             'name' => $cardTranslation->name,
             'ability_name' => $cardTranslation->ability_name,

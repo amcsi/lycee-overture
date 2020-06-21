@@ -4,12 +4,16 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Card;
 
 use amcsi\LyceeOverture\Set;
-use League\Fractal\TransformerAbstract;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class SetTransformer extends TransformerAbstract
+/**
+ * @property Set $resource
+ */
+class SetResource extends JsonResource
 {
-    public function transform(Set $set): array
+    public function toArray($request): array
     {
+        $set = $this->resource;
         return [
             'id' => $set->id,
             'full_name' => $set->getFullName(\App::getLocale()),

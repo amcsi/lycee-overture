@@ -3,13 +3,16 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Etc;
 
-use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
-use League\Fractal\TransformerAbstract;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class StatisticsTransformer extends TransformerAbstract
+/**
+ * @property Statistics $resource
+ */
+class StatisticsResource extends JsonResource
 {
-    public function transform(Statistics $statistics)
+    public function toArray($request)
     {
+        $statistics = $this->resource;
         return [
             'kanji_removal_ratio' => $statistics->getKanjiRemovalRatio(),
             'fully_translated_ratio' => $statistics->getFullyTranslatedRatio(),

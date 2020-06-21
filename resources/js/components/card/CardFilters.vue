@@ -101,7 +101,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
         setList: 'list',
       }),
       ...mapState('cards', {
-        totalCards: state => state.list.meta.pagination.total,
+        totalCards: state => state.list.meta.total,
       }),
       ...mapGetters('sets', ['brands']),
       ...(filterConfig)

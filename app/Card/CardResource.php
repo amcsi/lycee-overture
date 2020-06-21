@@ -3,31 +3,21 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Card;
 
-use amcsi\LyceeOverture\Api\GenericTransformers\DateTimeTransformer;
 use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\I18n\Locale;
-use League\Fractal\TransformerAbstract;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class CardTransformer extends TransformerAbstract
+/**
+ * @property Card $resource
+ */
+class CardResource extends JsonResource
 {
-    private $cardTranslationTransformer;
-    private $dateTimeTransformer;
-    private $setTransformer;
-
-    public function __construct(
-        CardTranslationTransformer $cardTranslationTransformer,
-        DateTimeTransformer $dateTimeTransformer,
-        SetTransformer $setTransformer
-    ) {
-        $this->cardTranslationTransformer = $cardTranslationTransformer;
-        $this->dateTimeTransformer = $dateTimeTransformer;
-        $this->setTransformer = $setTransformer;
-    }
-
-    public function transform(Card $card)
+    public function toArray($request)
     {
+        $card = $this->resource;
         $locale = \App::getLocale();
-        $ret = [
+
+        return [
             'id' => $card->id,
             'type' => $card->getType(),
             'ex' => $card->ex,
@@ -39,15 +29,12 @@ class CardTransformer extends TransformerAbstract
             'cost' => self::getCostMarkup($card),
             'rarity' => $card->rarity,
             'translation' => $locale !== Locale::JAPANESE ?
-                $this->cardTranslationTransformer->transform($card->getBestTranslation()) :
+                new CardTranslationResource($card->getBestTranslation()) :
                 null,
-            'japanese' => $this->cardTranslationTransformer->transform($card->getTranslation('ja')),
-            'created_at' => $this->dateTimeTransformer->transform($card->created_at),
+            'japanese' => new CardTranslationResource($card->getTranslation('ja')),
+            'created_at' => $card->created_at,
+            'set' => new SetResource($this->whenLoaded('set')),
         ];
-        if ($card->relationLoaded('set') && $card->set) {
-            $ret['set'] = $this->setTransformer->transform($card->set);
-        }
-        return $ret;
     }
 
     public static function getElementMarkup(Card $card): string
