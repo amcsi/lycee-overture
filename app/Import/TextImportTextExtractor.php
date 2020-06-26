@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import;
 
+use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 
@@ -13,10 +14,16 @@ class TextImportTextExtractor
 {
     public function toDatabaseRows(iterable $reader): \Traversable
     {
+        $cardIds = Card::all('id')->pluck('id')->toArray();
+
         foreach ($reader as $csvRow) {
             $id = $csvRow[CsvColumns::ID];
             if (!preg_match('/^[A-Z]{2}-\d{4}$/', $id)) {
                 // Skip alternative variants of cards.
+                continue;
+            }
+            if (!in_array($id, $cardIds, true)) {
+                // Skip cards whose basic cards failed to get imported.
                 continue;
             }
             $dbRow = [];
