@@ -24,6 +24,10 @@ class CsvValueInterpreter
             case 'イベント':
                 return Type::EVENT;
             default:
+                // TODO: remove if the original CSV gets fixed.
+                if ($csvRow[CsvColumns::ID] === 'LO-2156') {
+                    return Type::CHARACTER;
+                }
                 throw new \InvalidArgumentException("Unknown Type: $cellValue");
         }
     }
