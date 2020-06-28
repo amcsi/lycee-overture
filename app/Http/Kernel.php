@@ -18,7 +18,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \amcsi\LyceeOverture\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \amcsi\LyceeOverture\Http\Middleware\TrustProxies::class,
         \amcsi\LyceeOverture\Http\Middleware\SetLocale::class,
     ];

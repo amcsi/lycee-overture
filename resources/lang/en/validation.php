@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 return [
 
@@ -112,6 +113,8 @@ return [
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
+
+    'no_japanese_characters' => 'The :attribute must be fully translated; no japanese characters should remain.',
 
     /*
     |--------------------------------------------------------------------------
