@@ -7,11 +7,22 @@ use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\Suggestion;
+use amcsi\LyceeOverture\User;
 use Tests\DatabaseTestCase;
 
 class SuggestionControllerTest extends DatabaseTestCase
 {
     private CardTranslation $japaneseTranslation;
+
+    private static $suggestionInput = [
+        'card_id' => 'LO-0001',
+        'locale' => Locale::ENGLISH,
+        'basic_abilities' => '',
+        'pre_comments' => '',
+        'ability_cost' => 'something',
+        'ability_description' => 'something in English',
+        'comments' => '',
+    ];
 
     public function testWithoutAuth(): void
     {
@@ -41,15 +52,8 @@ class SuggestionControllerTest extends DatabaseTestCase
     {
         $this->actingAs($this->user);
 
-        $data = [
-            'card_id' => 'LO-0001',
-            'locale' => Locale::ENGLISH,
-            'basic_abilities' => '',
-            'pre_comments' => '',
-            'ability_cost' => 'something',
-            'ability_description' => '日本語',
-            'comments' => '',
-        ];
+        $data = self::$suggestionInput;
+        $data['ability_description'] = '日本語';
 
         $errors = self::assertStatus(422, $this->postJson('/api/suggestions', $data))->json('errors');
 
@@ -66,20 +70,34 @@ class SuggestionControllerTest extends DatabaseTestCase
     {
         $this->actingAs($this->user);
 
-        $data = [
-            'card_id' => 'LO-0001',
-            'locale' => Locale::ENGLISH,
-            'basic_abilities' => '',
-            'pre_comments' => '',
-            'ability_cost' => 'something',
-            'ability_description' => 'something in English',
-            'comments' => '',
-        ];
+        $data = self::$suggestionInput;
 
         $responseData = self::assertSuccessfulResponseData($this->postJson('/api/suggestions', $data));
         self::assertIsArray($responseData);
         self::assertSame($data, array_intersect_key($data, $responseData));
         Suggestion::findOrFail($responseData['id']);
+    }
+
+    public function testNewSubmissionEditsExistingOne(): void
+    {
+        $this->actingAs($this->user);
+
+        $originalTranslator = factory(User::class)->create();
+        $existingSuggestion = factory(Suggestion::class)->create([
+            'card_id' => 'LO-0001',
+            'creator_id' => $originalTranslator->id,
+        ]);
+
+        $data = self::$suggestionInput;
+
+        $responseData = self::assertSuccessfulResponseData($this->postJson('/api/suggestions', $data));
+        self::assertIsArray($responseData);
+        self::assertSame($data, array_intersect_key($data, $responseData));
+        $suggestion = Suggestion::findOrFail($responseData['id']);
+
+        self::assertTrue($suggestion->is($existingSuggestion));
+        self::assertSame($originalTranslator->id, $suggestion->creator_id, 'Creator should not change');
+        self::assertSame($data, array_intersect_key($data, $responseData));
     }
 
     protected function setUp(): void

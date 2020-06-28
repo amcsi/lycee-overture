@@ -11,6 +11,17 @@ class SuggestionController
 {
     public function store(SuggestionCreateRequest $request)
     {
-        return new SuggestionResource(Suggestion::create($request->validated()));
+        $keyAttributes = ['card_id', 'locale'];
+        $attributes = [];
+        $values = [];
+        foreach ($request->validated() as $key => $value) {
+            if (in_array($key, $keyAttributes, true)) {
+                $attributes[$key] = $value;
+            } else {
+                $values[$key] = $value;
+            }
+        }
+
+        return new SuggestionResource(Suggestion::updateOrCreate($attributes, $values));
     }
 }
