@@ -24,7 +24,8 @@ Route::get('/card-sets', [CardSetController::class, 'index']);
 Route::get('/sets', [SetController::class, 'index']);
 Route::get('/statistics', [StatisticsController::class, 'index']);
 Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/suggestions', [SuggestionController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('suggestions', SuggestionController::class, ['only' => ['store']]);
+    Route::post('suggestions', [SuggestionController::class, 'store']);
 });

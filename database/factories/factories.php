@@ -12,12 +12,15 @@ use Illuminate\Database\Eloquent\Factory;
 
 $japaneseFaker = Faker\Factory::create('ja_JP');
 
+$incrementing = 1;
+
 /** @var Factory $factory */
 $factory->define(
     Card::class,
-    function () {
+    function () use (&$incrementing) {
+        $idNumber = $incrementing++;
         return [
-            'id' => 'LO-0001',
+            'id' => sprintf('LO-%04d', $idNumber),
             'type' => Type::CHARACTER,
         ];
     });

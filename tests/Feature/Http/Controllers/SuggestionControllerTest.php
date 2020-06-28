@@ -100,6 +100,14 @@ class SuggestionControllerTest extends DatabaseTestCase
         self::assertSame($data, array_intersect_key($data, $responseData));
     }
 
+    public function testList()
+    {
+        factory(Suggestion::class)->create();
+        $responseData = self::assertSuccessfulResponseData($this->get('/api/suggestions'));
+        self::assertIsArray($responseData);
+        self::assertCount(1, $responseData);
+    }
+
     protected function setUp(): void
     {
         parent::setUp();

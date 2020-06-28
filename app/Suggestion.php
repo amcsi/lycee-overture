@@ -19,4 +19,9 @@ class Suggestion extends Model
         'ability_description',
         'comments',
     ];
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
