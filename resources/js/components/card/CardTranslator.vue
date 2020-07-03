@@ -376,6 +376,9 @@ export default {
       },
     },
   },
+  destroyed() {
+    this.REMOVE_DIRTY_CARD_ID(this.id);
+  },
 };
 </script>
 

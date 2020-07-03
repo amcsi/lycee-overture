@@ -89,8 +89,8 @@ import ExternalLink from '../common/ExternalLink';
 import CardDescription from './CardDescription';
 import CardText from './CardText';
 import CardThumbnail from './CardThumbnail';
-import StatValue from './StatValue';
 import CardTranslator from './CardTranslator';
+import StatValue from './StatValue';
 
 /** @class CardListItem */
 export default {
@@ -140,7 +140,7 @@ export default {
       return this.isLocaleJapanese ? this.card.japanese : this.card.translation;
     },
     showLanguageSelectors() {
-      return !!this.card.translation;
+      return !!this.card.translation && !this.translateMode;
     },
     rulingsLink() {
       let link = `https://lycee-tcg.com/faq/?word=${this.card.id}`;
