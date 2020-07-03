@@ -101,8 +101,14 @@
             <div class="spacer" />
         </template>
 
-        <el-button type="primary" :disabled="!dirty" :loading="waiting" @click="suggestTranslation">
-            Suggest Translation
+        <el-button
+            type="primary"
+            :disabled="!dirty"
+            :loading="waiting"
+            @click="suggestTranslation"
+            title="Clicking here will submit your translation suggestion."
+        >
+            {{ submitText }}
         </el-button>
         <el-button
             title="Clicking this will reset the form input fields match the auto-translated text."
@@ -122,6 +128,7 @@
 </template>
 
 <script>
+import isEqual from 'lodash.isequal';
 import { mapMutations } from 'vuex';
 import api from '../../api';
 import { normalizeError, reportError, VALIDATION_FAILURE } from '../../utils/errorHandling';
@@ -248,6 +255,19 @@ export default {
     waiting() {
       return this.loading || this.saving;
     },
+    autoTranslatedAsDraft() {
+      return cardTranslationToDraft(this.autoTranslated);
+    },
+    isCurrentDraftEqualToAutoTranslated() {
+      return isEqual(this.autoTranslatedAsDraft, this.currentDraft);
+    },
+    submitText() {
+      if (this.dirty && this.isCurrentDraftEqualToAutoTranslated) {
+        return 'Suggest Reverting to Auto-Translated';
+      }
+
+      return 'Suggest Translation';
+    },
   },
   methods: {
     ...mapMutations('translation', ['ADD_DIRTY_CARD_ID', 'REMOVE_DIRTY_CARD_ID']),
@@ -271,7 +291,9 @@ export default {
             ...this.resultTranslation,
           },
         )).data.data;
-        this.$displaySuccess('You have successfully submitted the translation suggestion.');
+        this.$displaySuccess(
+          'You have successfully submitted the translation suggestion for review by a translator.',
+        );
       } catch (e) {
         const normalizedError = normalizeError(e);
         this.$displayError(normalizedError.message);

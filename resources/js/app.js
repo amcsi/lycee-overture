@@ -89,10 +89,12 @@ Vue.filter('formatDate', function(value) {
   return value ? dateFormatter.format(value) : '';
 });
 
+const toastDuration = 10000;
 Vue.prototype.$displaySuccess = function(message) {
   return Message({
     type: 'success',
     message,
+    duration: toastDuration,
   });
 };
 
@@ -100,6 +102,7 @@ Vue.prototype.$displayError = function(message) {
   return Message({
     type: 'error',
     message,
+    duration: toastDuration,
   });
 };
 
