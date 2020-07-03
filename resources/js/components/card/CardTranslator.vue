@@ -104,7 +104,18 @@
         <el-button type="primary" :disabled="!dirty" :loading="waiting" @click="suggestTranslation">
             Suggest Translation
         </el-button>
-        <el-button @click="toAutoTranslated">Revert to Auto-Translated</el-button>
+        <el-button
+            title="Clicking this will reset the form input fields match the auto-translated text."
+            @click="toAutoTranslated"
+        >Revert to Auto-Translated
+        </el-button>
+        <el-button
+            v-if="lastSavedTranslationSuggestion"
+            @click="toLastSuggestion"
+            title="Clicking this will reset the form input fields to the last saved translation suggestion's."
+        >
+            Revert to Last Suggestion
+        </el-button>
 
         <div class="spacer" />
     </div>
@@ -242,6 +253,9 @@ export default {
     ...mapMutations('translation', ['ADD_DIRTY_CARD_ID', 'REMOVE_DIRTY_CARD_ID']),
     toAutoTranslated() {
       this.setCurrentTranslation(this.autoTranslated);
+    },
+    toLastSuggestion() {
+      this.setCurrentTranslation(this.lastSavedTranslationSuggestion);
     },
     setCurrentTranslation(translation) {
       this.currentDraft = cardTranslationToDraft(translation);
