@@ -61,7 +61,7 @@ class SuggestionControllerTest extends DatabaseTestCase
         self::assertCount(1, $errors);
         self::assertArrayHasKey('ability_description', $errors);
         self::assertSame(
-            ['The ability description must be fully translated; no japanese characters should remain.'],
+            ['validation.no_japanese_characters'],
             $errors['ability_description']
         );
     }
