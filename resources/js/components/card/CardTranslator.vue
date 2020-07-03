@@ -8,6 +8,14 @@
             translated.
         </el-alert>
 
+        <template v-if="lastSavedTranslationSuggestion">
+            <div class="spacer" />
+
+            <el-alert show-icon :closable="false" type="success">
+                There is a pending translation suggestion for this card by <strong>{{lastSavedTranslationSuggestion.creator.name}}</strong>.
+            </el-alert>
+        </template>
+
         <div class="spacer" />
 
         <el-card>
