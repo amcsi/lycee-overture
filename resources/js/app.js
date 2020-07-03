@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import {
+  Alert,
   Button,
   Card,
   Checkbox,
@@ -40,6 +41,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 Vue.use(VueRouter);
+Vue.component(Alert.name, Alert);
 Vue.component(Button.name, Button);
 Vue.component(Card.name, Card);
 Vue.component(Checkbox.name, Checkbox);

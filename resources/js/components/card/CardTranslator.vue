@@ -2,6 +2,14 @@
     <div>
         <div class="spacer" />
 
+        <el-alert show-icon :closable="false">
+            This card is currently
+            <span class="translatedText" :class="{autoTranslated}">{{ autoTranslated ? 'automatically' : 'manually'}}</span>
+            translated.
+        </el-alert>
+
+        <div class="spacer" />
+
         <el-card>
             <div slot="header">
                 <FlagEmoji locale="ja" />
@@ -193,7 +201,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import 'resources/sass/variables';
+
 .spacer {
     height: 1rem;
+}
+
+.translatedText {
+    font-weight: bold;
+    color: $--color-primary;
+
+    &.autoTranslated {
+        color: $--color-success;
+    }
 }
 </style>
