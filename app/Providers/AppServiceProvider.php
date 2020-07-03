@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Providers;
 
 use amcsi\LyceeOverture\Console\Commands\DownloadTranslations;
-use amcsi\LyceeOverture\Http\ConfigureTrustedProxies;
 use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
 use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
@@ -51,8 +50,6 @@ class AppServiceProvider extends ServiceProvider
             $connection->flushQueryLog();
             $connection->enableQueryLog();
         }
-
-        ConfigureTrustedProxies::configure();
 
         if (self::$booted) {
             return;
