@@ -326,6 +326,26 @@ export default {
       this.errors = { globalErrors };
     },
   },
+  async created() {
+    try {
+      this.loading = true;
+      const lastSavedSuggestion = (await api.get('suggestions', {
+        params: {
+          card_id: this.id,
+        },
+      })).data.data[0];
+      if (lastSavedSuggestion) {
+        this.lastSavedTranslationSuggestion = lastSavedSuggestion;
+        this.currentDraft = cardTranslationToDraft(lastSavedSuggestion);
+      }
+    } catch (e) {
+      const normalizedError = normalizeError(e);
+      this.$displayError(`Could not load last saved translation suggestion: ${normalizedError.message}`);
+      reportError(e);
+    } finally {
+      this.loading = false;
+    }
+  },
   watch: {
     'card.translation': {
       immediate: true,
