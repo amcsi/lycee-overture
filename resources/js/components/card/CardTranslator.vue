@@ -40,52 +40,46 @@
             </div>
 
             <el-form>
-                <el-form-item label="Pre-comments" v-if="relevantPropertyMap.preComments">
-                    <el-input
-                        type="textarea"
-                        v-model="currentTranslation.preComments"
-                        placeholder="E.g. Equip Restriction: ..."
-                    ></el-input>
-                </el-form-item>
-                <el-form-item label="Basic abilities" v-if="relevantPropertyMap.basicAbilities">
-                    <el-input
-                        type="textarea"
-                        v-model="currentTranslation.basicAbilities"
-                        placeholder="Basic abilities"
-                    ></el-input>
-                </el-form-item>
+                <translatable-textarea
+                    v-if="relevantPropertyMap.preComments"
+                    v-model="currentDraft.preComments"
+                    :dirty="dirtyValues.preComments"
+                    label="Pre-comments"
+                    placeholder="E.g. Equip Restriction: ..."
+                />
+                <translatable-textarea
+                    v-if="relevantPropertyMap.basicAbilities"
+                    v-model="currentDraft.basicAbilities"
+                    :dirty="dirtyValues.basicAbilities"
+                    label="Basic abilities"
+                    placeholder="Basic abilities"
+                />
                 <div v-if="relevantPropertyMap.abilityDescriptionLines">
-                    <div v-for="(n, i) in lineCount">
-                        <el-form-item
+                    <div v-for="(n, i) in lineCount" :key="i">
+                        <translatable-textarea
+                            v-if="currentDraft.abilityCostLines"
+                            v-model="currentDraft.abilityCostLines[i]"
+                            :dirty="dirtyValues.abilityCostLines[i]"
                             :label="`Ability Cost ${n}`"
-                            v-if="i in currentTranslation.abilityCostLines"
-                        >
-                            <el-input
-                                type="textarea"
-                                v-model="currentTranslation.abilityCostLines[i]"
-                                placeholder="E.g. [0]"
-                            ></el-input>
-                        </el-form-item>
-                        <el-form-item
+                            placeholder="E.g. [0]"
+                        />
+                        <translatable-textarea
+                            v-if="i in currentDraft.abilityDescriptionLines"
+                            v-model="currentDraft.abilityDescriptionLines[i]"
+                            :dirty="dirtyValues.abilityDescriptionLines[i]"
                             :label="`Ability Description ${n}`"
-                            v-if="i in currentTranslation.abilityDescriptionLines"
-                        >
-                            <el-input
-                                type="textarea"
-                                v-model="currentTranslation.abilityDescriptionLines[i]"
-                                placeholder="Ability Description"
-                            ></el-input>
-                        </el-form-item>
+                            placeholder="Ability Description"
+                        />
                     </div>
                 </div>
 
-                <el-form-item label="Comments" v-if="relevantPropertyMap.comments">
-                    <el-input
-                        type="textarea"
-                        v-model="currentTranslation.comments"
-                        placeholder="E.g. Deck Restriction: ..."
-                    ></el-input>
-                </el-form-item>
+                <translatable-textarea
+                    v-if="relevantPropertyMap.comments"
+                    v-model="currentDraft.comments"
+                    :dirty="dirtyValues.comments"
+                    label="Comments"
+                    placeholder="E.g. Deck Restriction: ..."
+                />
             </el-form>
         </el-card>
 
@@ -101,7 +95,7 @@
 
         <div class="spacer" />
 
-        <el-button type="primary">Suggest Translation</el-button>
+        <el-button type="primary" :disabled="!dirty">Suggest Translation</el-button>
         <el-button @click="toAutoTranslated">Revert to Auto-Translated</el-button>
 
         <div class="spacer" />
@@ -111,19 +105,45 @@
 <script>
 import { characterType, itemType } from '../../value/cardType';
 import FlagEmoji from '../common/FlagEmoji';
+import TranslatableTextarea from '../form/TranslatableTextarea';
 import CardDescription from './CardDescription';
+
+function draftToCardTranslation(draft) {
+  return {
+    basic_abilities: draft.basicAbilities,
+    pre_comments: draft.preComments,
+    comments: draft.comments,
+    ability_cost: draft.abilityCostLines.join('\n'),
+    ability_description: draft.abilityDescriptionLines.join('\n'),
+  };
+}
+
+function cardTranslationToDraft(translation) {
+  const abilityCostLines = translation.ability_cost.split('\n');
+  const abilityDescriptionLines = translation.ability_description.split('\n');
+
+  const draft = {};
+  draft.basicAbilities = translation.basic_abilities;
+  draft.preComments = translation.pre_comments;
+  draft.comments = translation.comments;
+  draft.abilityCostLines = abilityCostLines;
+  draft.abilityDescriptionLines = abilityDescriptionLines;
+
+  return draft;
+}
 
 /** @class CardTranslator */
 export default {
   name: 'CardTranslator',
-  components: { FlagEmoji, CardDescription },
+  components: { TranslatableTextarea, FlagEmoji, CardDescription },
   props: {
     id: String,
     card: Object,
   },
   data() {
     return {
-      currentTranslation: {
+      // Current draft.
+      currentDraft: {
         basicAbilities: '',
         preComments: '',
         comments: '',
@@ -138,8 +158,8 @@ export default {
     },
     lineCount() {
       return Math.max(
-        this.currentTranslation.abilityCostLines.length,
-        this.currentTranslation.abilityDescriptionLines.length,
+        this.currentDraft.abilityCostLines.length,
+        this.currentDraft.abilityDescriptionLines.length,
       );
     },
     relevantProperties() {
@@ -162,13 +182,42 @@ export default {
       return ret;
     },
     resultTranslation() {
-      return {
-        basic_abilities: this.currentTranslation.basicAbilities,
-        pre_comments: this.currentTranslation.preComments,
-        comments: this.currentTranslation.comments,
-        ability_cost: this.currentTranslation.abilityCostLines.join('\n'),
-        ability_description: this.currentTranslation.abilityDescriptionLines.join('\n'),
-      };
+      return draftToCardTranslation(this.currentDraft);
+    },
+    lastSavedTranslationDraft() {
+      return cardTranslationToDraft(this.card.translation);
+    },
+    // Show a dirty check per translate input.
+    dirtyValues() {
+      const base = this.lastSavedTranslationDraft;
+      const compare = this.currentDraft;
+
+      const changes = {};
+
+      for (let translationKey in base) {
+        const baseTranslation = base[translationKey];
+        const compareTranslation = compare[translationKey];
+        changes[translationKey] = Array.isArray(baseTranslation) ?
+          // Recurse the array components.
+          baseTranslation.map((value, key) => value !== compareTranslation[key]) :
+          // Just compare the strings here.
+          baseTranslation !== compareTranslation;
+      }
+
+      return changes;
+    },
+    dirty() {
+      for (const changed of Object.values(this.dirtyValues)) {
+        if (Array.isArray(changed)) {
+          if (changed.some(value => value)) {
+            return true;
+          }
+        } else if (changed) {
+          return true;
+        }
+      }
+
+      return false;
     },
   },
   methods: {
@@ -176,17 +225,7 @@ export default {
       this.setCurrentTranslation(this.autoTranslated);
     },
     setCurrentTranslation(translation) {
-      const abilityCostLines = translation.ability_cost.split('\n');
-      const abilityDescriptionLines = translation.ability_description.split('\n');
-
-      const newTranslation = {};
-      newTranslation.basicAbilities = translation.basic_abilities;
-      newTranslation.preComments = translation.pre_comments;
-      newTranslation.comments = translation.comments;
-      newTranslation.abilityCostLines = abilityCostLines;
-      newTranslation.abilityDescriptionLines = abilityDescriptionLines;
-
-      this.currentTranslation = newTranslation;
+      this.currentDraft = cardTranslationToDraft(translation);
     },
   },
   watch: {
