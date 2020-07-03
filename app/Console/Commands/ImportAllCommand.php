@@ -46,6 +46,8 @@ class ImportAllCommand extends Command
             }
         }
 
+        $this->call(AutoTranslateCommand::COMMAND);
+
         if ($this->option('lackey')) {
             try {
                 $this->call(BuildLackeyCommand::COMMAND);
@@ -53,8 +55,6 @@ class ImportAllCommand extends Command
                 Log::warning((string) $exception);
             }
         }
-
-        $this->call(AutoTranslateCommand::COMMAND);
 
         if ($this->option('images')) {
             $this->call(ImageDownloadCommand::COMMAND, ['--new-only' => true]);
