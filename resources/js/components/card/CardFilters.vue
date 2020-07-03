@@ -52,7 +52,19 @@
         <div style="clear: both;"></div>
 
         <el-form-item>
-            <el-checkbox v-model="translatedFirst" :label="$t('cardFilters.translatedFirst')" />
+            <el-checkbox
+                v-model="translatedFirst"
+                true-label="1"
+                :label="$t('cardFilters.translatedFirst')"
+            />
+        </el-form-item>
+
+        <el-form-item>
+            <el-checkbox
+                v-model="hideFullyTranslated"
+                true-label="1"
+                label="Hide fully translated"
+            />
         </el-form-item>
 
         <el-form-item>
@@ -83,6 +95,8 @@ const debouncedChangeRoute = debounce(($router, query) => {
     { name: 'cardId', debouncing: true },
     { name: 'name', debouncing: true },
     { name: 'text', debouncing: true },
+    { name: 'translatedFirst' },
+    { name: 'hideFullyTranslated' },
   ];
   /** @class CardFilters */
   export default {
@@ -141,19 +155,6 @@ const debouncedChangeRoute = debounce(($router, query) => {
         .reduce((acc, current) => {
           return { ...acc, ...current };
         }, {}),
-      translatedFirst: {
-        get() {
-          return !!this.$route.query.translatedFirst;
-        },
-        set(translatedFirst) {
-          const query = { ...this.$route.query };
-          delete query.translatedFirst;
-          if (translatedFirst) {
-            query.translatedFirst = 1;
-          }
-          this.$router.push({ query });
-        },
-      },
       _brands() {
         if (!this.brands) {
           return null;

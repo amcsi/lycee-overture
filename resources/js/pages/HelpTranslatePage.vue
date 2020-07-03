@@ -67,12 +67,43 @@
                 of the cards in order to be able to do neat things like automatic links from quoted
                 text to list the cards that match the quote.
                 <ul>
+                    <li>
+                        Generally text between angled brackets (&lt;like this&gt;) always refer to
+                        character types. Please keep these in sync with OneSky.
+                    </li>
+                    <li>
+                        Text between quotation marks (“Like this”) can be one of these things:
+                        <ul>
+                            <li>A reference to a card name. By clicking on the link of such a quote,
+                                if you get a card(s) listed, then it's definitely a card name.
+                                So make sure to translate the name of that card in OneSky first.
+                            </li>
+                            <li>
+                                A reference to an anime/light novel (e.g. "untap 1 “ToHeart2”
+                                character").
+                                You can freely translate these without worrying about OneSky.
+                            </li>
+                            <li>
+                                A reference to the name of a character token. You can tell by the
+                                last card description row mentioning that same character token name
+                                and with that token's stats. Feel free to translate this without
+                                worrying about OneSky.
+                            </li>
+                        </ul>
+                    </li>
+
                     <li>There may be quotes that don't refer to actual card names/types. In that
                         case feel free to just translate them.
                     </li>
+                    <li>
+                        Generally text between angled brackets (&lt;like this&gt;) always refer to
+                        character types. Text between quotation marks (“Like this”) are
+                    </li>
                 </ul>
             </li>
-            <li>Please try to keep the symbols, quotes, targeting intact.</li>
+            <li>Please try to keep the symbols, quotes, targeting etc. intact. Take advantage of the
+                offered card text preview functionality for this.
+            </li>
             <li>Do not translate cards/sentences that are already fully translated thanks to
                 automatic
                 translation. The text may not be perfect, but it's best to rely on automatic
@@ -96,7 +127,11 @@
                 If you can't decide which cards to start translation, here is my suggestion:
                 <ol>
                     <li>Cards in starter decks.</li>
-                    <li>Cards with fewer untranslated bits.</li>
+                    <li>
+                        <router-link to="/cards?hideFullyTranslated=1&translatedFirst=1">Cards with
+                            fewer untranslated bits.
+                        </router-link>
+                    </li>
                 </ol>
             </li>
         </ul>

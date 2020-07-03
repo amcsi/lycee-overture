@@ -73,11 +73,13 @@ class CardBuilderFactory
 
         $name = (string) ($query['name'] ?? null);
         $text = (string) ($query['text'] ?? null);
+        $hideFullyTranslated = (bool) ($query['hideFullyTranslated'] ?? null);
 
         // Load some translations for text search or kanji counting?
         $shouldLoadTranslation = $forceLoadTranslation ||
             $name !== '' ||
             $text !== '' ||
+            $hideFullyTranslated ||
             ($locale !== Locale::JAPANESE && ($query['translatedFirst'] ?? null));
         if ($shouldLoadTranslation) {
             $nameColumns = ['name', 'ability_name', 'character_type'];
@@ -126,6 +128,9 @@ class CardBuilderFactory
                         $join->on('t.card_id', '=', 't2.card_id')->on('t.locale', '=', 't2.preferred_locale');
                     }
                 );
+            }
+            if ($hideFullyTranslated) {
+                $builder->where('t.kanji_count', '!=', 0);
             }
         }
 
