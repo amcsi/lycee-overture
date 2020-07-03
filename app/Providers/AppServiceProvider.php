@@ -23,9 +23,7 @@ use Illuminate\Cache\Repository;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use JpnForPhp\Transliterator\Transliterator;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
@@ -61,12 +59,6 @@ class AppServiceProvider extends ServiceProvider
         }
         Builder::macro('upsert', require __DIR__ . '/../../app/Database/upsert.php');
         Builder::macro('insertIgnore', require __DIR__ . '/../../app/Database/insertIgnore.php');
-
-        // Since there's something funky with proxying to Swoole and it seems like Laravel can't see that
-        // the request is actually HTTPS. So this is needed for route links on the login/register pages to use HTTPS.
-        if (Str::startsWith(config('app.url'), 'https')) {
-            URL::forceScheme('https');
-        }
 
         self::$booted = true;
     }
