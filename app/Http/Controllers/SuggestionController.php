@@ -38,6 +38,9 @@ class SuggestionController
             }
         }
 
-        return new SuggestionResource(Suggestion::updateOrCreate($attributes, $values));
+        $suggestion = Suggestion::updateOrCreate($attributes, $values);
+        $suggestion->load('creator');
+
+        return new SuggestionResource($suggestion);
     }
 }
