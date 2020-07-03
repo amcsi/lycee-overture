@@ -95,7 +95,15 @@
 
         <div class="spacer" />
 
-        <el-button type="primary" :disabled="!dirty">Suggest Translation</el-button>
+        <template v-if="errors.globalErrors && errors.globalErrors.length">
+            <el-alert v-for="(error, i) in errors.globalErrors" :key="i" type="error">{{ error }}
+            </el-alert>
+            <div class="spacer" />
+        </template>
+
+        <el-button type="primary" :disabled="!dirty" :loading="waiting" @click="suggestTranslation">
+            Suggest Translation
+        </el-button>
         <el-button @click="toAutoTranslated">Revert to Auto-Translated</el-button>
 
         <div class="spacer" />
@@ -104,6 +112,8 @@
 
 <script>
 import { mapMutations } from 'vuex';
+import api from '../../api';
+import { normalizeError, reportError, VALIDATION_FAILURE } from '../../utils/errorHandling';
 import { characterType, itemType } from '../../value/cardType';
 import FlagEmoji from '../common/FlagEmoji';
 import TranslatableTextarea from '../form/TranslatableTextarea';
@@ -143,6 +153,10 @@ export default {
   },
   data() {
     return {
+      loading: false,
+      saving: false,
+      lastSavedTranslationSuggestion: null,
+      errors: {},
       // Current draft.
       currentDraft: {
         basicAbilities: '',
@@ -186,7 +200,7 @@ export default {
       return draftToCardTranslation(this.currentDraft);
     },
     lastSavedTranslationDraft() {
-      return cardTranslationToDraft(this.card.translation);
+      return cardTranslationToDraft(this.lastSavedTranslationSuggestion || this.card.translation);
     },
     // Show a dirty check per translate input.
     dirtyValues() {
@@ -220,6 +234,9 @@ export default {
 
       return false;
     },
+    waiting() {
+      return this.loading || this.saving;
+    },
   },
   methods: {
     ...mapMutations('translation', ['ADD_DIRTY_CARD_ID', 'REMOVE_DIRTY_CARD_ID']),
@@ -228,6 +245,49 @@ export default {
     },
     setCurrentTranslation(translation) {
       this.currentDraft = cardTranslationToDraft(translation);
+    },
+    async suggestTranslation() {
+      try {
+        this.saving = true;
+        this.lastSavedTranslationSuggestion = (await api.post(
+          'suggestions',
+          {
+            card_id: this.id,
+            locale: 'en',
+            ...this.resultTranslation,
+          },
+        )).data.data;
+        this.$displaySuccess('You have successfully submitted the translation suggestion.');
+      } catch (e) {
+        const normalizedError = normalizeError(e);
+        this.$displayError(normalizedError.message);
+        if (normalizedError.type === VALIDATION_FAILURE) {
+          this.setValidationErrors(normalizedError.data);
+        } else {
+          reportError(e);
+        }
+      } finally {
+        this.saving = false;
+      }
+    },
+    setValidationErrors(data) {
+      const globalErrors = [];
+      let anyJapaneseCharacterErrors = false;
+      for (const fieldErrors of Object.values(data)) {
+        for (const error of fieldErrors) {
+          if (error === 'validation.no_japanese_characters') {
+            anyJapaneseCharacterErrors = true;
+          } else {
+            globalErrors.push(error);
+          }
+        }
+      }
+      if (anyJapaneseCharacterErrors) {
+        globalErrors.push(
+          'Make sure the card\'s text is fully translated. No Japanese characters should remain.');
+      }
+
+      this.errors = { globalErrors };
     },
   },
   watch: {
@@ -243,6 +303,13 @@ export default {
       } else {
         this.REMOVE_DIRTY_CARD_ID(this.id);
       }
+    },
+    currentDraft: {
+      deep: true,
+      handler() {
+        // Unset all errors when the draft gets changed.
+        this.errors = {};
+      },
     },
   },
 };

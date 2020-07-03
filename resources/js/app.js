@@ -19,6 +19,7 @@ import {
   Main,
   Menu,
   MenuItem,
+  Message,
   Option,
   Pagination,
   Row,
@@ -29,10 +30,10 @@ import {
   Tag,
 } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import Rollbar from 'rollbar';
 import VueRouter from 'vue-router';
 import App from './App';
 import i18n from './i18n';
+import { rollbar } from './rollbar';
 import router from './router';
 import store from './store/index';
 
@@ -67,21 +68,6 @@ Vue.use(Loading.directive);
 
 //noinspection JSUnusedGlobalSymbols
 
-const rollbar = Rollbar.init({
-  accessToken: window.vars.rollbarToken,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-  enabled: true,
-  source_map_enabled: true,
-  environment: window.vars.environment,
-  payload: {
-    client: {
-      javascript: {
-        code_version: window.vars.gitSha1,
-      }
-    }
-  }
-});
 Vue.prototype.$rollbar = rollbar;
 Vue.config.errorHandler = function(err) {
   console.error(err);
@@ -102,6 +88,20 @@ Vue.filter('formatDate', function(value) {
   }
   return value ? dateFormatter.format(value) : '';
 });
+
+Vue.prototype.$displaySuccess = function(message) {
+  return Message({
+    type: 'success',
+    message,
+  });
+};
+
+Vue.prototype.$displayError = function(message) {
+  return Message({
+    type: 'error',
+    message,
+  });
+};
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
