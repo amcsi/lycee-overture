@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\CommentTranslator;
 
+use amcsi\LyceeOverture\I18n\AutoTranslator\FullWidthCharacters;
+use amcsi\LyceeOverture\I18n\AutoTranslator\QuoteTranslator;
 use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
 
 /**
@@ -11,10 +13,12 @@ use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
 class CommentTranslator
 {
     private $setTranslator;
+    private QuoteTranslator $quoteTranslator;
 
-    public function __construct(SetTranslator $setTranslator)
+    public function __construct(SetTranslator $setTranslator, QuoteTranslator $quoteTranslator)
     {
         $this->setTranslator = $setTranslator;
+        $this->quoteTranslator = $quoteTranslator;
     }
 
     public function translate(string $text): string
@@ -29,6 +33,9 @@ class CommentTranslator
             'This card can be used in the game as a character without an ability.',
             $text
         );
+        $text = $this->quoteTranslator->autoTranslate($text);
+        $text = FullWidthCharacters::transformQuotes($text);
+
         return preg_replace_callback('/構築制限:(.+)/u', [$this, 'deckRestrictionCallback'], $text);
     }
 

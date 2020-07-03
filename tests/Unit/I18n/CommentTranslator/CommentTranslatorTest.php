@@ -6,6 +6,7 @@ namespace Tests\Unit\I18n\CommentTranslator;
 use amcsi\LyceeOverture\I18n\CommentTranslator\CommentTranslator;
 use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
 use PHPUnit\Framework\TestCase;
+use Tests\Tools\TestUtils;
 
 class CommentTranslatorTest extends TestCase
 {
@@ -17,7 +18,8 @@ class CommentTranslatorTest extends TestCase
         self::assertSame(
             $expected,
             (new CommentTranslator(
-                new SetTranslator((require __DIR__ . '/../../../../config/lycee.php')['sets'])
+                new SetTranslator((require __DIR__ . '/../../../../config/lycee.php')['sets']),
+                TestUtils::createQuoteTranslator()
             ))->translate($input)
         );
     }

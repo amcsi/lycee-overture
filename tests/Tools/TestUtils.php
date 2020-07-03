@@ -16,14 +16,7 @@ class TestUtils
 {
     public static function createAutoTranslator(): AutoTranslator
     {
-        $quoteTranslator = new QuoteTranslator(
-            new NameTranslator(
-                new ManualNameTranslator([]),
-                new KanaTranslator(TransliteratorFactory::getInstance()),
-                self::createKanjiTranslator()
-            )
-        );
-        return new AutoTranslator($quoteTranslator);
+        return new AutoTranslator(self::createQuoteTranslator());
     }
 
     public static function createKanjiTranslator(): KanjiTranslator
@@ -35,5 +28,16 @@ class TestUtils
                 return $text;
             }
         });
+    }
+
+    public static function createQuoteTranslator(): QuoteTranslator
+    {
+        return new QuoteTranslator(
+            new NameTranslator(
+                new ManualNameTranslator([]),
+                new KanaTranslator(TransliteratorFactory::getInstance()),
+                self::createKanjiTranslator()
+            )
+        );
     }
 }
