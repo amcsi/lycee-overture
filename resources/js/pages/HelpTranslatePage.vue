@@ -19,7 +19,7 @@
             So if someone can help clarify what those means, that's a start :D
         </p>
 
-        <p>In any case to translate these, please visit this project's
+        <p id="onesky-reference">In any case to translate these, please visit this project's
             <ExternalLink href="https://oscet9a.oneskyapp.com/collaboration/translate/project/project/314275/language/1">
                 OneSky
             </ExternalLink>
@@ -52,19 +52,89 @@
 
         <h3>Card Descriptions</h3>
 
-        <p>Unfortunately the website is not yet ready for translating the actual card descriptions.
-            Various preparations need to be done, the existing automatic translations needs to be
-            finalized, and rules of translations would need to be assembled among other things.</p>
+        <p>You need to register and log in on this site to be able to submit card descrption
+            changes. You can do so by manually typing in the /register and /login paths in the URL
+            respectively. The reason I didn't include links is to prevent bots from finding the
+            register/login pages.</p>
+
+        <p>Things to keep in mind:</p>
+
+        <ul>
+            <li>
+                Do not translate card names and types between quotes before translating them in
+                OneSky. Refer to <a href="#onesky-reference">this section</a>.
+                This is in order to try to keep the quoted names/types in sync with the names/types
+                of the cards in order to be able to do neat things like automatic links from quoted
+                text to list the cards that match the quote.
+                <ul>
+                    <li>There may be quotes that don't refer to actual card names/types. In that
+                        case feel free to just translate them.
+                    </li>
+                </ul>
+            </li>
+            <li>Please try to keep the symbols, quotes, targeting intact.</li>
+            <li>Do not translate cards/sentences that are already fully translated thanks to
+                automatic
+                translation. The text may not be perfect, but it's best to rely on automatic
+                translations whenever possible so e.g. in case of the card text getting errata'd,
+                the auto-translation will follow it unlike the manual translation.
+                <ul>
+                    <li>In case you think a fully auto-translated sentence is outright wrong, please
+                        let me know so I can sort it out.
+                    </li>
+                    <li>However if you encounter a <em>partly</em> auto-translated sentence, then
+                        feel free to change that all you want, as those are not expected to be taken
+                        seriously.
+                    </li>
+                </ul>
+            </li>
+            <li>In general, try to follow the style of translations to all the other automatically
+                or manually translated cards to make both the automatic and manually translated
+                cards feel natural among one another.
+            </li>
+            <li>
+                If you can't decide which cards to start translation, here is my suggestion:
+                <ol>
+                    <li>Cards in starter decks.</li>
+                    <li>Cards with fewer untranslated bits.</li>
+                </ol>
+            </li>
+        </ul>
+
+        <p>Here is a hopefully helpful glossary that may be helpful for translating whether you are
+            good in Japanese or not:</p>
+
+        <h4>Glossary</h4>
+
+        <el-table :data="glossaryData">
+            <el-table-column
+                prop="0"
+                label="Japanese"
+                width="180"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="1"
+                label="English"
+            >
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 
 <script>
 import ExternalLink from '../components/common/ExternalLink';
+import { glossaryData } from '../value/glossary';
 
 /** @class HelpTranslatePage */
 export default {
   name: 'HelpTranslatePage',
   components: { ExternalLink },
+  data() {
+    return {
+      glossaryData,
+    };
+  },
 };
 </script>
 
