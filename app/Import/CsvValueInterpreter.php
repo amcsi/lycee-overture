@@ -111,7 +111,7 @@ class CsvValueInterpreter
                 $description = preg_replace(
                     sprintf(
                         '/%s(.*?)%s/',
-                        preg_quote('<span style=color:#FFCC00;font-weight:bold;>', '/'),
+                        '<span style="?color:#FFCC00;font-weight:bold;"?>',
                         preg_quote('</span>', '/')
                     ),
                     '{$1}',
