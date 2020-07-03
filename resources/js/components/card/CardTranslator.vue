@@ -103,6 +103,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import { characterType, itemType } from '../../value/cardType';
 import FlagEmoji from '../common/FlagEmoji';
 import TranslatableTextarea from '../form/TranslatableTextarea';
@@ -221,6 +222,7 @@ export default {
     },
   },
   methods: {
+    ...mapMutations('translation', ['ADD_DIRTY_CARD_ID', 'REMOVE_DIRTY_CARD_ID']),
     toAutoTranslated() {
       this.setCurrentTranslation(this.autoTranslated);
     },
@@ -234,6 +236,13 @@ export default {
       handler() {
         this.setCurrentTranslation(this.card.translation);
       },
+    },
+    dirty(dirty) {
+      if (dirty) {
+        this.ADD_DIRTY_CARD_ID(this.id);
+      } else {
+        this.REMOVE_DIRTY_CARD_ID(this.id);
+      }
     },
   },
 };

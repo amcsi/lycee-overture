@@ -6,6 +6,7 @@ import cards from './modules/cards';
 import cardSets from './modules/cardSets';
 import sets from './modules/sets';
 import statistics from './modules/statistics';
+import translation from './modules/translation';
 
 /**
  * In this file we instantiate the store with configuration and return it.
@@ -23,6 +24,7 @@ const store = new Vuex.Store({
     cardSets,
     sets,
     statistics,
+    translation,
   },
   state: {
     startedInitialTasks: false,
