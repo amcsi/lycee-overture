@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-card>
-            <el-alert show-icon title="Notice">
+            <el-alert show-icon title="Guidelines" type="warning">
                 Please read
                 <ExternalLink href="/help-translate#card-names-character-types">the guidelines
                 </ExternalLink>

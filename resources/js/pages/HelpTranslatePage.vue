@@ -50,7 +50,7 @@
             </li>
         </ul>
 
-        <h3>Card Descriptions</h3>
+        <h3 id="card-descriptions">Card Descriptions</h3>
 
         <p>You need to register and log in on this site to be able to submit card descrption
             changes. You can do so by manually typing in the /register and /login paths in the URL
@@ -62,7 +62,7 @@
         <ul>
             <li>
                 Do not translate card names and types between quotes before translating them in
-                OneSky. Refer to <a href="#onesky-reference">this section</a>.
+                OneSky. Refer to <a href="#card-names-character-types">this section</a>.
                 This is in order to try to keep the quoted names/types in sync with the names/types
                 of the cards in order to be able to do neat things like automatic links from quoted
                 text to list the cards that match the quote.
@@ -171,6 +171,16 @@ export default {
       glossaryData,
       oneSkyProjectUrl,
     };
+  },
+  mounted() {
+    // Manually scroll ID element into view, bc for some reason it doesn't usually work by itself.
+
+    const hash = window.location.hash;
+    let element;
+    console.info({ hash });
+    if (hash && (element = document.getElementById(hash.substring(1)))) {
+      setTimeout(() => element.scrollIntoView(), 200);
+    }
   },
 };
 </script>

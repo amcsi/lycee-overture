@@ -15,6 +15,16 @@
                 There is a pending translation suggestion for this card by <strong>{{lastSavedTranslationSuggestion.creator.name}}</strong>.
             </el-alert>
         </template>
+
+        <div class="spacer" />
+
+        <el-alert show-icon title="Guidelines" type="warning">
+            Please read
+            <ExternalLink href="/help-translate#card-descriptions">the guidelines</ExternalLink>
+            for <strong>"Card Descriptions"</strong> before submitting
+            card description translations.
+        </el-alert>
+
         <div class="spacer" />
 
         <el-card>
@@ -149,6 +159,7 @@ import { mapActions, mapMutations } from 'vuex';
 import api from '../../api';
 import { normalizeError, reportError, VALIDATION_FAILURE } from '../../utils/errorHandling';
 import { characterType, itemType } from '../../value/cardType';
+import ExternalLink from '../common/ExternalLink';
 import FlagEmoji from '../common/FlagEmoji';
 import TranslatableTextarea from '../form/TranslatableTextarea';
 import CardDescription from './CardDescription';
@@ -180,7 +191,7 @@ function cardTranslationToDraft(translation) {
 /** @class CardTranslator */
 export default {
   name: 'CardTranslator',
-  components: { TranslatableTextarea, FlagEmoji, CardDescription },
+  components: { ExternalLink, TranslatableTextarea, FlagEmoji, CardDescription },
   props: {
     id: String,
     card: Object,
