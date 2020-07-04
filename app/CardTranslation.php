@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class CardTranslation extends Model
 {
+    // Columns that are translated in OneSky.
+    public const NAME_COLUMNS = ['name', 'ability_name', 'character_type'];
+
     public function card(): BelongsTo
     {
         return $this->belongsTo(Card::class);

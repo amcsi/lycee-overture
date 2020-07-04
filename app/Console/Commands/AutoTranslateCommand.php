@@ -6,6 +6,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\I18n\AutoTranslator;
+use amcsi\LyceeOverture\I18n\AutoTranslator\NameSyncer;
 use amcsi\LyceeOverture\I18n\CommentTranslator\CommentTranslator;
 use amcsi\LyceeOverture\I18n\CommentTranslator\PreCommentTranslator;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
@@ -204,6 +205,9 @@ class AutoTranslateCommand extends Command
                 $cardCount
             )
         );
+
+        NameSyncer::syncNames();
+        $this->output->text('Synced card names.');
 
         $this->output->text(
             "Finished auto translation of cards in " . Profiling::stopwatchToHuman($stopwatchEvent->stop())
