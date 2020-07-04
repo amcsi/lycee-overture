@@ -4,7 +4,7 @@
 
         <el-alert show-icon :closable="false">
             This card is currently
-            <span class="translatedText" :class="{autoTranslated}">{{ autoTranslated ? 'automatically' : 'manually'}}</span>
+            <span class="translatedText" :class="{autoTranslated: !isManuallyTranslated}">{{ !isManuallyTranslated ? 'automatically' : 'manually'}}</span>
             translated.
         </el-alert>
 
@@ -15,7 +15,6 @@
                 There is a pending translation suggestion for this card by <strong>{{lastSavedTranslationSuggestion.creator.name}}</strong>.
             </el-alert>
         </template>
-
         <div class="spacer" />
 
         <el-card>
@@ -110,6 +109,15 @@
         </template>
 
         <el-button
+            v-if="showApproveButton"
+            type="success"
+            :disabled="!this.approveButtonEnabled"
+            :loading="waiting"
+            @click="approveTranslation"
+        >
+            {{ approveText }}
+        </el-button>
+        <el-button
             type="primary"
             :disabled="!dirty"
             :loading="waiting"
@@ -137,7 +145,7 @@
 
 <script>
 import isEqual from 'lodash.isequal';
-import { mapMutations } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 import api from '../../api';
 import { normalizeError, reportError, VALIDATION_FAILURE } from '../../utils/errorHandling';
 import { characterType, itemType } from '../../value/cardType';
@@ -183,6 +191,7 @@ export default {
       saving: false,
       lastSavedTranslationSuggestion: null,
       errors: {},
+      locale: 'en',
       // Current draft.
       currentDraft: {
         basicAbilities: '',
@@ -196,6 +205,9 @@ export default {
   computed: {
     autoTranslated() {
       return this.card.auto_translation || this.card.translation;
+    },
+    isManuallyTranslated() {
+      return !!this.card.auto_translation;
     },
     lineCount() {
       return Math.max(
@@ -266,8 +278,14 @@ export default {
     autoTranslatedAsDraft() {
       return cardTranslationToDraft(this.autoTranslated);
     },
+    bestTranslationAsDraft() {
+      return cardTranslationToDraft(this.card.translation);
+    },
     isCurrentDraftEqualToAutoTranslated() {
       return isEqual(this.autoTranslatedAsDraft, this.currentDraft);
+    },
+    isCurrentDraftEqualToBestTranslated() {
+      return isEqual(this.bestTranslationAsDraft, this.currentDraft);
     },
     submitText() {
       if (this.dirty && this.isCurrentDraftEqualToAutoTranslated) {
@@ -276,9 +294,27 @@ export default {
 
       return 'Suggest Translation';
     },
+    showApproveButton() {
+      return window.vars.auth.canApproveLocales.includes(this.locale);
+    },
+    approveButtonEnabled() {
+      return this.showApproveButton && !this.isCurrentDraftEqualToBestTranslated;
+    },
+    approveText() {
+      if (this.isCurrentDraftEqualToAutoTranslated && this.isManuallyTranslated) {
+        return 'Approve Revert to Auto-Translated';
+      }
+
+      if (this.dirty) {
+        return 'Approve Translation with Changes';
+      }
+
+      return 'Approve Translation';
+    },
   },
   methods: {
     ...mapMutations('translation', ['ADD_DIRTY_CARD_ID', 'REMOVE_DIRTY_CARD_ID']),
+    ...mapActions('cards', ['refreshCard']),
     toAutoTranslated() {
       this.setCurrentTranslation(this.autoTranslated);
     },
@@ -288,20 +324,43 @@ export default {
     setCurrentTranslation(translation) {
       this.currentDraft = cardTranslationToDraft(translation);
     },
-    async suggestTranslation() {
+    async approveTranslation() {
+      await this._suggestTranslation(true);
       try {
         this.saving = true;
-        this.lastSavedTranslationSuggestion = (await api.post(
+        await this.refreshCard(this.card.id);
+        this.$displaySuccess(
+          'You have successfully approved the translation.',
+        );
+      } catch (e) {
+        const normalizedError = normalizeError(e);
+        this.$displayError(normalizedError.message);
+        reportError(e);
+        throw e;
+      } finally {
+        this.saving = false;
+      }
+    },
+    async suggestTranslation() {
+      await this._suggestTranslation();
+      this.$displaySuccess(
+        'You have successfully submitted the translation suggestion for review by a translator.',
+      );
+    },
+    async _suggestTranslation(approve) {
+      try {
+        this.saving = true;
+        const responseData = (await api.post(
           'suggestions',
           {
             card_id: this.id,
-            locale: 'en',
+            locale: this.locale,
+            approved: approve ? 1 : 0,
             ...this.resultTranslation,
           },
         )).data.data;
-        this.$displaySuccess(
-          'You have successfully submitted the translation suggestion for review by a translator.',
-        );
+        // If (by approval) the suggestion got deleted, then unset the last saved suggestion.
+        this.lastSavedTranslationSuggestion = responseData.id ? responseData : null;
       } catch (e) {
         const normalizedError = normalizeError(e);
         this.$displayError(normalizedError.message);
@@ -310,6 +369,7 @@ export default {
         } else {
           reportError(e);
         }
+        throw e;
       } finally {
         this.saving = false;
       }

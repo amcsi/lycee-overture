@@ -13,6 +13,7 @@ declare(strict_types=1);
 */
 
 use amcsi\LyceeOverture\Http\Controllers\Auth\LoginController;
+use amcsi\LyceeOverture\User;
 
 Auth::routes();
 
@@ -27,6 +28,7 @@ Route::get(
             $appUrl = "$scheme://$host";
         }
 
+        /** @var User $authUser */
         $authUser = Auth::user();
 
         $vars = [
@@ -38,6 +40,9 @@ Route::get(
             'auth' => $authUser ? [
                 'id' => $authUser->id,
                 'name' => $authUser->name,
+                'canApproveLocales' => $authUser->can_approve_locale ?
+                    explode(',', $authUser->can_approve_locale) :
+                    [],
             ] : null,
         ];
         return view('spa', ['jsVars' => $vars]);

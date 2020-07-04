@@ -1,4 +1,5 @@
-import { listCards } from '../../api/endpoints/cards';
+import Vue from 'vue';
+import { listCards, showCard } from '../../api/endpoints/cards';
 
 export default {
   namespaced: true,
@@ -42,6 +43,16 @@ export default {
     CARDS_SET_NEWEST_DATE(state, newestDate) {
       state.newestDate = newestDate;
     },
+    UPDATE_CARD_IN_LIST(state, toCard) {
+      if (!toCard.id) {
+        return;
+      }
+      const cardList = state.list.data;
+      const index = cardList.findIndex((card) => card.id === toCard.id);
+      if (index >= 0) {
+        Vue.set(cardList, index, toCard);
+      }
+    },
   },
   actions: {
     async listCards({ commit, state }, query) {
@@ -61,6 +72,10 @@ export default {
         commit('CARDS_LOADING_FAILED');
         throw e;
       }
+    },
+    async refreshCard({ commit, state }, cardId) {
+      const card = (await showCard(cardId)).data;
+      commit('UPDATE_CARD_IN_LIST', card);
     },
     async listCardsForPrinting({ commit, state }, queryInput) {
       // Manipulate query to remove the page and make sure the limit is 60.
