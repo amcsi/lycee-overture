@@ -15,7 +15,7 @@ class SuggestionResource extends JsonResource
     public function toArray($request)
     {
         $item = $this->resource;
-        $ret = $item->toArray();
+        $ret = $item->attributesToArray();
         $ret['creator'] = new UserBareResource($this->whenLoaded('creator'));
         return $ret;
     }

@@ -32,6 +32,8 @@ class SuggestionCreateRequest extends FormRequest
             'ability_cost' => $lineRule,
             'ability_description' => $lineRule,
             'comments' => $lineRule,
+            'approved' => 'bool',
         ];
     }
+
 }
