@@ -102,21 +102,21 @@ class CsvValueInterpreter
                 continue;
             }
 
+            // Normalize targeting.
+            $abilityRow = preg_replace(
+                sprintf(
+                    '/%s(.*?)%s/',
+                    '<span style="?color:#FFCC00;font-weight:bold;"?>',
+                    preg_quote('</span>', '/')
+                ),
+                '{$1}',
+                $abilityRow
+            );
+
             if (preg_match("/$abilityTypeAndCostRegexPart(.*)/u", $abilityRow, $matches)) {
                 $abilityTypeAndCosts[] = trim($matches[1] . ' ' . $matches[2]);
 
                 $description = trim($matches[3]);
-
-                // Normalize description.
-                $description = preg_replace(
-                    sprintf(
-                        '/%s(.*?)%s/',
-                        '<span style="?color:#FFCC00;font-weight:bold;"?>',
-                        preg_quote('</span>', '/')
-                    ),
-                    '{$1}',
-                    $description
-                );
 
                 // Comments in description.
                 preg_match('/^(.*?)(※.*)?$/u', $description, $_matches);
