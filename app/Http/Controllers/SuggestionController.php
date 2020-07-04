@@ -39,7 +39,7 @@ class SuggestionController
             }
         }
 
-        $suggestion = Suggestion::firstOrNew($attributes, $values);
+        $suggestion = Suggestion::firstOrNew($attributes)->fill($values);
 
         if ($request->approved) {
             $suggestionApprover->approve($suggestion);

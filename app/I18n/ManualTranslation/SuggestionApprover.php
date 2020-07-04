@@ -34,7 +34,7 @@ class SuggestionApprover
             Arr::only($values, Suggestion::SUGGESTABLE_PROPERTIES)
         );
         $cardTranslation = CardTranslation::unguarded(
-            fn() => CardTranslation::firstOrNew($attributes, $tranlationValues)
+            fn() => CardTranslation::firstOrNew($attributes)->fill($tranlationValues)
         );
 
         if ($this->manualAutoDifferenceChecker->areSuggestablesDifferent($cardTranslation, $cardAutoTranslation)) {
