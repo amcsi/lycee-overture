@@ -9,6 +9,13 @@ use Illuminate\Support\Arr;
 
 class SuggestionApprover
 {
+    private ManualAutoDifferenceChecker $manualAutoDifferenceChecker;
+
+    public function __construct(ManualAutoDifferenceChecker $manualAutoDifferenceChecker)
+    {
+        $this->manualAutoDifferenceChecker = $manualAutoDifferenceChecker;
+    }
+
     public function approve(Suggestion $suggestion): void
     {
         $locale = $suggestion->locale;
@@ -16,7 +23,8 @@ class SuggestionApprover
         $attributes = $suggestion->only($keyAttributes);
         $values = $suggestion->attributesToArray();
 
-        $newTranslationData = $suggestion->card->getTranslation("$locale-auto")->replicate()->toArray();
+        $cardAutoTranslation = $suggestion->card->getTranslation("$locale-auto");
+        $newTranslationData = $cardAutoTranslation->replicate()->toArray();
 
         // Grab all the auto-translated values, and merge in the card description related properties
         // that are in the translation suggestion.
@@ -25,7 +33,17 @@ class SuggestionApprover
             $tranlationValues,
             Arr::only($values, Suggestion::SUGGESTABLE_PROPERTIES)
         );
-        CardTranslation::updateOrInsert($attributes, $tranlationValues);
+        $cardTranslation = CardTranslation::unguarded(
+            fn() => CardTranslation::firstOrNew($attributes, $tranlationValues)
+        );
+
+        if ($this->manualAutoDifferenceChecker->areSuggestablesDifferent($cardTranslation, $cardAutoTranslation)) {
+            // Save the manual translation.
+            $cardTranslation->save();
+        } else {
+            // Since being equal to the auto-translation, delete the manual translation.
+            $cardTranslation->delete();
+        }
 
         $suggestion->delete();
     }
