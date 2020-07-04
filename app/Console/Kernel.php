@@ -31,6 +31,9 @@ class Kernel extends ConsoleKernel
         $schedule->command(ImportAllCommand::COMMAND . ' --translations --images --no-cache')
             ->dailyAt('20:00')
             ->sendOutputTo($logPath);
+        $schedule->command(ImportAllCommand::COMMAND . ' --translations')
+            ->hourly()
+            ->sendOutputTo($logPath);
         $schedule->command(BuildLackeyCommand::COMMAND)
             ->dailyAt('08:00')
             ->sendOutputTo($logPath);
