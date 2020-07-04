@@ -7,6 +7,7 @@ use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\Rules\NoJapaneseCharactersRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class SuggestionCreateRequest extends FormRequest
 {
@@ -36,4 +37,11 @@ class SuggestionCreateRequest extends FormRequest
         ];
     }
 
+    protected function passedValidation()
+    {
+        $locale = $this->request->get('locale');
+        if ($this->approved && !in_array($locale, explode(',', $this->user()->can_approve_locale), true)) {
+            throw new AccessDeniedHttpException();
+        }
+    }
 }

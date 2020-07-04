@@ -108,6 +108,16 @@ class SuggestionControllerTest extends DatabaseTestCase
         self::assertCount(1, $responseData);
     }
 
+    public function testCannotApproveUnlessHaveRights(): void
+    {
+        $this->actingAs($this->user);
+
+        $data = self::$suggestionInput;
+        $data['approved'] = 1;
+
+        self::assertStatus(403, $this->postJson('/api/suggestions', $data));
+    }
+
     public function testApprove(): void
     {
         $this->user->can_approve_locale = Locale::ENGLISH;
