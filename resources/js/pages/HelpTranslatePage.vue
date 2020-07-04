@@ -12,7 +12,7 @@
                 website.</p>
         </div>
 
-        <h3>Card Names, Ability Names, Character Types</h3>
+        <h3 id="card-names-character-types">Card Names, Ability Names, Character Types</h3>
 
         <p>Just to clarify... I say "Ability Names", but I'm actually not that certain what they
             are. I asked NepZone and he said they are some sort of flavor texts.
@@ -20,7 +20,7 @@
         </p>
 
         <p id="onesky-reference">In any case to translate these, please visit this project's
-            <ExternalLink href="https://oscet9a.oneskyapp.com/collaboration/translate/project/project/314275/language/1">
+            <ExternalLink :href="oneSkyProjectUrl">
                 OneSky
             </ExternalLink>
             page and sign up. This way you can start suggesting translations for these, which I can
@@ -159,6 +159,7 @@
 
 <script>
 import ExternalLink from '../components/common/ExternalLink';
+import { oneSkyProjectUrl } from '../value/env';
 import { glossaryData } from '../value/glossary';
 
 /** @class HelpTranslatePage */
@@ -168,6 +169,7 @@ export default {
   data() {
     return {
       glossaryData,
+      oneSkyProjectUrl,
     };
   },
 };

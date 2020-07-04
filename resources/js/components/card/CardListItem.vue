@@ -11,12 +11,19 @@
                             - <span class="card-ability-name">{{ cardText.ability_name }}</span>
                             <span class="card-character-type" v-if="characterType">- Type: {{ cardText.character_type || '-' }}</span>
                         </span>
+                        <el-button
+                            class="show-when-hovering"
+                            size="mini"
+                            @click="translateNamesOpen = !translateNamesOpen"
+                        >{{translateNamesOpen ? 'Hide' : 'Help Translate'}}
+                        </el-button>
                     </div>
                     <div style="flex: 1" />
                     <div>
                         <span class="rarity">{{card.rarity}}</span>
                     </div>
                 </div>
+                <CardNameTranslator v-if="translateNamesOpen" :card="card" />
                 <div class="stats-and-stuff">
                     <div class="flex-center">
                         <div class="flex-center gaps">
@@ -65,7 +72,7 @@
                             :class="{ active: localLocale !== 'ja' }"
                             @click="localLocale = 'en'"
                         >
-                            <img src="../../../images/flags/gb.png" alt="English" title="English" />
+                            <FlagImage locale="en" />
                         </span>
                                 <span
                                     class="language-link clickable"
@@ -73,7 +80,7 @@
                                     :class="{ active: localLocale === 'ja' }"
                                     @click="localLocale = 'ja'"
                                 >
-                            <img src="../../../images/flags/jp.png" alt="日本語" title="日本語" />
+                            <FlagImage locale="ja" />
                         </span>
                     </span>
                 </div>
@@ -86,7 +93,9 @@
 import { mapComputed } from '../../store/storeUtils';
 import formatCardMixin from '../../utils/formatCardMixin';
 import ExternalLink from '../common/ExternalLink';
+import FlagImage from '../common/FlagImage';
 import CardDescription from './CardDescription';
+import CardNameTranslator from './CardNameTranslator';
 import CardText from './CardText';
 import CardThumbnail from './CardThumbnail';
 import CardTranslator from './CardTranslator';
@@ -95,7 +104,16 @@ import StatValue from './StatValue';
 /** @class CardListItem */
 export default {
   name: 'CardListItem',
-  components: { StatValue, ExternalLink, CardText, CardDescription, CardThumbnail, CardTranslator },
+  components: {
+    FlagImage,
+    CardNameTranslator,
+    StatValue,
+    ExternalLink,
+    CardText,
+    CardDescription,
+    CardThumbnail,
+    CardTranslator,
+  },
   props: {
     card: {
       type: Object,
@@ -107,6 +125,7 @@ export default {
     return {
       localLocale: null,
       translateMode: false,
+      translateNamesOpen: false,
     };
   },
   computed: {

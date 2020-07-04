@@ -146,6 +146,10 @@ class CardBuilderFactory
             $builder->whereIn('cards.id', $cardIds);
         }
 
+        if (!empty($query['translationSuggestions'])) {
+            $builder->has('suggestions');
+        }
+
         return $builder;
     }
 

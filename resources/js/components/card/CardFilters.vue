@@ -68,6 +68,14 @@
         </el-form-item>
 
         <el-form-item>
+            <el-checkbox
+                v-model="translationSuggestions"
+                true-label="1"
+                label="Cards with unapproved translations"
+            />
+        </el-form-item>
+
+        <el-form-item>
             <a href="#" @click.prevent="clearAllFilters"><i class="fa fa-eraser"></i> Clear all
                 filters</a>
         </el-form-item>
@@ -97,6 +105,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
     { name: 'text', debouncing: true },
     { name: 'translatedFirst' },
     { name: 'hideFullyTranslated' },
+    { name: 'translationSuggestions' },
   ];
   /** @class CardFilters */
   export default {

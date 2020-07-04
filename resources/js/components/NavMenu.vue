@@ -15,10 +15,10 @@
 
         <li class="language-links">
             <a :href="enHref" class="language-link" :class="{ active: locale !== 'ja' }">
-                <img src="../../images/flags/gb.png" alt="English" title="English" />
+                <FlagImage locale="en" />
             </a>
             <a :href="jaHref" class="language-link" :class="{ active: locale === 'ja' }">
-                <img src="../../images/flags/jp.png" alt="日本語" title="日本語" />
+                <FlagImage locale="ja" />
             </a>
         </li>
 
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import FlagImage from './common/FlagImage';
 
 function getLocaleChangeUrl(vueComponent, locale) {
   let url = vueComponent.$route.fullPath;
@@ -45,7 +46,7 @@ function getLocaleChangeUrl(vueComponent, locale) {
 
   /** @class NavMenu */
   export default {
-    components: {},
+    components: { FlagImage },
     data() {
       return {
         locale: window.locale,

@@ -50,4 +50,9 @@ class Card extends Model
         $locale = $this->locale();
         return $this->getTranslation($locale) ?: $this->getTranslation("$locale-auto");
     }
+
+    public function suggestions()
+    {
+        return $this->hasMany(Suggestion::class);
+    }
 }
