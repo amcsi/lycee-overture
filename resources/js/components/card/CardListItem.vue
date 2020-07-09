@@ -140,7 +140,7 @@ export default {
         return '';
       }
       const characterType = this.cardText.character_type.trim();
-      if (characterType.length <= 1) {
+      if (!characterType.length || characterType === '-') {
         // Empty or just a dash; return empty string.
         return '';
       }
