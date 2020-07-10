@@ -29,6 +29,8 @@ import {
   TableColumn,
   Tag,
 } from 'element-ui';
+import elementUiLocale from 'element-ui/lib/locale';
+import elementUiLangEnglish from 'element-ui/lib/locale/lang/en';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueRouter from 'vue-router';
 import App from './App';
@@ -40,6 +42,8 @@ import store from './store/index';
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+elementUiLocale.use(elementUiLangEnglish);
 
 Vue.use(VueRouter);
 Vue.component(Alert.name, Alert);

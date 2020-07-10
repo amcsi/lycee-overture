@@ -2,7 +2,7 @@
     <div>
         <div v-if="cards">
             <h3>
-                Total: {{ cards.meta.total }}.
+                &nbsp;
                 <span v-if="statistics" v-show="!cardsLoading && cards.meta.total > 0">
                     Fully translated: {{ statistics.translated_cards }}
                     ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).

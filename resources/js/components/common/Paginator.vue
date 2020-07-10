@@ -4,19 +4,12 @@
             <el-pagination
                 :total="pagination.total"
                 :current-page="pagination.current_page"
-                :page-size="pagination.per_page"
+                :page-size.sync="limit"
                 @current-change="$emit('page-change', $event)"
-                layout="prev, pager, next"
+                layout="total, sizes, prev, pager, next, jumper"
+                :page-sizes="limitValues"
+                style="margin-bottom: 0.5rem"
             />
-        </el-col>
-
-        <el-col :sm="12" class="limitContainer">
-            <select v-model="limit" class="right">
-                <option v-for="limitValue in limitValues" :value="limitValue">
-                    {{ limitValue }}
-                </option>
-            </select>
-            items per page
         </el-col>
     </el-row>
 </template>

@@ -5,6 +5,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
+use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Console\Command;
 
 class ListQuoted extends Command
@@ -15,7 +16,9 @@ class ListQuoted extends Command
     public function handle()
     {
         $quoteds = [];
-        foreach (CardTranslation::where('locale', 'en')->where('kanji_count', '>', '0')->get() as $cardTranslation) {
+        foreach (CardTranslation::where('locale', Locale::ENGLISH_AUTO)->where('kanji_count',
+            '>',
+            '0')->get() as $cardTranslation) {
             preg_match_all('/[<"].*?[>"]/', $cardTranslation->ability_description, $matches, PREG_SET_ORDER);
             foreach ($matches as [$quoted]) {
                 if (JapaneseCharacterCounter::countJapaneseCharacters($quoted)) {
