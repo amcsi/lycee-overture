@@ -26,8 +26,9 @@ export default {
   actions: {
     async fetchStatistics({ commit, state }, query) {
       const params = { ...query };
-      // The page doesn't matter when getting statistics.
+      // The pagination related properties don't matter when getting statistics.
       delete params.page;
+      delete params.limit;
 
       const stringifiedParams = JSON.stringify(params);
 
