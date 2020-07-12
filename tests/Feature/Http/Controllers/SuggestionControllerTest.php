@@ -141,6 +141,7 @@ class SuggestionControllerTest extends DatabaseTestCase
         $cardTranslation = $card->getTranslation(Locale::ENGLISH);
         self::assertNotNull($cardTranslation);
         self::assertTranslationMatchesSuggestion($suggestion, $cardTranslation);
+        self::assertSame(0, $cardTranslation->kanji_count, 'The kanji count should be updated to 0');
     }
 
     public function testSuggestAndApproveInOneGo(): void

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n;
 
+use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Console\Commands\AutoTranslateCommand;
 
 /**
@@ -21,7 +22,11 @@ class JapaneseCharacterCounter
         return mb_strlen(preg_replace("/[^$japaneseLettersRanges]/u", '', $string));
     }
 
-    public static function countJapaneseCharactersForDbRow(array $dbRow): int
+    /**
+     * @param CardTranslation|string[] $dbRow
+     * @return int
+     */
+    public static function countJapaneseCharactersForDbRow($dbRow): int
     {
         $stringToCountJapaneseCharactersFor = '';
         foreach (AutoTranslateCommand::AUTO_TRANSLATE_FIELDS as $column) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\ManualTranslation;
 
 use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\Suggestion;
 use Illuminate\Support\Arr;
 
@@ -36,6 +37,7 @@ class SuggestionApprover
         $cardTranslation = CardTranslation::unguarded(
             fn() => CardTranslation::firstOrNew($attributes)->fill($tranlationValues)
         );
+        $cardTranslation->kanji_count = JapaneseCharacterCounter::countJapaneseCharactersForDbRow($tranlationValues);
 
         if ($this->manualAutoDifferenceChecker->areSuggestablesDifferent($cardTranslation, $cardAutoTranslation)) {
             // Save the manual translation.
