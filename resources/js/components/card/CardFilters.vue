@@ -80,10 +80,12 @@
                 filters</a>
         </el-form-item>
 
-        <router-link :to="{path: 'cards/print', query: $route.query }" v-if="showPrintLink">
-            <i class="fa fa-print"></i>
-            Print view
-        </router-link>
+        <el-form-item>
+            <router-link :to="{path: 'cards/print', query: $route.query }" v-if="showPrintLink">
+                <i class="fa fa-print"></i>
+                Print view
+            </router-link>
+        </el-form-item>
     </el-form>
 </template>
 
