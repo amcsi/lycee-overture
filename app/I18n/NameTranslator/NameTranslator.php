@@ -12,7 +12,7 @@ class NameTranslator
 
     private static $punctuationTranslationMap = [
         '／' => ' / ',
-        '・' => ', ',
+        '・' => ' ',
     ];
 
     private $punctuationSearch;

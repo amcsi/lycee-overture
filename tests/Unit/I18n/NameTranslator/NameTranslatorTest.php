@@ -62,7 +62,7 @@ class NameTranslatorTest extends TestCase
     {
         $instance = $this->createInstance();
         self::assertSame(
-            'i / baa, i',
+            'i / baa i',
             $instance->tryTranslateName('イ／バー・イ')
         );
     }
