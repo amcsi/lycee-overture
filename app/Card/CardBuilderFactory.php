@@ -82,8 +82,8 @@ class CardBuilderFactory
             $hideFullyTranslated ||
             ($locale !== Locale::JAPANESE && ($query['translatedFirst'] ?? null));
         if ($shouldLoadTranslation) {
-            $nameColumns = ['name', 'ability_name', 'character_type'];
-            $textColumns = ['ability_description', 'ability_cost', 'pre_comments', 'comments'];
+            $nameColumns = CardTranslation::NAME_COLUMNS;
+            $textColumns = CardTranslation::TEXT_COLUMNS;
 
             $builder->join(
                 'card_translations as t',
@@ -122,7 +122,10 @@ class CardBuilderFactory
             if ($locale !== Locale::JAPANESE) {
                 // Prefer fully translated over auto translated.
                 $builder->joinSub(
-                    CardTranslation::select('card_id', \DB::raw('MIN(locale) as preferred_locale'))->groupBy('card_id'),
+                    CardTranslation::select([
+                        'card_id',
+                        \DB::raw('MIN(locale) as preferred_locale'),
+                    ])->groupBy('card_id'),
                     't2',
                     function (JoinClause $join) {
                         $join->on('t.card_id', '=', 't2.card_id')->on('t.locale', '=', 't2.preferred_locale');
