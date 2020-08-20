@@ -128,6 +128,9 @@ class Subject
             case 'イベント':
                 $noun = 'event';
                 break;
+            case 'エリア':
+                $noun = 'area';
+                break;
             case 'フィールド':
                 $noun = 'field';
                 break;
@@ -259,7 +262,6 @@ class Subject
                             break;
                         default:
                             throw new \LogicException("Unexpected whosGraveyard: $whosGraveyard");
-                            break;
                     }
                 }
             }

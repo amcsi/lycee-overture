@@ -23,6 +23,8 @@ class CsvValueInterpreter
                 return Type::ITEM;
             case 'イベント':
                 return Type::EVENT;
+            case 'エリア':
+                return Type::AREA;
             default:
                 // TODO: remove if the original CSV gets fixed.
                 if ($csvRow[CsvColumns::ID] === 'LO-2156') {

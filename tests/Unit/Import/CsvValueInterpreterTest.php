@@ -25,6 +25,7 @@ class CsvValueInterpreterTest extends TestCase
             [Type::CHARACTER, 'キャラクター'],
             [Type::ITEM, 'アイテム'],
             [Type::EVENT, 'イベント'],
+            [Type::AREA, 'エリア'],
         ];
     }
 
