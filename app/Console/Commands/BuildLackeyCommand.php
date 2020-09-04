@@ -9,6 +9,7 @@ use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Etc\FilesystemsCopier;
 use amcsi\LyceeOverture\Etc\LackeyHasher;
 use amcsi\LyceeOverture\Etc\LackeyVariant;
+use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
@@ -66,7 +67,11 @@ class BuildLackeyCommand extends Command
         $writer->setDelimiter("\t");
         $definitions = [
             'Name' => fn(Card $card) => $card->id,
-            'Set' => fn() => 'cards',
+            'Set' => fn(Card $card) => str_replace(
+                ' ',
+                '_',
+                $card->set ? $card->set->getFullName(Locale::ENGLISH) : 'Unknown'
+            ),
             'ImageFile' => fn(Card $card) => $card->id,
             'Actual Name' => fn(Card $card) => $card->getBestTranslation()->name,
             'Ability Name' => fn(Card $card) => $card->getBestTranslation()->ability_name,
@@ -97,7 +102,7 @@ class BuildLackeyCommand extends Command
         ];
         $writer->insertOne(array_keys($definitions));
         $writer->insertAll(
-            Card::all()
+            Card::with('set')->get()
                 ->filter(fn(Card $card
                 ) => !$card->getBestTranslation()->kanji_count) // Exclude ones not fully translated.
                 ->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
