@@ -31,6 +31,9 @@ return [
         'OSP' => [
             'Oshiro Project: RE',
         ],
+        'PUR' => [
+            'Purple software',
+        ],
         'TOA' => [
             'Toaru Majutsu no Index',
             'Toaru Majutsu no Index III',
@@ -58,5 +61,6 @@ return [
         'とある魔術の禁書目録Ⅲ' => 'Toaru Majutsu no Index III',
         '御城プロジェクト：ＲＥ' => 'Oshiro Project: RE',
         'ネクストン' => 'Nexton',
+        'パープルソフトウェア' => 'Purple software',
     ],
 ];
