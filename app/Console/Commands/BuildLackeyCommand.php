@@ -9,6 +9,7 @@ use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Etc\FilesystemsCopier;
 use amcsi\LyceeOverture\Etc\LackeyHasher;
+use amcsi\LyceeOverture\Etc\LackeyVariant;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
@@ -30,12 +31,28 @@ class BuildLackeyCommand extends Command
 
     public function handle()
     {
-        $stopwatchEvent = (new Stopwatch())->start('download-translations');
+        $stopwatchEvent = (new Stopwatch())->start('build-lackey');
         $this->output->text('Started building plugin for LackeyCCG.');
 
+        $variants = [
+            new LackeyVariant('lycee-overture-translated', 'w_281/cards', 'medium'),
+            new LackeyVariant('lycee-overture-translated-highquality', 'q_auto/cards', 'high'),
+        ];
+
+        foreach ($variants as $variant) {
+            $this->buildVariant($variant);
+        }
+
+        $this->output->text(
+            'Finished building plugin for LackeyCCG in ' . Profiling::stopwatchToHuman($stopwatchEvent->stop())
+        );
+    }
+
+    public function buildVariant(LackeyVariant $lackeyVariant)
+    {
         $lackeyResourcesPath = __DIR__ . '/../../../resources/lackeyccg';
 
-        $pluginFolderName = 'lycee-overture-translated';
+        $pluginFolderName = $lackeyVariant->getPluginFolderName();
         $dstPath = "lackey/$pluginFolderName";
 
         $adapter = Storage::drive('localRoot');
@@ -144,8 +161,9 @@ class BuildLackeyCommand extends Command
         $newUpdateListContents .= "\n";
         $newUpdateListContents .= "CardGeneralURLs:\n";
         $newUpdateListContents .= sprintf(
-            "https://res.cloudinary.com/%s/image/upload/w_281/cards/\n",
-            config('cloudinary.defaults.cloud_name')
+            "https://res.cloudinary.com/%s/image/upload/%s/\n",
+            config('cloudinary.defaults.cloud_name'),
+            $lackeyVariant->getImagePrefix()
         );
 
         if ($lastUpdateListContents !== $newUpdateListContents) {
@@ -179,10 +197,6 @@ class BuildLackeyCommand extends Command
             );
             $dstAdapter->put("$dstPath/updatelist.txt", $newUpdateListContents);
         }
-
-        $this->output->text(
-            'Finished building plugin for LackeyCCG in ' . Profiling::stopwatchToHuman($stopwatchEvent->stop())
-        );
     }
 
     private static function hashFile(string $file): int

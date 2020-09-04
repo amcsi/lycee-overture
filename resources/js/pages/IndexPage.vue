@@ -35,24 +35,29 @@
                         alt="Discord"
                         src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"
                     >
-                    Discord server
+                  Discord server
                 </ExternalLink>
             </li>
-            <li>
-                <ExternalLink href="https://lycee-tcg.eu/storage/lackey/lycee-overture-translated/updatelist.txt">
-                    LackeyCCG auto-updating plugin (work in progress)
-                </ExternalLink>
-            </li>
-            <li>
-                <ExternalLink href="https://lycee-tcg.com/">lycee-tcg.com - Japanese Official Lycee
-                    Overture website
-                </ExternalLink>
-            </li>
-            <li>
-                <ExternalLink href="https://web.archive.org/web/20180701222818/http://akiba.geocities.jp/lycee_tcg">
-                    akiba.geocities.jp - Old Lycee TCG rules website (archive)
-                </ExternalLink>
-            </li>
+          <li>
+            <ExternalLink href="https://lycee-tcg.eu/storage/lackey/lycee-overture-translated/updatelist.txt">
+              LackeyCCG auto-updating plugin (work in progress)
+            </ExternalLink>
+          </li>
+          <li>
+            <ExternalLink href="https://lycee-tcg.eu/storage/lackey/lycee-overture-translated-highquality/updatelist.txt">
+              LackeyCCG auto-updating plugin High Quality version (work in progress)
+            </ExternalLink>
+          </li>
+          <li>
+            <ExternalLink href="https://lycee-tcg.com/">lycee-tcg.com - Japanese Official Lycee
+              Overture website
+            </ExternalLink>
+          </li>
+          <li>
+            <ExternalLink href="https://web.archive.org/web/20180701222818/http://akiba.geocities.jp/lycee_tcg">
+              akiba.geocities.jp - Old Lycee TCG rules website (archive)
+            </ExternalLink>
+          </li>
             <li>
                 <ExternalLink href="https://www.facebook.com/groups/205241722843396/">
                     Facebook group (unofficial)
