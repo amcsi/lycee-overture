@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Import;
 
 use League\Csv\Reader;
+use function GuzzleHttp\Psr7\try_fopen;
 
 /**
  * Returns an iterator the Lycee Overture CSV file imported from the Japanese website
@@ -16,11 +17,37 @@ class CsvIterator
      */
     public function getIterator()
     {
-        $contents = file_get_contents(storage_path(ImportConstants::CSV_PATH));
-        $contents = preg_replace("#(<br />)?\s*\r\n#", "<br />", $contents);
+        $f = try_fopen(storage_path(ImportConstants::CSV_PATH), 'r');
+
+        $expectedColumnCount = 21;
+        $expectedCommaCount = $expectedColumnCount - 1;
+
+        $rows = [];
+
+        while (($row = fgets($f)) !== false) {
+            while (($commaCount = substr_count($row, ',')) < $expectedCommaCount) {
+                $additionalRow = fgets($f);
+                if (!$additionalRow) {
+                    throw new \RuntimeException("Could not get any more rows.");
+                }
+                $row .= $additionalRow;
+            }
+            if ($commaCount > $expectedCommaCount) {
+                throw new \RuntimeException("Comma count went over $expectedCommaCount.");
+            }
+            $rows[] = $row;
+        }
+
+        $rows = array_reverse($rows);
+        // Explode by comma.
+        $reader = (function () use ($rows) {
+            foreach ($rows as $row) {
+                yield explode(',', $row);
+            }
+        })();
+
         /** @var Reader $reader */
-        $reader = Reader::createFromString($contents);
-        $reader = array_reverse(iterator_to_array($reader)); // Reverse to ensure that newer cards have newer dates.
+        $reader = iterator_to_array($reader);
 
         return $reader;
     }
