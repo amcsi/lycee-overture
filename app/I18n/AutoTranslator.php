@@ -27,6 +27,9 @@ use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
  */
 class AutoTranslator
 {
+    private static $sentenceBeginningPunctuationMap = [
+        '・' => '•',
+    ];
     private static $punctuationMap = [
         '。' => '.',
         '、' => ',',
@@ -55,10 +58,13 @@ class AutoTranslator
 
         $autoTranslated = preg_replace('/。$/', '.', $autoTranslated);
         $autoTranslated = preg_replace_callback(
-            '/。|、|・/',
-            function ($match) {
-                return self::$punctuationMap[$match[0]] . ' ';
-            },
+            sprintf("/^([%s])/mu", implode(array_keys(self::$sentenceBeginningPunctuationMap))),
+            fn($match) => self::$sentenceBeginningPunctuationMap[$match[0]] . ' ',
+            $autoTranslated
+        );
+        $autoTranslated = preg_replace_callback(
+            sprintf("/(?<!^)([%s])/mu", implode(array_keys(self::$punctuationMap))),
+            fn($match) => self::$punctuationMap[$match[0]] . ' ',
             $autoTranslated
         );
         $autoTranslated = FullWidthCharacters::translateFullWidthCharacters($autoTranslated);

@@ -7,8 +7,11 @@ class CapitalizationFixer
 {
     public static function fixCapitalization(string $text): string
     {
+        // Periods and bullet points should make the next letter character be capitalized.
+        $capitalizerCharacterRegex = '[\.•]';
+
         return preg_replace_callback(
-            '/((?:\.\s+|^\s*|\\[)[a-z](?!ttp))/m',
+            sprintf('/((?:%s\s+|^\s*|\[)[a-z](?!ttp))/mu', $capitalizerCharacterRegex),
             ['self', 'uppercaseCallback'],
             $text
         );

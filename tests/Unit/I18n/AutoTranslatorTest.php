@@ -275,6 +275,10 @@ class AutoTranslatorTest extends TestCase
                 'This effect can only be used 1 time during the game.',
                 'ゲーム中１回まで使用可能。',
             ],
+            'bullet points' => [
+                "Something\n• One\n• Two",
+                "something\n・one\n・two",
+            ],
         ];
     }
 }
