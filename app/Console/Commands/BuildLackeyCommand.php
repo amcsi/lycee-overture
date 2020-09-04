@@ -5,7 +5,6 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Card\CardResource;
-use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Etc\FilesystemsCopier;
 use amcsi\LyceeOverture\Etc\LackeyHasher;
@@ -98,27 +97,12 @@ class BuildLackeyCommand extends Command
         ];
         $writer->insertOne(array_keys($definitions));
         $writer->insertAll(
-            Card::cursor()
+            Card::all()
                 ->filter(fn(Card $card
                 ) => !$card->getBestTranslation()->kanji_count) // Exclude ones not fully translated.
                 ->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
         );
         $dstAdapter->putStream("$dstPath/sets/carddata.txt", try_fopen($tempnam, 'rb'));
-
-        /** @var Card $card */
-        foreach (Card::query()->cursor() as $card) {
-            /** @var CardTranslation $translation */
-            $translation = $card->getBestTranslation();
-            $writer->insertOne(
-                [
-                    $card->id,
-                    'cards',
-                    $card->id,
-                    $translation->name,
-                    $translation->ability_name,
-                ]
-            );
-        }
 
         // plugininfo.txt
 
