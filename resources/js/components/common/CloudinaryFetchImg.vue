@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     _src() {
-      return `https://res.cloudinary.com/${window.vars.cloudinaryCloudName}/image/fetch/f_jpg/${this.src}`;
+      return `https://res.cloudinary.com/${window.vars.cloudinaryCloudName}/image/fetch/q_auto,f_auto/${this.src}`;
     },
   },
 };
