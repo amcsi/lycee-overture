@@ -1,14 +1,16 @@
 <template>
     <section v-loading="articles === null">
         <article v-for="{ title, content, date_gmt } in articles">
+          <el-card style="margin-bottom: 1rem">
             <div>
-                <h4>{{ title.rendered }}</h4> -
-                <time :datetime="date_gmt + 'Z'">{{ date_gmt + 'Z' | formatDate }}</time>
+              <h4>{{ title.rendered }}</h4> -
+              <time :datetime="date_gmt + 'Z'">{{ date_gmt + 'Z' | formatDate }}</time>
             </div>
 
             <div v-html="content.rendered">
 
             </div>
+          </el-card>
         </article>
         <div v-if="articles && !articles.length">No articles.</div>
     </section>
