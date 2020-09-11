@@ -1,8 +1,9 @@
 <template>
-    <img :src="src" :height="height" :width="width" :style="styles" />
+    <img alt="card" :src="src" :height="height" :width="width" :style="styles" />
 </template>
 
 <script>
+import { cardHeightWidthRatio } from '../../../sass/_variables.scss';
 import { assembleCloudinaryImageUrl } from '../../utils/image';
 
 /** @class CardImage */
@@ -34,12 +35,20 @@ import { assembleCloudinaryImageUrl } from '../../utils/image';
       },
       width() {
         // Card width/height ratio.
-        return this.height ? this.height * 0.71538461538 : this.height;
+        return this.height ? this.height * cardHeightWidthRatio : this.height;
       },
     },
   };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import 'resources/sass/variables';
 
+$borderHeightRadius: 1.92%;
+$borderWidthRadius: $borderHeightRadius * $cardHeightWidthRatio;
+
+img {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+  border-radius: #{$borderHeightRadius} / #{$borderWidthRadius};
+}
 </style>
