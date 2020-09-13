@@ -10,12 +10,16 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.10.4",
     "axios": "^0.19",
     "cross-env": "^5.2.0",
     "popper.js": "^1.12"
   },
   "dependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-jsx": "^7.10.4",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
+    "@vue/babel-plugin-transform-vue-jsx": "^1.1.2",
     "babel-plugin-component": "^1.1.1",
     "element-ui": "^2.13.2",
     "laravel-mix": "^4.0.14",

@@ -21,7 +21,6 @@ import {
   MenuItem,
   Message,
   Option,
-  Pagination,
   Row,
   Select,
   Switch,
@@ -38,6 +37,7 @@ import i18n from './i18n';
 import { rollbar } from './rollbar';
 import router from './router';
 import store from './store/index';
+import Pagination from './vendorOverrides/pagination/pagination';
 
 require('./bootstrap');
 
