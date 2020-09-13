@@ -56,6 +56,8 @@ export default {
     disabled: Boolean,
 
     hideOnSinglePage: Boolean,
+
+    getToForPage: Function,
   },
 
   data() {
@@ -90,6 +92,7 @@ export default {
         pagerCount={this.pagerCount}
         on-change={this.handleCurrentChange}
         disabled={this.disabled}
+        get-to-for-page={this.getToForPage}
       ></pager>,
       next: <next></next>,
       sizes: <sizes pageSizes={this.pageSizes}></sizes>,

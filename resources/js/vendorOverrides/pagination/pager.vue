@@ -4,7 +4,9 @@
         :class="{ active: currentPage === 1, disabled }"
         v-if="pageCount > 0"
         class="number"
-    >1
+    >
+      <router-link v-if="getToForPage" :to="getToForPage(1)" @click.prevent>1</router-link>
+      <span v-else>1</span>
     </li>
     <li
         class="el-icon more btn-quickprev"
@@ -19,7 +21,9 @@
         :key="pager"
         :class="{ active: currentPage === pager, disabled }"
         class="number"
-    >{{ pager }}
+    >
+      <router-link v-if="getToForPage" :to="getToForPage(pager)" @click.prevent>{{ pager }}</router-link>
+      <span v-else>{{ pager }}</span>
     </li>
     <li
         class="el-icon more btn-quicknext"
@@ -33,7 +37,9 @@
         :class="{ active: currentPage === pageCount, disabled }"
         class="number"
         v-if="pageCount > 1"
-    >{{ pageCount }}
+    >
+      <router-link v-if="getToForPage" :to="getToForPage(pageCount)" @click.prevent>{{ pageCount }}</router-link>
+      <span v-else>{{ pageCount }}</span>
     </li>
   </ul>
 </template>
@@ -50,6 +56,8 @@ export default {
     pagerCount: Number,
 
     disabled: Boolean,
+
+    getToForPage: Function,
   },
 
   watch: {
@@ -156,6 +164,10 @@ export default {
 
       return array;
     },
+
+    element() {
+      return this.routerLinkUrlTemplate ? 'router-link' : 'li';
+    }
   },
 
   data() {
@@ -169,3 +181,13 @@ export default {
   },
 };
 </script>
+
+<style>
+a {
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: inherit;
+}
+</style>

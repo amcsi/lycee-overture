@@ -9,13 +9,16 @@
                 layout="total, sizes, prev, pager, next, jumper"
                 :page-sizes="limitValues"
                 style="margin-bottom: 0.5rem"
+                :get-to-for-page="getToForPage"
             />
         </el-col>
     </el-row>
 </template>
 
-<script>
-  /** @class Paginator */
+<script>/** @class Paginator */
+
+import router from '../../router';
+
   export default {
     props: {
       pagination: { required: true },
@@ -27,6 +30,14 @@
       };
     },
     components: {},
+    methods: {
+      getToForPage(page) {
+        return {
+          path: this.$route.path,
+          query: {...this.$route.query, page},
+        };
+      }
+    },
     computed: {
       limit: {
         get() {
