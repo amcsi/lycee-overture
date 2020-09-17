@@ -1,5 +1,5 @@
 <template>
-    <el-card class="card-list-item">
+    <el-card class="card-list-item" :class="cls">
         <div class="card-list-item-inner">
             <CardThumbnail class="card-thumbnail" :id="card.id" />
             <div class="card-details">
@@ -92,6 +92,7 @@
 <script>
 import { mapComputed } from '../../store/storeUtils';
 import formatCardMixin from '../../utils/formatCardMixin';
+import { areaType, characterType, eventType, itemType } from '../../value/cardType';
 import ExternalLink from '../common/ExternalLink';
 import FlagImage from '../common/FlagImage';
 import CardDescription from './CardDescription';
@@ -129,6 +130,23 @@ export default {
     };
   },
   computed: {
+    cls() {
+      return [`card-type-${this.cardTypeKey}`];
+    },
+    cardTypeKey() {
+      switch (this.card.type) {
+        case characterType:
+          return 'character';
+        case itemType:
+          return 'item';
+        case eventType:
+          return 'event';
+        case areaType:
+          return 'area';
+        default:
+          return null;
+      }
+    },
     isCharacter() {
       return this.card.type === 0;
     },
@@ -184,7 +202,7 @@ export default {
 
     .card-list-item {
         position: relative;
-        margin-bottom: .5rem;
+        margin-bottom: 1rem;
     }
 
     .card-list-item-inner {
@@ -289,5 +307,21 @@ export default {
 
     .clickable {
         color: $link-color;
+    }
+
+    .card-type-character {
+      background-color: lighten(#000110, 94);
+    }
+
+    .card-type-area {
+      background-color: lighten(#755819, 70);
+    }
+
+    .card-type-item {
+      background-color: lighten(#346738, 65);
+    }
+
+    .card-type-event {
+      background-color: lighten(#60011D, 77);
     }
 </style>
