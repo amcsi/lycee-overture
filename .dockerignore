@@ -20,6 +20,7 @@ public/css/app.css
 bootstrap/cache/*
 storage/*
 data/generated_images
+.github
 
 # For swoole
 *.pid
