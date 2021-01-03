@@ -4,6 +4,7 @@ declare(strict_types=1);
 use amcsi\LyceeOverture\Http\Controllers\ArticleController;
 use amcsi\LyceeOverture\Http\Controllers\CardController;
 use amcsi\LyceeOverture\Http\Controllers\DeckController;
+use amcsi\LyceeOverture\Http\Controllers\FooterDataController;
 use amcsi\LyceeOverture\Http\Controllers\SetController;
 use amcsi\LyceeOverture\Http\Controllers\StatisticsController;
 use amcsi\LyceeOverture\Http\Controllers\SuggestionController;
@@ -25,6 +26,7 @@ Route::get('/sets', [SetController::class, 'index']);
 Route::get('/statistics', [StatisticsController::class, 'index']);
 Route::get('/articles', [ArticleController::class, 'index']);
 Route::get('/suggestions', [SuggestionController::class, 'index']);
+Route::get('/footer-data', [FooterDataController::class, 'index']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('suggestions', [SuggestionController::class, 'store']);

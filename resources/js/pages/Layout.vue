@@ -30,6 +30,16 @@
                         ({{ newestDateDaysAgo ? `${newestDateDaysAgo} days ago.` : 'Less than a day ago.' }})
                     </span>
             </p>
+
+            <p v-if="newestSuggestion !== null">
+              Newest unapproved translation suggestion by <strong>{{ newestSuggestion.creator.name }}</strong>:<br />
+              <span>
+                        {{ newestSuggestion.created_at | formatDate }}
+                        ({{
+                  newestSuggestionDaysAgo ? `${newestSuggestionDaysAgo} days ago.` : 'Less than a day ago.'
+                }})
+                    </span>
+            </p>
           </el-card>
 
           <div v-if="$route.path === '/'">
@@ -41,7 +51,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import api from '../api';
 import LatestArticles from '../components/article/LatestArticles';
 import ExternalLink from '../components/common/ExternalLink';
 import NavMenu from '../components/NavMenu';
@@ -50,8 +60,20 @@ import NavMenu from '../components/NavMenu';
 export default {
   name: 'Layout',
   components: { LatestArticles, ExternalLink, NavMenu },
+  data() {
+    return {
+      footerData: null,
+    };
+  },
   computed: {
-    ...mapState('cards', ['newestDate']),
+    newestDate() {
+      const newestCardLastImported = this.footerData?.newestCardLastImported;
+
+      return newestCardLastImported ? new Date(newestCardLastImported) : null;
+    },
+    newestSuggestion() {
+      return this.footerData?.newestSuggestion;
+    },
     newestDateDaysAgo() {
       const newestDate = this.newestDate;
       if (!newestDate) {
@@ -60,12 +82,19 @@ export default {
 
       return Math.floor(((new Date()) - newestDate.getTime()) / (1000 * 60 * 60 * 24));
     },
+    newestSuggestionDaysAgo() {
+      const newestDate = this.newestSuggestion?.created_at;
+      if (!newestDate) {
+        return;
+      }
+
+      return Math.floor(((new Date()) - new Date(newestDate).getTime()) / (1000 * 60 * 60 * 24));
+    },
   },
-  methods: mapActions('cards', ['loadNewestCardDate']),
-  created() {
-    this.loadNewestCardDate();
+  async created() {
+    this.footerData = (await api.get('/footer-data')).data.data;
   },
-  };
+};
 </script>
 
 <style lang="scss">

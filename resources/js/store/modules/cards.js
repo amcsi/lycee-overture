@@ -11,7 +11,6 @@ export default {
     lastPrintParams: false, // Cache key to avoid unnecessary API calls.
     printListLoading: null,
     printList: null,
-    newestDate: undefined,
   },
   mutations: {
     CARDS_LOADING(state) {
@@ -39,9 +38,6 @@ export default {
     },
     CARDS_SET_LAST_PARAMS(state, stringifiedParams) {
       state.lastParams = stringifiedParams;
-    },
-    CARDS_SET_NEWEST_DATE(state, newestDate) {
-      state.newestDate = newestDate;
     },
     UPDATE_CARD_IN_LIST(state, toCard) {
       if (!toCard.id) {
@@ -101,11 +97,6 @@ export default {
       } catch (e) {
         commit('CARDS_PRINT_LOADING_FAILED');
       }
-    },
-    async loadNewestCardDate({ commit }) {
-      const createdOn =
-        (await listCards({ sort: 'created_at', limit: 1 })).data[0].created_at;
-      commit('CARDS_SET_NEWEST_DATE', new Date(createdOn));
     },
   },
 };
