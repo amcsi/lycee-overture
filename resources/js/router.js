@@ -117,20 +117,22 @@ const router = new VueRouter({
             title: `${title} - Card List`,
           },
         },
-        {
-          path: '/deck',
-          component: DeckPage,
-          meta: {
-            title: `${title} - Deck`,
-          },
-          children: [
-            {
-              path: ':deck',
-              title: `${title} - Deck Card List`,
-              component: DeckCardListPage,
+        ...(window.vars.environment === 'local' ? [
+          {
+            path: '/deck',
+            component: DeckPage,
+            meta: {
+              title: `${title} - Deck`,
             },
-          ],
-        },
+            children: [
+              {
+                path: ':deck',
+                title: `${title} - Deck Card List`,
+                component: DeckCardListPage,
+              },
+            ],
+          },
+        ] : []),
         {
           path: '/deck-to-migration-converter',
           component: DeckToMigrationConverterPage,
