@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Deck extends Model
 {
@@ -12,4 +13,9 @@ class Deck extends Model
         'name_en',
         'cards',
     ];
+
+    public function cards(): BelongsToMany
+    {
+        return $this->belongsToMany(Card::class)->using(CardDeck::class);
+    }
 }

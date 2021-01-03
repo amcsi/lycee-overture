@@ -35,6 +35,7 @@ const DeckCardListPage = loadingizeAsyncComponent(() => import(/* webpackChunkNa
 const RulesPage = loadingizeAsyncComponent(() => import(/* webpackChunkName: "rules" */ './pages/RulesPage'));
 const IndexPage = loadingizeAsyncComponent(() => import ('./pages/IndexPage'));
 const HelpTranslatePage = loadingizeAsyncComponent(() => import ('./pages/HelpTranslatePage'));
+const DeckToMigrationConverterPage = loadingizeAsyncComponent(() => import ('./pages/DeckToMigrationConverterPage'));
 
 const title = 'Lycee Overture TCG Translations';
 
@@ -129,6 +130,10 @@ const router = new VueRouter({
               component: DeckCardListPage,
             },
           ],
+        },
+        {
+          path: '/deck-to-migration-converter',
+          component: DeckToMigrationConverterPage,
         },
         { path: '*', component: NotFoundPage }, // 404.
       ],

@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Card;
 
 use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\CardDeck;
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Query\JoinClause;
 
 class CardBuilderFactory
@@ -31,14 +31,7 @@ class CardBuilderFactory
         $builder = $this->card->select(['cards.*']);
 
         if ($deck = ($query['deck'] ?? null)) {
-            $builder->join(
-                'decks AS cs',
-                function (JoinClause $join) use ($deck): void {
-                    $join
-                        ->on(new Expression('FIND_IN_SET(cards.id, cs.cards)'), '>', new Expression('0'))
-                        ->where('cs.id', '=', $deck);
-                }
-            );
+            $builder->whereIn('cards.id', CardDeck::where('deck_id', $deck)->get()->pluck('card_id'));
         }
 
         if (($brand = $query['brand'] ?? null)) {
