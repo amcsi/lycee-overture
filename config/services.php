@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 return [
 
@@ -35,4 +36,7 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'discord' => [
+        'webhookUrl' => env('DISCORD_WEBHOOK_URL'),
+    ],
 ];

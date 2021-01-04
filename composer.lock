@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6eef1d64ec41dc7df635e2b5b7f741e7",
+    "content-hash": "b25b2c7f6fac4f89105252ddea9e9152",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -3372,6 +3372,71 @@
                 "rollbar"
             ],
             "time": "2020-03-03T20:09:19+00:00"
+        },
+        {
+            "name": "snoeren-development/laravel-discord-webhook-channel",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/snoeren-development/laravel-discord-webhook-channel.git",
+                "reference": "f49e349ffd2fd1184e38061cead91dc489337477"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/snoeren-development/laravel-discord-webhook-channel/zipball/f49e349ffd2fd1184e38061cead91dc489337477",
+                "reference": "f49e349ffd2fd1184e38061cead91dc489337477",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0|^6.5",
+                "illuminate/support": "^8.0|^7.0|^6.0",
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SnoerenDevelopment\\DiscordWebhook\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Snoeren Development",
+                    "email": "info@snoerendevelopment.nl"
+                }
+            ],
+            "description": "Send notifications to a Discord webhook.",
+            "homepage": "https://github.com/snoeren-development/laravel-discord-webhook-channel",
+            "keywords": [
+                "discord",
+                "driver",
+                "laravel",
+                "notification",
+                "snoeren",
+                "webhook"
+            ],
+            "support": {
+                "issues": "https://github.com/snoeren-development/laravel-discord-webhook-channel/issues",
+                "source": "https://github.com/snoeren-development/laravel-discord-webhook-channel/tree/v1.3.0"
+            },
+            "funding": [
+                {
+                    "url": "https://beerpay.io/snoeren-development/laravel-discord-webhook-channel",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/snoerendevelopment",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-12-07T07:15:18+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -7791,5 +7856,6 @@
         "ext-json": "*",
         "ext-simplexml": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

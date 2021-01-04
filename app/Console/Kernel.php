@@ -5,6 +5,7 @@ namespace amcsi\LyceeOverture\Console;
 
 use amcsi\LyceeOverture\Console\Commands\BuildLackeyCommand;
 use amcsi\LyceeOverture\Console\Commands\ImportAllCommand;
+use amcsi\LyceeOverture\Console\Commands\NewSuggestionsNotificationCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -36,6 +37,9 @@ class Kernel extends ConsoleKernel
             ->sendOutputTo($logPath);
         $schedule->command(BuildLackeyCommand::COMMAND)
             ->dailyAt('08:00')
+            ->sendOutputTo($logPath);
+        $schedule->command(NewSuggestionsNotificationCommand::COMMAND)
+            ->daily()
             ->sendOutputTo($logPath);
     }
 
