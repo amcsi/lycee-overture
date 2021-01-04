@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
+use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Debug\Profiling;
+use amcsi\LyceeOverture\Notifications\GlobalNotifiable;
+use amcsi\LyceeOverture\Notifications\NewCardsNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -25,6 +28,8 @@ class ImportAllCommand extends Command
         $stopwatch = new Stopwatch();
         $stopwatchEvent = $stopwatch->start('import-all');
         $this->output->text('Started doing all the import tasks...');
+
+        $start = now();
 
         $downloadCsvArguments = [];
         if ($this->option('no-cache')) {
@@ -73,5 +78,10 @@ class ImportAllCommand extends Command
         $this->output->text(
             "Finished doing all the import tasks in " . Profiling::stopwatchToHuman($stopwatchEvent->stop())
         );
+
+        $newCards = Card::where('created_at', '>=', $start)->get();
+        if (count($newCards)) {
+            app(GlobalNotifiable::class)->notify(new NewCardsNotification($newCards));
+        }
     }
 }
