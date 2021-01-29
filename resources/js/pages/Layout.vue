@@ -23,7 +23,7 @@
               Thanks to Yee Cheng Xuan for consulting with me with the automatic translations.
             </p>
 
-            <p v-if="newestDate !== null">
+            <p v-if="newestDate">
               Newest card(s) last imported:<br />
               <span :style="{ zoom: !newestDate ? 0.5 : 1 }" v-loading="!newestDate">
                         {{ newestDate | formatDate }}
@@ -31,7 +31,7 @@
                     </span>
             </p>
 
-            <p v-if="newestSuggestion !== null">
+            <p v-if="newestSuggestion">
               Newest unapproved translation suggestion by <strong>{{ newestSuggestion.creator.name }}</strong>:<br />
               <span>
                         {{ newestSuggestion.created_at | formatDate }}
