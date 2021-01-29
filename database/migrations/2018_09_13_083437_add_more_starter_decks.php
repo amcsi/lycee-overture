@@ -53,14 +53,15 @@ class AddMoreStarterDecks extends Migration
 
     public function up()
     {
+        $cardSetsModel = (new Deck())->setTable('card_sets');
         foreach (self::SETS as $setData) {
-            Deck::create($setData);
+            $cardSetsModel->create($setData);
         }
     }
 
     public function down()
     {
-        app(Deck::class)->whereIn(
+        app('card_sets')->whereIn(
             'name_ja',
             array_map(
                 function (array $cardSetData) {

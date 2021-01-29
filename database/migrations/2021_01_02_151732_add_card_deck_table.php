@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\CardDeck;
 use amcsi\LyceeOverture\Deck;
 use Illuminate\Database\Migrations\Migration;
@@ -208,10 +209,17 @@ class AddCardDeckTable extends Migration
                     ));
                 }
 
+                $cardsById = Card::all()->keyBy('id');
+
                 // Add in all the cards and quantities for the decks.
                 foreach ($decks as $deck) {
                     $cards = self::$decks[$deck->name_en];
                     foreach ($cards as [$cardId, $quantity]) {
+                        if (!isset($cardsById[$cardId])) {
+                            // Card was not found. Perhaps this is a fresh migration?
+                            continue;
+                        }
+
                         $cardDeck = new CardDeck();
                         $cardDeck->card_id = $cardId;
                         $cardDeck->deck_id = $deck->id;

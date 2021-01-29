@@ -21,7 +21,9 @@ class AddInitialCardSets extends Migration
         // Because name_jp has since been renamed to name_ja.
         \Eloquent::unguard();
 
-        Deck::create(
+        $cardSetModel = new Deck();
+        $cardSetModel->setTable('card_sets')->toBase();
+        $cardSetModel->create(
             [
                 'name_jp' => self::FATE_GRAND_ORDER_2_0,
                 'name_en' => 'Fate/Grand Order 2.0',
@@ -29,7 +31,7 @@ class AddInitialCardSets extends Migration
                 'deck' => true,
             ]
         );
-        Deck::create(
+        $cardSetModel->create(
             [
                 'name_jp' => self::GIRLS_UND_PANZER,
                 'name_en' => 'Girls und Panzer Senshadou Daisakusen! 1.0',
@@ -37,7 +39,7 @@ class AddInitialCardSets extends Migration
                 'deck' => true,
             ]
         );
-        Deck::create(
+        $cardSetModel->create(
             [
                 'name_jp' => self::KAMIHIME_PROJECT,
                 'name_en' => 'Kamihime Project 1.0',
@@ -45,7 +47,7 @@ class AddInitialCardSets extends Migration
                 'deck' => true,
             ]
         );
-        Deck::create(
+        $cardSetModel->create(
             [
                 'name_jp' => self::YUZU_SOFT,
                 'name_en' => 'Yuzusoft 1.0',
@@ -57,7 +59,7 @@ class AddInitialCardSets extends Migration
 
     public function down()
     {
-        app(Deck::class)->whereIn(
+        app('card_sets')->whereIn(
             'name_jp',
             [
                 self::FATE_GRAND_ORDER_2_0,
