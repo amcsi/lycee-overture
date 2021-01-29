@@ -26,9 +26,16 @@ class ImportBasicCardsCommand extends Command
 
     public function handle()
     {
+        $chunkizeOperation = fn($allData, $operationFn) => array_sum(
+            array_map(
+                fn($chunk) => $operationFn($chunk),
+                array_chunk($allData, 1000)
+            )
+        );
+
         $this->output->writeln('Starting import of basic card data.');
         $toInsert = app(BasicImportCsvFilterer::class)->toDatabaseRows($this->csvIterator->getIterator());
-        $insertedCount = Card::getQuery()->insertIgnore($toInsert);
+        $insertedCount = $chunkizeOperation($toInsert, fn($chunk) => Card::getQuery()->insertIgnore($chunk));
 
         $toUpdate = $this->option('reset-dates') ?
             $toInsert :
@@ -41,7 +48,7 @@ class ImportBasicCardsCommand extends Command
                 $toInsert
             );
 
-        $updatedCount = Card::getQuery()->upsert($toUpdate) / 2;
+        $updatedCount = $chunkizeOperation($toUpdate, fn($chunk) => Card::getQuery()->upsert($chunk)) / 2;
         $this->output->writeln(
             sprintf(
                 'Finished import of basic card data. Inserted: %s, Updated: %s',
