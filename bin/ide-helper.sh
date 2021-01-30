@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PHP_VERSION=7.4
+PHP_VERSION=8.0
 VERSION_PHP_BIN="php$PHP_VERSION"
 
 # If PHP_BIN was not provided...
