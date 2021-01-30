@@ -18,19 +18,19 @@
     "doctrine/dbal": "^2.8",
     "erusev/parsedown": "^1.7",
     "fideloper/proxy": "^4.0",
-    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/guzzle": "^7.0.1",
     "guzzlehttp/psr7": "^1.5",
-    "laravel/framework": "7.*",
+    "laravel/framework": "8.*",
     "laravel/sanctum": "^2.4",
     "laravel/tinker": "^2.0",
-    "laravel/ui": "^2.0",
+    "laravel/ui": "^3.0",
     "league/csv": "^9.1",
     "league/flysystem-memory": "^1.0",
     "league/fractal": "^0.17.0",
     "mbilbille/jpnforphp": "^0.7.0",
     "nikic/iter": "^2.0",
     "php-http/curl-client": "^1.7",
-    "rollbar/rollbar-laravel": "^6.0",
+    "rollbar/rollbar-laravel": "^7.0",
     "snoeren-development/laravel-discord-webhook-channel": "^1.3",
     "swooletw/laravel-swoole": "^2.4",
     "symfony/stopwatch": "^4.1"
@@ -42,17 +42,19 @@
     "filp/whoops": "^2.0",
     "fzaninotto/faker": "^1.4",
     "mockery/mockery": "^1.0",
-    "nunomaduro/collision": "^4.1",
-    "phpunit/phpunit": "^8.5"
+    "nunomaduro/collision": "^5.0",
+    "phpunit/phpunit": "^9.0"
   },
   "autoload": {
     "classmap": [
-      "database/seeds",
+      "database/seeders",
       "database/factories"
     ],
     "psr-4": {
       "amcsi\\LyceeOverture\\": "app/",
-      "database\\tools\\": "database/tools/"
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/",
+      "Database\\Tools\\": "database/tools/"
     }
   },
   "autoload-dev": {

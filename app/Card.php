@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture;
 
 use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -81,7 +82,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Card extends Model
 {
-    use Translatable;
+    use HasFactory, Translatable;
 
     public $incrementing = false;
 

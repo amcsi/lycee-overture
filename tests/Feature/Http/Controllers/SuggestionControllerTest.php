@@ -12,17 +12,8 @@ use Tests\DatabaseTestCase;
 
 class SuggestionControllerTest extends DatabaseTestCase
 {
+    private Card $card;
     private CardTranslation $japaneseTranslation;
-
-    private static $suggestionInput = [
-        'card_id' => 'LO-0001',
-        'locale' => Locale::ENGLISH,
-        'basic_abilities' => '',
-        'pre_comments' => '',
-        'ability_cost' => 'something',
-        'ability_description' => 'something in English',
-        'comments' => '',
-    ];
 
     public function testWithoutAuth(): void
     {
@@ -52,7 +43,7 @@ class SuggestionControllerTest extends DatabaseTestCase
     {
         $this->actingAs($this->user);
 
-        $data = self::$suggestionInput;
+        $data = $this->getSuggestionInput();
         $data['ability_description'] = '日本語';
 
         $errors = self::assertStatus(422, $this->postJson('/api/suggestions', $data))->json('errors');
@@ -70,7 +61,7 @@ class SuggestionControllerTest extends DatabaseTestCase
     {
         $this->actingAs($this->user);
 
-        $data = self::$suggestionInput;
+        $data = $this->getSuggestionInput();
 
         $responseData = self::assertSuccessfulResponseData($this->postJson('/api/suggestions', $data));
         self::assertIsArray($responseData);
@@ -82,13 +73,13 @@ class SuggestionControllerTest extends DatabaseTestCase
     {
         $this->actingAs($this->user);
 
-        $originalTranslator = factory(User::class)->create();
-        $existingSuggestion = factory(Suggestion::class)->create([
-            'card_id' => 'LO-0001',
+        $originalTranslator = User::factory()->create();
+        $existingSuggestion = Suggestion::factory()->create([
+            'card_id' => $this->card->id,
             'creator_id' => $originalTranslator->id,
         ]);
 
-        $data = self::$suggestionInput;
+        $data = $this->getSuggestionInput();
 
         $responseData = self::assertSuccessfulResponseData($this->postJson('/api/suggestions', $data));
         self::assertIsArray($responseData);
@@ -102,7 +93,7 @@ class SuggestionControllerTest extends DatabaseTestCase
 
     public function testList()
     {
-        factory(Suggestion::class)->create();
+        Suggestion::factory()->create();
         $responseData = self::assertSuccessfulResponseData($this->get('/api/suggestions'));
         self::assertIsArray($responseData);
         self::assertCount(1, $responseData);
@@ -112,7 +103,7 @@ class SuggestionControllerTest extends DatabaseTestCase
     {
         $this->actingAs($this->user);
 
-        $data = self::$suggestionInput;
+        $data = $this->getSuggestionInput();
         $data['approved'] = 1;
 
         self::assertStatus(403, $this->postJson('/api/suggestions', $data));
@@ -124,10 +115,10 @@ class SuggestionControllerTest extends DatabaseTestCase
         $this->user->save();
         $this->actingAs($this->user);
 
-        $data = self::$suggestionInput;
+        $data = $this->getSuggestionInput();
         $suggestion = Suggestion::create($data);
-        factory(CardTranslation::class)->create([
-            'card_id' => self::$suggestionInput['card_id'],
+        CardTranslation::factory()->create([
+            'card_id' => $this->getSuggestionInput()['card_id'],
             'locale' => Locale::ENGLISH_AUTO,
         ]);
 
@@ -140,7 +131,7 @@ class SuggestionControllerTest extends DatabaseTestCase
 
         $cardTranslation = $card->getTranslation(Locale::ENGLISH);
         self::assertNotNull($cardTranslation);
-        self::assertTranslationMatchesSuggestion($suggestion, $cardTranslation);
+        $this->assertTranslationMatchesSuggestion($suggestion, $cardTranslation);
         self::assertSame(0, $cardTranslation->kanji_count, 'The kanji count should be updated to 0');
     }
 
@@ -150,12 +141,12 @@ class SuggestionControllerTest extends DatabaseTestCase
         $this->user->save();
         $this->actingAs($this->user);
 
-        factory(CardTranslation::class)->create([
-            'card_id' => self::$suggestionInput['card_id'],
+        CardTranslation::factory()->create([
+            'card_id' => $this->getSuggestionInput()['card_id'],
             'locale' => Locale::ENGLISH_AUTO,
         ]);
 
-        $data = self::$suggestionInput;
+        $data = $this->getSuggestionInput();
         $data['approved'] = 1;
 
         $responseData = self::assertSuccessfulResponseData($this->postJson('/api/suggestions', $data));
@@ -164,14 +155,14 @@ class SuggestionControllerTest extends DatabaseTestCase
         $card->load('translations');
 
         $cardTranslation = $card->getTranslation(Locale::ENGLISH);
-        self::assertTranslationMatchesSuggestion(Suggestion::make(self::$suggestionInput), $cardTranslation);
+        $this->assertTranslationMatchesSuggestion(Suggestion::make($this->getSuggestionInput()), $cardTranslation);
     }
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $translation = factory(CardTranslation::class)->create();
+        $translation = CardTranslation::factory()->create();
         $card = $translation->card;
         $card->type = Card\Type::CHARACTER;
         $card->save();
@@ -179,14 +170,29 @@ class SuggestionControllerTest extends DatabaseTestCase
         $translation->ability_cost = '[宣言] [0]';
         $translation->ability_description = '日本語';
         $translation->save();
+
+        $this->card = $card;
         $this->japaneseTranslation = $translation;
     }
 
-    private static function assertTranslationMatchesSuggestion(
+    private function getSuggestionInput(): array
+    {
+        return [
+            'card_id' => $this->card->id,
+            'locale' => Locale::ENGLISH,
+            'basic_abilities' => '',
+            'pre_comments' => '',
+            'ability_cost' => 'something',
+            'ability_description' => 'something in English',
+            'comments' => '',
+        ];
+    }
+
+    private function assertTranslationMatchesSuggestion(
         Suggestion $suggestion,
         CardTranslation $cardTranslation
     ): void {
-        foreach (array_keys(self::$suggestionInput) as $key) {
+        foreach (array_keys($this->getSuggestionInput()) as $key) {
             self::assertSame($suggestion->{$key}, $cardTranslation->{$key});
         }
     }

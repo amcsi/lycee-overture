@@ -48,7 +48,7 @@ class ImportBasicCardsCommand extends Command
                 $toInsert
             );
 
-        $updatedCount = $chunkizeOperation($toUpdate, fn($chunk) => Card::getQuery()->upsert($chunk)) / 2;
+        $updatedCount = $chunkizeOperation($toUpdate, fn($chunk) => Card::getQuery()->myUpsert($chunk)) / 2;
         $this->output->writeln(
             sprintf(
                 'Finished import of basic card data. Inserted: %s, Updated: %s',

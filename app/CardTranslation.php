@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -45,6 +46,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class CardTranslation extends Model
 {
+    use HasFactory;
+
     // Columns that are translated in OneSky.
     public const NAME_COLUMNS = ['name', 'ability_name', 'character_type'];
     // Columns that are translated locally.

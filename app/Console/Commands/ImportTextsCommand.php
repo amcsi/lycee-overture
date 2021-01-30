@@ -30,7 +30,7 @@ class ImportTextsCommand extends Command
 
         $rows = iterator_to_array($this->textImportTextExtractor->toDatabaseRows($this->csvIterator->getIterator()));
         $insertedCount = CardTranslation::getQuery()->insertIgnore($rows);
-        $updatedCount = CardTranslation::getQuery()->upsert($rows) / 2;
+        $updatedCount = CardTranslation::getQuery()->myUpsert($rows) / 2;
 
         $this->output->writeln(sprintf(
             'Finished import of japanese texts. Inserted: %s, Updated: %s',

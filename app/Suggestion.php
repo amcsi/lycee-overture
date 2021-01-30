@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture;
 
 use amcsi\LyceeOverture\Models\Traits\HasCreator;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -40,7 +41,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Suggestion extends Model
 {
-    use HasCreator;
+    use HasCreator, HasFactory;
 
     public const SUGGESTABLE_PROPERTIES = [
         'basic_abilities',

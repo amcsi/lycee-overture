@@ -54,7 +54,7 @@ class AppServiceProvider extends ServiceProvider
         if (self::$booted) {
             return;
         }
-        Builder::macro('upsert', require __DIR__ . '/../../app/Database/upsert.php');
+        Builder::macro('myUpsert', require __DIR__ . '/../../app/Database/upsert.php');
         Builder::macro('insertIgnore', require __DIR__ . '/../../app/Database/insertIgnore.php');
 
         self::$booted = true;
@@ -118,5 +118,7 @@ class AppServiceProvider extends ServiceProvider
                 return $app->get(Translator::class)->get('sets');
             }
         );
+
+        $app->singleton('japaneseFaker', fn() => \Faker\Factory::create('ja_JP'));
     }
 }

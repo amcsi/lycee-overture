@@ -22,12 +22,11 @@ abstract class DatabaseTestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->user = factory(User::class)->create();
+        $this->user = User::factory()->create();
     }
 
     /**
      * Status asserter which gives more info.
-     * @noinspection PhpInconsistentReturnPointsInspection
      */
     protected static function assertStatus(int $status, TestResponse $response): TestResponse
     {
@@ -48,7 +47,6 @@ abstract class DatabaseTestCase extends BaseTestCase
             return $response->assertOk();
         } catch (ExpectationFailedException $expectationFailedException) {
             self::fail($expectationFailedException->getMessage() . "\nResponse:\n" . $response->baseResponse);
-            return null;
         }
     }
 
@@ -61,7 +59,6 @@ abstract class DatabaseTestCase extends BaseTestCase
             return $response->assertSuccessful()->assertJsonStructure(['data'])->json('data');
         } catch (ExpectationFailedException $expectationFailedException) {
             self::fail($expectationFailedException->getMessage() . "\nResponse:\n" . $response->baseResponse);
-            return null;
         }
     }
 }

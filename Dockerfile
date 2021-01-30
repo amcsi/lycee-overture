@@ -47,7 +47,7 @@ COPY composer.json .
 COPY composer.lock .
 
 # These directories need to exist if we composer install without hooks/scripts.
-RUN mkdir -p database/seeds
+RUN mkdir -p database/seeders
 RUN mkdir -p database/factories
 
 # Do not run hooks, because they require the project files to already be there.

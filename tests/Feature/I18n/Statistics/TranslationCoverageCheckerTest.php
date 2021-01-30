@@ -23,8 +23,8 @@ class TranslationCoverageCheckerTest extends DatabaseTestCase
     {
         parent::setUp();
 
-        $card1 = factory(Card::class)->create(['id' => 'LO-0001']);
-        $card2 = factory(Card::class)->create(['id' => 'LO-0002']);
+        $card1 = Card::factory()->create(['id' => 'LO-0001']);
+        $card2 = Card::factory()->create(['id' => 'LO-0002']);
 
         $defaultProperties = [
             'name' => '',
