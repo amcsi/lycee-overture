@@ -19,12 +19,10 @@ class DownloadCsvCommand extends Command
 
     protected $signature = self::COMMAND . ' {--f|force : Ignore cache}';
     protected $description = 'Imports the CSV file with the Lycee cards from the official website.';
-    private $csvDownloader;
 
-    public function __construct(CsvDownloader $csvDownloader)
+    public function __construct(private CsvDownloader $csvDownloader)
     {
         parent::__construct();
-        $this->csvDownloader = $csvDownloader;
     }
 
     public function handle(): void

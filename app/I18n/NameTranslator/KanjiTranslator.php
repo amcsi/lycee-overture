@@ -11,11 +11,8 @@ use JpnForPhp\Analyzer\Analyzer;
  */
 class KanjiTranslator
 {
-    private $yahooKanjiTranslator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private TranslatorInterface $yahooKanjiTranslator)
     {
-        $this->yahooKanjiTranslator = $translator;
     }
 
     public function translate(string $text): string

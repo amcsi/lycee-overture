@@ -35,11 +35,9 @@ class AutoTranslator
         '、' => ',',
         '・' => ',',
     ];
-    private $quoteTranslator;
 
-    public function __construct(QuoteTranslator $quoteTranslator)
+    public function __construct(private QuoteTranslator $quoteTranslator)
     {
-        $this->quoteTranslator = $quoteTranslator;
     }
 
     public function autoTranslate(string $japaneseText): string
@@ -237,9 +235,6 @@ class AutoTranslator
     /**
      * Use this method to keep track of how many brackets there are before and after automatically translating.
      * Having not the same count is bad, and it means some logic in the code is replacing text badly.
-     *
-     * @param string $japaneseText
-     * @return array
      */
     private static function countBrackets(string $japaneseText): array
     {

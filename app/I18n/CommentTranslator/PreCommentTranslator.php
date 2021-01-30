@@ -7,11 +7,8 @@ use amcsi\LyceeOverture\I18n\AutoTranslator;
 
 class PreCommentTranslator
 {
-    private AutoTranslator $autoTranslator;
-
-    public function __construct(AutoTranslator $autoTranslator)
+    public function __construct(private AutoTranslator $autoTranslator)
     {
-        $this->autoTranslator = $autoTranslator;
     }
 
     public function translate(string $text): string

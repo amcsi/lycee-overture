@@ -7,13 +7,8 @@ use Illuminate\Filesystem\FilesystemAdapter;
 
 class FilesystemsCopier
 {
-    private $src;
-    private $dst;
-
-    public function __construct(FilesystemAdapter $src, FilesystemAdapter $dst)
+    public function __construct(private FilesystemAdapter $src, private FilesystemAdapter $dst)
     {
-        $this->src = $src;
-        $this->dst = $dst;
     }
 
     /**

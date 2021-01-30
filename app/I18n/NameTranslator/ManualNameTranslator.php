@@ -37,7 +37,6 @@ class ManualNameTranslator
     /**
      * @param string $quoted The name/type to translate.
      * @param array $textTypes The order of which text types to look in for translations.
-     * @return string
      */
     public function tryToTranslate(string $quoted, array $textTypes): string
     {

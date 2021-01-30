@@ -12,13 +12,8 @@ use Cake\Chronos\Chronos;
 
 class CardImageCloudinaryUploader
 {
-    private $cloudinaryUploader;
-    private $cardImage;
-
-    public function __construct(CloudinaryUploader $cloudinaryUploader, CardImage $cardImage)
+    public function __construct(private CloudinaryUploader $cloudinaryUploader, private CardImage $cardImage)
     {
-        $this->cloudinaryUploader = $cloudinaryUploader;
-        $this->cardImage = $cardImage;
     }
 
     /**

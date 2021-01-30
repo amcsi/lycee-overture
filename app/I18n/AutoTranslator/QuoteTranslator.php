@@ -10,11 +10,8 @@ use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
  */
 class QuoteTranslator
 {
-    private $nameTranslator;
-
-    public function __construct(NameTranslator $nameTranslator)
+    public function __construct(private NameTranslator $nameTranslator)
     {
-        $this->nameTranslator = $nameTranslator;
     }
 
     public function autoTranslate(string $autoTranslated): string

@@ -16,12 +16,9 @@ class ImportBasicCardsCommand extends Command
     ' {--reset-dates : Resets all cards\' creation the dates, making newer cards have later dates}';
     protected $description = 'Imports the basic data of cards (excluding text)';
 
-    private CsvIterator $csvIterator;
-
-    public function __construct(CsvIterator $csvIterator)
+    public function __construct(private CsvIterator $csvIterator)
     {
         parent::__construct();
-        $this->csvIterator = $csvIterator;
     }
 
     public function handle()

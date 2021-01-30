@@ -14,12 +14,10 @@ class ImageDownloadCommand extends Command
 
     protected $signature = self::COMMAND . ' {--new-only : Only download images that haven\'t been downloaded yet.}';
     protected $description = 'Downloads the images of the cards.';
-    private $imageDownloader;
 
-    public function __construct(ImageDownloader $imageDownloader)
+    public function __construct(private ImageDownloader $imageDownloader)
     {
         parent::__construct();
-        $this->imageDownloader = $imageDownloader;
     }
 
     public function handle()

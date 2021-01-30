@@ -23,13 +23,8 @@ class ImageDownloader
     const HEADER_IF_MODIFIED_SINCE = 'If-Modified-Since';
     const HTTP_DATE_FORMAT = 'D, d M Y H:i:s \G\M\T';
 
-    private $client;
-    private $filesystem;
-
-    public function __construct(Client $client, FilesystemInterface $filesystem)
+    public function __construct(private Client $client, private FilesystemInterface $filesystem)
     {
-        $this->client = $client;
-        $this->filesystem = $filesystem;
     }
 
     public function downloadImages(SymfonyStyle $output, bool $newOnly = false)

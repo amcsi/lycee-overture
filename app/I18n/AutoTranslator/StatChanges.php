@@ -43,7 +43,7 @@ class StatChanges
         }
         $thirdPersonPluralPlaceholder = Action::THIRD_PERSON_PLURAL_PLACEHOLDER;
         $turnAndBattleText = $turnAndBattleSource ? ' ' . TurnAndBattle::autoTranslate($turnAndBattleSource) : '';
-        if (strpos($actionText, 'に') === 0) {
+        if (str_starts_with($actionText, 'に')) {
             $verb = $mandatory ? "get$thirdPersonPluralPlaceholder" : 'can get';
             $subjectRegex = Subject::getUncapturedRegex();
             $statChanges = preg_replace_callback(

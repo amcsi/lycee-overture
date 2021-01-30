@@ -7,7 +7,6 @@ class RegexHelper
 {
     /**
      * @param string $subregex Removes capturing from the given regex subpattern
-     * @return string
      */
     public static function uncapture(string $subregex): string
     {

@@ -26,7 +26,7 @@ class TextFixer
             if ($item->isDirty()) {
                 $dirty = $item->getDirty();
                 $ret[] = [
-                    'model' => get_class($item),
+                    'model' => $item::class,
                     'id' => $item->card_id,
                     'old' => array_intersect_key($item->getOriginal(), $item->getDirty()),
                     'new' => $dirty,

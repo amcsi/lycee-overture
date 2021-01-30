@@ -14,14 +14,12 @@ class ImportTextsCommand extends Command
 
     protected $signature = self::COMMAND;
     protected $description = 'Imports the japanese texts from the CSV';
-    private $textImportTextExtractor;
-    private CsvIterator $csvIterator;
 
-    public function __construct(TextImportTextExtractor $textImportTextExtractor, CsvIterator $csvIterator)
-    {
+    public function __construct(
+        private TextImportTextExtractor $textImportTextExtractor,
+        private CsvIterator $csvIterator
+    ) {
         parent::__construct();
-        $this->textImportTextExtractor = $textImportTextExtractor;
-        $this->csvIterator = $csvIterator;
     }
 
     public function handle()

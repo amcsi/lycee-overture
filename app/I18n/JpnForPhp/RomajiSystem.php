@@ -10,7 +10,7 @@ use JpnForPhp\Transliterator\System\Hepburn;
  *
  * We make sure double vowels are transliterated as 'aa', 'ii', 'uu', 'ee', 'ou' rather than using accents.
  */
-class RomajiSystem extends Hepburn
+class RomajiSystem extends Hepburn implements \Stringable
 {
     private $mapping = [
         'あ' => 'a',
@@ -245,7 +245,7 @@ class RomajiSystem extends Hepburn
      *
      * @see System
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'Hepburn romanization system (ヘボン式ローマ字)';
     }

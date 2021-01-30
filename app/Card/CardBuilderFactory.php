@@ -12,17 +12,8 @@ use Illuminate\Database\Query\JoinClause;
 
 class CardBuilderFactory
 {
-    private $card;
-    private BrandMapper $brandMapper;
-
-    /**
-     * @param Card|Builder $card
-     * @param BrandMapper $brandMapper
-     */
-    public function __construct(Card $card, BrandMapper $brandMapper)
+    public function __construct(private Card $card, private BrandMapper $brandMapper)
     {
-        $this->card = $card;
-        $this->brandMapper = $brandMapper;
     }
 
     public function createBuilderWithQuery(string $locale, array $query, $forceLoadTranslation = false): Builder

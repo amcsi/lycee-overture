@@ -7,9 +7,6 @@ use amcsi\LyceeOverture\I18n\OneSkyClient;
 
 class NameTranslator
 {
-    private $manualNameTranslator;
-    private $kanaTranslator;
-
     private static $punctuationTranslationMap = [
         '／' => ' / ',
         '・' => ' ',
@@ -17,18 +14,14 @@ class NameTranslator
 
     private $punctuationSearch;
     private $punctuationReplace;
-    private KanjiTranslator $kanjiTranslator;
 
     public function __construct(
-        ManualNameTranslator $manualNameTranslator,
-        KanaTranslator $kanaTranslator,
-        KanjiTranslator $kanjiTranslator
+        private ManualNameTranslator $manualNameTranslator,
+        private KanaTranslator $kanaTranslator,
+        private KanjiTranslator $kanjiTranslator
     ) {
-        $this->manualNameTranslator = $manualNameTranslator;
-        $this->kanaTranslator = $kanaTranslator;
         $this->punctuationSearch = array_keys(self::$punctuationTranslationMap);
         $this->punctuationReplace = array_values(self::$punctuationTranslationMap);
-        $this->kanjiTranslator = $kanjiTranslator;
     }
 
     /**

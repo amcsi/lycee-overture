@@ -9,13 +9,8 @@ use Illuminate\Contracts\Cache\Repository;
 
 class YahooKanjiTranslator implements TranslatorInterface
 {
-    private $yahooRawKanjiTranslator;
-    private $cache;
-
-    public function __construct(YahooRawKanjiTranslator $yahooRawKanjiTranslator, Repository $cache)
+    public function __construct(private YahooRawKanjiTranslator $yahooRawKanjiTranslator, private Repository $cache)
     {
-        $this->yahooRawKanjiTranslator = $yahooRawKanjiTranslator;
-        $this->cache = $cache;
     }
 
     public function translate(string $text): string

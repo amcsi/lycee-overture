@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Notifications;
 
-use amcsi\LyceeOverture\Suggestion;
 use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notification;
@@ -14,18 +13,12 @@ class NewSuggestionsNotification extends Notification
 {
     use Queueable;
 
-    /** @var Suggestion[]|Collection */
-    private $suggestions;
-
-    public function __construct(Collection $suggestions)
+    public function __construct(private Collection $suggestions)
     {
-        $this->suggestions = $suggestions;
     }
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @return array
      */
     public function via(): array
     {

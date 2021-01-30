@@ -12,13 +12,10 @@ use Illuminate\Database\Query\JoinClause;
 
 class TranslationCoverageChecker
 {
-    private $cardTranslation;
-    private $cardBuilderFactory;
-
-    public function __construct(CardTranslation $cardTranslation, CardBuilderFactory $cardBuilderFactory)
-    {
-        $this->cardTranslation = $cardTranslation;
-        $this->cardBuilderFactory = $cardBuilderFactory;
+    public function __construct(
+        private CardTranslation $cardTranslation,
+        private CardBuilderFactory $cardBuilderFactory
+    ) {
     }
 
     public function calculateStatistics(array $query): Statistics

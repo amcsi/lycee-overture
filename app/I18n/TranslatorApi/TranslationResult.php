@@ -8,11 +8,8 @@ namespace amcsi\LyceeOverture\I18n\TranslatorApi;
  */
 class TranslationResult
 {
-    private $xml;
-
-    public function __construct(string $xml)
+    public function __construct(private string $xml)
     {
-        $this->xml = $xml;
     }
 
     public function getWords(): array

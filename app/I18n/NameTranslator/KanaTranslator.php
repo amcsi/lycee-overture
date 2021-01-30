@@ -11,11 +11,8 @@ use JpnForPhp\Transliterator\Transliterator;
  */
 class KanaTranslator
 {
-    private $transliterator;
-
-    public function __construct(Transliterator $transliterator)
+    public function __construct(private Transliterator $transliterator)
     {
-        $this->transliterator = $transliterator;
     }
 
     public function translate(string $text): string

@@ -11,14 +11,8 @@ class Action
     // Placeholder for plural if the Subjects needs it. "get(s)".
     public const THIRD_PERSON_PLURAL_PLACEHOLDER = '¤thirdPersonPlural¤';
 
-    private $actionTextWithPlaceholders;
-
-    /**
-     * @param string $actionTextWithPlaceholders Action text with placeholders for plural
-     */
-    public function __construct(string $actionTextWithPlaceholders)
+    public function __construct(private string $actionTextWithPlaceholders)
     {
-        $this->actionTextWithPlaceholders = $actionTextWithPlaceholders;
     }
 
     public function getActionTextWithPlaceholders(): string
@@ -31,15 +25,11 @@ class Action
      * returns the replaced text.
      * The callback should return an Action, and $subjectIndex should point to the index where the subject gets matched.
      *
-     * @param string $pattern
      * @param callable|string $callbackOrString If a string, it is used as the Action text string.
-     * @param string $input
-     * @param int $subjectIndex
-     * @return string
      */
     public static function subjectReplace(
         string $pattern,
-        $callbackOrString,
+        callable|string $callbackOrString,
         string $input,
         int $subjectIndex = 1
     ): string {

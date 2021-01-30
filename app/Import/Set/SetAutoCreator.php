@@ -13,12 +13,10 @@ class SetAutoCreator
 {
     /** @var Collection|Set[] */
     private $sets;
-    private $setModel;
 
-    public function __construct($sets, Set $setModel)
+    public function __construct($sets, private Set $setModel)
     {
         $this->setSetsAndKeyByFullName(collect($sets));
-        $this->setModel = $setModel;
     }
 
     public function getOrCreateSetIdByJaFullName($fullNameJa): ?int

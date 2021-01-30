@@ -12,12 +12,10 @@ use Carbon\CarbonImmutable;
  */
 class BasicImportCsvFilterer
 {
-    private $setAutoCreator;
     private $dateFormat;
 
-    public function __construct(SetAutoCreator $setAutoCreator)
+    public function __construct(private SetAutoCreator $setAutoCreator)
     {
-        $this->setAutoCreator = $setAutoCreator;
         $this->dateFormat = (new Card())->getDateFormat();
     }
 

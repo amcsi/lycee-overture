@@ -13,13 +13,8 @@ use function GuzzleHttp\Psr7\str;
  */
 class CsvDownloader
 {
-    private $config;
-    private $client;
-
-    public function __construct(array $config, Client $client)
+    public function __construct(private array $config, private Client $client)
     {
-        $this->config = $config;
-        $this->client = $client;
     }
 
     public function download(): ResponseInterface

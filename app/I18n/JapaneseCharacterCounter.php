@@ -24,9 +24,8 @@ class JapaneseCharacterCounter
 
     /**
      * @param CardTranslation|string[] $dbRow
-     * @return int
      */
-    public static function countJapaneseCharactersForDbRow($dbRow): int
+    public static function countJapaneseCharactersForDbRow(\amcsi\LyceeOverture\CardTranslation|array $dbRow): int
     {
         $stringToCountJapaneseCharactersFor = '';
         foreach (AutoTranslateCommand::AUTO_TRANSLATE_FIELDS as $column) {

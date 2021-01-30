@@ -11,12 +11,10 @@ use SnoerenDevelopment\DiscordWebhook\DiscordWebhookChannel;
 
 class NewCardsNotification extends Notification
 {
-    /** @var Collection|Card[] */
-    private $newCards;
-
-    public function __construct($newCards)
-    {
-        $this->newCards = $newCards;
+    public function __construct(
+        /** @var Collection|Card[] */
+        private $newCards
+    ) {
     }
 
     public function via(): array

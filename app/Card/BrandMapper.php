@@ -14,11 +14,8 @@ class BrandMapper
     private static $brands;
     private static $setNameJaToBrandMap;
 
-    private Set $setModel;
-
-    public function __construct(Set $setModel)
+    public function __construct(private Set $setModel)
     {
-        $this->setModel = $setModel;
     }
 
     public static function getBrand(string $setNameJa): ?string

@@ -17,19 +17,13 @@ class ImageUploadCommand extends Command
     protected $signature = self::COMMAND .
     ' {--new-only : Only upload images that haven\'t been uploaded yet according to the local DB.}';
     protected $description = 'Uploads images to cloud service. Images must have been downloaded.';
-    private $card;
-    private $cardImage;
-    private $cardImageCloudinaryUploader;
 
     public function __construct(
-        Card $card,
-        CardImage $cardImage,
-        CardImageCloudinaryUploader $cardImageCloudinaryUploader
+        private Card $card,
+        private CardImage $cardImage,
+        private CardImageCloudinaryUploader $cardImageCloudinaryUploader
     ) {
         parent::__construct();
-        $this->card = $card;
-        $this->cardImage = $cardImage;
-        $this->cardImageCloudinaryUploader = $cardImageCloudinaryUploader;
     }
 
     /**

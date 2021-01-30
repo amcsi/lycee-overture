@@ -12,13 +12,8 @@ use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
  */
 class CommentTranslator
 {
-    private $setTranslator;
-    private QuoteTranslator $quoteTranslator;
-
-    public function __construct(SetTranslator $setTranslator, QuoteTranslator $quoteTranslator)
+    public function __construct(private SetTranslator $setTranslator, private QuoteTranslator $quoteTranslator)
     {
-        $this->setTranslator = $setTranslator;
-        $this->quoteTranslator = $quoteTranslator;
     }
 
     public function translate(string $text): string

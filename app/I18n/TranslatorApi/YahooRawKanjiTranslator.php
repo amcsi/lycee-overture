@@ -12,13 +12,8 @@ use GuzzleHttp\Exception\ServerException;
  */
 class YahooRawKanjiTranslator implements TranslatorInterface
 {
-    private $client;
-    private $apiKey;
-
-    public function __construct(Client $client, string $apiKey)
+    public function __construct(private Client $client, private string $apiKey)
     {
-        $this->client = $client;
-        $this->apiKey = $apiKey;
     }
 
     public function translate(string $kanji): string
@@ -37,7 +32,7 @@ class YahooRawKanjiTranslator implements TranslatorInterface
             if (
                 $exception->getCode() === 503 &&
                 ($response = $exception->getResponse()) &&
-                strpos((string) $response->getBody(), 'invalid parameter: sentence') !== false
+                str_contains((string) $response->getBody(), 'invalid parameter: sentence')
             ) {
                 // Bad kanji. Just return the input string.
                 return $kanji;

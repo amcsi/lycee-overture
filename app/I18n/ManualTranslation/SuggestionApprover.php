@@ -10,11 +10,8 @@ use Illuminate\Support\Arr;
 
 class SuggestionApprover
 {
-    private ManualAutoDifferenceChecker $manualAutoDifferenceChecker;
-
-    public function __construct(ManualAutoDifferenceChecker $manualAutoDifferenceChecker)
+    public function __construct(private ManualAutoDifferenceChecker $manualAutoDifferenceChecker)
     {
-        $this->manualAutoDifferenceChecker = $manualAutoDifferenceChecker;
     }
 
     public function approve(Suggestion $suggestion): void

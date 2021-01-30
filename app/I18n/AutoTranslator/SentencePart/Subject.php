@@ -16,22 +16,17 @@ class Subject
     private const REGEX_COMPOUND_AND_OR = '[subject](と|または)[subject]';
     private const REGEX_COMPOUND_ADJACENT = '[subject]に隣接した[subject]';
 
-    private $subjectText;
-
-    /**
-     * @var bool Whether the subject is plural.
-     */
-    private $plural;
-
-    private function __construct(string $subjectText, bool $plural)
-    {
-        $this->subjectText = $subjectText;
-        $this->plural = $plural;
+    private function __construct(
+        private string $subjectText,
+        /**
+         * @var bool Whether the subject is plural.
+         */
+        private bool $plural
+    ) {
     }
 
     /**
      * @param string $subjectPart String with just the subject.
-     * @return self
      */
     public static function createInstance(string $subjectPart): self
     {
@@ -275,7 +270,7 @@ class Subject
             if ($itsStatsSource) {
                 // ...'s DP/SP/AP
                 $itsStatsText = str_replace('と', ' and ', $itsStatsSource);
-                $plural = strpos($itsStatsText, ' and ') !== false;
+                $plural = str_contains($itsStatsText, ' and ');
 
                 $text = self::posessivize(
                         (new Subject((new self($text, $plural))->getSubjectText(), false))
@@ -346,7 +341,6 @@ class Subject
     /**
      * Gets the regular expression matching a compound subject with and/or.
      * @param string $compoundReplacable A subregex string with multiple [subject]s.
-     * @return string
      */
     private static function getCompoundRegexFor(string $compoundReplacable): string
     {
