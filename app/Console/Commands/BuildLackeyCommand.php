@@ -56,7 +56,13 @@ class BuildLackeyCommand extends Command
         $dstPath = "lackey/$pluginFolderName";
 
         $adapter = Storage::drive('localRoot');
-        $dstAdapter = Storage::drive('public');
+
+        $dstAdapter = Storage::createLocalDriver([
+            'root' => sprintf("%s/%s", storage_path('app/public'), $dstPath),
+            'url' => sprintf("%s/storage/%s", config('app.url'), $dstPath),
+            'visibility' => 'public',
+        ]);
+
         $copier = new FilesystemsCopier($adapter, $dstAdapter);
 
         $copier->copyCached($lackeyResourcesPath, $dstPath);
@@ -107,13 +113,13 @@ class BuildLackeyCommand extends Command
                 ) => !$card->getBestTranslation()->kanji_count) // Exclude ones not fully translated.
                 ->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
         );
-        $dstAdapter->putStream("$dstPath/sets/carddata.txt", try_fopen($tempnam, 'rb'));
+        $dstAdapter->putStream('sets/carddata.txt', try_fopen($tempnam, 'rb'));
 
         // plugininfo.txt
 
         $updateListFirstRowToday = sprintf("%s\t%s", $pluginFolderName, date('m-d-y'));
-        $lastUpdateListContents = $dstAdapter->exists("$dstPath/updatelist.txt") ?
-            $dstAdapter->read("$dstPath/updatelist.txt") :
+        $lastUpdateListContents = $dstAdapter->exists('updatelist.txt') ?
+            $dstAdapter->read('updatelist.txt') :
             $updateListFirstRowToday;
 
         $lastUpdateListFirstLine = strtok($lastUpdateListContents, "\n");
@@ -124,8 +130,7 @@ class BuildLackeyCommand extends Command
         $newUpdateListContents .= "$pluginFolderName\t$dateText\n";
 
         $pluginInfoBasePath = "plugins/$pluginFolderName";
-        $appUrl = env('APP_URL');
-        $getPublicUrl = fn($path) => $appUrl . Storage::url("$dstPath/$path");
+        $getPublicUrl = fn($path) => $dstAdapter->url($path);
         $versionFileUrl = $getPublicUrl('version.txt');
 
         $fileList = [
@@ -139,9 +144,9 @@ class BuildLackeyCommand extends Command
             ),
             'decks/Yuzusoft_1.0_Starter.dek' => $getPublicUrl('decks/Yuzusoft_1.0_Starter.dek'),
         ];
-        if (!$dstAdapter->exists("$dstPath/version.txt")) {
+        if (!$dstAdapter->exists('version.txt')) {
             // The version.txt file must exist so we can hash it.
-            $dstAdapter->copy("$dstPath/version.dist.xml", "$dstPath/version.txt");
+            $dstAdapter->copy('version.dist.xml', "version.txt");
         }
 
         foreach ($fileList as $pluginFileRelativePath => $url) {
@@ -169,7 +174,7 @@ class BuildLackeyCommand extends Command
             // Try to ensure updating plugin can work multiple times a day by using the message as a cache buster.
             $versionFileContents = str_replace(':dateWithTime:', e(date('Y-m-d H:i:s')), $versionFileContents);
 
-            $dstAdapter->put("$dstPath/version.txt", $versionFileContents);
+            $dstAdapter->put('version.txt', $versionFileContents);
 
             // The contents did not end up the same. So let's replace the first line to show today's date instead.
             $newUpdateListContents = str_replace(
@@ -185,7 +190,7 @@ class BuildLackeyCommand extends Command
                 -1,
                 $count
             );
-            $dstAdapter->put("$dstPath/updatelist.txt", $newUpdateListContents);
+            $dstAdapter->put('updatelist.txt', $newUpdateListContents);
         }
     }
 
