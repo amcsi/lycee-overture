@@ -76,7 +76,7 @@ class BuildLackeyCommand extends Command
             'Actual Name' => fn(Card $card) => $card->getBestTranslation()->name,
             'Ability Name' => fn(Card $card) => $card->getBestTranslation()->ability_name,
             'Character Type' => fn(Card $card) => $card->getBestTranslation()->character_type,
-            'Comments' => fn(Card $card) => $card->getBestTranslation()->comments,
+            'Comments' => fn(Card $card) => str_replace("\n", ' ', $card->getBestTranslation()->comments),
             'EX' => fn(Card $card) => $card->ex,
             'Element' => fn(Card $card) => CardResource::getElementMarkup($card),
             'Cost' => fn(Card $card) => CardResource::getCostMarkup($card),
@@ -127,6 +127,7 @@ class BuildLackeyCommand extends Command
         $appUrl = env('APP_URL');
         $getPublicUrl = fn($path) => $appUrl . Storage::url("$dstPath/$path");
         $versionFileUrl = $getPublicUrl('version.txt');
+
         $fileList = [
             'plugininfo.txt' => $getPublicUrl('plugininfo.txt'),
             'version.txt' => $versionFileUrl,
