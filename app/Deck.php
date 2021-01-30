@@ -36,6 +36,6 @@ class Deck extends Model
 
     public function cards(): BelongsToMany
     {
-        return $this->belongsToMany(Card::class)->using(CardDeck::class);
+        return $this->belongsToMany(Card::class)->withPivot('quantity')->using(CardDeck::class);
     }
 }

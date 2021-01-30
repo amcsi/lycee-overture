@@ -1,0 +1,11 @@
+<deck version="0.8">
+    <meta>
+        <game>lycee-overture-translated</game>
+    </meta>
+    <superzone name="Deck">
+        %deck%
+    </superzone>
+    <superzone name="Leader">
+        %leader%
+    </superzone>
+</deck>

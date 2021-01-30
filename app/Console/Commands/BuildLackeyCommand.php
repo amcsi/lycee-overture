@@ -7,9 +7,10 @@ use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Card\CardResource;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Etc\FilesystemsCopier;
+use amcsi\LyceeOverture\Etc\Lackey\LackeyNameFormatter;
+use amcsi\LyceeOverture\Etc\Lackey\LackeyStarterDecksAssember;
 use amcsi\LyceeOverture\Etc\LackeyHasher;
 use amcsi\LyceeOverture\Etc\LackeyVariant;
-use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
@@ -73,11 +74,7 @@ class BuildLackeyCommand extends Command
         $writer->setDelimiter("\t");
         $definitions = [
             'Name' => fn(Card $card) => $card->id,
-            'Set' => fn(Card $card) => str_replace(
-                ' ',
-                '_',
-                $card->set ? $card->set->getFullName(Locale::ENGLISH) : 'Unknown'
-            ),
+            'Set' => fn(Card $card) => LackeyNameFormatter::formatSet($card),
             'ImageFile' => fn(Card $card) => $card->id,
             'Actual Name' => fn(Card $card) => $card->getBestTranslation()->name,
             'Ability Name' => fn(Card $card) => $card->getBestTranslation()->ability_name,
@@ -115,6 +112,11 @@ class BuildLackeyCommand extends Command
         );
         $dstAdapter->putStream('sets/carddata.txt', try_fopen($tempnam, 'rb'));
 
+        /*
+         * Handle starter decks.
+         */
+        app(LackeyStarterDecksAssember::class)->handle($dstAdapter);
+
         // plugininfo.txt
 
         $updateListFirstRowToday = sprintf("%s\t%s", $pluginFolderName, date('m-d-y'));
@@ -139,11 +141,11 @@ class BuildLackeyCommand extends Command
             'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
             'bot.jpg' => 'https://cdn.discordapp.com/attachments/477535411871416332/652989736847409152/dummy_card_3.png',
             'sets/setimages/general/cardback.jpg' => 'https://cdn.discordapp.com/attachments/477535411871416332/652989736847409152/dummy_card_3.png',
-            'decks/Brave_Sword_X_Blaze_Soul_1.0_Starter.dek' => $getPublicUrl(
-                'decks/Brave_Sword_X_Blaze_Soul_1.0_Starter.dek'
-            ),
-            'decks/Yuzusoft_1.0_Starter.dek' => $getPublicUrl('decks/Yuzusoft_1.0_Starter.dek'),
         ];
+        foreach ($dstAdapter->listContents('decks') as $file) {
+            $deckPath = $file['path'];
+            $fileList[$deckPath] = $getPublicUrl($deckPath);
+        }
         if (!$dstAdapter->exists('version.txt')) {
             // The version.txt file must exist so we can hash it.
             $dstAdapter->copy('version.dist.xml', "version.txt");
