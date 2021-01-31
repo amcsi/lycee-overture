@@ -184,21 +184,21 @@ class AddCardDeckTable extends Migration
     public function up()
     {
         try {
+            // Create the new pivot table.
+            Schema::create(
+                'card_deck',
+                function (Blueprint $table) {
+                    $table->string('card_id')->index();
+                    $table->unsignedInteger('deck_id')->index();
+                    $table->unique(['card_id', 'deck_id']);
+                    $table->unsignedTinyInteger('quantity');
+
+                    $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
+                    $table->foreign('deck_id')->references('id')->on('decks')->onDelete('cascade');
+                }
+            );
+
             \DB::transaction(function () {
-                // Create the new pivot table.
-                Schema::create(
-                    'card_deck',
-                    function (Blueprint $table) {
-                        $table->string('card_id')->index();
-                        $table->unsignedInteger('deck_id')->index();
-                        $table->unique(['card_id', 'deck_id']);
-                        $table->unsignedTinyInteger('quantity');
-
-                        $table->foreign('card_id')->references('id')->on('cards')->onDelete('cascade');
-                        $table->foreign('deck_id')->references('id')->on('decks')->onDelete('cascade');
-                    }
-                );
-
                 /** @var Deck[] $decks */
                 $decks = Deck::query()->whereIn('name_en', array_keys(self::$decks))->get();
                 if (count($decks) !== count(self::$decks)) {
@@ -227,15 +227,15 @@ class AddCardDeckTable extends Migration
                         $cardDeck->save();
                     }
                 }
-
-                // Remove the legacy "cards" column.
-                Schema::table(
-                    'decks',
-                    function (Blueprint $table) {
-                        $table->dropColumn('cards');
-                    }
-                );
             });
+
+            // Remove the legacy "cards" column.
+            Schema::table(
+                'decks',
+                function (Blueprint $table) {
+                    $table->dropColumn('cards');
+                }
+            );
         } catch (\Exception $e) {
             Schema::dropIfExists('card_deck');
 
@@ -250,22 +250,22 @@ class AddCardDeckTable extends Migration
      */
     public function down()
     {
-        \DB::transaction(function () {
-            Schema::table(
-                'decks',
-                function (Blueprint $table) {
-                    $table->string('cards')->after('name_en')->default('');
-                }
-            );
+        Schema::table(
+            'decks',
+            function (Blueprint $table) {
+                $table->string('cards')->after('name_en')->default('');
+            }
+        );
 
+        \DB::transaction(function () {
             $cardDecksByDeckId = CardDeck::all()->groupBy('deck_id');
             foreach ($cardDecksByDeckId as $deckId => $cardDecks) {
                 $cardIds = $cardDecks->pluck('card_id');
                 $cardListCommaSeparated = $cardIds->join(',');
                 Deck::where('id', $deckId)->update(['cards' => $cardListCommaSeparated]);
             }
-
-            Schema::drop('card_deck');
         });
+
+        Schema::drop('card_deck');
     }
 }
