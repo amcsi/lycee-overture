@@ -187,7 +187,7 @@ class BuildLackeyCommand extends Command
             // Update the version.txt hash to express that the version changed.
             $newUpdateListContents = preg_replace(
                 sprintf("/\\b(?<=%s\t).*$/m", preg_quote($versionFileUrl, '/')),
-                self::hashFile($versionFileUrl),
+                (string) self::hashFile($versionFileUrl),
                 $newUpdateListContents,
                 -1,
                 $count
