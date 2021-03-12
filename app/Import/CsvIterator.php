@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import;
 
-use League\Csv\Reader;
 use function GuzzleHttp\Psr7\try_fopen;
 
 /**
@@ -45,9 +44,6 @@ class CsvIterator
                 yield explode(',', $row);
             }
         })();
-
-        /** @var Reader $reader */
-        $reader = iterator_to_array($reader);
 
         return $reader;
     }

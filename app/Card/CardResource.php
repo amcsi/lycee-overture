@@ -27,7 +27,7 @@ class CardResource extends JsonResource
             'sp' => $card->sp,
             'element' => self::getElementMarkup($card),
             'cost' => self::getCostMarkup($card),
-            'rarity' => $card->rarity,
+            'rarity' => explode(',', $card->rarity)[0],
             'translation' => $locale !== Locale::JAPANESE ?
                 new CardTranslationResource(($card->getBestTranslation())) :
                 null,
