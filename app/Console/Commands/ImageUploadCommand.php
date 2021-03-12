@@ -38,18 +38,26 @@ class ImageUploadCommand extends Command
 
         $this->output->text('Started uploading images to cloud service...');
 
-        $cards = $this->card->all();
         $newOnly = $this->option('new-only');
+
+        // LO-0001, LO-0001A etc
+        $cardVariants = collect();
+        foreach ($this->card->cursor() as $cardVariant) {
+            foreach (explode(',', $cardVariant->variants) as $variant) {
+                $cardVariants[] = "$cardVariant->id$variant";
+            }
+        }
+
         /** @var CardImage[] $cardImages */
         $cardImages = $this->cardImage->all()->keyBy('card_id');
         if ($newOnly) {
             // Filter out cards whose images are already in the card images DB.
-            $cards = $cards->reject(function (Card $card) use ($cardImages) {
-                return isset($cardImages[$card->id]);
+            $cardVariants = $cardVariants->reject(function ($cardVariant) use ($cardImages) {
+                return isset($cardImages[$cardVariant]);
             });
         }
 
-        $total = $cards->count();
+        $total = $cardVariants->count();
         $this->output->text("$total card images to upload.");
 
         $i = 0;
@@ -58,22 +66,21 @@ class ImageUploadCommand extends Command
          * Gets the text that should be outputted to report progress.
          * Includes the index of card too.
          *
-         * @param string $cardId
+         * @param string $cardVariant
          * @return string
          */
-        $getOutputText = function ($cardId) use (&$i, $total): string {
-            return sprintf('(%04d/%04d) % -10s... ', ++$i, $total, $cardId);
+        $getOutputText = function ($cardVariant) use (&$i, $total): string {
+            return sprintf('(%04d/%04d) % -10s... ', ++$i, $total, $cardVariant);
         };
 
-        foreach ($cards as $card) {
+        foreach ($cardVariants as $cardVariant) {
             try {
-                $id = $card->id;
-                if ($newOnly && isset($cardImages[$id])) {
+                if ($newOnly && isset($cardImages[$cardVariant])) {
                     // Only new card option was provided, and this is an old card.
                     continue;
                 }
-                $this->output->write($getOutputText($id));
-                $message = $this->cardImageCloudinaryUploader->upload($card, $cardImages);
+                $this->output->write($getOutputText($cardVariant));
+                $message = $this->cardImageCloudinaryUploader->upload($cardVariant, $cardImages);
                 $this->output->writeln($message);
             } catch (\Exception $e) {
                 $this->output->error($e);

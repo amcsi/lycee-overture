@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Card\Image;
 
-use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\CardImage;
 use amcsi\LyceeOverture\CloudinaryUploader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
@@ -17,29 +16,28 @@ class CardImageCloudinaryUploader
     }
 
     /**
-     * @param Card $card The card whose image is to be uploaded.
+     * @param string $cardVariant e.g. 'LO-0001A'
      * @param CardImage[] $cardImages Cached list of card images keyed by ID to check whether uploading is necessary.
      * @return string Message to log
      */
-    public function upload(Card $card, $cardImages): string
+    public function upload(string $cardVariant, $cardImages): string
     {
-        $id = $card->getId();
         $localImagePath = storage_path(
-            ImportConstants::ORIGINAL_CARD_IMAGES_PATH . '/' . ImageDownloader::getLocalImagePathForCardId($id)
+            ImportConstants::ORIGINAL_CARD_IMAGES_PATH . '/' . ImageDownloader::getLocalImagePathForCardId($cardVariant)
         );
         $md5 = md5_file($localImagePath);
         if (
-            isset($cardImages[$id]) &&
-            $cardImages[$id]->getLastUploaded() &&
-            $cardImages[$id]->getMd5() === $md5
+            isset($cardImages[$cardVariant]) &&
+            $cardImages[$cardVariant]->getLastUploaded() &&
+            $cardImages[$cardVariant]->getMd5() === $md5
         ) {
             // No need to upload.
             return 'Already uploaded.';
         }
 
-        $this->cloudinaryUploader->upload($localImagePath, $id, ['folder' => 'cards', 'tags' => 'cards']);
-        $values = ['md5' => $md5, 'last_uploaded' => new Chronos(), 'card_id' => $id];
-        $this->cardImage->updateOrInsert(['card_id' => $id], $values);
+        $this->cloudinaryUploader->upload($localImagePath, $cardVariant, ['folder' => 'cards', 'tags' => 'cards']);
+        $values = ['md5' => $md5, 'last_uploaded' => new Chronos(), 'card_id' => $cardVariant];
+        $this->cardImage->updateOrInsert(['card_id' => $cardVariant], $values);
 
         return 'Done.';
     }
