@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { savedCardVariants } from '../../utils/cardVariant';
+import { getCurrentVariant } from '../../utils/cardVariant';
 import CardImage from './CardImage';
 import CardText from './CardText';
 
@@ -81,7 +81,7 @@ export default {
       return ret;
     },
     imageVariant() {
-      return savedCardVariants.preferences[this.card.id] ?? '';
+      return getCurrentVariant(this.card.id);
     },
   },
 };

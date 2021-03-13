@@ -5,7 +5,7 @@
       <div class="card-details">
         <div class="names-and-type">
           <div>
-            <span class="card-id">{{ card.id }}</span>
+            <span class="card-id">{{ card.id }}{{ currentVariant }}</span>
             <span class="card-name">{{ cardText.name }}</span>
             <span v-if="isCharacter">
               - <span class="card-ability-name">{{ cardText.ability_name }}</span>
@@ -22,7 +22,7 @@
           </div>
           <div style="flex: 1" />
           <div>
-            <span class="rarity">{{ card.rarity }}</span>
+            <span class="rarity">{{ currentRarity }}</span>
           </div>
         </div>
         <CardNameTranslator v-if="translateNamesOpen" :card="card" />
@@ -91,6 +91,7 @@
 
 <script>
 import { mapComputed } from '../../store/storeUtils';
+import { getCurrentVariant } from '../../utils/cardVariant';
 import formatCardMixin from '../../utils/formatCardMixin';
 import { areaType, characterType, eventType, itemType } from '../../value/cardType';
 import ExternalLink from '../common/ExternalLink';
@@ -191,6 +192,13 @@ export default {
     formattedBrand() {
       return this.formatBrands(`[${this.card.set.brand}]`);
     },
+    currentVariant() {
+      return getCurrentVariant(this.card.id);
+    },
+    currentRarity() {
+      const index = this.card.variants.findIndex(obj => obj.variant === this.currentVariant);
+      return this.card.variants[index].rarity;
+    },
     ...mapComputed('auth', ['user']),
   },
   created() {
@@ -234,6 +242,8 @@ export default {
 }
 
 .card-id {
+  display: inline-block;
+  width: 7rem;
   font-weight: bold;
   font-size: 1.2em;
   color: #555555;

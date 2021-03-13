@@ -55,7 +55,13 @@
 
 <script>
 import Popper from 'popper.js';
-import { saveCardVariant, savedCardVariants } from '../../utils/cardVariant';
+import {
+  getCurrentVariant,
+  getSavedVariant,
+  saveCardVariant,
+  setTemporaryVariant,
+  unsetTemporaryVariant,
+} from '../../utils/cardVariant';
 import { assembleCloudinaryImageCardUrl } from '../../utils/image';
 import CardImage from './CardImage';
 
@@ -66,7 +72,6 @@ export default {
     return {
       largerImage: false,
       revealImageOverlay: false,
-      hoveringVariant: null,
     };
   },
   props: {
@@ -90,10 +95,10 @@ export default {
       });
     },
     savedCardVariant() {
-      return savedCardVariants.preferences[this.id] ?? '';
+      return getSavedVariant(this.id);
     },
-    savedCardVariants() {
-      return savedCardVariants;
+    currentCardVariant() {
+      return getCurrentVariant(this.id);
     },
     variantsByVariantString() {
       const ret = {};
@@ -103,9 +108,7 @@ export default {
       return ret;
     },
     variantObj() {
-      const variantObj = this.variantsByVariantString[
-        this.hoveringVariant ?? this.savedCardVariant ?? ''
-      ];
+      const variantObj = this.variantsByVariantString[this.currentCardVariant ?? ''];
       if (variantObj) {
         return variantObj;
       }
@@ -150,14 +153,14 @@ export default {
       this.largerImage = false;
     },
     selectVariant(variant, select) {
-      this.hoveringVariant = variant;
+      setTemporaryVariant(this.id, variant);
       if (select) {
         saveCardVariant(this.id, variant);
       }
       this.mouseEnter();
     },
     unselectVariant() {
-      this.hoveringVariant = null;
+      unsetTemporaryVariant();
       this.mouseLeave();
     },
     click(event) {
