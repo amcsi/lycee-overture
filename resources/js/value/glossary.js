@@ -1,134 +1,35 @@
 export const glossaryData = [
-  [
-    '全て',
-    'all',
-  ],
-  [
-    '自分',
-    'your',
-  ],
-  [
-    '味方',
-    'ally',
-  ],
-  [
-    '相手',
-    'opponent',
-  ],
-  [
-    '破棄',
-    'discard',
-  ],
-  [
-    '対戦',
-    'opposing character',
-  ],
-  [
-    '対象',
-    'target (e.g. for supporting)',
-  ],
-  [
-    '未行動',
-    'untapped',
-  ],
-  [
-    '行動済み',
-    'tapped',
-  ],
-  [
-    '効果',
-    'effect',
-  ],
-  [
-    '能力',
-    'ability',
-  ],
-  [
-    'ゴミ箱',
-    'discard pile',
-  ],
-  [
-    '除外',
-    'remove(d) from play',
-  ],
-  [
-    '手札',
-    'hand',
-  ],
-  [
-    '移動',
-    'move',
-  ],
-  [
-    '登場',
-    'summon',
-  ],
-  [
-    '次',
-    'next',
-  ],
-  [
-    'ダウン',
-    'downed (defeated in battle)',
-  ],
-  [
-    '防御',
-    'defense',
-  ],
-  [
-    '攻撃',
-    'attack',
-  ],
-  [
-    '装備',
-    'equip',
-  ],
-  [
-    '番号',
-    'number',
-  ],
-  [
-    '同',
-    'same',
-  ],
-  [
-    '隣接した',
-    'adjacent',
-  ],
-  [
-    '列',
-    'column',
-  ],
-  [
-    'オーダー',
-    'row',
-  ],
-  [
-    'できる',
-    '(you) can',
-  ],
-  [
-    'れる',
-    '"gets" something',
-  ],
-  [
-    'または',
-    'or',
-  ],
-  [
-    '使用',
-    'use',
-  ],
-  [
-    '入れる',
-    'put in',
-  ],
-  [
-    'している',
-    'is being...',
-  ],
-  [
-    '場合',
-    'case/situation/when',
-  ],
+  ['全て', 'all'],
+  ['自分', 'your'],
+  ['味方', 'ally'],
+  ['相手', 'opponent'],
+  ['破棄', 'discard'],
+  ['対戦', 'opposing character'],
+  ['対象', 'target (e.g. for supporting)'],
+  ['未行動', 'untapped'],
+  ['行動済み', 'tapped'],
+  ['効果', 'effect'],
+  ['能力', 'ability'],
+  ['ゴミ箱', 'discard pile'],
+  ['除外', 'remove(d) from play'],
+  ['手札', 'hand'],
+  ['移動', 'move'],
+  ['登場', 'summon'],
+  ['次', 'next'],
+  ['ダウン', 'downed (defeated in battle)'],
+  ['防御', 'defense'],
+  ['攻撃', 'attack'],
+  ['装備', 'equip'],
+  ['番号', 'number'],
+  ['同', 'same'],
+  ['隣接した', 'adjacent'],
+  ['列', 'column'],
+  ['オーダー', 'row'],
+  ['できる', '(you) can'],
+  ['れる', '"gets" something'],
+  ['または', 'or'],
+  ['使用', 'use'],
+  ['入れる', 'put in'],
+  ['している', 'is being...'],
+  ['場合', 'case/situation/when'],
 ];

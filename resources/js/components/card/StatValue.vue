@@ -1,7 +1,8 @@
 <template>
-    <el-tag class="stat-value" :class="cls" :type="tagType" size="small" hit>{{value}}
-        {{typeCapitals}}
-    </el-tag>
+  <el-tag class="stat-value" :class="cls" :type="tagType" size="small" hit
+    >{{ value }}
+    {{ typeCapitals }}
+  </el-tag>
 </template>
 
 <script>
@@ -43,21 +44,21 @@ export default {
 @import '~element-ui/packages/theme-chalk/src/common/var.scss';
 
 .stat-value {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 $colors: (
-    'primary': $--tag-primary-color,
-    'success': $--tag-success-color,
-    'info': $--tag-info-color,
-    'warning': $--tag-warning-color,
-    'danger': $--tag-danger-color,
+  'primary': $--tag-primary-color,
+  'success': $--tag-success-color,
+  'info': $--tag-info-color,
+  'warning': $--tag-warning-color,
+  'danger': $--tag-danger-color,
 );
 
 @each $type, $color in $colors {
-    .stat-value-#{$type} {
-        // For better contrast.
-        color: darken($color, 20);
-    }
+  .stat-value-#{$type} {
+    // For better contrast.
+    color: darken($color, 20);
+  }
 }
 </style>

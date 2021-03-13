@@ -1,12 +1,7 @@
 <template>
-    <img v-if="locale === 'en'" src="../../../images/flags/gb.png" :alt="title" :title="title" />
-    <img
-        v-else-if="locale === 'ja'"
-        src="../../../images/flags/jp.png"
-        :alt="title"
-        :title="title"
-    />
-    <span v-else />
+  <img v-if="locale === 'en'" src="../../../images/flags/gb.png" :alt="title" :title="title" />
+  <img v-else-if="locale === 'ja'" src="../../../images/flags/jp.png" :alt="title" :title="title" />
+  <span v-else />
 </template>
 
 <script>
@@ -29,6 +24,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

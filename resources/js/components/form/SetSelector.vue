@@ -1,16 +1,16 @@
 <template>
-    <el-form-item label="Set" v-loading="listLoading">
-        <el-select placeholder="-" :value="value" @input="$emit('input', $event)">
-            <el-option label="-" value=""></el-option>
-            <el-option label="(Unknown or no set)" value="-1"></el-option>
-            <el-option
-                v-for="item in list"
-                :key="item.id"
-                :label="item.full_name"
-                :value="String(item.id)"
-            ></el-option>
-        </el-select>
-    </el-form-item>
+  <el-form-item label="Set" v-loading="listLoading">
+    <el-select placeholder="-" :value="value" @input="$emit('input', $event)">
+      <el-option label="-" value=""></el-option>
+      <el-option label="(Unknown or no set)" value="-1"></el-option>
+      <el-option
+        v-for="item in list"
+        :key="item.id"
+        :label="item.full_name"
+        :value="String(item.id)"
+      ></el-option>
+    </el-select>
+  </el-form-item>
 </template>
 
 <script>

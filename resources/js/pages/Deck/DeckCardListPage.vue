@@ -1,5 +1,5 @@
 <template>
-    <div>TBI</div>
+  <div>TBI</div>
 </template>
 
 <script>
@@ -9,6 +9,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

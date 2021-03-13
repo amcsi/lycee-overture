@@ -1,19 +1,18 @@
 <template>
-    <section v-loading="articles === null">
-        <article v-for="{ title, content, date_gmt } in articles">
-          <el-card style="margin-bottom: 1rem">
-            <div>
-              <h4>{{ title.rendered }}</h4> -
-              <time :datetime="date_gmt + 'Z'">{{ date_gmt + 'Z' | formatDate }}</time>
-            </div>
+  <section v-loading="articles === null">
+    <article v-for="{ title, content, date_gmt } in articles">
+      <el-card style="margin-bottom: 1rem">
+        <div>
+          <h4>{{ title.rendered }}</h4>
+          -
+          <time :datetime="date_gmt + 'Z'">{{ (date_gmt + 'Z') | formatDate }}</time>
+        </div>
 
-            <div v-html="content.rendered">
-
-            </div>
-          </el-card>
-        </article>
-        <div v-if="articles && !articles.length">No articles.</div>
-    </section>
+        <div v-html="content.rendered"></div>
+      </el-card>
+    </article>
+    <div v-if="articles && !articles.length">No articles.</div>
+  </section>
 </template>
 
 <script>
@@ -38,11 +37,11 @@ export default {
 </script>
 
 <style scoped>
-    h4 {
-        display: inline;
-    }
+h4 {
+  display: inline;
+}
 
-    time {
-        font-size: .9em;
-    }
+time {
+  font-size: 0.9em;
+}
 </style>

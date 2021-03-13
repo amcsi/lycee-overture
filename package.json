@@ -26,6 +26,7 @@
     "laravel-mix": "^4.0.14",
     "lodash.debounce": "^4.0.8",
     "lodash.isequal": "^4.5.0",
+    "prettier": "^2.2.1",
     "rollbar": "^2.5.5",
     "sass": "^1.17.0",
     "sass-loader": "^7.1.0",

@@ -1,36 +1,37 @@
 <template>
-    <div>
-        <el-card>
-            <el-alert show-icon title="Guidelines" type="warning">
-                Please read
-                <ExternalLink href="/help-translate#card-names-character-types">the guidelines
-                </ExternalLink>
-                for <strong>"Card Names, Ability Names, Character Types"</strong> before submitting
-                name / ability type translations.
-            </el-alert>
-            <div
-                v-for="nameProperty of nameProperties"
-                v-if="card.japanese[nameProperty.key]"
-                :key="nameProperty.key"
-            >
-                <h3>{{nameProperty.name}}</h3>
-                <div v-for="(japanese, index) of japaneseComponentsByProperty[nameProperty.key]">
-                    <el-tag effect="plain">
-                        <FlagImage locale="ja" />
-                        {{ japanese }}
-                    </el-tag>
-                    <el-tag effect="plain">
-                        <FlagImage locale="en" />
-                        {{ translatedComponentsByProperty[nameProperty.key][index]}}
-                    </el-tag>
-                    <ExternalLink :href="translateLinkByProperty[nameProperty.key][index]">
-                        Translate
-                    </ExternalLink>
-                </div>
-            </div>
-        </el-card>
-        <div style="height: 2rem" />
-    </div>
+  <div>
+    <el-card>
+      <el-alert show-icon title="Guidelines" type="warning">
+        Please read
+        <ExternalLink href="/help-translate#card-names-character-types"
+          >the guidelines
+        </ExternalLink>
+        for <strong>"Card Names, Ability Names, Character Types"</strong> before submitting name /
+        ability type translations.
+      </el-alert>
+      <div
+        v-for="nameProperty of nameProperties"
+        v-if="card.japanese[nameProperty.key]"
+        :key="nameProperty.key"
+      >
+        <h3>{{ nameProperty.name }}</h3>
+        <div v-for="(japanese, index) of japaneseComponentsByProperty[nameProperty.key]">
+          <el-tag effect="plain">
+            <FlagImage locale="ja" />
+            {{ japanese }}
+          </el-tag>
+          <el-tag effect="plain">
+            <FlagImage locale="en" />
+            {{ translatedComponentsByProperty[nameProperty.key][index] }}
+          </el-tag>
+          <ExternalLink :href="translateLinkByProperty[nameProperty.key][index]">
+            Translate
+          </ExternalLink>
+        </div>
+      </div>
+    </el-card>
+    <div style="height: 2rem" />
+  </div>
 </template>
 
 <script>
@@ -76,8 +77,9 @@ export default {
       const ret = {};
 
       for (const { key } of this.nameProperties) {
-        ret[key] = this.japaneseComponentsByProperty[key].map(japaneseName => `${oneSkyKeywordBaseUrl}${encodeURIComponent(
-          japaneseName)}`);
+        ret[key] = this.japaneseComponentsByProperty[key].map(
+          japaneseName => `${oneSkyKeywordBaseUrl}${encodeURIComponent(japaneseName)}`
+        );
       }
 
       return ret;
@@ -86,6 +88,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

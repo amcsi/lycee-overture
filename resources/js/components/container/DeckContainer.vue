@@ -1,8 +1,8 @@
 <template>
-    <div v-if="!listLoading">
-        <slot :decks="list"></slot>
-    </div>
-    <div v-else v-loading="true" style="height: 300px;"></div>
+  <div v-if="!listLoading">
+    <slot :decks="list"></slot>
+  </div>
+  <div v-else v-loading="true" style="height: 300px"></div>
 </template>
 
 <script>
@@ -23,6 +23,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,8 +1,8 @@
 <template>
-    <CardListContainer>
-        <CardFilters />
-        <CardList />
-    </CardListContainer>
+  <CardListContainer>
+    <CardFilters />
+    <CardList />
+  </CardListContainer>
 </template>
 
 <script>
@@ -11,7 +11,8 @@ import CardFilters from '../components/card/CardFilters';
 import CardList from '../components/CardList';
 import CardListContainer from '../components/container/CardListContainer';
 
-const navigateAwayMessage = 'There are unsaved translation draft changes. Are you sure you would like to navigate away?';
+const navigateAwayMessage =
+  'There are unsaved translation draft changes. Are you sure you would like to navigate away?';
 
 function beforeRouteLeave(to, from, next) {
   if (!this.dirtyTranslationCardIds.length) {
@@ -50,7 +51,7 @@ export default {
     },
   },
   mounted() {
-    const listener = (event) => {
+    const listener = event => {
       if (this.dirtyTranslationCardIds.length) {
         event.preventDefault();
         event.returnValue = '';
@@ -67,6 +68,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,25 +1,25 @@
 <template>
-    <div>
-        <div v-if="cards">
-            <h3>
-                <span v-if="statistics" v-show="totalCards > 0">
-                    Fully translated: {{ statistics.translated_cards }}
-                    ({{ getPercentOfRatio(statistics.fully_translated_ratio) }}).
-                    Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
-                </span>
-                <span v-else-if="!isLocaleJapanese" v-loading="true">&nbsp;</span>
-            </h3>
+  <div>
+    <div v-if="cards">
+      <h3>
+        <span v-if="statistics" v-show="totalCards > 0">
+          Fully translated: {{ statistics.translated_cards }} ({{
+            getPercentOfRatio(statistics.fully_translated_ratio)
+          }}). Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
+        </span>
+        <span v-else-if="!isLocaleJapanese" v-loading="true">&nbsp;</span>
+      </h3>
 
-            <Paginator :pagination="cards.meta" @page-change="pageChange" />
+      <Paginator :pagination="cards.meta" @page-change="pageChange" />
 
-            <div class="card-list" v-loading="cardsLoading">
-                <CardListItem v-for="card in cards.data" :card="card" :key="card.id"></CardListItem>
-            </div>
+      <div class="card-list" v-loading="cardsLoading">
+        <CardListItem v-for="card in cards.data" :card="card" :key="card.id"></CardListItem>
+      </div>
 
-            <Paginator :pagination="cards.meta" @page-change="pageChange" />
-        </div>
-        <div v-else v-loading="cardsLoading" style="height: 300px;"></div>
+      <Paginator :pagination="cards.meta" @page-change="pageChange" />
     </div>
+    <div v-else v-loading="cardsLoading" style="height: 300px"></div>
+  </div>
 </template>
 
 <script>
@@ -51,18 +51,20 @@ export default {
       this.$router.push({ query });
     },
     getPercentOfRatio(ratio) {
-      return new Intl.NumberFormat({
-        maximumFractionDigits: 3,
-        style: 'percent',
-      }).format(ratio * 100) + '%';
+      return (
+        new Intl.NumberFormat({
+          maximumFractionDigits: 3,
+          style: 'percent',
+        }).format(ratio * 100) + '%'
+      );
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-    .el-card {
-        // For the thumbnails.
-        overflow: visible;
-    }
+.el-card {
+  // For the thumbnails.
+  overflow: visible;
+}
 </style>

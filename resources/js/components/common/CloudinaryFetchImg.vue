@@ -1,5 +1,5 @@
 <template>
-    <img v-bind="$attrs" :alt="alt" :src="_src" />
+  <img v-bind="$attrs" :alt="alt" :src="_src" />
 </template>
 
 <script>
@@ -22,6 +22,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

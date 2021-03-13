@@ -1,7 +1,7 @@
 <template>
-    <CardListContainer>
-        <CardListPrint v-loading="printListLoading" :cards="printList" />
-    </CardListContainer>
+  <CardListContainer>
+    <CardListPrint v-loading="printListLoading" :cards="printList" />
+  </CardListContainer>
 </template>
 
 <script>
@@ -14,15 +14,10 @@ export default {
   name: 'CardListPrintPage',
   components: { CardListContainer, CardListPrint },
   computed: {
-    ...mapState('cards', [
-      'printList',
-      'printListLoading',
-    ]),
+    ...mapState('cards', ['printList', 'printListLoading']),
   },
   methods: {
-    ...mapActions('cards', [
-      'listCardsForPrinting',
-    ]),
+    ...mapActions('cards', ['listCardsForPrinting']),
   },
   mounted() {
     this.listCardsForPrinting(this.$route.query);
@@ -38,6 +33,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

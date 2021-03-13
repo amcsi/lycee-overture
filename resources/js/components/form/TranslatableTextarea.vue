@@ -1,14 +1,14 @@
 <template>
-    <el-form-item>
-        <slot name="label">{{ _label }}</slot>
+  <el-form-item>
+    <slot name="label">{{ _label }}</slot>
 
-        <el-input
-            type="textarea"
-            :value="value"
-            @input="$emit('input', $event)"
-            :placeholder="placeholder"
-        ></el-input>
-    </el-form-item>
+    <el-input
+      type="textarea"
+      :value="value"
+      @input="$emit('input', $event)"
+      :placeholder="placeholder"
+    ></el-input>
+  </el-form-item>
 </template>
 
 <script>
@@ -32,10 +32,7 @@ export default {
       return ret;
     },
   },
-
 };
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

@@ -1,156 +1,156 @@
 <template>
-    <div>
-        <div class="spacer" />
+  <div>
+    <div class="spacer" />
 
-        <el-alert show-icon :closable="false">
-            This card is currently
-            <span class="translatedText" :class="{autoTranslated: !isManuallyTranslated}">{{ !isManuallyTranslated ? 'automatically' : 'manually'}}</span>
-            translated.
-        </el-alert>
+    <el-alert show-icon :closable="false">
+      This card is currently
+      <span class="translatedText" :class="{ autoTranslated: !isManuallyTranslated }">{{
+        !isManuallyTranslated ? 'automatically' : 'manually'
+      }}</span>
+      translated.
+    </el-alert>
 
-        <template v-if="lastSavedTranslationSuggestion">
-            <div class="spacer" />
+    <template v-if="lastSavedTranslationSuggestion">
+      <div class="spacer" />
 
-            <el-alert show-icon :closable="false" type="success">
-                There is a pending translation suggestion for this card by <strong>{{lastSavedTranslationSuggestion.creator.name}}</strong>.
-            </el-alert>
-        </template>
+      <el-alert show-icon :closable="false" type="success">
+        There is a pending translation suggestion for this card by
+        <strong>{{ lastSavedTranslationSuggestion.creator.name }}</strong
+        >.
+      </el-alert>
+    </template>
 
-        <div class="spacer" />
+    <div class="spacer" />
 
-        <el-alert show-icon title="Guidelines" type="warning">
-            Please read
-            <ExternalLink href="/help-translate#card-descriptions">the guidelines</ExternalLink>
-            for <strong>"Card Descriptions"</strong> before submitting
-            card description translations.
-        </el-alert>
+    <el-alert show-icon title="Guidelines" type="warning">
+      Please read
+      <ExternalLink href="/help-translate#card-descriptions">the guidelines</ExternalLink>
+      for <strong>"Card Descriptions"</strong> before submitting card description translations.
+    </el-alert>
 
-        <div class="spacer" />
+    <div class="spacer" />
 
-        <el-card>
-            <div slot="header">
-                <FlagEmoji locale="ja" />
-                Original
-            </div>
+    <el-card>
+      <div slot="header">
+        <FlagEmoji locale="ja" />
+        Original
+      </div>
 
-            <CardDescription :translation="card.japanese" />
-        </el-card>
+      <CardDescription :translation="card.japanese" />
+    </el-card>
 
-        <div v-if="card.auto_translation">
-            <div class="spacer" />
+    <div v-if="card.auto_translation">
+      <div class="spacer" />
 
-            <el-card>
-                <div slot="header">
-                    🤖 Auto Translated
-                </div>
+      <el-card>
+        <div slot="header">🤖 Auto Translated</div>
 
-                <CardDescription :translation="card.auto_translation" />
-            </el-card>
+        <CardDescription :translation="card.auto_translation" />
+      </el-card>
+    </div>
+
+    <div class="spacer" />
+
+    <el-card>
+      <div slot="header">
+        <FlagEmoji locale="en" />
+        Manual Translation
+      </div>
+
+      <el-form>
+        <translatable-textarea
+          v-if="relevantPropertyMap.preComments"
+          v-model="currentDraft.preComments"
+          :dirty="dirtyValues.preComments"
+          label="Pre-comments"
+          placeholder="E.g. Equip Restriction: ..."
+        />
+        <translatable-textarea
+          v-if="relevantPropertyMap.basicAbilities"
+          v-model="currentDraft.basicAbilities"
+          :dirty="dirtyValues.basicAbilities"
+          label="Basic abilities"
+          placeholder="Basic abilities"
+        />
+        <div v-if="relevantPropertyMap.abilityDescriptionLines">
+          <div v-for="(n, i) in lineCount" :key="i">
+            <translatable-textarea
+              v-if="currentDraft.abilityCostLines"
+              v-model="currentDraft.abilityCostLines[i]"
+              :dirty="dirtyValues.abilityCostLines[i]"
+              :label="`Ability Cost ${n}`"
+              placeholder="E.g. [0]"
+            />
+            <translatable-textarea
+              v-if="i in currentDraft.abilityDescriptionLines"
+              v-model="currentDraft.abilityDescriptionLines[i]"
+              :dirty="dirtyValues.abilityDescriptionLines[i]"
+              :label="`Ability Description ${n}`"
+              placeholder="Ability Description"
+            />
+          </div>
         </div>
 
-        <div class="spacer" />
+        <translatable-textarea
+          v-if="relevantPropertyMap.comments"
+          v-model="currentDraft.comments"
+          :dirty="dirtyValues.comments"
+          label="Comments"
+          placeholder="E.g. Deck Restriction: ..."
+        />
+      </el-form>
+    </el-card>
 
-        <el-card>
-            <div slot="header">
-                <FlagEmoji locale="en" />
-                Manual Translation
-            </div>
+    <div class="spacer" />
 
-            <el-form>
-                <translatable-textarea
-                    v-if="relevantPropertyMap.preComments"
-                    v-model="currentDraft.preComments"
-                    :dirty="dirtyValues.preComments"
-                    label="Pre-comments"
-                    placeholder="E.g. Equip Restriction: ..."
-                />
-                <translatable-textarea
-                    v-if="relevantPropertyMap.basicAbilities"
-                    v-model="currentDraft.basicAbilities"
-                    :dirty="dirtyValues.basicAbilities"
-                    label="Basic abilities"
-                    placeholder="Basic abilities"
-                />
-                <div v-if="relevantPropertyMap.abilityDescriptionLines">
-                    <div v-for="(n, i) in lineCount" :key="i">
-                        <translatable-textarea
-                            v-if="currentDraft.abilityCostLines"
-                            v-model="currentDraft.abilityCostLines[i]"
-                            :dirty="dirtyValues.abilityCostLines[i]"
-                            :label="`Ability Cost ${n}`"
-                            placeholder="E.g. [0]"
-                        />
-                        <translatable-textarea
-                            v-if="i in currentDraft.abilityDescriptionLines"
-                            v-model="currentDraft.abilityDescriptionLines[i]"
-                            :dirty="dirtyValues.abilityDescriptionLines[i]"
-                            :label="`Ability Description ${n}`"
-                            placeholder="Ability Description"
-                        />
-                    </div>
-                </div>
+    <el-card>
+      <div slot="header">👀 Preview</div>
 
-                <translatable-textarea
-                    v-if="relevantPropertyMap.comments"
-                    v-model="currentDraft.comments"
-                    :dirty="dirtyValues.comments"
-                    label="Comments"
-                    placeholder="E.g. Deck Restriction: ..."
-                />
-            </el-form>
-        </el-card>
+      <CardDescription :translation="resultTranslation" />
+    </el-card>
 
-        <div class="spacer" />
+    <div class="spacer" />
 
-        <el-card>
-            <div slot="header">
-                👀 Preview
-            </div>
+    <template v-if="errors.globalErrors && errors.globalErrors.length">
+      <el-alert v-for="(error, i) in errors.globalErrors" :key="i" type="error"
+        >{{ error }}
+      </el-alert>
+      <div class="spacer" />
+    </template>
 
-            <CardDescription :translation="resultTranslation" />
-        </el-card>
+    <el-button
+      v-if="showApproveButton"
+      type="success"
+      :disabled="!this.approveButtonEnabled"
+      :loading="waiting"
+      @click="approveTranslation"
+    >
+      {{ approveText }}
+    </el-button>
+    <el-button
+      type="primary"
+      :disabled="!dirty"
+      :loading="waiting"
+      @click="suggestTranslation"
+      title="Clicking here will submit your translation suggestion."
+    >
+      {{ submitText }}
+    </el-button>
+    <el-button
+      title="Clicking this will reset the form input fields match the auto-translated text."
+      @click="toAutoTranslated"
+      >Revert to Auto-Translated
+    </el-button>
+    <el-button
+      v-if="lastSavedTranslationSuggestion"
+      @click="toLastSuggestion"
+      title="Clicking this will reset the form input fields to the last saved translation suggestion's."
+    >
+      Revert to Last Suggestion
+    </el-button>
 
-        <div class="spacer" />
-
-        <template v-if="errors.globalErrors && errors.globalErrors.length">
-            <el-alert v-for="(error, i) in errors.globalErrors" :key="i" type="error">{{ error }}
-            </el-alert>
-            <div class="spacer" />
-        </template>
-
-        <el-button
-            v-if="showApproveButton"
-            type="success"
-            :disabled="!this.approveButtonEnabled"
-            :loading="waiting"
-            @click="approveTranslation"
-        >
-            {{ approveText }}
-        </el-button>
-        <el-button
-            type="primary"
-            :disabled="!dirty"
-            :loading="waiting"
-            @click="suggestTranslation"
-            title="Clicking here will submit your translation suggestion."
-        >
-            {{ submitText }}
-        </el-button>
-        <el-button
-            title="Clicking this will reset the form input fields match the auto-translated text."
-            @click="toAutoTranslated"
-        >Revert to Auto-Translated
-        </el-button>
-        <el-button
-            v-if="lastSavedTranslationSuggestion"
-            @click="toLastSuggestion"
-            title="Clicking this will reset the form input fields to the last saved translation suggestion's."
-        >
-            Revert to Last Suggestion
-        </el-button>
-
-        <div class="spacer" />
-    </div>
+    <div class="spacer" />
+  </div>
 </template>
 
 <script>
@@ -223,7 +223,7 @@ export default {
     lineCount() {
       return Math.max(
         this.currentDraft.abilityCostLines.length,
-        this.currentDraft.abilityDescriptionLines.length,
+        this.currentDraft.abilityDescriptionLines.length
       );
     },
     relevantProperties() {
@@ -261,11 +261,11 @@ export default {
       for (let translationKey in base) {
         const baseTranslation = base[translationKey];
         const compareTranslation = compare[translationKey];
-        changes[translationKey] = Array.isArray(baseTranslation) ?
-          // Recurse the array components.
-          baseTranslation.map((value, key) => value !== compareTranslation[key]) :
-          // Just compare the strings here.
-          baseTranslation !== compareTranslation;
+        changes[translationKey] = Array.isArray(baseTranslation)
+          ? // Recurse the array components.
+            baseTranslation.map((value, key) => value !== compareTranslation[key])
+          : // Just compare the strings here.
+            baseTranslation !== compareTranslation;
       }
 
       return changes;
@@ -340,9 +340,7 @@ export default {
       try {
         this.saving = true;
         await this.refreshCard(this.card.id);
-        this.$displaySuccess(
-          'You have successfully approved the translation.',
-        );
+        this.$displaySuccess('You have successfully approved the translation.');
       } catch (e) {
         const normalizedError = normalizeError(e);
         this.$displayError(normalizedError.message);
@@ -355,21 +353,20 @@ export default {
     async suggestTranslation() {
       await this._suggestTranslation();
       this.$displaySuccess(
-        'You have successfully submitted the translation suggestion for review by a translator.',
+        'You have successfully submitted the translation suggestion for review by a translator.'
       );
     },
     async _suggestTranslation(approve) {
       try {
         this.saving = true;
-        const responseData = (await api.post(
-          'suggestions',
-          {
+        const responseData = (
+          await api.post('suggestions', {
             card_id: this.id,
             locale: this.locale,
             approved: approve ? 1 : 0,
             ...this.resultTranslation,
-          },
-        )).data.data;
+          })
+        ).data.data;
         // If (by approval) the suggestion got deleted, then unset the last saved suggestion.
         this.lastSavedTranslationSuggestion = responseData.id ? responseData : null;
       } catch (e) {
@@ -399,7 +396,8 @@ export default {
       }
       if (anyJapaneseCharacterErrors) {
         globalErrors.push(
-          'Make sure the card\'s text is fully translated. No Japanese characters should remain.');
+          "Make sure the card's text is fully translated. No Japanese characters should remain."
+        );
       }
 
       this.errors = { globalErrors };
@@ -408,18 +406,22 @@ export default {
   async created() {
     try {
       this.loading = true;
-      const lastSavedSuggestion = (await api.get('suggestions', {
-        params: {
-          card_id: this.id,
-        },
-      })).data.data[0];
+      const lastSavedSuggestion = (
+        await api.get('suggestions', {
+          params: {
+            card_id: this.id,
+          },
+        })
+      ).data.data[0];
       if (lastSavedSuggestion) {
         this.lastSavedTranslationSuggestion = lastSavedSuggestion;
         this.currentDraft = cardTranslationToDraft(lastSavedSuggestion);
       }
     } catch (e) {
       const normalizedError = normalizeError(e);
-      this.$displayError(`Could not load last saved translation suggestion: ${normalizedError.message}`);
+      this.$displayError(
+        `Could not load last saved translation suggestion: ${normalizedError.message}`
+      );
       reportError(e);
     } finally {
       this.loading = false;
@@ -457,15 +459,15 @@ export default {
 @import 'resources/sass/variables';
 
 .spacer {
-    height: 1rem;
+  height: 1rem;
 }
 
 .translatedText {
-    font-weight: bold;
-    color: $--color-primary;
+  font-weight: bold;
+  color: $--color-primary;
 
-    &.autoTranslated {
-        color: $--color-success;
-    }
+  &.autoTranslated {
+    color: $--color-success;
+  }
 }
 </style>

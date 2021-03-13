@@ -3,7 +3,7 @@ export const mapComputed = normalizeNamespace(function mapComputed(namespace, da
   if (process.env.NODE_ENV !== 'production' && !isValidMap(data)) {
     console.error('[vuex] mapComputed: mapper parameter must be either an Array or an Object');
   }
-  normalizeMap(data).forEach(function(ref) {
+  normalizeMap(data).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
     var gettersVal = namespace + val;
@@ -28,14 +28,13 @@ export const mapComputed = normalizeNamespace(function mapComputed(namespace, da
   return res;
 });
 
-
 /**
  * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
  * @param {Function} fn
  * @return {Function}
  */
 function normalizeNamespace(fn) {
-  return function(namespace, map) {
+  return function (namespace, map) {
     if (typeof namespace !== 'string') {
       map = namespace;
       namespace = '';
@@ -56,7 +55,7 @@ function normalizeNamespace(fn) {
 function getModuleByNamespace(store, helper, namespace) {
   var module = store._modulesNamespaceMap[namespace];
   if (process.env.NODE_ENV !== 'production' && !module) {
-    console.error(('[vuex] module namespace not found in ' + helper + '(): ' + namespace));
+    console.error('[vuex] module namespace not found in ' + helper + '(): ' + namespace);
   }
   return module;
 }
@@ -70,8 +69,12 @@ function getModuleByNamespace(store, helper, namespace) {
  */
 function normalizeMap(map) {
   return Array.isArray(map)
-    ? map.map(function(key) { return ({ key: key, val: key }); })
-    : Object.keys(map).map(function(key) { return ({ key: key, val: map[key] }); });
+    ? map.map(function (key) {
+        return { key: key, val: key };
+      })
+    : Object.keys(map).map(function (key) {
+        return { key: key, val: map[key] };
+      });
 }
 
 /**

@@ -11,9 +11,7 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-  .extract()
-;
+mix.js('resources/js/app.js', 'public/js').extract();
 
 if (!mix.inProduction()) {
   mix.sourceMaps();
@@ -44,7 +42,7 @@ mix.options({
         // Keeps <?xml in minified SVGs to make PHP see them as image/svg+xml rather than image/svg.
         // With the latter the SVGs as background images won't appear.
         { removeXMLProcInst: false },
-      ]
+      ],
     },
   },
 });

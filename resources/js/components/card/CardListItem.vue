@@ -1,92 +1,92 @@
 <template>
-    <el-card class="card-list-item" :class="cls">
-        <div class="card-list-item-inner">
-            <CardThumbnail class="card-thumbnail" :id="card.id" />
-            <div class="card-details">
-                <div class="names-and-type">
-                    <div>
-                        <span class="card-id">{{ card.id }}</span>
-                        <span class="card-name">{{ cardText.name }}</span>
-                        <span v-if="isCharacter">
-                            - <span class="card-ability-name">{{ cardText.ability_name }}</span>
-                            <span class="card-character-type" v-if="characterType">- Type: {{ cardText.character_type || '-' }}</span>
-                        </span>
-                        <el-button
-                            class="show-when-hovering"
-                            size="mini"
-                            @click="translateNamesOpen = !translateNamesOpen"
-                        >{{translateNamesOpen ? 'Hide' : 'Help Translate'}}
-                        </el-button>
-                    </div>
-                    <div style="flex: 1" />
-                    <div>
-                        <span class="rarity">{{card.rarity}}</span>
-                    </div>
-                </div>
-                <CardNameTranslator v-if="translateNamesOpen" :card="card" />
-                <div class="stats-and-stuff">
-                    <div class="flex-center">
-                        <div class="flex-center gaps">
-                            <CardText class="element" :text="card.element" />
-                            <StatValue type="ex" :value="card.ex" />
-                            <template v-if="isCharacter">
-                                <StatValue
-                                    type="dmg"
-                                    :value="card.dmg"
-                                    style="margin-left: 0.75rem"
-                                />
-                                <StatValue type="ap" :value="card.ap" />
-                                <StatValue type="dp" :value="card.dp" />
-                                <StatValue type="sp" :value="card.sp" />
-                            </template>
-                            <span style="margin-left: 0.75rem">Cost:</span>
-                            <CardText class="cost" :text="card.cost" />
-                        </div>
-                        <div style="flex: 1" />
-                        <div v-if="card.set">
-                            <router-link :to="{ path: '/cards', query: {set: card.set.id} }">
-                                {{card.set.full_name}}
-                            </router-link>
-                            <router-link
-                                :to="{ path: '/cards', query: {brand: card.set.brand} }"
-                                v-html="formattedBrand"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="card-description" v-if="hasCardDescription">
-                    <CardDescription :translation="cardText" />
-                    <CardTranslator v-if="translateMode" :card="card" :id="this.card.id" />
-                </div>
-                <div style="flex: 1" />
-                <div class="show-when-hovering" style="text-align: right">
-                    <span v-if="user">
-                        <span class="clickable" @click="translateMode = !translateMode">{{translateMode ? 'Collapse' : ''}} Suggest Translation</span>
-                        -
-                    </span>
-                    <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
-                    <span v-if="showLanguageSelectors">
-                        <span
-                            class="language-link clickable"
-                            tabindex="0"
-                            :class="{ active: localLocale !== 'ja' }"
-                            @click="localLocale = 'en'"
-                        >
-                            <FlagImage locale="en" />
-                        </span>
-                                <span
-                                    class="language-link clickable"
-                                    tabindex="0"
-                                    :class="{ active: localLocale === 'ja' }"
-                                    @click="localLocale = 'ja'"
-                                >
-                            <FlagImage locale="ja" />
-                        </span>
-                    </span>
-                </div>
-            </div>
+  <el-card class="card-list-item" :class="cls">
+    <div class="card-list-item-inner">
+      <CardThumbnail class="card-thumbnail" :id="card.id" />
+      <div class="card-details">
+        <div class="names-and-type">
+          <div>
+            <span class="card-id">{{ card.id }}</span>
+            <span class="card-name">{{ cardText.name }}</span>
+            <span v-if="isCharacter">
+              - <span class="card-ability-name">{{ cardText.ability_name }}</span>
+              <span class="card-character-type" v-if="characterType"
+                >- Type: {{ cardText.character_type || '-' }}</span
+              >
+            </span>
+            <el-button
+              class="show-when-hovering"
+              size="mini"
+              @click="translateNamesOpen = !translateNamesOpen"
+              >{{ translateNamesOpen ? 'Hide' : 'Help Translate' }}
+            </el-button>
+          </div>
+          <div style="flex: 1" />
+          <div>
+            <span class="rarity">{{ card.rarity }}</span>
+          </div>
         </div>
-    </el-card>
+        <CardNameTranslator v-if="translateNamesOpen" :card="card" />
+        <div class="stats-and-stuff">
+          <div class="flex-center">
+            <div class="flex-center gaps">
+              <CardText class="element" :text="card.element" />
+              <StatValue type="ex" :value="card.ex" />
+              <template v-if="isCharacter">
+                <StatValue type="dmg" :value="card.dmg" style="margin-left: 0.75rem" />
+                <StatValue type="ap" :value="card.ap" />
+                <StatValue type="dp" :value="card.dp" />
+                <StatValue type="sp" :value="card.sp" />
+              </template>
+              <span style="margin-left: 0.75rem">Cost:</span>
+              <CardText class="cost" :text="card.cost" />
+            </div>
+            <div style="flex: 1" />
+            <div v-if="card.set">
+              <router-link :to="{ path: '/cards', query: { set: card.set.id } }">
+                {{ card.set.full_name }}
+              </router-link>
+              <router-link
+                :to="{ path: '/cards', query: { brand: card.set.brand } }"
+                v-html="formattedBrand"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="card-description" v-if="hasCardDescription">
+          <CardDescription :translation="cardText" />
+          <CardTranslator v-if="translateMode" :card="card" :id="this.card.id" />
+        </div>
+        <div style="flex: 1" />
+        <div class="show-when-hovering" style="text-align: right">
+          <span v-if="user">
+            <span class="clickable" @click="translateMode = !translateMode"
+              >{{ translateMode ? 'Collapse' : '' }} Suggest Translation</span
+            >
+            -
+          </span>
+          <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
+          <span v-if="showLanguageSelectors">
+            <span
+              class="language-link clickable"
+              tabindex="0"
+              :class="{ active: localLocale !== 'ja' }"
+              @click="localLocale = 'en'"
+            >
+              <FlagImage locale="en" />
+            </span>
+            <span
+              class="language-link clickable"
+              tabindex="0"
+              :class="{ active: localLocale === 'ja' }"
+              @click="localLocale = 'ja'"
+            >
+              <FlagImage locale="ja" />
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </el-card>
 </template>
 
 <script>
@@ -166,9 +166,11 @@ export default {
     },
     hasCardDescription() {
       const translation = this.cardText;
-      return translation.ability_cost.trim().length > 1
-        || translation.ability_description.trim().length > 1 || translation.comments.trim().length
-        > 1;
+      return (
+        translation.ability_cost.trim().length > 1 ||
+        translation.ability_description.trim().length > 1 ||
+        translation.comments.trim().length > 1
+      );
     },
     cardText() {
       if (!this.card.translation) {
@@ -200,128 +202,128 @@ export default {
 <style scoped lang="scss">
 @import 'resources/sass/variables';
 
-    .card-list-item {
-        position: relative;
-        margin-bottom: 1rem;
-    }
+.card-list-item {
+  position: relative;
+  margin-bottom: 1rem;
+}
 
-    .card-list-item-inner {
-        display: flex;
-        flex-direction: row;
-        justify-content: stretch;
-    }
+.card-list-item-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
 
-    .card-thumbnail {
-        margin-left: -1rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
+.card-thumbnail {
+  margin-left: -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 
-    .card-details {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        min-height: 100%;
-    }
+.card-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
 
-    .names-and-type {
-        display: flex;
-        align-items: center;
-        margin-bottom: .5rem;
-        color: gray;
-    }
+.names-and-type {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  color: gray;
+}
 
-    .card-id {
-        font-weight: bold;
-        font-size: 1.2em;
-        color: #555555;
-    }
+.card-id {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #555555;
+}
 
-    .stats-and-stuff {
-        margin-bottom: .5rem;
-    }
+.stats-and-stuff {
+  margin-bottom: 0.5rem;
+}
 
-    .element {
-        font-size: 1.5em;
-        vertical-align: middle;
-    }
+.element {
+  font-size: 1.5em;
+  vertical-align: middle;
+}
 
-    .stat {
-        display: inline-block;
-        color: white;
-        padding: .3rem .4rem;
-        font-size: .75rem;
-        line-height: 1rem;
-        border-radius: 1rem;
-        vertical-align: middle;
+.stat {
+  display: inline-block;
+  color: white;
+  padding: 0.3rem 0.4rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  border-radius: 1rem;
+  vertical-align: middle;
 
-        &:before {
-            content: '';
-            display: inline-block;
-            vertical-align: middle;
-            height: 100%;
-        }
-    }
+  &:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  }
+}
 
-    .card-description {
-        border-top: 1px dashed #a4a4a4;
-        padding-top: .5rem;
-        line-height: 1.4;
-    }
+.card-description {
+  border-top: 1px dashed #a4a4a4;
+  padding-top: 0.5rem;
+  line-height: 1.4;
+}
 
-    .language-selector {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        display: none;
+.language-selector {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: none;
 
-        .card-list-item:hover & {
-            display: block;
-        }
-    }
+  .card-list-item:hover & {
+    display: block;
+  }
+}
 
-    .language-link {
-        margin-left: 0.25em;
+.language-link {
+  margin-left: 0.25em;
 
-        &:not(.active) {
-            opacity: 0.25;
-        }
-    }
+  &:not(.active) {
+    opacity: 0.25;
+  }
+}
 
-    .show-when-hovering {
-        visibility: hidden;
+.show-when-hovering {
+  visibility: hidden;
 
-        .card-list-item:hover & {
-            visibility: visible;
-        }
-    }
+  .card-list-item:hover & {
+    visibility: visible;
+  }
+}
 
-    .flex-center {
-        display: flex;
-        align-items: center;
-    }
+.flex-center {
+  display: flex;
+  align-items: center;
+}
 
-    .gaps > * {
-        margin-right: 0.25rem;
-    }
+.gaps > * {
+  margin-right: 0.25rem;
+}
 
-    .clickable {
-        color: $link-color;
-    }
+.clickable {
+  color: $link-color;
+}
 
-    .card-type-character {
-      background-color: lighten(#000110, 94);
-    }
+.card-type-character {
+  background-color: lighten(#000110, 94);
+}
 
-    .card-type-area {
-      background-color: lighten(#755819, 70);
-    }
+.card-type-area {
+  background-color: lighten(#755819, 70);
+}
 
-    .card-type-item {
-      background-color: lighten(#346738, 65);
-    }
+.card-type-item {
+  background-color: lighten(#346738, 65);
+}
 
-    .card-type-event {
-      background-color: lighten(#60011D, 77);
-    }
+.card-type-event {
+  background-color: lighten(#60011d, 77);
+}
 </style>

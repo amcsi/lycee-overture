@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <h1>News</h1>
-        <LatestArticles />
-    </div>
+  <div>
+    <h1>News</h1>
+    <LatestArticles />
+  </div>
 </template>
 
 <script>
@@ -18,6 +18,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

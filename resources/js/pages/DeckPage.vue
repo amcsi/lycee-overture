@@ -1,22 +1,21 @@
 <template>
-    <div>
-        <h1>{{ $t('nav.deck') }}</h1>
+  <div>
+    <h1>{{ $t('nav.deck') }}</h1>
 
-        <deck-container v-slot="{ decks }">
-            <el-select placeholder="-" :value="$route.params.deck" @change="deckChange">
-                <el-option label="-" value=""></el-option>
-                <el-option
-                    v-for="deck in decks"
-                    :key="deck.id"
-                    :label="deck.name"
-                    :value="'' + deck.id"
-                ></el-option>
-            </el-select>
+    <deck-container v-slot="{ decks }">
+      <el-select placeholder="-" :value="$route.params.deck" @change="deckChange">
+        <el-option label="-" value=""></el-option>
+        <el-option
+          v-for="deck in decks"
+          :key="deck.id"
+          :label="deck.name"
+          :value="'' + deck.id"
+        ></el-option>
+      </el-select>
 
-            <router-view />
-
-        </deck-container>
-    </div>
+      <router-view />
+    </deck-container>
+  </div>
 </template>
 
 <script>
@@ -38,6 +37,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

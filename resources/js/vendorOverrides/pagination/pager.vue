@@ -1,44 +1,42 @@
 <template>
   <ul @click="onPagerClick" class="el-pager">
-    <li
-        :class="{ active: currentPage === 1, disabled }"
-        v-if="pageCount > 0"
-        class="number"
-    >
+    <li :class="{ active: currentPage === 1, disabled }" v-if="pageCount > 0" class="number">
       <router-link v-if="getToForPage" :to="getToForPage(1)" @click.prevent>1</router-link>
       <span v-else>1</span>
     </li>
     <li
-        class="el-icon more btn-quickprev"
-        :class="[quickprevIconClass, { disabled }]"
-        v-if="showPrevMore"
-        @mouseenter="onMouseenter('left')"
-        @mouseleave="quickprevIconClass = 'el-icon-more'"
-    >
-    </li>
+      class="el-icon more btn-quickprev"
+      :class="[quickprevIconClass, { disabled }]"
+      v-if="showPrevMore"
+      @mouseenter="onMouseenter('left')"
+      @mouseleave="quickprevIconClass = 'el-icon-more'"
+    ></li>
     <li
-        v-for="pager in pagers"
-        :key="pager"
-        :class="{ active: currentPage === pager, disabled }"
-        class="number"
+      v-for="pager in pagers"
+      :key="pager"
+      :class="{ active: currentPage === pager, disabled }"
+      class="number"
     >
-      <router-link v-if="getToForPage" :to="getToForPage(pager)" @click.prevent>{{ pager }}</router-link>
+      <router-link v-if="getToForPage" :to="getToForPage(pager)" @click.prevent>{{
+        pager
+      }}</router-link>
       <span v-else>{{ pager }}</span>
     </li>
     <li
-        class="el-icon more btn-quicknext"
-        :class="[quicknextIconClass, { disabled }]"
-        v-if="showNextMore"
-        @mouseenter="onMouseenter('right')"
-        @mouseleave="quicknextIconClass = 'el-icon-more'"
-    >
-    </li>
+      class="el-icon more btn-quicknext"
+      :class="[quicknextIconClass, { disabled }]"
+      v-if="showNextMore"
+      @mouseenter="onMouseenter('right')"
+      @mouseleave="quicknextIconClass = 'el-icon-more'"
+    ></li>
     <li
-        :class="{ active: currentPage === pageCount, disabled }"
-        class="number"
-        v-if="pageCount > 1"
+      :class="{ active: currentPage === pageCount, disabled }"
+      class="number"
+      v-if="pageCount > 1"
     >
-      <router-link v-if="getToForPage" :to="getToForPage(pageCount)" @click.prevent>{{ pageCount }}</router-link>
+      <router-link v-if="getToForPage" :to="getToForPage(pageCount)" @click.prevent>{{
+        pageCount
+      }}</router-link>
       <span v-else>{{ pageCount }}</span>
     </li>
   </ul>
@@ -167,7 +165,7 @@ export default {
 
     element() {
       return this.routerLinkUrlTemplate ? 'router-link' : 'li';
-    }
+    },
   },
 
   data() {

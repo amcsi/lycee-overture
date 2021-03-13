@@ -1,10 +1,10 @@
 <template>
-    <div class="anatomy-container">
-        <cloudinary-fetch-img :src="src" :alt="alt" />
-        <AnatomyTable>
-            <slot></slot>
-        </AnatomyTable>
-    </div>
+  <div class="anatomy-container">
+    <cloudinary-fetch-img :src="src" :alt="alt" />
+    <AnatomyTable>
+      <slot></slot>
+    </AnatomyTable>
+  </div>
 </template>
 
 <script>
@@ -29,15 +29,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    @import '~element-ui/packages/theme-chalk/src/mixins/mixins.scss';
+@import '~element-ui/packages/theme-chalk/src/mixins/mixins.scss';
 
-    .anatomy-container {
-        display: flex;
-        align-items: flex-start;
-        flex-direction: column;
+.anatomy-container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 
-        @include res(sm) {
-            flex-direction: row;
-        }
-    }
+  @include res(sm) {
+    flex-direction: row;
+  }
+}
 </style>

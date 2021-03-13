@@ -73,7 +73,7 @@ Vue.use(Loading.directive);
 //noinspection JSUnusedGlobalSymbols
 
 Vue.prototype.$rollbar = rollbar;
-Vue.config.errorHandler = function(err) {
+Vue.config.errorHandler = function (err) {
   console.error(err);
   rollbar.error(err);
 };
@@ -86,7 +86,7 @@ const dateFormatter = new Intl.DateTimeFormat(void 0, {
   minute: 'numeric',
 });
 
-Vue.filter('formatDate', function(value) {
+Vue.filter('formatDate', function (value) {
   if (typeof value === 'string') {
     value = new Date(value);
   }
@@ -94,7 +94,7 @@ Vue.filter('formatDate', function(value) {
 });
 
 const toastDuration = 10000;
-Vue.prototype.$displaySuccess = function(message) {
+Vue.prototype.$displaySuccess = function (message) {
   return Message({
     type: 'success',
     message,
@@ -102,7 +102,7 @@ Vue.prototype.$displaySuccess = function(message) {
   });
 };
 
-Vue.prototype.$displayError = function(message) {
+Vue.prototype.$displayError = function (message) {
   return Message({
     type: 'error',
     message,

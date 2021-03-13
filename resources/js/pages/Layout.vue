@@ -1,53 +1,55 @@
 <template>
-    <el-container class="container">
-        <el-header height="auto">
-            <NavMenu />
-        </el-header>
-        <el-main class="main">
-            <router-view></router-view>
-        </el-main>
-        <el-footer height="auto">
-          <el-card>
-            <p>Created by
-              <ExternalLink href="https://www.szeremi.org/">Attila Szeremi</ExternalLink>
-              . Drop me an email at
-              <strong>lycee-overture@szeremi.org</strong>, or follow me on
-              <ExternalLink href="https://twitter.com/amcsi_san">Twitter</ExternalLink>
-              .<br />
-              Website source code can be found on
-              <ExternalLink
-                  href="https://github.com/amcsi/lycee-overture"
-              >GitHub
-              </ExternalLink>
-              .<br />
-              Thanks to Yee Cheng Xuan for consulting with me with the automatic translations.
-            </p>
+  <el-container class="container">
+    <el-header height="auto">
+      <NavMenu />
+    </el-header>
+    <el-main class="main">
+      <router-view></router-view>
+    </el-main>
+    <el-footer height="auto">
+      <el-card>
+        <p>
+          Created by
+          <ExternalLink href="https://www.szeremi.org/">Attila Szeremi</ExternalLink>
+          . Drop me an email at
+          <strong>lycee-overture@szeremi.org</strong>, or follow me on
+          <ExternalLink href="https://twitter.com/amcsi_san">Twitter</ExternalLink>
+          .<br />
+          Website source code can be found on
+          <ExternalLink href="https://github.com/amcsi/lycee-overture">GitHub </ExternalLink>
+          .<br />
+          Thanks to Yee Cheng Xuan for consulting with me with the automatic translations.
+        </p>
 
-            <p v-if="newestDate">
-              Newest card(s) last imported:<br />
-              <span :style="{ zoom: !newestDate ? 0.5 : 1 }" v-loading="!newestDate">
-                        {{ newestDate | formatDate }}
-                        ({{ newestDateDaysAgo ? `${newestDateDaysAgo} days ago.` : 'Less than a day ago.' }})
-                    </span>
-            </p>
+        <p v-if="newestDate">
+          Newest card(s) last imported:<br />
+          <span :style="{ zoom: !newestDate ? 0.5 : 1 }" v-loading="!newestDate">
+            {{ newestDate | formatDate }}
+            ({{ newestDateDaysAgo ? `${newestDateDaysAgo} days ago.` : 'Less than a day ago.' }})
+          </span>
+        </p>
 
-            <p v-if="newestSuggestion">
-              Newest unapproved translation suggestion by <strong>{{ newestSuggestion.creator.name }}</strong>:<br />
-              <span>
-                        {{ newestSuggestion.created_at | formatDate }}
-                        ({{
-                  newestSuggestionDaysAgo ? `${newestSuggestionDaysAgo} days ago.` : 'Less than a day ago.'
-                }})
-                    </span>
-            </p>
-          </el-card>
+        <p v-if="newestSuggestion">
+          Newest unapproved translation suggestion by
+          <strong>{{ newestSuggestion.creator.name }}</strong
+          >:<br />
+          <span>
+            {{ newestSuggestion.created_at | formatDate }}
+            ({{
+              newestSuggestionDaysAgo
+                ? `${newestSuggestionDaysAgo} days ago.`
+                : 'Less than a day ago.'
+            }})
+          </span>
+        </p>
+      </el-card>
 
-          <div v-if="$route.path === '/'">
-            <h3>Latest news</h3>
-            <LatestArticles :limit="2" />
-          </div>
-        </el-footer>
-    </el-container>
+      <div v-if="$route.path === '/'">
+        <h3>Latest news</h3>
+        <LatestArticles :limit="2" />
+      </div>
+    </el-footer>
+  </el-container>
 </template>
 
 <script>
@@ -80,7 +82,7 @@ export default {
         return;
       }
 
-      return Math.floor(((new Date()) - newestDate.getTime()) / (1000 * 60 * 60 * 24));
+      return Math.floor((new Date() - newestDate.getTime()) / (1000 * 60 * 60 * 24));
     },
     newestSuggestionDaysAgo() {
       const newestDate = this.newestSuggestion?.created_at;
@@ -88,7 +90,7 @@ export default {
         return;
       }
 
-      return Math.floor(((new Date()) - new Date(newestDate).getTime()) / (1000 * 60 * 60 * 24));
+      return Math.floor((new Date() - new Date(newestDate).getTime()) / (1000 * 60 * 60 * 24));
     },
   },
   async created() {
@@ -98,11 +100,11 @@ export default {
 </script>
 
 <style lang="scss">
-    .main {
-        overflow: visible;
-    }
+.main {
+  overflow: visible;
+}
 
-    footer p:first-child {
-        margin-top: 0;
-    }
+footer p:first-child {
+  margin-top: 0;
+}
 </style>

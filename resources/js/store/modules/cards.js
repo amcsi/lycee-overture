@@ -44,7 +44,7 @@ export default {
         return;
       }
       const cardList = state.list.data;
-      const index = cardList.findIndex((card) => card.id === toCard.id);
+      const index = cardList.findIndex(card => card.id === toCard.id);
       if (index >= 0) {
         Vue.set(cardList, index, toCard);
       }
@@ -87,10 +87,9 @@ export default {
 
       commit('CARDS_PRINT_LOADING');
       try {
-
         const cards = (await listCards(query)).data.sort(
           // Ensure cards are sorted in ID order.
-          (card1, card2) => card1.id > card2.id ? 1 : -1,
+          (card1, card2) => (card1.id > card2.id ? 1 : -1)
         );
         commit('CARDS_PRINT_SET_LAST_PARAMS', stringifiedParams);
         commit('CARDS_PRINT_LOADED', cards);

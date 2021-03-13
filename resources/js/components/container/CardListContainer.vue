@@ -1,8 +1,8 @@
 <template>
-    <div v-if="list">
-        <slot></slot>
-    </div>
-    <div v-else v-loading="true" style="height: 300px;"></div>
+  <div v-if="list">
+    <slot></slot>
+  </div>
+  <div v-else v-loading="true" style="height: 300px"></div>
 </template>
 
 <script>
@@ -29,15 +29,14 @@ export default {
     }),
   },
   watch: {
-     '$route.query': {
+    '$route.query': {
       immediate: true,
-        async handler() {await this.listCardsAndFetchStatistics(this.$route.query);
+      async handler() {
+        await this.listCardsAndFetchStatistics(this.$route.query);
+      },
     },
   },
-},
-  };
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

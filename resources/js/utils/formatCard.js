@@ -2,22 +2,22 @@ import { escape } from './html';
 
 //noinspection NonAsciiCharacters
 const japaneseIconMap = {
-  '無': 'star',
-  '雪': 'snow',
-  '月': 'moon',
-  '花': 'flower',
-  '宙': 'space',
-  '日': 'sun',
+  無: 'star',
+  雪: 'snow',
+  月: 'moon',
+  花: 'flower',
+  宙: 'space',
+  日: 'sun',
 };
 
 //noinspection NonAsciiCharacters
 const japaneseAbilityTypeMap = {
-  '宣言': 'Activate',
-  '誘発': 'Trigger',
-  '常時': 'Continuous',
-  'コスト': 'Cost',
-  '装備制限': 'Equip Restriction',
-  '手札宣言': 'Hand Activate',
+  宣言: 'Activate',
+  誘発: 'Trigger',
+  常時: 'Continuous',
+  コスト: 'Cost',
+  装備制限: 'Equip Restriction',
+  手札宣言: 'Hand Activate',
 };
 
 const abbreviations = {
@@ -46,10 +46,15 @@ function simpleCallback(match, contents) {
  * For copy-ability, they need to be enclosed with invisible copiable brackets.
  */
 function japaneseElementsCallback(match, contents) {
-  const iconsString = contents.split('').map(japaneseElementChar => getIcon(
-    japaneseElementChar === 'T' ? 'tap' : japaneseIconMap[japaneseElementChar],
-    japaneseElementChar,
-  )).join('');
+  const iconsString = contents
+    .split('')
+    .map(japaneseElementChar =>
+      getIcon(
+        japaneseElementChar === 'T' ? 'tap' : japaneseIconMap[japaneseElementChar],
+        japaneseElementChar
+      )
+    )
+    .join('');
 
   return `<span class=ict>[</span>${iconsString}<span class="ict">]</span>`;
 }
@@ -62,9 +67,7 @@ function abilityTypeCallback(match, contents) {
   const englishAbilityType = japaneseAbilityTypeMap[contents] || contents;
   const cls = englishAbilityType.toLowerCase().replace(' ', '-');
   const text = abbreviations[contents] || contents;
-  return (
-    `<span class="ict">[</span><span class="card-ability-type-${cls}">${text}</span><span class="ict">]</span>`
-  );
+  return `<span class="ict">[</span><span class="card-ability-type-${cls}">${text}</span><span class="ict">]</span>`;
 }
 
 export function formatBrands(text = '', brandsRegexp) {
@@ -78,10 +81,8 @@ function brandsCallback(match, contents) {
 /**
  * Formats card text to use pretty icons and stuff.
  */
-export default function(text = '') {
-  text = text
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+export default function (text = '') {
+  text = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   text = text.replace(/([“「])(.*?)([」”])/g, (_, opening, name, closing) => {
     // Make quotes into links.
     // Get the same string, but it made into a link with a new name filter.
