@@ -1,12 +1,20 @@
 <template>
-  <div :style="computedContainerStyle">
+  <div class="container" :style="computedContainerStyle">
+    <img
+      v-if="fallbackToCardback"
+      alt="fallback"
+      :src="cardbackSrc"
+      :height="height"
+      :width="width"
+      :style="styles"
+    />
     <img alt="card" :key="key" :src="src" :height="height" :width="width" :style="styles" />
   </div>
 </template>
 
 <script>
 import { cardHeightWidthRatio } from '../../../sass/_variables.scss';
-import { assembleCloudinaryImageUrl } from '../../utils/image';
+import { assembleCloudinaryImageCardUrl, assembleCloudinaryImageUrl } from '../../utils/image';
 
 /** @class CardImage */
 export default {
@@ -27,6 +35,9 @@ export default {
     noPointerEvents: {
       type: Boolean,
     },
+    fallbackToCardback: {
+      type: Boolean,
+    },
     styles: {
       type: Object,
       default() {
@@ -39,13 +50,11 @@ export default {
   },
   computed: {
     src() {
-      return assembleCloudinaryImageUrl(this.id + (this.variant ?? ''), this);
+      return assembleCloudinaryImageCardUrl(this.id + (this.variant ?? ''), this);
     },
     width() {
       // Card width/height ratio.
-      const width = this.height ? this.height * cardHeightWidthRatio : this.height;
-      console.info({ width });
-      return width;
+      return this.height ? this.height * cardHeightWidthRatio : this.height;
     },
     computedContainerStyle() {
       const style = { width: `${this.width}px`, height: `${this.height}px` };
@@ -58,6 +67,9 @@ export default {
       // The key ensures that the previous image wouldn't be shown while the newer variant is loading.
       return this.id + this.variant;
     },
+    cardbackSrc() {
+      return assembleCloudinaryImageUrl('cardback');
+    },
   },
 };
 </script>
@@ -69,7 +81,14 @@ $borderHeightRadius: 1.92%;
 $borderWidthRadius: $borderHeightRadius * $cardHeightWidthRatio;
 
 img {
+  position: absolute;
+  top: 0;
+  left: 0;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   border-radius: #{$borderHeightRadius} / #{$borderWidthRadius};
+}
+
+.container {
+  position: relative;
 }
 </style>

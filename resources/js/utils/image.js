@@ -1,3 +1,7 @@
+export function assembleCloudinaryImageCardUrl(imageName, options = {}, modifiers = []) {
+  return assembleCloudinaryImageUrl(`cards/${imageName}`, options, modifiers);
+}
+
 export function assembleCloudinaryImageUrl(imageName, options = {}, modifiers = []) {
   modifiers.push('q_auto');
   modifiers.push('f_auto');
@@ -6,5 +10,5 @@ export function assembleCloudinaryImageUrl(imageName, options = {}, modifiers = 
   }
   return `https://res.cloudinary.com/${
     window.vars.cloudinaryCloudName
-  }/image/upload/${modifiers.join(',')}/cards/${imageName}.jpg`;
+  }/image/upload/${modifiers.join(',')}/${imageName}.jpg`;
 }

@@ -10,6 +10,7 @@
         @mouseenter.native="mouseEnter"
         @mouseleave.native="mouseLeave"
         style="cursor: pointer"
+        fallback-to-cardback
       />
     </a>
 
@@ -22,6 +23,7 @@
       :variant="variant"
       :height="height"
       :cloudinary-height="150"
+      fallback-to-cardback
       no-pointer-events
     />
 
@@ -54,7 +56,7 @@
 <script>
 import Popper from 'popper.js';
 import { saveCardVariant, savedCardVariants } from '../../utils/cardVariant';
-import { assembleCloudinaryImageUrl } from '../../utils/image';
+import { assembleCloudinaryImageCardUrl } from '../../utils/image';
 import CardImage from './CardImage';
 
 /** @class CardThumbnail */
@@ -83,7 +85,7 @@ export default {
       return this.largerImage ? 520 : 300;
     },
     imageUrl() {
-      return assembleCloudinaryImageUrl(this.id + this.variantObj.variant, {
+      return assembleCloudinaryImageCardUrl(this.id + this.variantObj.variant, {
         cloudinaryHeight: this.height,
       });
     },

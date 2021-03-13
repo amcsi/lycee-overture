@@ -13,7 +13,6 @@ try {
  * property additions/deletions.
  */
 export const savedCardVariants = Vue.observable(_savedCardVariants);
-console.info({ savedCardVariants });
 
 /**
  * Updates the user's preference for a card and saves it to localStorage.
