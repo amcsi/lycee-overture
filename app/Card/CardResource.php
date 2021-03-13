@@ -17,6 +17,8 @@ class CardResource extends JsonResource
         $card = $this->resource;
         $locale = \App::getLocale();
 
+        $rarities = collect(explode(',', $card->rarity));
+        $variants = collect(explode(',', $card->variants));
         return [
             'id' => $card->id,
             'type' => $card->getType(),
@@ -27,7 +29,11 @@ class CardResource extends JsonResource
             'sp' => $card->sp,
             'element' => self::getElementMarkup($card),
             'cost' => self::getCostMarkup($card),
-            'rarity' => explode(',', $card->rarity)[0],
+            'rarity' => $rarities[0],
+            'variants' => $rarities->map(fn(string $rarity, int $index) => [
+                'rarity' => $rarity,
+                'variant' => $variants[$index],
+            ]),
             'translation' => $locale !== Locale::JAPANESE ?
                 new CardTranslationResource(($card->getBestTranslation())) :
                 null,

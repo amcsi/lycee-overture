@@ -1,7 +1,7 @@
 <template>
   <el-card class="card-list-item" :class="cls">
     <div class="card-list-item-inner">
-      <CardThumbnail class="card-thumbnail" :id="card.id" />
+      <CardThumbnail class="card-thumbnail" :id="card.id" :variants="card.variants" />
       <div class="card-details">
         <div class="names-and-type">
           <div>

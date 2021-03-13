@@ -28,10 +28,13 @@ export default {
         return {};
       },
     },
+    variant: {
+      type: String,
+    },
   },
   computed: {
     src() {
-      return assembleCloudinaryImageUrl(this.id, this);
+      return assembleCloudinaryImageUrl(this.id + (this.variant ?? ''), this);
     },
     width() {
       // Card width/height ratio.

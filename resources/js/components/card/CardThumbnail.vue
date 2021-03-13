@@ -4,6 +4,7 @@
     <a target="_blank" rel="nofollow" :href="largerImage ? imageUrl : null" @click="click">
       <CardImage
         :id="id"
+        :variant="variant"
         :height="150"
         :cloudinary-height="150"
         @mouseenter.native="mouseEnter"
@@ -18,6 +19,7 @@
       class="biggerImage"
       v-show="revealImageOverlay"
       :id="id"
+      :variant="variant"
       :height="height"
       :cloudinary-height="150"
       :styles="{ 'pointer-events': 'none' }"
@@ -28,15 +30,30 @@
       class="biggerImage"
       v-show="revealImageOverlay"
       :id="id"
+      :variant="variant"
       :height="height"
       :cloudinary-height="height"
       :styles="{ 'pointer-events': 'none' }"
     />
+
+    <div class="variants" v-if="variants.length > 1">
+      <span
+        v-for="{ variant, rarity } of variants"
+        class="variant"
+        :class="{ notSelected: variant !== savedCardVariant }"
+        @mouseenter="selectVariant(variant)"
+        @mouseleave="unselectVariant"
+        @click="selectVariant(variant, true)"
+      >
+        {{ rarity }}
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
 import Popper from 'popper.js';
+import { saveCardVariant, savedCardVariants } from '../../utils/cardVariant';
 import { assembleCloudinaryImageUrl } from '../../utils/image';
 import CardImage from './CardImage';
 
@@ -47,11 +64,16 @@ export default {
     return {
       largerImage: false,
       revealImageOverlay: false,
+      hoveringVariant: null,
     };
   },
   props: {
     id: {
       type: String,
+      required: true,
+    },
+    variants: {
+      type: Array,
       required: true,
     },
   },
@@ -61,7 +83,34 @@ export default {
       return this.largerImage ? 520 : 300;
     },
     imageUrl() {
-      return assembleCloudinaryImageUrl(this.id, { cloudinaryHeight: this.height });
+      return assembleCloudinaryImageUrl(this.id + this.variantObj.variant, {
+        cloudinaryHeight: this.height,
+      });
+    },
+    savedCardVariant() {
+      return savedCardVariants.preferences[this.id] ?? '';
+    },
+    savedCardVariants() {
+      return savedCardVariants;
+    },
+    variantsByVariantString() {
+      const ret = {};
+      for (const variantObj of this.variants) {
+        ret[variantObj.variant] = variantObj;
+      }
+      return ret;
+    },
+    variantObj() {
+      const variantObj = this.variantsByVariantString[
+        this.hoveringVariant ?? this.savedCardVariant ?? ''
+      ];
+      if (variantObj) {
+        return variantObj;
+      }
+      return this.variants[0];
+    },
+    variant() {
+      return this.variantObj.variant;
     },
   },
   methods: {
@@ -98,6 +147,17 @@ export default {
       this.revealImageOverlay = false;
       this.largerImage = false;
     },
+    selectVariant(variant, select) {
+      this.hoveringVariant = variant;
+      if (select) {
+        saveCardVariant(this.id, variant);
+      }
+      this.mouseEnter();
+    },
+    unselectVariant() {
+      this.hoveringVariant = null;
+      this.mouseLeave();
+    },
     click(event) {
       event.stopPropagation();
       if (this.largerImage) {
@@ -130,5 +190,17 @@ export default {
   bottom: -312px;
   left: 10px;
   z-index: 10;
+}
+
+.variants {
+  margin-top: 0.25rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/*noinspection CssUnusedSymbol*/
+.notSelected {
+  font-weight: bold;
+  cursor: pointer;
 }
 </style>
