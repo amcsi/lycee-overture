@@ -22,7 +22,7 @@
       :variant="variant"
       :height="height"
       :cloudinary-height="150"
-      :styles="{ 'pointer-events': 'none' }"
+      no-pointer-events
     />
 
     <CardImage
@@ -33,7 +33,7 @@
       :variant="variant"
       :height="height"
       :cloudinary-height="height"
-      :styles="{ 'pointer-events': 'none' }"
+      no-pointer-events
     />
 
     <div class="variants" v-if="variants.length > 1">

@@ -1,5 +1,7 @@
 <template>
-  <img alt="card" :src="src" :height="height" :width="width" :style="styles" />
+  <div :style="computedContainerStyle">
+    <img alt="card" :key="key" :src="src" :height="height" :width="width" :style="styles" />
+  </div>
 </template>
 
 <script>
@@ -22,6 +24,9 @@ export default {
       type: Number,
       default: false,
     },
+    noPointerEvents: {
+      type: Boolean,
+    },
     styles: {
       type: Object,
       default() {
@@ -38,7 +43,20 @@ export default {
     },
     width() {
       // Card width/height ratio.
-      return this.height ? this.height * cardHeightWidthRatio : this.height;
+      const width = this.height ? this.height * cardHeightWidthRatio : this.height;
+      console.info({ width });
+      return width;
+    },
+    computedContainerStyle() {
+      const style = { width: `${this.width}px`, height: `${this.height}px` };
+      if (this.noPointerEvents) {
+        style['pointer-events'] = 'none';
+      }
+      return style;
+    },
+    key() {
+      // The key ensures that the previous image wouldn't be shown while the newer variant is loading.
+      return this.id + this.variant;
     },
   },
 };
