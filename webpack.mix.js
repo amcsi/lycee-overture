@@ -20,9 +20,11 @@ if (!mix.inProduction()) {
 // https://github.com/JeffreyWay/laravel-mix/issues/845#issuecomment-343188420
 if (mix.config.hmr) {
   const host = process.env.HOT_HOST || '127.0.0.1';
+  const port = process.env.HOT_PORT || '8080';
   mix.options({
     hmrOptions: {
       host,
+      port,
     },
   });
 
