@@ -5,6 +5,7 @@
         v-if="withImages"
         class="card-image"
         :id="card.id"
+        :variant="imageVariant"
         :height="100"
         :cloudinary-height="150"
       />
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import { savedCardVariants } from '../../utils/cardVariant';
 import CardImage from './CardImage';
 import CardText from './CardText';
 
@@ -77,6 +79,9 @@ export default {
         ret.push([abilityCost, abilityDescription]);
       });
       return ret;
+    },
+    imageVariant() {
+      return savedCardVariants.preferences[this.card.id] ?? '';
     },
   },
 };
