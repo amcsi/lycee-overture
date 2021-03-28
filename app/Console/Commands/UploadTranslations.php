@@ -11,6 +11,9 @@ use amcsi\LyceeOverture\I18n\OneSkyClient;
 use Illuminate\Console\Command;
 use Symfony\Component\Stopwatch\Stopwatch;
 
+/**
+ * Gathers japanese names / types found in card_translations and uploads them to OneSky.
+ */
 class UploadTranslations extends Command
 {
     public const COMMAND = 'lycee:upload-translations';

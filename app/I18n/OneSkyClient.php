@@ -71,6 +71,11 @@ class OneSkyClient
                 throw new \InvalidArgumentException("Bad which: $which");
         }
 
+        if (!$input) {
+            \Log::warning("Translations to upload to OneSky for `$key` is empty. Not uploading.");
+            return;
+        }
+
         $this->getGuzzleClient()->request(
             'POST',
             'files',
