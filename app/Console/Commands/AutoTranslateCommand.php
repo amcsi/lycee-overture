@@ -53,8 +53,9 @@ class AutoTranslateCommand extends Command
         $japaneseCards = $japaneseBuilder->get();
 
         $fileDumpPath = sprintf(storage_path('dump/autoTranslate/%s.txt'), date('Y-m-d--His'));
-        if (!@mkdir($concurrentDirectory = dirname($fileDumpPath), 0775, true) && !is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+        $fileDumpDir = dirname($fileDumpPath);
+        if (!is_dir($fileDumpDir) && !@mkdir($fileDumpDir, 0775, true) && !is_dir($fileDumpDir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $fileDumpDir));
         }
         $dumpFile = $this->option('dump-to-file') ?
             try_fopen($fileDumpPath, 'wb') :
