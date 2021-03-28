@@ -6,6 +6,7 @@ namespace amcsi\LyceeOverture\I18n;
 use GuzzleHttp\Client;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 
 class OneSkyClient
@@ -118,7 +119,12 @@ class OneSkyClient
                     ],
                 ]
             );
-            $result = json_decode($result->getBody()->__toString(), true);
+            $contents = $result->getBody()->getContents();
+            if ($contents === '') {
+                $message = 'Response body from OneSky is empty. Could not download translations.';
+                throw new \UnexpectedValueException($message);
+            }
+            $result = Utils::jsonDecode($contents, true);
             /** @noinspection SlowArrayOperationsInLoopInspection */
             $translations = array_merge_recursive($translations, $result);
         }
