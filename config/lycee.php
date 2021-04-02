@@ -22,6 +22,9 @@ return [
             'Girls & Panzer: Senshadou Daisakusen',
             'Girls und Panzer: Destruction Mission!',
         ],
+        'HOK' => [
+            'HOOKSOFT',
+        ],
         'KHP' => [
             'Kamihime Project',
         ],
