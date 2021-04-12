@@ -1,6 +1,6 @@
 @php
 $title = 'Lycee Overture TCG Translations';
-$description = 'This is a website in progress with the goal of translating the this new Lycee Overture Trading Card Game and provide a useful database for being able to search for cards.';
+$description = 'This is a website in progress with the goal of translating the new Lycee Overture Trading Card Game and provide a useful database for being able to search for cards.';
 @endphp
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">

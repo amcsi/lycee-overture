@@ -13,8 +13,8 @@
       Overture.
     </p>
     <p>
-      This is a website in progress with the goal of translating the this new Lycee Overture Trading
-      Card Game, and also provide a useful database for being able to search for cards. You can view
+      This is a website in progress with the goal of translating the new Lycee Overture Trading Card
+      Game, and also provide a useful database for being able to search for cards. You can view
       what's been done so far in the above link.
     </p>
 
