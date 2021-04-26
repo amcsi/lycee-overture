@@ -16,8 +16,8 @@ $description = 'This is a website in progress with the goal of translating the n
 
     <meta property="og:title" content="{{ $title }}" />
     <meta property="og:description" content="{{ $description }}" />
-    <meta property="og:image" content="http://media.archonia.com/images/samples/74/87/307487_s0.jpg" />
-    <meta property="og:image:secure_url" content="https://media.archonia.com/images/samples/74/87/307487_s0.jpg" />
+    <meta property="og:image" content="https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/v1619434147/og_image.jpg" />
+    <meta property="og:image:secure_url" content="https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/v1619434147/og_image.jpg" />
     <meta property="og:image:width" content="249" />
     <meta property="og:image:height" content="423" />
 
