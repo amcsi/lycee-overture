@@ -18,6 +18,9 @@ return [
         'FGO' => [
             'Fate/Grand Order',
         ],
+        'GIG' => [
+            'Giga',
+        ],
         'GUP' => [
             'Girls & Panzer: Senshadou Daisakusen',
             'Girls und Panzer: Destruction Mission!',
@@ -69,5 +72,6 @@ return [
         'ネクストン' => 'Nexton',
         'ぱれっと' => 'Palette',
         'パープルソフトウェア' => 'Purple software',
+        '戯画' => 'Giga',
     ],
 ];
