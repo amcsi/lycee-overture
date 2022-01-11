@@ -28,7 +28,7 @@ class WhenAppearsTest extends TestCase
                 '味方キャラが登場したとき',
             ],
             'while summoning' => [
-                'while an ally character is being summoned',
+                'if an ally character is on the field',
                 '味方キャラが登場している場合',
             ],
         ];

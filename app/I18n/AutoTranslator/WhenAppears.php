@@ -25,7 +25,7 @@ class WhenAppears
         $partOrCurrent = next($matches);
         $subject = Subject::createInstance($subjectSource);
 
-        $text = $partOrCurrent === 'したとき' ? 'when%s is summoned' : 'while%s is being summoned';
+        $text = $partOrCurrent === 'したとき' ? 'when%s is summoned' : 'if%s is on the field';
 
         return sprintf(
             $text,
