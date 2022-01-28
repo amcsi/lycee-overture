@@ -58,12 +58,10 @@
         </div>
         <div style="flex: 1" />
         <div class="show-when-hovering" style="text-align: right">
-          <span v-if="user">
-            <span class="clickable" @click="translateMode = !translateMode"
-              >{{ translateMode ? 'Collapse' : '' }} Suggest Translation</span
-            >
-            -
-          </span>
+          <span class="clickable" @click="onSuggestTranslationClick"
+            >{{ translateMode ? 'Collapse' : '' }} Suggest Translation</span
+          >
+          -
           <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
           <span v-if="showLanguageSelectors">
             <span
@@ -200,6 +198,16 @@ export default {
       return this.card.variants[index].rarity;
     },
     ...mapComputed('auth', ['user']),
+  },
+  methods: {
+    onSuggestTranslationClick() {
+      if (this.user) {
+        this.translateMode = !this.translateMode;
+      } else {
+        console.log('Navigating to /login');
+        window.location.href = '/login';
+      }
+    },
   },
   created() {
     this.localLocale = this.card.translation ? 'en' : 'ja';
