@@ -1,6 +1,6 @@
 <template>
   <el-card class="card-list-item" :class="cls">
-    <div class="card-list-item-inner">
+    <LazyComponent class="card-list-item-inner">
       <CardThumbnail class="card-thumbnail" :id="card.id" :variants="card.variants" />
       <div class="card-details">
         <div class="names-and-type">
@@ -83,9 +83,8 @@
               <FlagImage locale="ja" />
             </span>
           </span>
-        </div>
-      </div>
-    </div>
+        </div></div
+    ></LazyComponent>
   </el-card>
 </template>
 
@@ -96,6 +95,7 @@ import formatCardMixin from '../../utils/formatCardMixin';
 import { areaType, characterType, eventType, itemType } from '../../value/cardType';
 import ExternalLink from '../common/ExternalLink';
 import FlagImage from '../common/FlagImage';
+import LazyComponent from '../common/LazyComponent';
 import CardDescription from './CardDescription';
 import CardNameTranslator from './CardNameTranslator';
 import CardText from './CardText';
@@ -107,6 +107,7 @@ import StatValue from './StatValue';
 export default {
   name: 'CardListItem',
   components: {
+    LazyComponent,
     FlagImage,
     CardNameTranslator,
     StatValue,
