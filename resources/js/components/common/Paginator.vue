@@ -42,7 +42,7 @@ export default {
   computed: {
     limit: {
       get() {
-        return this.$route.query.limit || this.limitDefault;
+        return this.$route.query.limit ? Number(this.$route.query.limit) : this.limitDefault;
       },
       set(limit) {
         const query = { ...this.$route.query };
