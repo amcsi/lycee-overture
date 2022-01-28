@@ -13,7 +13,11 @@
       <Paginator :pagination="cards.meta" @page-change="pageChange" />
 
       <div class="card-list" v-loading="cardsLoading">
-        <CardListItem v-for="card in cards.data" :card="card" :key="card.id"></CardListItem>
+        <CardListItemOuter
+          v-for="card in cards.data"
+          :card="card"
+          :key="card.id"
+        ></CardListItemOuter>
       </div>
 
       <Paginator :pagination="cards.meta" @page-change="pageChange" />
@@ -25,11 +29,12 @@
 <script>
 import { mapState } from 'vuex';
 import CardListItem from './card/CardListItem';
+import CardListItemOuter from './card/CardListItemOuter';
 import Paginator from './common/Paginator';
 
 /** @class CardList */
 export default {
-  components: { CardListItem, Paginator },
+  components: { CardListItem, CardListItemOuter, Paginator },
   data() {
     return {
       isLocaleJapanese: window.locale === 'ja',
@@ -61,10 +66,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-.el-card {
-  // For the thumbnails.
-  overflow: visible;
-}
-</style>
