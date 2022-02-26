@@ -118,11 +118,15 @@ class Card extends Model
     public function getBestTranslation(): CardTranslation
     {
         $locale = $this->locale();
+        $ret = $this->getTranslation($locale) ?:
+            $this->getTranslation("$locale-auto");
+        if (!$ret) {
+            $ret = $this->getTranslation('ja');
+            $ret->pre_comments = trim("(Automatic translation failure)\n{$ret->pre_comments}");
+        }
+
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->getTranslation($locale) ?:
-            $this->getTranslation("$locale-auto") ?:
-            // If we have to fall back to Japanese, that means something is wrong with the auto-translation services.
-            $this->getTranslation('ja');
+        return $ret;
     }
 
     public function suggestions()
