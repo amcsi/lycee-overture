@@ -119,7 +119,10 @@ class Card extends Model
     {
         $locale = $this->locale();
         /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->getTranslation($locale) ?: $this->getTranslation("$locale-auto");
+        return $this->getTranslation($locale) ?:
+            $this->getTranslation("$locale-auto") ?:
+            // If we have to fall back to Japanese, that means something is wrong with the auto-translation services.
+            $this->getTranslation('ja');
     }
 
     public function suggestions()
