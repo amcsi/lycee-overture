@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Unit\LyceeOverture\I18n\TranslatorApi;
+namespace Tests\Unit\I18n\TranslatorApi;
 
 use amcsi\LyceeOverture\I18n\TranslatorApi\TranslationResult;
 use PHPUnit\Framework\TestCase;
@@ -10,8 +10,22 @@ class TranslationResultTest extends TestCase
 {
     public static function testReadResult(): void
     {
-        $result = new TranslationResult(file_get_contents(__DIR__ . '/result.xml'));
+        $result = new TranslationResult([
+            [
+                'furigana' => 'おおの',
+                'roman' => 'oono',
+                'surface' => '大野',
+            ],
+            [
+                'surface' => ' ',
+            ],
+            [
+                'furigana' => 'あや',
+                'roman' => 'aya',
+                'surface' => 'あや',
+            ],
+        ]);
 
-        self::assertSame(['isuzu', 'hana'], $result->getWords());
+        self::assertSame(['oono', 'aya'], $result->getWords());
     }
 }

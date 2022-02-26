@@ -8,19 +8,17 @@ namespace amcsi\LyceeOverture\I18n\TranslatorApi;
  */
 class TranslationResult
 {
-    public function __construct(private string $xml)
+    public function __construct(private array $words)
     {
     }
 
     public function getWords(): array
     {
         $return = [];
-        $xmlElement = new \SimpleXMLElement($this->xml);
-        $words = json_decode(json_encode($xmlElement->Result->WordList));
 
-        foreach ($words->Word as $word) {
-            if (isset($word->Roman)) {
-                $return[] = $word->Roman;
+        foreach ($this->words as $word) {
+            if (isset($word['roman'])) {
+                $return[] = $word['roman'];
             }
         }
 

@@ -6,6 +6,9 @@ namespace amcsi\LyceeOverture\I18n\TranslatorApi;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Utils;
+use Illuminate\Support\Str;
 
 /**
  * Translates kanji (names) with Yahoo's API.
@@ -22,12 +25,20 @@ class YahooRawKanjiTranslator implements TranslatorInterface
             'appid' => $this->apiKey,
             'sentence' => $kanji,
         ];
-        $options = ['query' => $query];
+        $body = [
+            'id' => Str::random(),
+            'jsonrpc' => '2.0',
+            'method' =>  'jlp.furiganaservice.furigana',
+            'params' => [
+                'q'=>  "大野 あや"
+            ],
+        ];
+        $options = [RequestOptions::QUERY => $query, RequestOptions::JSON => $body];
         try {
-            $apiResponseBodyXml = $this->client
-                ->get('https://jlp.yahooapis.jp/FuriganaService/V1/furigana', $options)
+            $responseBody = Utils::jsonDecode($this->client
+                ->post('https://jlp.yahooapis.jp/FuriganaService/V2/furigana', $options)
                 ->getBody()
-                ->__toString();
+                ->__toString(), true);
         } catch (ServerException $exception) {
             if (
                 $exception->getCode() === 503 &&
@@ -40,7 +51,7 @@ class YahooRawKanjiTranslator implements TranslatorInterface
             throw $exception;
         }
 
-        $translationResult = new TranslationResult($apiResponseBodyXml);
+        $translationResult = new TranslationResult($responseBody['result']['word']);
 
         return implode(
             ' ',
