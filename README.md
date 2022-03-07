@@ -1,6 +1,6 @@
 # lycee-overture
 
-https://lycee-tcg.eu/
+https://lycee-tcg.eu/cards
 
 [![Build Status](https://travis-ci.org/amcsi/lycee-overture.png?branch=master)](https://travis-ci.org/amcsi/lycee-overture)
 
