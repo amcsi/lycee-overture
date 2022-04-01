@@ -24,7 +24,7 @@ class YahooRawKanjiTranslatorTest extends TestCase
         $guzzleClient = new Client(['handler' => HandlerStack::create(new MockHandler([
             function (Request $request) use ($apiKey, $kanjiInput) {
                 self::assertCorrectRequestUrl($request, $apiKey, $kanjiInput);
-                return new Response(200, [], file_get_contents(__DIR__ . '/result.xml'));
+                return new Response(200, [], file_get_contents(__DIR__ . '/result.json'));
             },
         ]))]);
 
@@ -37,12 +37,16 @@ class YahooRawKanjiTranslatorTest extends TestCase
     {
         $apiKey = 'whatever';
         $kanjiInput = 'bad_kanji';
-        $guzzleClient = new Client(['handler' => HandlerStack::create(new MockHandler([
-            function (Request $request) use ($apiKey, $kanjiInput) {
-                self::assertCorrectRequestUrl($request, $apiKey, $kanjiInput);
-                return new Response(503, [], 'bla bla bla invalid parameter: sentence bla');
-            },
-        ]))]);
+        $guzzleClient = new Client([
+            'handler' => HandlerStack::create(
+                new MockHandler([
+                    function (Request $request) use ($apiKey, $kanjiInput) {
+                        self::assertCorrectRequestUrl($request, $apiKey, $kanjiInput);
+                        return new Response(503, [], 'bla bla bla invalid parameter: sentence bla');
+                    },
+                ])
+            ),
+        ]);
 
         $instance = new YahooRawKanjiTranslator($guzzleClient, $apiKey);
 
@@ -53,7 +57,7 @@ class YahooRawKanjiTranslatorTest extends TestCase
     {
         $encodedKanjiInput = rawurlencode($kanjiInput);
         self::assertSame(
-            "https://jlp.yahooapis.jp/FuriganaService/V1/furigana?appid=$apiKey&sentence=$encodedKanjiInput",
+            "https://jlp.yahooapis.jp/FuriganaService/V2/furigana?appid=$apiKey&sentence=$encodedKanjiInput",
             (string) $request->getUri()
         );
     }
