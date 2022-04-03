@@ -46,11 +46,13 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
+            'throw' => true,
         ],
 
         'localRoot' => [
             'driver' => 'local',
             'root' => '/',
+            'throw' => true,
         ],
 
         'public' => [
@@ -58,6 +60,7 @@ return [
             'root' => storage_path('app/public'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
+            'throw' => true,
         ],
 
         's3' => [
@@ -67,6 +70,7 @@ return [
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
+            'throw' => true,
         ],
 
     ],

@@ -24,9 +24,9 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
 use JpnForPhp\Transliterator\Transliterator;
-use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -76,9 +76,10 @@ class AppServiceProvider extends ServiceProvider
             ->give($config->get('import'));
 
         $app->when(ImageDownloader::class)
-            ->needs(FilesystemInterface::class)
+            ->needs(FilesystemOperator::class)
             ->give(function () {
-                return new Filesystem(new Local(storage_path(ImportConstants::ORIGINAL_CARD_IMAGES_PATH)));
+                $adapter = new LocalFilesystemAdapter(storage_path(ImportConstants::ORIGINAL_CARD_IMAGES_PATH));
+                return new Filesystem($adapter);
             });
 
         $app->when(OneSkyClient::class)

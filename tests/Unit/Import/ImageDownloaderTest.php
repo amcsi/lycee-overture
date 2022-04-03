@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture\Import;
+namespace Tests\Unit\Import;
 
+use amcsi\LyceeOverture\Import\ImageDownloader;
+use amcsi\LyceeOverture\Import\ImportConstants;
 use GuzzleHttp\Client;
-use League\Flysystem\Adapter\NullAdapter;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Memory\MemoryAdapter;
+use League\Flysystem\InMemory\InMemoryFilesystemAdapter;
 use PHPUnit\Framework\TestCase;
 
 class ImageDownloaderTest extends TestCase
@@ -14,7 +15,9 @@ class ImageDownloaderTest extends TestCase
     public function testCreateCardIdRequest()
     {
         $cardId = 'foo';
-        $instance = new ImageDownloader(new Client(), new Filesystem(new NullAdapter()));
+        $adapter = new InMemoryFilesystemAdapter();
+        $filesystem = new Filesystem($adapter);
+        $instance = new ImageDownloader(new Client(), $filesystem);
         $request = $instance->createCardIdRequest($cardId);
         $expected = str_replace('{id}', $cardId, ImportConstants::IMAGE_URL);
         self::assertSame($expected, (string)$request->getUri());
@@ -25,13 +28,14 @@ class ImageDownloaderTest extends TestCase
     public function testCreateCardIdRequestWithIfModifiedSince()
     {
         $cardId = 'foo';
-        $filesystem = new Filesystem(new MemoryAdapter());
+        $adapter = new InMemoryFilesystemAdapter();
+        $filesystem = new Filesystem($adapter);
         $instance = new ImageDownloader(new Client(), $filesystem);
 
         // Put a file there to use for If-Modified-Since.
         $filename = str_replace('{id}', $cardId, ImportConstants::IMAGE_FILENAME);
         $time = strtotime('2012-01-01 00:00:00 GMT');
-        $filesystem->put($filename, 'bar', ['timestamp' => $time]);
+        $filesystem->write($filename, 'bar', ['timestamp' => $time]);
 
         $request = $instance->createCardIdRequest($cardId);
 

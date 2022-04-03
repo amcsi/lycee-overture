@@ -11,7 +11,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\StreamWrapper;
 use League\Csv\Reader;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use function GuzzleHttp\Psr7\str;
 
@@ -23,7 +23,7 @@ class ImageDownloader
     const HEADER_IF_MODIFIED_SINCE = 'If-Modified-Since';
     const HTTP_DATE_FORMAT = 'D, d M Y H:i:s \G\M\T';
 
-    public function __construct(private Client $client, private FilesystemInterface $filesystem)
+    public function __construct(private Client $client, private FilesystemOperator $filesystem)
     {
     }
 
@@ -69,7 +69,7 @@ class ImageDownloader
                 if ($statusCode === 200) {
                     // Copy body stream of downloaded card image to its file.
                     $file = self::getLocalImagePathForCardId($cardId);
-                    $this->filesystem->putStream($file, StreamWrapper::getResource($response->getBody()));
+                    $this->filesystem->writeStream($file, StreamWrapper::getResource($response->getBody()));
                 } elseif ($response->getStatusCode() === 304) {
                     // Not Modified; no need to download.
                 } else {
@@ -104,7 +104,7 @@ class ImageDownloader
         if ($this->filesystem->has($filename)) {
             // To get 304 when not needing to redownload an image.
             /** @noinspection PhpUnhandledExceptionInspection */
-            $headers['If-Modified-Since'] = date(self::HTTP_DATE_FORMAT, $this->filesystem->getTimestamp($filename));
+            $headers['If-Modified-Since'] = date(self::HTTP_DATE_FORMAT, $this->filesystem->lastModified($filename));
         }
         $imageUrl = str_replace('{id}', $cardId, ImportConstants::IMAGE_URL);
         return new Request('GET', $imageUrl, $headers);

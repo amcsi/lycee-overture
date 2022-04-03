@@ -125,7 +125,7 @@ class SuggestionControllerTest extends DatabaseTestCase
         $data['approved'] = 1;
 
         self::assertSuccessfulResponseData($this->postJson('/api/suggestions', $data));
-        $this->assertDeleted($suggestion); // Approving should remove the suggestion.
+        $this->assertModelMissing($suggestion); // Approving should remove the suggestion.
         $card = $this->japaneseTranslation->card;
         $card->load('translations');
 

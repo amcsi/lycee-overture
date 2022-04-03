@@ -62,6 +62,7 @@ class BuildLackeyCommand extends Command
             'root' => sprintf("%s/%s", storage_path('app/public'), $dstPath),
             'url' => sprintf("%s/storage/%s", config('app.url'), $dstPath),
             'visibility' => 'public',
+            'throw' => true,
         ]);
 
         $copier = new FilesystemsCopier($adapter, $dstAdapter);
