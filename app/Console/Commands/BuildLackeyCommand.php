@@ -167,15 +167,17 @@ class BuildLackeyCommand extends Command
         if ($lastUpdateListContents !== $newUpdateListContents) {
             // version.txt
             $versionFileContents = $adapter->read("$lackeyResourcesPath/version.dist.xml");
-            $versionFileContents = str_replace(':date:', date('Ymd'), $versionFileContents);
-            $versionFileContents = str_replace(':versionUrl:', e($versionFileUrl), $versionFileContents);
             $versionFileContents = str_replace(
-                ':updateListUrl:',
-                e($getPublicUrl('updatelist.txt')),
+                [':date:', ':versionUrl:', ':updateListUrl:', ':dateWithTime:'],
+                [
+                    date('Ymd'),
+                    e($versionFileUrl),
+                    e($getPublicUrl('updatelist.txt')),
+                    // Try to ensure updating plugin can work multiple times a day by using the message as a cache buster.
+                    e(date('Y-m-d H:i:s'))
+                ],
                 $versionFileContents
             );
-            // Try to ensure updating plugin can work multiple times a day by using the message as a cache buster.
-            $versionFileContents = str_replace(':dateWithTime:', e(date('Y-m-d H:i:s')), $versionFileContents);
 
             $dstAdapter->put('version.txt', $versionFileContents);
 
