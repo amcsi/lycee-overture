@@ -118,6 +118,7 @@ return [
             'level' => 'debug',
             // Args in stack traces result in 413 status errors from Rollbar for too large payload.
             'local_vars_dump' => false,
+            'use_error_reporting' => true,
         ],
 
         'null' => [
