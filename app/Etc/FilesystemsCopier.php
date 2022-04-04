@@ -16,7 +16,7 @@ class FilesystemsCopier
      */
     public function copyCached($srcPath, $dstPath): void
     {
-        if ($this->src->getMetadata($srcPath)['type'] === 'dir') {
+        if ($this->src->directoryExists($srcPath)) {
             if (!$this->dst->exists($dstPath)) {
                 $this->dst->makeDirectory($dstPath);
             }
@@ -39,6 +39,6 @@ class FilesystemsCopier
             return;
         }
 
-        $this->dst->putStream($dstPath, $this->src->readStream($srcPath));
+        $this->dst->writeStream($dstPath, $this->src->readStream($srcPath));
     }
 }
