@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Etc;
 
 use Illuminate\Filesystem\FilesystemAdapter;
+use League\Flysystem\StorageAttributes;
 
 class FilesystemsCopier
 {
@@ -21,9 +22,11 @@ class FilesystemsCopier
                 $this->dst->makeDirectory($dstPath);
             }
 
-            foreach ($this->src->listContents($srcPath) as $fileinfo) {
-                $file = $fileinfo['path'];
-                $this->copyCached($file, "$dstPath/$fileinfo[basename]");
+            foreach ($this->src->listContents($srcPath) as $attributes) {
+                /** @var StorageAttributes $attributes */
+                $file = $attributes['path'];
+                $basename = basename($file);
+                $this->copyCached($file, "$dstPath/$basename");
             }
 
             return;

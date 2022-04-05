@@ -11,11 +11,11 @@ use amcsi\LyceeOverture\Etc\Lackey\LackeyNameFormatter;
 use amcsi\LyceeOverture\Etc\Lackey\LackeyStarterDecksAssember;
 use amcsi\LyceeOverture\Etc\LackeyHasher;
 use amcsi\LyceeOverture\Etc\LackeyVariant;
+use GuzzleHttp\Psr7\Utils;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use League\Csv\Writer;
 use Symfony\Component\Stopwatch\Stopwatch;
-use function GuzzleHttp\Psr7\try_fopen;
 
 class BuildLackeyCommand extends Command
 {
@@ -67,7 +67,7 @@ class BuildLackeyCommand extends Command
 
         $copier = new FilesystemsCopier($adapter, $dstAdapter);
 
-        $copier->copyCached($lackeyResourcesPath, $dstPath);
+        $copier->copyCached($lackeyResourcesPath, '/');
 
         // Card data.
         $tempnam = tempnam('', sys_get_temp_dir());
@@ -111,7 +111,7 @@ class BuildLackeyCommand extends Command
                 ) => !$card->getBestTranslation()->kanji_count) // Exclude ones not fully translated.
                 ->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
         );
-        $dstAdapter->putStream('sets/carddata.txt', try_fopen($tempnam, 'rb'));
+        $dstAdapter->writeStream('sets/carddata.txt', Utils::tryFopen($tempnam, 'rb'));
 
         /*
          * Handle starter decks.
