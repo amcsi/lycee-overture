@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash-es';
 import { mapGetters, mapState } from 'vuex';
 import DeckSelector from '../form/DeckSelector';
 import SetSelector from '../form/SetSelector';

@@ -39,13 +39,13 @@
       <CardDescription :translation="card.japanese" />
     </el-card>
 
-    <div v-if="card.auto_translation">
+    <div v-if="autoTranslated">
       <div class="spacer" />
 
       <el-card>
         <div slot="header">🤖 Auto Translated</div>
 
-        <CardDescription :translation="card.auto_translation" />
+        <CardDescription :translation="autoTranslated" />
       </el-card>
     </div>
 
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash-es';
 import { mapActions, mapMutations } from 'vuex';
 import api from '../../api';
 import { normalizeError, reportError, VALIDATION_FAILURE } from '../../utils/errorHandling';
@@ -355,6 +355,7 @@ export default {
       this.$displaySuccess(
         'You have successfully submitted the translation suggestion for review by a translator.'
       );
+      return this.refreshCard(this.card.id);
     },
     async _suggestTranslation(approve) {
       try {
@@ -416,6 +417,8 @@ export default {
       if (lastSavedSuggestion) {
         this.lastSavedTranslationSuggestion = lastSavedSuggestion;
         this.currentDraft = cardTranslationToDraft(lastSavedSuggestion);
+      } else {
+        this.setCurrentTranslation(this.card.translation);
       }
     } catch (e) {
       const normalizedError = normalizeError(e);
@@ -428,12 +431,6 @@ export default {
     }
   },
   watch: {
-    'card.translation': {
-      immediate: true,
-      handler() {
-        this.setCurrentTranslation(this.card.translation);
-      },
-    },
     dirty(dirty) {
       if (dirty) {
         this.ADD_DIRTY_CARD_ID(this.id);

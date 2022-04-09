@@ -53,6 +53,7 @@
           </div>
         </div>
         <div class="card-description" v-if="hasCardDescription">
+          <div v-if="shouldShowSuggestion"><em>(Unapproved translation)</em></div>
           <CardDescription :translation="cardText" />
           <CardTranslator v-if="translateMode" :card="card" :id="this.card.id" />
         </div>
@@ -89,6 +90,7 @@
 
 <script>
 import { mapComputed } from '../../store/storeUtils';
+import cardMixin from '../../utils/cardMixin';
 import { getCurrentVariant } from '../../utils/cardVariant';
 import formatCardMixin from '../../utils/formatCardMixin';
 import { areaType, characterType, eventType, itemType } from '../../value/cardType';
@@ -120,7 +122,7 @@ export default {
       required: true,
     },
   },
-  mixins: [formatCardMixin],
+  mixins: [formatCardMixin, cardMixin],
   data() {
     return {
       localLocale: null,
@@ -149,9 +151,6 @@ export default {
     isCharacter() {
       return this.card.type === 0;
     },
-    isLocaleJapanese() {
-      return this.localLocale === 'ja';
-    },
     characterType() {
       if (!this.isCharacter) {
         return '';
@@ -170,12 +169,6 @@ export default {
         translation.ability_description.trim().length > 1 ||
         translation.comments.trim().length > 1
       );
-    },
-    cardText() {
-      if (!this.card.translation) {
-        return this.card.japanese;
-      }
-      return this.isLocaleJapanese ? this.card.japanese : this.card.translation;
     },
     showLanguageSelectors() {
       return !!this.card.translation && !this.translateMode;
@@ -196,6 +189,9 @@ export default {
     currentRarity() {
       const index = this.card.variants.findIndex(obj => obj.variant === this.currentVariant);
       return this.card.variants[index].rarity;
+    },
+    locale() {
+      return this.localLocale;
     },
     ...mapComputed('auth', ['user']),
   },

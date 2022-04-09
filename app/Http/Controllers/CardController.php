@@ -11,8 +11,6 @@ use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
-    private static $relations = ['set'];
-
     public function index(Request $request, CardBuilderFactory $builderFactory)
     {
         $locale = \App::getLocale();
@@ -20,7 +18,7 @@ class CardController extends Controller
         $limit = min(100, $request->get('limit', 10));
 
         $builder = $builderFactory->createBuilderWithQuery($locale, $request->query());
-        $builder->with(self::$relations);
+        $builder->with($this->getRelations());
 
         if ($locale !== Locale::JAPANESE && $request->query('translatedFirst')) {
             // Bring forward cards with fewer kanjis (i.e. fewer untranslated bits).
@@ -35,8 +33,18 @@ class CardController extends Controller
 
     public function show(Card $card)
     {
-        $card->load(self::$relations);
+        $card->load($this->getRelations());
 
         return new CardResource($card);
+    }
+
+    private function getRelations(): array
+    {
+        $locale = \App::getLocale();
+        $relations = ['set'];
+        if ($locale !== Locale::JAPANESE) {
+            $relations[] = 'suggestions';
+        }
+        return $relations;
     }
 }

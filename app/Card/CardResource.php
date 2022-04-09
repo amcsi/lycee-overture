@@ -5,6 +5,7 @@ namespace amcsi\LyceeOverture\Card;
 
 use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\I18n\Locale;
+use amcsi\LyceeOverture\I18n\ManualTranslation\SuggestionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -49,6 +50,7 @@ class CardResource extends JsonResource
                     }
                 )
             ),
+            'suggestions' => SuggestionResource::collection($this->whenLoaded('suggestions'))
         ];
     }
 

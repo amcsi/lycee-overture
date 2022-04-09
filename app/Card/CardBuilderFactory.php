@@ -21,6 +21,8 @@ class CardBuilderFactory
         /** @var Builder $builder */
         $builder = $this->card->select(['cards.*']);
 
+        $isNotForJapanese = $locale !== Locale::JAPANESE;
+
         if ($deck = ($query['deck'] ?? null)) {
             $builder->whereIn('cards.id', CardDeck::where('deck_id', $deck)->get()->pluck('card_id'));
         }
@@ -64,7 +66,7 @@ class CardBuilderFactory
             $name !== '' ||
             $text !== '' ||
             $hideFullyTranslated ||
-            ($locale !== Locale::JAPANESE && ($query['translatedFirst'] ?? null));
+            ($isNotForJapanese && ($query['translatedFirst'] ?? null));
         if ($shouldLoadTranslation) {
             $nameColumns = CardTranslation::NAME_COLUMNS;
             $textColumns = CardTranslation::TEXT_COLUMNS;
@@ -103,7 +105,7 @@ class CardBuilderFactory
                     }
                 }
             );
-            if ($locale !== Locale::JAPANESE) {
+            if ($isNotForJapanese) {
                 // Prefer fully translated over auto translated.
                 $builder->joinSub(
                     CardTranslation::select([

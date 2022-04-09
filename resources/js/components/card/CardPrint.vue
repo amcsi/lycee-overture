@@ -11,33 +11,25 @@
       />
       <div class="card-text">
         <div>
-          <span v-if="card.translation.basic_abilities || abilities.length">
+          <span v-if="cardText.basic_abilities || abilities.length">
             <strong>{{ card.id }}</strong>
             <CardText
-              v-if="card.translation.basic_abilities"
+              v-if="cardText.basic_abilities"
               class="basic-abilities"
-              :text="card.translation.basic_abilities"
+              :text="cardText.basic_abilities"
             />
-            <CardText
-              v-if="card.translation.pre_comments"
-              class="comments"
-              :text="card.translation.pre_comments"
-            />
+            <CardText v-if="cardText.pre_comments" class="comments" :text="cardText.pre_comments" />
             <span v-for="[abilityCost, abilityDescription] in abilities">
               <CardText v-if="abilityCost" class="ability-cost" :text="abilityCost" />
               <CardText class="ability-description" :text="abilityDescription" />
             </span>
-            <CardText
-              v-if="card.translation.comments"
-              class="comments"
-              :text="card.translation.comments"
-            />
+            <CardText v-if="cardText.comments" class="comments" :text="cardText.comments" />
           </span>
         </div>
         <div style="color: grey; font-style: italic">
-          {{ card.translation.name }}
+          {{ cardText.name }}
           <span v-if="card.type === 0">
-            - {{ card.translation.ability_name }} - {{ card.translation.character_type }}
+            - {{ cardText.ability_name }} - {{ cardText.character_type }}
           </span>
         </div>
       </div>
@@ -46,6 +38,7 @@
 </template>
 
 <script>
+import cardMixin from '../../utils/cardMixin';
 import { getCurrentVariant } from '../../utils/cardVariant';
 import CardImage from './CardImage';
 import CardText from './CardText';
@@ -59,10 +52,11 @@ export default {
   name: 'CardPrint',
   components: { CardText, CardImage },
   props: ['card', 'withImages'],
+  mixins: [cardMixin],
   computed: {
     abilities() {
-      const abilityCostsSplit = this.card.translation.ability_cost.split('\n');
-      const abilityDescriptionsSplit = this.card.translation.ability_description.split('\n');
+      const abilityCostsSplit = this.cardText.ability_cost.split('\n');
+      const abilityDescriptionsSplit = this.cardText.ability_description.split('\n');
       const ret = [];
       abilityDescriptionsSplit.forEach((abilityDescription, i) => {
         if (!abilityDescription || abilityDescription.trim() === '-') {
@@ -82,6 +76,9 @@ export default {
     },
     imageVariant() {
       return getCurrentVariant(this.card.id);
+    },
+    locale() {
+      return this.card.translation ? 'en' : 'ja';
     },
   },
 };
