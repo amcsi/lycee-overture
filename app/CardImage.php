@@ -14,15 +14,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $updated_at
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon|null $last_uploaded
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage query()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereCardId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereLastUploaded($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereMd5($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\CardImage whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage whereCardId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage whereLastUploaded($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage whereMd5($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CardImage whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class CardImage extends Model

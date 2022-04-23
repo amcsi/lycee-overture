@@ -20,17 +20,18 @@ use Illuminate\Notifications\Notifiable;
  * @property string $can_approve_locale
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereCanApproveLocale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\User whereUpdatedAt($value)
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCanApproveLocale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable
