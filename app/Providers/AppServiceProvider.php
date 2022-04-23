@@ -21,6 +21,7 @@ use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\Repository;
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
 use JpnForPhp\Transliterator\Transliterator;
@@ -56,6 +57,8 @@ class AppServiceProvider extends ServiceProvider
         }
         Builder::macro('myUpsert', require __DIR__ . '/../../app/Database/upsert.php');
         Builder::macro('insertIgnore', require __DIR__ . '/../../app/Database/insertIgnore.php');
+
+        Model::preventLazyLoading(! app()->isProduction());
 
         self::$booted = true;
     }
