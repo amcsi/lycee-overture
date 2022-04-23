@@ -21,7 +21,10 @@ use amcsi\LyceeOverture\Http\Controllers\SuggestionController;
 */
 
 Route::apiResource('/cards', CardController::class, ['only' => ['index', 'show']]);
-Route::get('/decks', DeckController::class . '@index');
+Route::prefix('/decks')->group(function () {
+    Route::get('', DeckController::class . '@index');
+    Route::get('{deck}', DeckController::class . '@show');
+});
 Route::get('/sets', [SetController::class, 'index']);
 Route::get('/statistics', [StatisticsController::class, 'index']);
 Route::get('/articles', [ArticleController::class, 'index']);
