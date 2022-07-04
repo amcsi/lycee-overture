@@ -14,4 +14,12 @@ export const rollbar = init({
       },
     },
   },
+  checkIgnore(isUncaught, args, payload) {
+    if (window.navigator.userAgent && window.navigator.userAgent.indexOf('PetalBot') !== -1) {
+      // ignore PetalBot
+      return true;
+    }
+    // no other ignores
+    return false;
+  },
 });
