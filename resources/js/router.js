@@ -3,9 +3,9 @@
  */
 
 import VueRouter from 'vue-router';
-import Layout from './pages/Layout';
-import NewsPage from './pages/NewsPage';
-import NotFoundPage from './pages/NotFoundPage';
+import Layout from './pages/Layout.vue';
+import NewsPage from './pages/NewsPage.vue';
+import NotFoundPage from './pages/NotFoundPage.vue';
 
 /**
  * Loading wrapper for code-split async components in the route.
@@ -28,21 +28,21 @@ const loadingizeAsyncComponent = asyncComponent => () => ({
   timeout: Infinity,
 });
 
-const CardListPrintPage = loadingizeAsyncComponent(() => import('./pages/CardListPrintPage'));
-const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage'));
+const CardListPrintPage = loadingizeAsyncComponent(() => import('./pages/CardListPrintPage.vue'));
+const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage.vue'));
 const DeckPage = loadingizeAsyncComponent(() =>
-  import(/* webpackChunkName: "deck" */ './pages/DeckPage')
+  import(/* webpackChunkName: "deck" */ './pages/DeckPage.vue')
 );
 const DeckCardListPage = loadingizeAsyncComponent(() =>
-  import(/* webpackChunkName: "deck" */ './pages/Deck/DeckCardListPage')
+  import(/* webpackChunkName: "deck" */ './pages/Deck/DeckCardListPage.vue')
 );
 const RulesPage = loadingizeAsyncComponent(() =>
-  import(/* webpackChunkName: "rules" */ './pages/RulesPage')
+  import(/* webpackChunkName: "rules" */ './pages/RulesPage.vue')
 );
-const IndexPage = loadingizeAsyncComponent(() => import('./pages/IndexPage'));
-const HelpTranslatePage = loadingizeAsyncComponent(() => import('./pages/HelpTranslatePage'));
+const IndexPage = loadingizeAsyncComponent(() => import('./pages/IndexPage.vue'));
+const HelpTranslatePage = loadingizeAsyncComponent(() => import('./pages/HelpTranslatePage.vue'));
 const DeckToMigrationConverterPage = loadingizeAsyncComponent(() =>
-  import('./pages/DeckToMigrationConverterPage')
+  import('./pages/DeckToMigrationConverterPage.vue')
 );
 
 const title = 'Lycee Overture TCG Translations';
@@ -81,45 +81,47 @@ const router = new VueRouter({
               path: 'deck-and-card',
               component() {
                 return import(
-                  /* webpackChunkName: "rules" */ './components/rules/DeckAndCardRules'
+                  /* webpackChunkName: "rules" */ './components/rules/DeckAndCardRules.vue'
                 );
               },
             },
             {
               path: 'field',
               component() {
-                return import(/* webpackChunkName: "rules" */ './components/rules/FieldRules');
+                return import(/* webpackChunkName: "rules" */ './components/rules/FieldRules.vue');
               },
             },
             {
               path: 'cost',
               component() {
-                return import(/* webpackChunkName: "rules" */ './components/rules/CostRules');
+                return import(/* webpackChunkName: "rules" */ './components/rules/CostRules.vue');
               },
             },
             {
               path: 'flow',
               component() {
-                return import(/* webpackChunkName: "rules" */ './components/rules/FlowOfGameRules');
+                return import(
+                  /* webpackChunkName: "rules" */ './components/rules/FlowOfGameRules.vue'
+                );
               },
             },
             {
               path: 'turn',
               component() {
-                return import(/* webpackChunkName: "rules" */ './components/rules/TurnRules');
+                return import(/* webpackChunkName: "rules" */ './components/rules/TurnRules.vue');
               },
             },
             {
               path: 'battle',
               component() {
-                return import(/* webpackChunkName: "rules" */ './components/rules/BattleRules');
+                return import(/* webpackChunkName: "rules" */ './components/rules/BattleRules.vue');
               },
             },
             {
               path: 'basic-abilities-and-the-stack',
               component() {
                 return import(
-                  /* webpackChunkName: "rules" */ './components/rules/BasicAbilityRules'
+                  /* webpackChunkName: "rules" */ './components/rules/BasicAbilityRules.vue'
                 );
               },
             },

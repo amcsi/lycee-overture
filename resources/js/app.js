@@ -21,6 +21,7 @@ import {
   MenuItem,
   Message,
   Option,
+  Pagination,
   Row,
   Select,
   Switch,
@@ -31,17 +32,18 @@ import {
 import elementUiLocale from 'element-ui/lib/locale';
 import elementUiLangEnglish from 'element-ui/lib/locale/lang/en';
 import 'element-ui/lib/theme-chalk/index.css';
+
+import Vue from 'vue';
 import VueRouter from 'vue-router';
-import App from './App';
+import App from './App.vue';
+
+import './bootstrap';
 import i18n from './i18n';
 import { rollbar } from './rollbar';
 import router from './router';
 import store from './store/index';
-import Pagination from './vendorOverrides/pagination/pagination';
 
-require('./bootstrap');
-
-window.Vue = require('vue');
+window.Vue = Vue;
 
 elementUiLocale.use(elementUiLangEnglish);
 

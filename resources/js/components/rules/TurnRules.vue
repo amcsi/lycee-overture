@@ -169,7 +169,7 @@
 </template>
 
 <script>
-import CardText from '../card/CardText';
+import CardText from '../card/CardText.vue';
 
 /** @class TurnRules */
 export default {

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import CardText from './CardText';
+import CardText from './CardText.vue';
 
 /** @class CardDescription */
 export default {

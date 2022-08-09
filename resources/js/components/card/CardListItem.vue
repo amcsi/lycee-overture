@@ -100,14 +100,14 @@ import cardMixin from '../../utils/cardMixin';
 import { getCurrentVariant } from '../../utils/cardVariant';
 import formatCardMixin from '../../utils/formatCardMixin';
 import { areaType, characterType, eventType, itemType } from '../../value/cardType';
-import ExternalLink from '../common/ExternalLink';
-import FlagImage from '../common/FlagImage';
-import CardDescription from './CardDescription';
-import CardNameTranslator from './CardNameTranslator';
-import CardText from './CardText';
-import CardThumbnail from './CardThumbnail';
-import CardTranslator from './CardTranslator';
-import StatValue from './StatValue';
+import ExternalLink from '../common/ExternalLink.vue';
+import FlagImage from '../common/FlagImage.vue';
+import CardDescription from './CardDescription.vue';
+import CardNameTranslator from './CardNameTranslator.vue';
+import CardText from './CardText.vue';
+import CardThumbnail from './CardThumbnail.vue';
+import CardTranslator from './CardTranslator.vue';
+import StatValue from './StatValue.vue';
 
 /** @class CardListItem */
 export default {
@@ -218,7 +218,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'resources/sass/variables';
+@import '../../../sass/variables.module';
 
 .card-list-item {
   position: relative;

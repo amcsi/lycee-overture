@@ -140,8 +140,8 @@
 </template>
 
 <script>
-import CardText from '../card/CardText';
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
+import CardText from '../card/CardText.vue';
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
 
 /** @class BasicAbilityRules */
 export default {

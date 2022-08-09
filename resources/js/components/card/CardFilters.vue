@@ -68,8 +68,8 @@
 <script>
 import { debounce } from 'lodash-es';
 import { mapGetters, mapState } from 'vuex';
-import DeckSelector from '../form/DeckSelector';
-import SetSelector from '../form/SetSelector';
+import DeckSelector from '../form/DeckSelector.vue';
+import SetSelector from '../form/SetSelector.vue';
 
 const debouncedChangeRoute = debounce(($router, query) => {
   $router.push({ query });

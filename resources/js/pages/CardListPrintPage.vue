@@ -6,8 +6,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import CardListPrint from '../components/CardListPrint';
-import CardListContainer from '../components/container/CardListContainer';
+import CardListPrint from '../components/CardListPrint.vue';
+import CardListContainer from '../components/container/CardListContainer.vue';
 
 /** @class CardListPrintPage */
 export default {

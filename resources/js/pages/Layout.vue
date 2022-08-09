@@ -54,9 +54,9 @@
 
 <script>
 import api from '../api';
-import LatestArticles from '../components/article/LatestArticles';
-import ExternalLink from '../components/common/ExternalLink';
-import NavMenu from '../components/NavMenu';
+import LatestArticles from '../components/article/LatestArticles.vue';
+import ExternalLink from '../components/common/ExternalLink.vue';
+import NavMenu from '../components/NavMenu.vue';
 
 /** @class Layout */
 export default {

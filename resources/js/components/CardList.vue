@@ -28,9 +28,9 @@
 
 <script>
 import { mapState } from 'vuex';
-import CardListItem from './card/CardListItem';
-import CardListItemOuter from './card/CardListItemOuter';
-import Paginator from './common/Paginator';
+import CardListItem from './card/CardListItem.vue';
+import CardListItemOuter from './card/CardListItemOuter.vue';
+import Paginator from './common/Paginator.vue';
 
 /** @class CardList */
 export default {

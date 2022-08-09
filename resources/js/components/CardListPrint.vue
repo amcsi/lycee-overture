@@ -28,7 +28,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import CardPrint from './card/CardPrint';
+import CardPrint from './card/CardPrint.vue';
 
 /** @class CardListPrint */
 export default {

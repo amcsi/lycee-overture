@@ -13,8 +13,10 @@
 </template>
 
 <script>
-import { cardHeightWidthRatio } from '../../../sass/_variables.scss';
+import variables from '../../../sass/_variables.module.scss';
 import { assembleCloudinaryImageCardUrl, assembleCloudinaryImageUrl } from '../../utils/image';
+
+const { cardHeightWidthRatio } = variables;
 
 /** @class CardImage */
 export default {
@@ -75,7 +77,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'resources/sass/variables';
+@import '../../../sass/variables.module';
 
 $borderHeightRadius: 1.92%;
 $borderWidthRadius: $borderHeightRadius * $cardHeightWidthRatio;

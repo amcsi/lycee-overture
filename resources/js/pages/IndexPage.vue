@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import ExternalLink from '../components/common/ExternalLink';
-import NavMenu from '../components/NavMenu';
+import ExternalLink from '../components/common/ExternalLink.vue';
+import NavMenu from '../components/NavMenu.vue';
 
 /** @class IndexPage */
 export default {

@@ -7,9 +7,9 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex';
-import CardFilters from '../components/card/CardFilters';
-import CardList from '../components/CardList';
-import CardListContainer from '../components/container/CardListContainer';
+import CardFilters from '../components/card/CardFilters.vue';
+import CardList from '../components/CardList.vue';
+import CardListContainer from '../components/container/CardListContainer.vue';
 
 const navigateAwayMessage =
   'There are unsaved translation draft changes. Are you sure you would like to navigate away?';

@@ -1,4 +1,4 @@
-@import '~element-ui/packages/theme-chalk/src/common/var.scss';
+@import 'element-ui/packages/theme-chalk/src/common/var.scss';
 
 // Body
 $body-bg: #f5f8fa;
@@ -16,5 +16,3 @@ $cardHeightWidthRatio: 0.71538461538;
 :export {
   cardHeightWidthRatio: $cardHeightWidthRatio
 }
-
-;

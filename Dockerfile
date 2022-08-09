@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
   libzip-dev \
   zlib1g-dev
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
   apt-get update && \
   apt-get install -y nodejs && \
   node --version && \
@@ -60,9 +60,9 @@ COPY package-lock.json .
 RUN npm install
 
 COPY resources resources
-COPY webpack.mix.js .
+COPY vite.config.js .
 COPY .babelrc .
-RUN npm run production
+RUN npm run build
 
 COPY . .
 

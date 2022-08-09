@@ -7,7 +7,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import CardFilters from '../card/CardFilters';
+import CardFilters from '../card/CardFilters.vue';
 
 /**
  * Wrapper for card lists

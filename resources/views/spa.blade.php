@@ -9,7 +9,6 @@
     window.location.hostname = 'lycee-tcg.eu'
   }
 </script>
-<script defer src="{{ mix('js/manifest.js') }}"></script>
-<script defer type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
-<script defer type="text/javascript" src="{{ mix('js/app.js') }}"></script>
+
+@vite(['resources/js/app.js'])
 @endsection

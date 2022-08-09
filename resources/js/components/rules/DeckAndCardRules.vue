@@ -141,9 +141,9 @@
 </template>
 
 <script>
-import CardText from '../card/CardText';
-import AnatomyRow from './AnatomyRow';
-import ImageWithAnatomy from './ImageWithAnatomy';
+import CardText from '../card/CardText.vue';
+import AnatomyRow from './AnatomyRow.vue';
+import ImageWithAnatomy from './ImageWithAnatomy.vue';
 
 /** @class DeckAndCardRules */
 export default {

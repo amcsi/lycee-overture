@@ -63,7 +63,7 @@ import {
   unsetTemporaryVariant,
 } from '../../utils/cardVariant';
 import { assembleCloudinaryImageCardUrl } from '../../utils/image';
-import CardImage from './CardImage';
+import CardImage from './CardImage.vue';
 
 /** @class CardThumbnail */
 export default {

@@ -18,8 +18,6 @@
 <script>
 /** @class Paginator */
 
-import router from '../../router';
-
 export default {
   props: {
     pagination: { required: true },
@@ -60,7 +58,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~element-ui/packages/theme-chalk/src/mixins/mixins.scss';
+@import 'element-ui/packages/theme-chalk/src/mixins/mixins.scss';
 
 @include res(sm) {
   .limitContainer {

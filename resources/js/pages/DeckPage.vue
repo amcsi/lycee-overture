@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import DeckContainer from '../components/container/DeckContainer';
+import DeckContainer from '../components/container/DeckContainer.vue';
 
 /** @class DeckPage */
 export default {

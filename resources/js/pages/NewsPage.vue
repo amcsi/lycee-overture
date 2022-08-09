@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import LatestArticles from '../components/article/LatestArticles';
-import CardFilters from '../components/card/CardFilters';
-import CardList from '../components/CardList';
-import CardListContainer from '../components/container/CardListContainer';
+import LatestArticles from '../components/article/LatestArticles.vue';
+import CardFilters from '../components/card/CardFilters.vue';
+import CardList from '../components/CardList.vue';
+import CardListContainer from '../components/container/CardListContainer.vue';
 
 /** @class CardListPage */
 export default {

@@ -36,8 +36,8 @@
 
 <script>
 import { oneSkyProjectUrl } from '../../value/env';
-import ExternalLink from '../common/ExternalLink';
-import FlagImage from '../common/FlagImage';
+import ExternalLink from '../common/ExternalLink.vue';
+import FlagImage from '../common/FlagImage.vue';
 
 const splitBy = {
   en: /, |\//,

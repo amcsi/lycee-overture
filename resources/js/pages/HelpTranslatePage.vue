@@ -156,7 +156,7 @@
 </template>
 
 <script>
-import ExternalLink from '../components/common/ExternalLink';
+import ExternalLink from '../components/common/ExternalLink.vue';
 import { oneSkyProjectUrl } from '../value/env';
 import { glossaryData } from '../value/glossary';
 

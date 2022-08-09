@@ -43,13 +43,13 @@
 </template>
 
 <script>
-import BasicAbilityRules from '../components/rules/BasicAbilityRules';
-import BattleRules from '../components/rules/BattleRules';
-import CostRules from '../components/rules/CostRules';
-import DeckAndCardRules from '../components/rules/DeckAndCardRules';
-import FieldRules from '../components/rules/FieldRules';
-import FlowOfGameRules from '../components/rules/FlowOfGameRules';
-import TurnRules from '../components/rules/TurnRules';
+import BasicAbilityRules from '../components/rules/BasicAbilityRules.vue';
+import BattleRules from '../components/rules/BattleRules.vue';
+import CostRules from '../components/rules/CostRules.vue';
+import DeckAndCardRules from '../components/rules/DeckAndCardRules.vue';
+import FieldRules from '../components/rules/FieldRules.vue';
+import FlowOfGameRules from '../components/rules/FlowOfGameRules.vue';
+import TurnRules from '../components/rules/TurnRules.vue';
 
 /** @class RulesPage */
 export default {

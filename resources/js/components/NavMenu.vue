@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import FlagImage from './common/FlagImage';
+import FlagImage from './common/FlagImage.vue';
 
 function getLocaleChangeUrl(vueComponent, locale) {
   let url = vueComponent.$route.fullPath;

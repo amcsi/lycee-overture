@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import DeckToMigrationConverter from '../components/DeckToMigrationConverter';
+import DeckToMigrationConverter from '../components/DeckToMigrationConverter.vue';
 
 /** @class DeckToMigrationConverterPage */
 export default {

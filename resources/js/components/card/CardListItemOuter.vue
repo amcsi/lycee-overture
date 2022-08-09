@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import LazyComponent from '../common/LazyComponent';
-import CardListItem from './CardListItem';
+import LazyComponent from '../common/LazyComponent.vue';
+import CardListItem from './CardListItem.vue';
 
 export default {
   name: 'CardListItemOuter',

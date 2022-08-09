@@ -202,7 +202,7 @@
 </template>
 
 <script>
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
 
 /** @class BattleRules */
 export default {

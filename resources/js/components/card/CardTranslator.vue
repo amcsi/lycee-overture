@@ -159,10 +159,10 @@ import { mapActions, mapMutations } from 'vuex';
 import api from '../../api';
 import { normalizeError, reportError, VALIDATION_FAILURE } from '../../utils/errorHandling';
 import { characterType, itemType } from '../../value/cardType';
-import ExternalLink from '../common/ExternalLink';
-import FlagEmoji from '../common/FlagEmoji';
-import TranslatableTextarea from '../form/TranslatableTextarea';
-import CardDescription from './CardDescription';
+import ExternalLink from '../common/ExternalLink.vue';
+import FlagEmoji from '../common/FlagEmoji.vue';
+import TranslatableTextarea from '../form/TranslatableTextarea.vue';
+import CardDescription from './CardDescription.vue';
 
 function draftToCardTranslation(draft) {
   return {
@@ -453,7 +453,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'resources/sass/variables';
+@import '../../../sass/variables.module';
 
 .spacer {
   height: 1rem;

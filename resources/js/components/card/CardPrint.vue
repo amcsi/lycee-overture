@@ -40,8 +40,8 @@
 <script>
 import cardMixin from '../../utils/cardMixin';
 import { getCurrentVariant } from '../../utils/cardVariant';
-import CardImage from './CardImage';
-import CardText from './CardText';
+import CardImage from './CardImage.vue';
+import CardText from './CardText.vue';
 
 /**
  * Represents a card to print

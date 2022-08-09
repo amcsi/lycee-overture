@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
-import AnatomyTable from './AnatomyTable';
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
+import AnatomyTable from './AnatomyTable.vue';
 
 /** @class ImageWithAnatomy */
 export default {
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~element-ui/packages/theme-chalk/src/mixins/mixins.scss';
+@import 'element-ui/packages/theme-chalk/src/mixins/mixins.scss';
 
 .anatomy-container {
   display: flex;

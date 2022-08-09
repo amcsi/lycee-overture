@@ -146,10 +146,10 @@
 </template>
 
 <script>
-import CardText from '../card/CardText';
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg';
-import AnatomyRow from './AnatomyRow';
-import ImageWithAnatomy from './ImageWithAnatomy';
+import CardText from '../card/CardText.vue';
+import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
+import AnatomyRow from './AnatomyRow.vue';
+import ImageWithAnatomy from './ImageWithAnatomy.vue';
 
 /** @class CostRules */
 export default {
