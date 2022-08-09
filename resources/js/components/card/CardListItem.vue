@@ -14,6 +14,7 @@
               >
             </span>
             <el-button
+              v-if="!isLocaleJapanese"
               class="show-when-hovering"
               size="mini"
               @click="translateNamesOpen = !translateNamesOpen"
@@ -59,7 +60,12 @@
         </div>
         <div style="flex: 1" />
         <div class="show-when-hovering" style="text-align: right">
-          <span class="clickable" @click="onSuggestTranslationClick"
+          <span
+            v-if="isLocaleJapanese"
+            title="Please switch the site language to English on the top right before translating."
+            >Suggest Translation</span
+          >
+          <span v-else class="clickable" @click="onSuggestTranslationClick"
             >{{ translateMode ? 'Collapse' : '' }} Suggest Translation</span
           >
           -
