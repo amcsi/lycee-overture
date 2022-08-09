@@ -30,7 +30,7 @@ export default {
       return this.isLocaleJapanese ? this.card.japanese : this.card.translation;
     },
     suggestion() {
-      return this.card.suggestions.filter(v => v.locale === this.locale)[0] ?? null;
+      return this.card.suggestions?.filter(v => v.locale === this.locale)[0] ?? null;
     },
   },
 };
