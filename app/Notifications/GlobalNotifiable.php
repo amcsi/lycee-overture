@@ -12,7 +12,7 @@ class GlobalNotifiable
 {
     use Notifiable;
 
-    public function routeNotificationForDiscord(): string
+    public function routeNotificationForDiscord(): ?string
     {
         return config('services.discord.webhookUrl');
     }
