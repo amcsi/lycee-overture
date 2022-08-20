@@ -21,7 +21,7 @@ $abilityTypeColors: (
   $icons: 0 tap star snow moon flower space sun;
 
   @each $icon in $icons {
-    &-#{$icon} {
+    &-#{"" + $icon} {
       //noinspection CssUnknownTarget
       background-image: url(../images/text-icons/#{$icon}.svg);
     }
