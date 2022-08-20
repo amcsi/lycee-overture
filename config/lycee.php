@@ -74,4 +74,8 @@ return [
         'パープルソフトウェア' => 'Purple software',
         '戯画' => 'Giga',
     ],
+    'names_to_translate_as_whole' => [
+        // LO-2714 Loki's Clock
+        'ロキ・ノ・クロック',
+    ]
 ];

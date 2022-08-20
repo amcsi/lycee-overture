@@ -62,8 +62,21 @@ export default {
     const japaneseComponentsByProperty = {};
     const translatedComponentsByProperty = {};
     for (const { key } of Object.values(nameProperties)) {
-      japaneseComponentsByProperty[key] = this.card.japanese[key].split(splitBy.ja);
-      translatedComponentsByProperty[key] = this.card.translation[key].split(splitBy.en);
+      const japanese = this.card.japanese[key];
+      const translated = this.card.translation[key];
+
+      let japaneseSplit;
+      let translatedSplit;
+      if (japanese === translated) {
+        // If the Japanese and translated names are the same, then translate them as a whole.
+        japaneseSplit = [japanese];
+        translatedSplit = [translated];
+      } else {
+        japaneseSplit = japanese.split(splitBy.ja);
+        translatedSplit = translated.split(splitBy.en);
+      }
+      japaneseComponentsByProperty[key] = japaneseSplit;
+      translatedComponentsByProperty[key] = translatedSplit;
     }
 
     return {

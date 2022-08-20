@@ -18,7 +18,8 @@ class NameTranslator
     public function __construct(
         private ManualNameTranslator $manualNameTranslator,
         private KanaTranslator $kanaTranslator,
-        private KanjiTranslator $kanjiTranslator
+        private KanjiTranslator $kanjiTranslator,
+        private $namesToTranslateAsWhole = [],
     ) {
         $this->punctuationSearch = array_keys(self::$punctuationTranslationMap);
         $this->punctuationReplace = array_values(self::$punctuationTranslationMap);
@@ -50,6 +51,10 @@ class NameTranslator
      */
     private function tryTranslate(string $untranslated, $textTypes, bool $useKanjiNameTranslation = false): string
     {
+        if (in_array($untranslated, $this->namesToTranslateAsWhole, true)) {
+            return $untranslated;
+        }
+
         $translated = self::doSeparatedByPunctuation(
             $untranslated,
             function (string $untranslated) use ($textTypes, $useKanjiNameTranslation) {

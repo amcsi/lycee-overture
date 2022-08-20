@@ -7,6 +7,7 @@ use amcsi\LyceeOverture\Console\Commands\DownloadTranslations;
 use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
 use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
+use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooKanjiTranslator;
@@ -121,5 +122,9 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $app->singleton('japaneseFaker', fn() => \Faker\Factory::create('ja_JP'));
+
+        $app->when(NameTranslator::class)->needs('$namesToTranslateAsWhole')->give(
+            config('lycee.names_to_translate_as_whole')
+        );
     }
 }
