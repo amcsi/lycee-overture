@@ -20,7 +20,6 @@ use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 use amcsi\LyceeOverture\Set;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\Repository;
-use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\ServiceProvider;
@@ -116,8 +115,8 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $app->when(SetTranslator::class)->needs('$setTranslations')->give(
-            function () use ($app) {
-                return $app->get(Translator::class)->get('sets');
+            function () {
+                return config('lycee.sets');
             }
         );
 

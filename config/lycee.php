@@ -6,6 +6,9 @@ return [
         'AIG' => [
             'Millennium War Aigis',
         ],
+        'AL' => [
+            'AliceSoft',
+        ],
         'AQP' => [
             'Aquaplus',
         ],
@@ -22,6 +25,7 @@ return [
             'Giga',
         ],
         'GUP' => [
+            'Girls & Panzer',
             'Girls & Panzer: Senshadou Daisakusen',
             'Girls und Panzer: Destruction Mission!',
         ],
@@ -30,6 +34,9 @@ return [
         ],
         'KHP' => [
             'Kamihime Project',
+        ],
+        'NAV' => [
+            'Navel',
         ],
         'NEX' => [
             'Nexton',
@@ -46,6 +53,16 @@ return [
         'TOA' => [
             'Toaru Majutsu no Index',
             'Toaru Majutsu no Index III',
+            'A Certain Scientific Railgun & A Certain Scientific Accelerator',
+        ],
+        'SME' => [
+            'SMEE',
+        ],
+        'WP' => [
+            'Whirlpool',
+        ],
+        'WM' => [
+            'Windmill',
         ],
         'VA' => [
             'Visual Arts',
@@ -73,6 +90,9 @@ return [
         'ぱれっと' => 'Palette',
         'パープルソフトウェア' => 'Purple software',
         '戯画' => 'Giga',
+        'アリスソフト' => 'AliceSoft',
+        'とある科学の超電磁砲T＆とある科学の一方通行' => 'A Certain Scientific Railgun & A Certain Scientific Accelerator',
+        'ういんどみる' => 'Windmill',
     ],
     'names_to_translate_as_whole' => [
         // LO-2714 Loki's Clock
