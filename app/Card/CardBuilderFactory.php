@@ -37,7 +37,7 @@ class CardBuilderFactory
             $query['set'] = ($query['set'] ?? null) ? array_intersect($setIds, (array) $query['set']) : $setIds;
         }
 
-        if (($set = $query['set'] ?? null)) {
+        if (($set = $query['set'] ?? null) !== null) {
             if ($set === '-1') {
                 $builder->whereNull('set_id');
             } else {
