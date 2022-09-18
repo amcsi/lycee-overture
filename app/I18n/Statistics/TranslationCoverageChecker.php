@@ -42,8 +42,11 @@ class TranslationCoverageChecker
                 $join->on('t_ja.card_id', '=', 'cards.id')->where('t_ja.locale', '=', Locale::JAPANESE);
             }
         );
-        $japaneseKanjiCount = $builder->sum('t_ja.kanji_count');
-        $afterEnglishKanjiCount = $builder->sum('t.kanji_count');
+        $builder->select(\DB::raw('SUM(t_ja.kanji_count) as before_count'));
+        $builder->addSelect(\DB::raw("SUM(IF(s.locale = 'en', 0, t.kanji_count)) as after_count"));
+        $result = $builder->sole();
+        $japaneseKanjiCount = $result->before_count;
+        $afterEnglishKanjiCount = $result->after_count;
         return $japaneseKanjiCount ? 1 - $afterEnglishKanjiCount / $japaneseKanjiCount : 0;
     }
 
@@ -59,7 +62,10 @@ class TranslationCoverageChecker
     public function countFullyTranslated(array $query = []): int
     {
         $englishBuilder = $this->getBuilder(Locale::ENGLISH, $query);
-        return $englishBuilder->where('kanji_count', '=', '0')->count();
+        return $englishBuilder->where(function (Builder $builder) {
+            $builder->where('kanji_count', '=', '0')
+                ->orWhere('s.locale', '=', Locale::ENGLISH);
+        })->count();
     }
 
     /**
@@ -72,6 +78,13 @@ class TranslationCoverageChecker
 
     private function getBuilder(string $locale, array $query): Builder
     {
-        return $this->cardBuilderFactory->createBuilderWithQuery($locale, $query, true);
+        return $this->cardBuilderFactory
+            ->createBuilderWithQuery($locale, $query, true)
+            ->leftJoin(
+                'suggestions as s',
+                'cards.id',
+                '=',
+                's.card_id'
+            );
     }
 }
