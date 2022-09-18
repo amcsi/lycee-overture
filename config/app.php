@@ -179,7 +179,10 @@ return [
         // amcsi\LyceeOverture\Providers\BroadcastServiceProvider::class,
         amcsi\LyceeOverture\Providers\EventServiceProvider::class,
         amcsi\LyceeOverture\Providers\RouteServiceProvider::class,
-
+        ...(class_exists(amcsi\LyceeOverture\Providers\LocalServiceProvider::class) ?
+            [amcsi\LyceeOverture\Providers\LocalServiceProvider::class] :
+            []
+        ),
     ],
 
     /*
