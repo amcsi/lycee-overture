@@ -18,7 +18,7 @@ class CsvIterator
     {
         $f = try_fopen(storage_path(ImportConstants::CSV_PATH), 'r');
 
-        $expectedColumnCount = 21;
+        $expectedColumnCount = 22;
         $expectedCommaCount = $expectedColumnCount - 1;
 
         $rows = [];

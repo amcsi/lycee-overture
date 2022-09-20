@@ -27,4 +27,5 @@ class CsvColumns
     public const ABILITY = 16;
     public const CARD_SET = 17;
     public const CARD_SET_2 = 18;
+    public const BRAND = 20;
 }
