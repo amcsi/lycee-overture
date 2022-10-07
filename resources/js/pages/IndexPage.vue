@@ -29,11 +29,29 @@
     <ul class="relevant-links">
       <li>
         <ExternalLink href="https://discord.gg/xtcQDtQ">
-          <img
-            class="discord-icon"
-            alt="Discord"
-            src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"
-          />
+          <span
+            style="
+              display: inline-block;
+              padding: 0.25rem;
+              border-radius: 50%;
+              background-color: #5865f2;
+              width: 1rem;
+              height: 1rem;
+            "
+          >
+            <img
+              style="
+                height: 1rem;
+                width: 1rem;
+                vertical-align: middle;
+                position: relative;
+                top: -0.1rem;
+              "
+              class="discord-icon"
+              alt="Discord"
+              src="../../../resources/images/icons/discord.svg"
+            />
+          </span>
           Discord server
         </ExternalLink>
       </li>
