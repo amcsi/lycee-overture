@@ -13,8 +13,7 @@
           <ExternalLink href="https://www.szeremi.org/">Attila Szeremi</ExternalLink>
           . Drop me an email at
           <strong>lycee-overture@szeremi.org</strong>, or follow me on
-          <ExternalLink href="https://twitter.com/amcsi_san">Twitter</ExternalLink>
-          .<br />
+          <ExternalLink href="https://twitter.com/amcsi_san">Twitter</ExternalLink>.<br />
           Website source code can be found on
           <ExternalLink href="https://github.com/amcsi/lycee-overture">GitHub </ExternalLink>
           .<br />
