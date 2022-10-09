@@ -1,6 +1,22 @@
 @php
 $title = 'Lycee Overture TCG Translations';
 $description = 'This is a website in progress with the goal of translating the new Lycee Overture Trading Card Game and provide a useful database for being able to search for cards.';
+$cardIds = request()->get('cardId') ?
+    array_map(
+        function (string $cardId): string {
+            return sprintf('LO-%04d', preg_replace('/\D/', '', $cardId));
+        },
+        explode(',', request()->str('cardId'))
+    ) :
+    [];
+$ogWidth = 249;
+$ogHeight = 423;
+$ogImageUrl = 'https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/v1619434147/og_image.jpg';
+if (!empty($cardIds)) {
+    $ogWidth = 346;
+    $ogHeight = 484;
+    $ogImageUrl = "https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/cards/{$cardIds[0]}.jpg";
+}
 @endphp
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
@@ -16,10 +32,10 @@ $description = 'This is a website in progress with the goal of translating the n
 
     <meta property="og:title" content="{{ $title }}" />
     <meta property="og:description" content="{{ $description }}" />
-    <meta property="og:image" content="https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/v1619434147/og_image.jpg" />
-    <meta property="og:image:secure_url" content="https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/v1619434147/og_image.jpg" />
-    <meta property="og:image:width" content="249" />
-    <meta property="og:image:height" content="423" />
+    <meta property="og:image" content="{{ $ogImageUrl }}" />
+    <meta property="og:image:secure_url" content="{{ $ogImageUrl }}" />
+    <meta property="og:image:width" content="{{ $ogWidth }}" />
+    <meta property="og:image:height" content="{{ $ogHeight }}" />
 
     <!-- Styles -->
     <style>
