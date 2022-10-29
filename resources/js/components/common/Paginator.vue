@@ -1,16 +1,18 @@
 <template>
   <el-row>
-    <el-col :sm="12">
-      <el-pagination
-        :total="pagination.total"
-        :current-page="pagination.current_page"
-        :page-size.sync="limit"
-        @current-change="$emit('page-change', $event)"
-        layout="total, sizes, prev, pager, next, jumper"
-        :page-sizes="limitValues"
-        style="margin-bottom: 0.5rem"
-        :get-to-for-page="getToForPage"
-      />
+    <el-col :sm="24">
+      <div style="width: 100%; overflow: auto">
+        <el-pagination
+          :total="pagination.total"
+          :current-page="pagination.current_page"
+          :page-size.sync="limit"
+          @current-change="$emit('page-change', $event)"
+          layout="total, sizes, prev, pager, next, jumper"
+          :page-sizes="limitValues"
+          style="margin-bottom: 0.5rem"
+          :get-to-for-page="getToForPage"
+        />
+      </div>
     </el-col>
   </el-row>
 </template>

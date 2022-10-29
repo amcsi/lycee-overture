@@ -16,3 +16,11 @@ $cardHeightWidthRatio: 0.71538461538;
 :export {
   cardHeightWidthRatio: $cardHeightWidthRatio
 }
+
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) { @content; }
+}
+
+@mixin not-for-tablet-landscape-up {
+  @media (max-width: 899px) { @content; }
+}

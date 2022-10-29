@@ -30,7 +30,7 @@
         </div>
         <CardNameTranslator v-if="translateNamesOpen" :card="card" />
         <div class="stats-and-stuff">
-          <div class="flex-center">
+          <div class="flex-center stats-and-stuff-flex">
             <div class="flex-center gaps" style="flex-wrap: wrap">
               <CardText class="element" :text="card.element" />
               <StatValue type="ex" :value="card.ex" />
@@ -40,8 +40,10 @@
                 <StatValue type="dp" :value="card.dp" />
                 <StatValue type="sp" :value="card.sp" />
               </template>
-              <span style="margin-left: 0.75rem">Cost:</span>
-              <CardText class="cost" :text="card.cost" />
+              <span class="cost">
+                <span style="margin-left: 0.75rem">Cost:{{ ' ' }}</span>
+                <CardText class="cost" :text="card.cost"
+              /></span>
             </div>
             <div style="flex: 1" />
             <div v-if="card.set">
@@ -55,6 +57,8 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="card-description-container">
         <div class="card-description" v-if="hasCardDescription">
           <div v-if="shouldShowSuggestion"><em>(Unapproved translation)</em></div>
           <CardDescription :translation="cardText" />
@@ -361,6 +365,51 @@ $smallScreenLimit: 600;
 
   .normal-screen-separator {
     display: none;
+  }
+
+  .cost {
+    margin-top: 0.5rem;
+  }
+
+  .stats-and-stuff-flex {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+.card-list-item-inner {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+}
+
+.card-thumbnail {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 3;
+
+  @include not-for-tablet-landscape-up {
+    grid-row-end: 2;
+  }
+}
+
+.card-details {
+  grid-column-start: 2;
+  grid-row-end: 2;
+
+  @include not-for-tablet-landscape-up {
+    grid-row-end: 2;
+  }
+}
+
+.card-description-container {
+  grid-row-start: 2;
+  grid-column-start: 2;
+
+  @include not-for-tablet-landscape-up {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 3;
   }
 }
 </style>
