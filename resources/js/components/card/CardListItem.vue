@@ -8,9 +8,11 @@
             <span class="card-id">{{ card.id }}{{ currentVariant }}</span>
             <span class="card-name">{{ cardText.name }}</span>
             <span v-if="isCharacter">
-              - <span class="card-ability-name">{{ cardText.ability_name }}</span>
+              <span class="normal-screen-separator">-</span>
+              <span class="card-ability-name">{{ cardText.ability_name }}</span>
               <span class="card-character-type" v-if="characterType"
-                >- Type: {{ cardText.character_type || '-' }}</span
+                ><span class="normal-screen-separator">-</span> Type:
+                {{ cardText.character_type || '-' }}</span
               >
             </span>
             <el-button
@@ -29,7 +31,7 @@
         <CardNameTranslator v-if="translateNamesOpen" :card="card" />
         <div class="stats-and-stuff">
           <div class="flex-center">
-            <div class="flex-center gaps">
+            <div class="flex-center gaps" style="flex-wrap: wrap">
               <CardText class="element" :text="card.element" />
               <StatValue type="ex" :value="card.ex" />
               <template v-if="isCharacter">
@@ -345,5 +347,20 @@ export default {
 
 .card-type-event {
   background-color: lighten(#60011d, 77);
+}
+
+$smallScreenLimit: 600;
+
+@media screen and (max-width: #{$smallScreenLimit}px) {
+  .card-id,
+  .card-name,
+  .card-ability-name,
+  .card-character-type {
+    display: block;
+  }
+
+  .normal-screen-separator {
+    display: none;
+  }
 }
 </style>
