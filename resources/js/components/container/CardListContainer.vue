@@ -17,9 +17,6 @@ import CardFilters from '../card/CardFilters.vue';
 export default {
   name: 'CardListContainer',
   components: { CardFilters },
-  created() {
-    this.listCardsAndFetchStatistics(this.$route.query);
-  },
   computed: {
     ...mapState('cards', ['list']),
   },
