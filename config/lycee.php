@@ -50,13 +50,16 @@ return [
         'PUR' => [
             'Purple software',
         ],
+        'SME' => [
+            'SMEE',
+        ],
+        'SP' => [
+            'Saga Planets',
+        ], 
         'TOA' => [
             'Toaru Majutsu no Index',
             'Toaru Majutsu no Index III',
             'A Certain Scientific Railgun & A Certain Scientific Accelerator',
-        ],
-        'SME' => [
-            'SMEE',
         ],
         'WP' => [
             'Whirlpool',
@@ -93,6 +96,7 @@ return [
         'アリスソフト' => 'AliceSoft',
         'とある科学の超電磁砲T＆とある科学の一方通行' => 'A Certain Scientific Railgun & A Certain Scientific Accelerator',
         'ういんどみる' => 'Windmill',
+        'サガプラネッツ' => 'Saga Planets',
     ],
     'names_to_translate_as_whole' => [
         // LO-2714 Loki's Clock
