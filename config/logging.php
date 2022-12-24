@@ -50,13 +50,13 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily', 'stderr', 'rollbar'],
+            'channels' => ['daily', 'stderr'],
             'ignore_exceptions' => false,
         ],
 
         'productionStack' => [
             'driver' => 'stack',
-            'channels' => ['errorlog', 'rollbar'],
+            'channels' => ['errorlog'],
         ],
 
         'single' => [
@@ -109,16 +109,6 @@ return [
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => env('LOG_LEVEL', 'debug'),
-        ],
-
-        'rollbar' => [
-            'driver' => 'monolog',
-            'handler' => \Rollbar\Laravel\MonologHandler::class,
-            'access_token' => env('ROLLBAR_SERVER_TOKEN'),
-            'level' => 'debug',
-            // Args in stack traces result in 413 status errors from Rollbar for too large payload.
-            'local_vars_dump' => false,
-            'use_error_reporting' => true,
         ],
 
         'null' => [

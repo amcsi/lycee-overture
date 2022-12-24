@@ -7,7 +7,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import CardFilters from '../card/CardFilters.vue';
 
 /**
  * Wrapper for card lists
@@ -16,7 +15,6 @@ import CardFilters from '../card/CardFilters.vue';
  **/
 export default {
   name: 'CardListContainer',
-  components: { CardFilters },
   computed: {
     ...mapState('cards', ['list']),
   },

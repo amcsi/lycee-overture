@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div v-if="cards">
       <h3>
         <span v-if="statistics" v-show="totalCards > 0">

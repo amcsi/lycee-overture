@@ -1,14 +1,17 @@
 <template>
   <div style="display: flex">
-    <el-input type="textarea" rows="20" :value="source" @input="$emit('update:source', $event)" />
-    <el-input type="textarea" rows="20" readonly :value="result" />
+    <a-input type="textarea" rows="20" :value="source" @input="$emit('update:source', $event)" />
+    <a-input type="textarea" rows="20" readonly :value="result" />
   </div>
 </template>
 
 <script>
+import AInput from './ui/AInput.vue';
+
 /** @class DeckToMigrationConverter */
 export default {
   name: 'DeckToMigrationConverter',
+  components: { AInput },
   props: {
     source: {
       type: String,

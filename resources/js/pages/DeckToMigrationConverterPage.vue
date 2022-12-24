@@ -1,5 +1,5 @@
 <template>
-  <DeckToMigrationConverter :source.sync="source" />
+  <DeckToMigrationConverter v-model:source="source" />
 </template>
 
 <script>
