@@ -1,19 +1,15 @@
 <template>
   <el-row>
-    <el-col :sm="24">
-      <div style="width: 100%; overflow: auto">
-        <el-pagination
-          :total="pagination.total"
-          :current-page="pagination.current_page"
-          :page-size.sync="limit"
-          @current-change="$emit('page-change', $event)"
-          layout="total, sizes, prev, pager, next, jumper"
-          :page-sizes="limitValues"
-          style="margin-bottom: 0.5rem"
-          :get-to-for-page="getToForPage"
-        />
-      </div>
-    </el-col>
+    <el-pagination
+      :total="pagination.total"
+      :current-page="pagination.current_page"
+      v-model:page-size="limit"
+      @current-change="$emit('page-change', $event)"
+      layout="total, sizes, prev, pager, next, jumper"
+      :page-sizes="limitValues"
+      style="margin-bottom: 0.5rem"
+      :get-to-for-page="getToForPage"
+    />
   </el-row>
 </template>
 
@@ -60,7 +56,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'element-ui/packages/theme-chalk/src/mixins/mixins.scss';
+@import 'element-plus/theme-chalk/src/mixins/mixins.scss';
 
 @include res(sm) {
   .limitContainer {

@@ -1,53 +1,54 @@
 <template>
-  <el-menu router mode="horizontal" :default-active="$route.path">
-    <el-menu-item index="/" route="/">
-      <a href="/" @click.prevent>{{ $t('nav.welcome') }}</a>
-    </el-menu-item>
-    <el-menu-item index="/news" route="/news">
-      <a href="/news" @click.prevent>{{ $t('nav.news') }}</a>
-    </el-menu-item>
-    <el-menu-item index="/rules" route="/rules">
-      <a href="/rules" @click.prevent>{{ $t('nav.rules') }}</a>
-    </el-menu-item>
-    <el-menu-item index="/cards" route="/cards">
-      <a href="/cards" @click.prevent>{{ $t('nav.cardList') }}</a>
-    </el-menu-item>
-    <el-menu-item v-if="isLocalEnv" index="/deck">
-      <router-link to="/deck">{{ $t('nav.deck') }}</router-link>
-    </el-menu-item>
+  <v-toolbar style="position: static">
+    <template #prepend>
+      <a-menu-item route="/" exact>
+        <span>{{ $t('nav.welcome') }}</span>
+      </a-menu-item>
+      <a-menu-item route="/news">
+        <span>{{ $t('nav.news') }}</span>
+      </a-menu-item>
+      <a-menu-item route="/rules">
+        <span>{{ $t('nav.rules') }}</span>
+      </a-menu-item>
+      <a-menu-item route="/cards">
+        <span>{{ $t('nav.cardList') }}</span>
+      </a-menu-item>
+      <a-menu-item v-if="isLocalEnv" route="/deck">
+        <span>{{ $t('nav.deck') }}</span>
+      </a-menu-item>
+    </template>
 
-    <li class="language-links">
+    <template #append>
+      <v-card-text v-if="authDetails">
+        Welcome, <strong>{{ authDetails.name }}!</strong>
+      </v-card-text>
+      <a-menu-item href="/logout" v-if="authDetails">
+        <span>Log out</span>
+      </a-menu-item>
+      <a-menu-item route="/help-translate">
+        <span>Help Translate</span>
+      </a-menu-item>
+
+      <div style="width: 1rem" />
+
       <a :href="enHref" class="language-link" :class="{ active: locale !== 'ja' }">
         <FlagImage locale="en" />
       </a>
       <a :href="jaHref" class="language-link" :class="{ active: locale === 'ja' }">
         <FlagImage locale="ja" />
       </a>
-    </li>
-
-    <el-menu-item style="float: right" index="/help-translate" route="/help-translate">
-      <a href="/help-translate" @click.prevent>Help Translate</a>
-    </el-menu-item>
-    <a class="el-menu-item" v-if="authDetails" style="float: right" href="/logout"> Log out </a>
-    <li class="el-menu-item" v-if="authDetails" style="float: right">
-      Welcome, <strong>{{ authDetails.name }}!</strong>
-    </li>
-  </el-menu>
+    </template>
+  </v-toolbar>
 </template>
 
 <script>
 import FlagImage from './common/FlagImage.vue';
-
-function getLocaleChangeUrl(vueComponent, locale) {
-  let url = vueComponent.$route.fullPath;
-  url += url.indexOf('?') >= 0 ? '&' : '?';
-  url += `locale=${locale}`;
-  return url;
-}
+import AMenu from './ui/AMenu.vue';
+import AMenuItem from './ui/AMenuItem.vue';
 
 /** @class NavMenu */
 export default {
-  components: { FlagImage },
+  components: { AMenuItem, AMenu, FlagImage },
   data() {
     return {
       locale: window.locale,
@@ -56,11 +57,20 @@ export default {
     };
   },
   computed: {
+    getLocaleChangeUrl() {
+      let fullPath = this.$route.fullPath;
+
+      return locale => {
+        let url = fullPath.indexOf('?') >= 0 ? '&' : '?';
+        url += `locale=${locale}`;
+        return url;
+      };
+    },
     enHref() {
-      return getLocaleChangeUrl(this, 'en');
+      return this.getLocaleChangeUrl('en');
     },
     jaHref() {
-      return getLocaleChangeUrl(this, 'ja');
+      return this.getLocaleChangeUrl('ja');
     },
   },
   methods: {

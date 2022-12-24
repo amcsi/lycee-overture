@@ -461,10 +461,10 @@ export default {
 
 .translatedText {
   font-weight: bold;
-  color: $--color-primary;
+  color: $color-primary;
 
   &.autoTranslated {
-    color: $--color-success;
+    color: $color-success;
   }
 }
 </style>

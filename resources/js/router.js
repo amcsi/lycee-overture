@@ -2,57 +2,37 @@
  * Vue Router.
  */
 
-import VueRouter from 'vue-router';
+import { defineAsyncComponent } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
 import Layout from './pages/Layout.vue';
 import NewsPage from './pages/NewsPage.vue';
 import NotFoundPage from './pages/NotFoundPage.vue';
 
-/**
- * Loading wrapper for code-split async components in the route.
- */
-const loadingizeAsyncComponent = asyncComponent => () => ({
-  // The component to load (should be a Promise)
-  component: asyncComponent(),
-  // A component to use while the async component is loading
-  loading: {
-    render(h) {
-      return h('div', { directives: [{ loading: true }] });
-    },
-  },
-  // A component to use if the load fails
-  error: null,
-  // Delay before showing the loading component. Default: 200ms.
-  delay: 200,
-  // The error component will be displayed if a timeout is
-  // provided and exceeded. Default: Infinity.
-  timeout: Infinity,
-});
-
-const CardListPrintPage = loadingizeAsyncComponent(() => import('./pages/CardListPrintPage.vue'));
-const CardListPage = loadingizeAsyncComponent(() => import('./pages/CardListPage.vue'));
-const DeckPage = loadingizeAsyncComponent(() =>
+const CardListPrintPage = defineAsyncComponent(() => import('./pages/CardListPrintPage.vue'));
+const CardListPage = defineAsyncComponent(() => import('./pages/CardListPage.vue'));
+const DeckPage = defineAsyncComponent(() =>
   import(/* webpackChunkName: "deck" */ './pages/DeckPage.vue')
 );
-const DeckCardListPage = loadingizeAsyncComponent(() =>
+const DeckCardListPage = defineAsyncComponent(() =>
   import(/* webpackChunkName: "deck" */ './pages/Deck/DeckCardListPage.vue')
 );
-const RulesPage = loadingizeAsyncComponent(() =>
+const RulesPage = defineAsyncComponent(() =>
   import(/* webpackChunkName: "rules" */ './pages/RulesPage.vue')
 );
-const IndexPage = loadingizeAsyncComponent(() => import('./pages/IndexPage.vue'));
-const HelpTranslatePage = loadingizeAsyncComponent(() => import('./pages/HelpTranslatePage.vue'));
-const DeckToMigrationConverterPage = loadingizeAsyncComponent(() =>
+const IndexPage = defineAsyncComponent(() => import('./pages/IndexPage.vue'));
+const HelpTranslatePage = defineAsyncComponent(() => import('./pages/HelpTranslatePage.vue'));
+const DeckToMigrationConverterPage = defineAsyncComponent(() =>
   import('./pages/DeckToMigrationConverterPage.vue')
 );
 
 const title = 'Lycee Overture TCG Translations';
 
-const router = new VueRouter({
-  mode: 'history', // HTML5 history.
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     { path: '/cards/print', component: CardListPrintPage },
     {
-      path: '',
+      path: '/',
       component: Layout,
       children: [
         {
@@ -159,9 +139,10 @@ const router = new VueRouter({
           path: '/deck-to-migration-converter',
           component: DeckToMigrationConverterPage,
         },
-        { path: '*', component: NotFoundPage }, // 404.
+        { path: '/:pathMatch(.*)*', component: NotFoundPage }, // 404.
       ],
     },
+    { path: '/:pathMatch(.*)*', component: NotFoundPage }, // 404.
   ],
 });
 

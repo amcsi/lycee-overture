@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { createStore } from 'vuex';
 import articles from './modules/articles';
 import auth from './modules/auth';
 import cards from './modules/cards';
@@ -16,7 +16,7 @@ import translation from './modules/translation';
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+const store = createStore({
   modules: {
     articles,
     auth,

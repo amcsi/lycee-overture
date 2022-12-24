@@ -30,7 +30,7 @@
     "mbilbille/jpnforphp": "^0.7.0",
     "nikic/iter": "^2.0",
     "php-http/curl-client": "^2.2",
-    "rollbar/rollbar-laravel": "^7.0",
+    "sentry/sentry-laravel": "^3.0",
     "snoeren-development/laravel-discord-webhook-channel": "^1.3",
     "swooletw/laravel-swoole": "^2.12",
     "symfony/stopwatch": "^4.1"

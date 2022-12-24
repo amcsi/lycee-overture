@@ -9,25 +9,23 @@
         for <strong>"Card Names, Ability Names, Character Types"</strong> before submitting name /
         ability type translations.
       </el-alert>
-      <div
-        v-for="nameProperty of nameProperties"
-        v-if="card.japanese[nameProperty.key]"
-        :key="nameProperty.key"
-      >
-        <h3>{{ nameProperty.name }}</h3>
-        <div v-for="(japanese, index) of japaneseComponentsByProperty[nameProperty.key]">
-          <el-tag effect="plain">
-            <FlagImage locale="ja" />
-            {{ japanese }}
-          </el-tag>
-          <el-tag effect="plain">
-            <FlagImage locale="en" />
-            {{ translatedComponentsByProperty[nameProperty.key][index] }}
-          </el-tag>
-          <ExternalLink :href="translateLinkByProperty[nameProperty.key][index]">
-            Translate
-          </ExternalLink>
-        </div>
+      <div v-for="nameProperty of nameProperties" :key="nameProperty.key">
+        <template v-if="card.japanese[nameProperty.key]">
+          <h3>{{ nameProperty.name }}</h3>
+          <div v-for="(japanese, index) of japaneseComponentsByProperty[nameProperty.key]">
+            <el-tag effect="plain">
+              <FlagImage locale="ja" />
+              {{ japanese }}
+            </el-tag>
+            <el-tag effect="plain">
+              <FlagImage locale="en" />
+              {{ translatedComponentsByProperty[nameProperty.key][index] }}
+            </el-tag>
+            <ExternalLink :href="translateLinkByProperty[nameProperty.key][index]">
+              Translate
+            </ExternalLink>
+          </div>
+        </template>
       </div>
     </el-card>
     <div style="height: 2rem" />

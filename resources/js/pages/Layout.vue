@@ -1,10 +1,10 @@
 <template>
-  <el-container class="container">
-    <el-header height="auto">
-      <NavMenu />
-    </el-header>
+  <div>
+    <NavMenu />
     <el-main class="main">
-      <router-view></router-view>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
     </el-main>
     <el-footer height="auto">
       <el-card>
@@ -15,15 +15,14 @@
           <strong>lycee-overture@szeremi.org</strong>, or follow me on
           <ExternalLink href="https://twitter.com/amcsi_san">Twitter</ExternalLink>.<br />
           Website source code can be found on
-          <ExternalLink href="https://github.com/amcsi/lycee-overture">GitHub </ExternalLink>
-          .<br />
+          <ExternalLink href="https://github.com/amcsi/lycee-overture">GitHub</ExternalLink>.<br />
           Thanks to Yee Cheng Xuan for consulting with me with the automatic translations.
         </p>
 
         <p v-if="newestDate">
           Newest card(s) last imported:<br />
           <span :style="{ zoom: !newestDate ? 0.5 : 1 }" v-loading="!newestDate">
-            {{ newestDate | formatDate }}
+            {{ $formatDate(newestDate) }}
             ({{ newestDateDaysAgo ? `${newestDateDaysAgo} days ago.` : 'Less than a day ago.' }})
           </span>
         </p>
@@ -33,7 +32,7 @@
           <strong>{{ newestSuggestion.creator.name }}</strong
           >:<br />
           <span>
-            {{ newestSuggestion.created_at | formatDate }}
+            {{ $formatDate(newestSuggestion.created_at) }}
             ({{
               newestSuggestionDaysAgo
                 ? `${newestSuggestionDaysAgo} days ago.`
@@ -48,7 +47,7 @@
         <LatestArticles :limit="2" />
       </div>
     </el-footer>
-  </el-container>
+  </div>
 </template>
 
 <script>

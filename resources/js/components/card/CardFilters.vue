@@ -17,21 +17,21 @@
     <DeckSelector v-model="deck" />
 
     <el-form-item :label="$t('cardFilters.cardId')">
-      <el-input class="card-id-input" placeholder="LO-0001,LO-0002" v-model="cardId" />
+      <a-input class="card-id-input" placeholder="LO-0001,LO-0002" v-model="cardId" />
     </el-form-item>
 
     <el-form-item :label="$t('cardFilters.nameOfCard')">
-      <el-input class="card-id-input" v-model="name" />
+      <a-input class="card-id-input" v-model="name" />
     </el-form-item>
 
     <el-form-item :label="$t('cardFilters.cardText')">
-      <el-input class="card-id-input" v-model="text" />
+      <a-input class="card-id-input" v-model="text" />
     </el-form-item>
 
     <div style="clear: both"></div>
 
     <el-form-item>
-      <el-checkbox
+      <a-checkbox
         v-model="translatedFirst"
         true-label="1"
         :label="$t('cardFilters.translatedFirst')"
@@ -39,11 +39,11 @@
     </el-form-item>
 
     <el-form-item>
-      <el-checkbox v-model="hideFullyTranslated" true-label="1" label="Hide fully translated" />
+      <a-checkbox v-model="hideFullyTranslated" true-label="1" label="Hide fully translated" />
     </el-form-item>
 
     <el-form-item>
-      <el-checkbox
+      <a-checkbox
         v-model="translationSuggestions"
         true-label="1"
         label="Cards with unapproved translations"
@@ -70,6 +70,8 @@ import { debounce } from 'lodash-es';
 import { mapGetters, mapState } from 'vuex';
 import DeckSelector from '../form/DeckSelector.vue';
 import SetSelector from '../form/SetSelector.vue';
+import ACheckbox from '../ui/ACheckbox.vue';
+import AInput from '../ui/AInput.vue';
 
 const debouncedChangeRoute = debounce(($router, query) => {
   $router.push({ query });
@@ -77,7 +79,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
 
 // Configuration for common query filter properties.
 const filterConfig = [
-  { name: 'brand' },
+  //{ name: 'brand' },
   { name: 'deck' },
   { name: 'set' },
   { name: 'cardId', debouncing: true },
@@ -87,10 +89,52 @@ const filterConfig = [
   { name: 'hideFullyTranslated' },
   { name: 'translationSuggestions' },
 ];
+const x = {
+  ...filterConfig
+    /**
+     * From a property configuration, generates a computed getter/setter pair, and returns an object with a single
+     * property (the name), and puts the getter/setter as its value.
+     */
+    .map(({ name, debouncing }) => {
+      const getterSetter = {
+        get() {
+          return this.filterData[name];
+        },
+        set(value) {
+          console.info('this.filterData[name]', this.filterData[name]);
+
+          this.filterData[name] = value;
+          const query = { ...this.$route.query };
+          delete query.page; // Always clear the page when the filters change.
+          delete query[name];
+          if (value) {
+            query[name] = value;
+          }
+
+          if (debouncing) {
+            debouncedChangeRoute(this.$router, query);
+          } else {
+            this.$router.push({ query });
+          }
+        },
+      };
+      return {
+        [name]: getterSetter,
+      };
+    })
+    /**
+     * Now we want to take the array where each contains an object with a single key (property) with a getter/setter
+     * in them, and make it into a single object containing all the properties with their getter/setters on them.
+     */
+    .reduce((acc, current) => {
+      return { ...acc, ...current };
+    }, {}),
+};
+
 /** @class CardFilters */
 export default {
   name: 'CardFilters',
-  components: { SetSelector, DeckSelector },
+  components: { AInput, ACheckbox, SetSelector, DeckSelector },
   data() {
     return {
       filterData: {},
@@ -102,42 +146,7 @@ export default {
       totalCards: state => state.list.meta.total,
     }),
     ...mapGetters('sets', ['brands']),
-    ...filterConfig
-      /**
-       * From a property configuration, generates a computed getter/setter pair, and returns an object with a single
-       * property (the name), and puts the getter/setter as its value.
-       */
-      .map(({ name, debouncing }) => {
-        const getterSetter = {
-          get() {
-            return this.filterData[name];
-          },
-          set(value) {
-            this.filterData[name] = value;
-            const query = { ...this.$route.query };
-            delete query.page; // Always clear the page when the filters change.
-            delete query[name];
-            if (value) {
-              query[name] = value;
-            }
-            if (debouncing) {
-              debouncedChangeRoute(this.$router, query);
-            } else {
-              this.$router.push({ query });
-            }
-          },
-        };
-        return {
-          [name]: getterSetter,
-        };
-      })
-      /**
-       * Now we want to take the array where each contains an object with a single key (property) with a getter/setter
-       * in them, and make it into a single object containing all the properties with their getter/setters on them.
-       */
-      .reduce((acc, current) => {
-        return { ...acc, ...current };
-      }, {}),
+    ...x,
     _brands() {
       if (!this.brands) {
         return null;
@@ -164,7 +173,7 @@ export default {
     },
   },
   watch: {
-    $route: {
+    '$route.query': {
       immediate: true,
       handler() {
         const filterData = {};

@@ -134,7 +134,7 @@
     <el-card>
       <h4>Result of Rider / Anne Bonny</h4>
       <p>
-        DP1 (Rider / Anne Bonny) < AP3 (Rider / Edward Teach)<br />
+        DP1 (Rider / Anne Bonny) &lt; AP3 (Rider / Edward Teach)<br />
         Rider / Anne Bonny is downed
       </p>
     </el-card>
@@ -142,7 +142,7 @@
     <el-card>
       <h4>Result of Rider / Edward Teach</h4>
       <p>
-        DP0 (Rider / Edward Teach) < AP2 (Rider / Anne Bonny)<br />
+        DP0 (Rider / Edward Teach) &lt; AP2 (Rider / Anne Bonny)<br />
         Rider / Edward Teach is downed
       </p>
     </el-card>
@@ -194,7 +194,7 @@
     <el-card>
       <h5>Result of Rider / Edward Teach</h5>
       <p>
-        DP0 (Rider / Edward Teach) < AP2 (Rider / Anne Bonny)<br />
+        DP0 (Rider / Edward Teach) &lt; AP2 (Rider / Anne Bonny)<br />
         Rider / Edward Teach is downed
       </p>
     </el-card>

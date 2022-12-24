@@ -10,7 +10,7 @@ const tagTypeMap = {
   ex: 'info',
   dmg: 'success',
   ap: 'danger',
-  dp: 'primary',
+  dp: '',
   sp: 'warning',
 };
 
@@ -41,18 +41,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'element-ui/packages/theme-chalk/src/common/var.scss';
+@import 'element-plus/theme-chalk/src/common/var.scss';
 
 .stat-value {
   font-weight: bold;
 }
 
 $colors: (
-  'primary': $--tag-primary-color,
-  'success': $--tag-success-color,
-  'info': $--tag-info-color,
-  'warning': $--tag-warning-color,
-  'danger': $--tag-danger-color,
+  'primary': $color-primary,
+  'success': $color-success,
+  'info': $color-info,
+  'warning': $color-warning,
+  'danger': $color-danger,
 );
 
 @each $type, $color in $colors {

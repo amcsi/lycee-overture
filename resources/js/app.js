@@ -3,82 +3,92 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import {
-  Alert,
-  Button,
-  Card,
-  Checkbox,
-  Col,
-  Container,
-  Footer,
-  Form,
-  FormItem,
-  Header,
-  Input,
-  Loading,
-  Main,
-  Menu,
-  MenuItem,
-  Message,
-  Option,
-  Pagination,
-  Row,
-  Select,
-  Switch,
-  Table,
-  TableColumn,
-  Tag,
-} from 'element-ui';
-import elementUiLocale from 'element-ui/lib/locale';
-import elementUiLangEnglish from 'element-ui/lib/locale/lang/en';
-import 'element-ui/lib/theme-chalk/index.css';
-
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import { BrowserTracing } from '@sentry/tracing';
+import * as Sentry from '@sentry/vue';
+import { createApp } from 'vue';
+import { createVuetify } from 'vuetify';
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
+import 'vuetify/styles';
+// TODO put back
+//import { ElMessage } from 'element-plus';
+//import 'element-plus/theme-chalk/index.css';
 import App from './App.vue';
-
-import './bootstrap';
 import i18n from './i18n';
-import { rollbar } from './rollbar';
 import router from './router';
 import store from './store/index';
 
-window.Vue = Vue;
+const vuetify = createVuetify({
+  components,
+  directives,
+});
 
-elementUiLocale.use(elementUiLangEnglish);
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+const app = createApp(App);
+app.config.globalProperties.$formatDate = formatDate;
+app.use(store).use(router).use(i18n).use(vuetify);
 
-Vue.use(VueRouter);
-Vue.component(Alert.name, Alert);
-Vue.component(Button.name, Button);
-Vue.component(Card.name, Card);
-Vue.component(Checkbox.name, Checkbox);
-Vue.component(Container.name, Container);
-Vue.component(Col.name, Col);
-Vue.component(Footer.name, Footer);
-Vue.component(Form.name, Form);
-Vue.component(FormItem.name, FormItem);
-Vue.component(Header.name, Header);
-Vue.component(Input.name, Input);
-Vue.component(Main.name, Main);
-Vue.component(Menu.name, Menu);
-Vue.component(MenuItem.name, MenuItem);
-Vue.component(Option.name, Option);
-Vue.component(Pagination.name, Pagination);
-Vue.component(Row.name, Row);
-Vue.component(Select.name, Select);
-Vue.component(Switch.name, Switch);
-Vue.component(Table.name, Table);
-Vue.component(TableColumn.name, TableColumn);
-Vue.component(Tag.name, Tag);
-Vue.use(Loading.directive);
+Sentry.init({
+  app,
+  dsn: window.vars.sentryToken,
+  integrations: [
+    new BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ['localhost', 'lycee-tcg.eu', /^\//],
+    }),
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
-//noinspection JSUnusedGlobalSymbols
+app.mount('#app');
 
-Vue.prototype.$rollbar = rollbar;
-Vue.config.errorHandler = function (err) {
-  console.error(err);
-  rollbar.error(err);
-};
+function formatDate(value) {
+  if (typeof value === 'string') {
+    value = new Date(value);
+  }
+  return value ? dateFormatter.format(value) : '';
+}
+
+//console.info('app.config.globalProperties', app.config.globalProperties);
+
+//app.config = {
+//  errorHandler(err) {
+//    console.error(err);
+//    // todo add back
+//    //rollbar.error(err);
+//  },
+//  globalProperties: {
+//    // todo add back
+//    //$rollbar: rollbar,
+//    formatDate(value) {
+//      if (typeof value === 'string') {
+//        value = new Date(value);
+//      }
+//      return value ? dateFormatter.format(value) : '';
+//    },
+//    //$displaySuccess(message) {
+//    //  return ElMessage({
+//    //    type: 'success',
+//    //    message,
+//    //    duration: toastDuration,
+//    //  });
+//    //},
+//    //$displayError(message) {
+//    //  return ElMessage({
+//    //    type: 'error',
+//    //    message,
+//    //    duration: toastDuration,
+//    //  });
+//    //},
+//  },
+//};
 
 const dateFormatter = new Intl.DateTimeFormat(void 0, {
   year: 'numeric',
@@ -86,43 +96,4 @@ const dateFormatter = new Intl.DateTimeFormat(void 0, {
   day: 'numeric',
   hour: 'numeric',
   minute: 'numeric',
-});
-
-Vue.filter('formatDate', function (value) {
-  if (typeof value === 'string') {
-    value = new Date(value);
-  }
-  return value ? dateFormatter.format(value) : '';
-});
-
-const toastDuration = 10000;
-Vue.prototype.$displaySuccess = function (message) {
-  return Message({
-    type: 'success',
-    message,
-    duration: toastDuration,
-  });
-};
-
-Vue.prototype.$displayError = function (message) {
-  return Message({
-    type: 'error',
-    message,
-    duration: toastDuration,
-  });
-};
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-new Vue({
-  router,
-  store,
-  i18n,
-  render(h) {
-    return h(App);
-  },
-  el: '#app',
 });

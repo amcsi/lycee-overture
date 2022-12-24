@@ -32,7 +32,6 @@
             <ExternalLink href="https://discord.gg/xtcQDtQ">
               <span
                 style="
-                  display: inline-block;
                   padding: 0.25rem;
                   border-radius: 50%;
                   background-color: #5865f2;
@@ -46,7 +45,7 @@
                     width: 1rem;
                     vertical-align: middle;
                     position: relative;
-                    top: -0.1rem;
+                    top: -0.05rem;
                   "
                   class="discord-icon"
                   alt="Discord"

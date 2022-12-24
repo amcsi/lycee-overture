@@ -7,8 +7,8 @@
         :variant="variant"
         :height="150"
         :cloudinary-height="150"
-        @mouseenter.native="mouseEnter"
-        @mouseleave.native="mouseLeave"
+        @mouseenter="mouseEnter"
+        @mouseleave="mouseLeave"
         style="cursor: pointer"
         fallback-to-cardback
       />

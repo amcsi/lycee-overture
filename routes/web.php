@@ -34,7 +34,7 @@ Route::get(
         $vars = [
             'apiBaseUrl' => "$appUrl/api",
             'cloudinaryCloudName' => config('cloudinary.defaults.cloud_name'),
-            'rollbarToken' => env('ROLLBAR_CLIENT_TOKEN'),
+            'sentryToken' => env('SENTRY_LARAVEL_DSN'),
             'gitSha1' => env('GIT_SHA1'),
             'environment' => config('app.env'),
             'auth' => $authUser ? [

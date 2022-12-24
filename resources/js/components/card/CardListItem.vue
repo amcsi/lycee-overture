@@ -18,7 +18,7 @@
             <el-button
               v-if="!isLocaleJapanese"
               class="show-when-hovering"
-              size="mini"
+              size="small"
               @click="translateNamesOpen = !translateNamesOpen"
               >{{ translateNamesOpen ? 'Hide' : 'Help Translate' }}
             </el-button>

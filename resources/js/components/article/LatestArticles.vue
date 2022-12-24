@@ -5,7 +5,7 @@
         <div>
           <h4>{{ title.rendered }}</h4>
           -
-          <time :datetime="date_gmt + 'Z'">{{ (date_gmt + 'Z') | formatDate }}</time>
+          <time :datetime="date_gmt + 'Z'">{{ $formatDate(date_gmt + 'Z') }}</time>
         </div>
 
         <div v-html="content.rendered"></div>

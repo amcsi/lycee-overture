@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'element-ui/packages/theme-chalk/src/mixins/mixins.scss';
+@import 'element-plus/theme-chalk/src/mixins/mixins.scss';
 
 .anatomy-container {
   display: flex;

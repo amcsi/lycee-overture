@@ -1,4 +1,4 @@
-import { rollbar } from '../rollbar';
+import { captureException } from '@sentry/vue';
 import { isProduction } from '../value/env';
 
 const genericErrorMessage = 'An error has occurred.';
@@ -58,5 +58,5 @@ export function reportError(error) {
     return;
   }
 
-  rollbar.error(error);
+  captureException(error);
 }

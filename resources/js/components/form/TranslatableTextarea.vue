@@ -1,20 +1,25 @@
 <template>
   <el-form-item>
-    <slot name="label">{{ _label }}</slot>
+    <slot name="label"
+      ><div class="label">{{ _label }}</div></slot
+    >
 
-    <el-input
+    <a-input
       type="textarea"
       :value="value"
       @input="$emit('input', $event)"
       :placeholder="placeholder"
-    ></el-input>
+    ></a-input>
   </el-form-item>
 </template>
 
 <script>
+import AInput from '../ui/AInput.vue';
+
 /** @class TranslatableTextarea */
 export default {
   name: 'TranslatableTextarea',
+  components: { AInput },
   props: {
     label: String,
     translationDraft: Object,
@@ -35,4 +40,12 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.label {
+  width: 10rem;
+}
+
+textarea {
+  width: 30rem;
+}
+</style>
