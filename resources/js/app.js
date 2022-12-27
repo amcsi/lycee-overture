@@ -5,8 +5,7 @@
  */
 import { BrowserTracing } from '@sentry/tracing';
 import * as Sentry from '@sentry/vue';
-// TODO put back
-//import { ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus';
 import 'element-plus/theme-chalk/index.css';
 import { createApp } from 'vue';
 import App from './App.vue';
@@ -21,6 +20,8 @@ import store from './store/index';
  */
 const app = createApp(App);
 app.config.globalProperties.$formatDate = formatDate;
+app.config.globalProperties.$displaySuccess = displaySuccess;
+app.config.globalProperties.$displayError = displayError;
 app.use(store).use(router).use(i18n);
 
 Sentry.init({
@@ -48,39 +49,23 @@ function formatDate(value) {
   return value ? dateFormatter.format(value) : '';
 }
 
-//console.info('app.config.globalProperties', app.config.globalProperties);
+const toastDuration = 10000;
 
-//app.config = {
-//  errorHandler(err) {
-//    console.error(err);
-//    // todo add back
-//    //rollbar.error(err);
-//  },
-//  globalProperties: {
-//    // todo add back
-//    //$rollbar: rollbar,
-//    formatDate(value) {
-//      if (typeof value === 'string') {
-//        value = new Date(value);
-//      }
-//      return value ? dateFormatter.format(value) : '';
-//    },
-//    //$displaySuccess(message) {
-//    //  return ElMessage({
-//    //    type: 'success',
-//    //    message,
-//    //    duration: toastDuration,
-//    //  });
-//    //},
-//    //$displayError(message) {
-//    //  return ElMessage({
-//    //    type: 'error',
-//    //    message,
-//    //    duration: toastDuration,
-//    //  });
-//    //},
-//  },
-//};
+function displaySuccess(message) {
+  return ElMessage({
+    type: 'success',
+    message,
+    duration: toastDuration,
+  });
+}
+
+function displayError(message) {
+  return ElMessage({
+    type: 'error',
+    message,
+    duration: toastDuration,
+  });
+}
 
 const dateFormatter = new Intl.DateTimeFormat(void 0, {
   year: 'numeric',
