@@ -20,7 +20,6 @@
     "@vitejs/plugin-vue": "^3.2.0",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.4.0",
     "@vue/babel-plugin-transform-vue-jsx": "^1.4.0",
-    "@vue/compat": "^3.2.45",
     "@vue/compiler-sfc": "^3.2.45",
     "babel-plugin-component": "^1.1.1",
     "element-plus": "^2.2.25",

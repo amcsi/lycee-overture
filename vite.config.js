@@ -8,9 +8,7 @@ import vuetify from 'vite-plugin-vuetify';
 
 export default defineConfig({
   resolve: {
-    alias: {
-      vue: '@vue/compat',
-    },
+    alias: {},
   },
   plugins: [
     laravel([
@@ -22,12 +20,6 @@ export default defineConfig({
         transformAssetUrls: {
           base: null,
           includeAbsolute: false,
-        },
-        compilerOptions: {
-          compatConfig: {
-            MODE: 2,
-            COMPILER_V_BIND_OBJECT_ORDER: false,
-          },
         },
       },
     }),
