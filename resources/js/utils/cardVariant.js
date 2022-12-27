@@ -1,3 +1,5 @@
+import { reactive } from 'vue';
+
 const temporaryInitial = { id: null, variant: null };
 
 let _savedCardVariants;
@@ -19,7 +21,7 @@ try {
  * We need to wrap the preferences in an additional object ({preferences: {}}) so Vue could detect
  * property additions/deletions.
  */
-export const savedCardVariants = Vue.observable(_savedCardVariants);
+export const savedCardVariants = reactive(_savedCardVariants);
 
 /**
  * Updates the user's preference for a card and saves it to localStorage.
