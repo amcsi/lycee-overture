@@ -114,6 +114,8 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
 
+    'no_japanese_characters' => 'The :attribute must be fully translated; no japanese characters should remain.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
