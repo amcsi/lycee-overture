@@ -56,18 +56,19 @@ export default {
       },
     },
   },
+  listener: null,
   mounted() {
-    const listener = event => {
+    this.listener = event => {
       if (this.dirtyTranslationCardIds.length) {
         event.preventDefault();
         event.returnValue = '';
         return '';
       }
     };
-    window.addEventListener('beforeunload', listener);
-    this.$once('destroy', () => {
-      window.removeEventListener('beforeunload', listener);
-    });
+    window.addEventListener('beforeunload', this.listener);
+  },
+  destroyed() {
+    window.removeEventListener('beforeunload', this.listener);
   },
   beforeRouteUpdate: beforeRouteLeave,
   beforeRouteLeave,
