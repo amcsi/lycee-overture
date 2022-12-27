@@ -5,10 +5,10 @@
  */
 import { BrowserTracing } from '@sentry/tracing';
 import * as Sentry from '@sentry/vue';
-import { createApp } from 'vue';
 // TODO put back
 //import { ElMessage } from 'element-plus';
 import 'element-plus/theme-chalk/index.css';
+import { createApp } from 'vue';
 import App from './App.vue';
 import i18n from './i18n';
 import router from './router';
@@ -36,6 +36,7 @@ Sentry.init({
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
+  logErrors: true,
 });
 
 app.mount('#app');
