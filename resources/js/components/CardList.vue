@@ -28,13 +28,12 @@
 
 <script>
 import { mapState } from 'vuex';
-import CardListItem from './card/CardListItem.vue';
 import CardListItemOuter from './card/CardListItemOuter.vue';
 import Paginator from './common/Paginator.vue';
 
 /** @class CardList */
 export default {
-  components: { CardListItem, CardListItemOuter, Paginator },
+  components: { CardListItemOuter, Paginator },
   data() {
     return {
       isLocaleJapanese: window.locale === 'ja',
