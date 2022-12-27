@@ -128,7 +128,6 @@ const x = {
       return { ...acc, ...current };
     }, {}),
 };
-console.info('x', x);
 
 /** @class CardFilters */
 export default {
