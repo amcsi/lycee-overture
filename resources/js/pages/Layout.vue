@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <NavMenu />
+  <el-container class="container">
+    <el-header height="auto">
+      <NavMenu />
+    </el-header>
     <el-main class="main">
-      <v-container>
-        <router-view></router-view>
-      </v-container>
+      <router-view></router-view>
     </el-main>
     <el-footer height="auto">
       <el-card>
@@ -47,7 +47,7 @@
         <LatestArticles :limit="2" />
       </div>
     </el-footer>
-  </div>
+  </el-container>
 </template>
 
 <script>

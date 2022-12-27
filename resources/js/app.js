@@ -6,22 +6,13 @@
 import { BrowserTracing } from '@sentry/tracing';
 import * as Sentry from '@sentry/vue';
 import { createApp } from 'vue';
-import { createVuetify } from 'vuetify';
-import * as components from 'vuetify/components';
-import * as directives from 'vuetify/directives';
-import 'vuetify/styles';
 // TODO put back
 //import { ElMessage } from 'element-plus';
-//import 'element-plus/theme-chalk/index.css';
+import 'element-plus/theme-chalk/index.css';
 import App from './App.vue';
 import i18n from './i18n';
 import router from './router';
 import store from './store/index';
-
-const vuetify = createVuetify({
-  components,
-  directives,
-});
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,7 +21,7 @@ const vuetify = createVuetify({
  */
 const app = createApp(App);
 app.config.globalProperties.$formatDate = formatDate;
-app.use(store).use(router).use(i18n).use(vuetify);
+app.use(store).use(router).use(i18n);
 
 Sentry.init({
   app,
