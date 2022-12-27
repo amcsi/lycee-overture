@@ -19,3 +19,5 @@ yarn-error.log
 /public/mix-manifest.json
 /_ide_helper_models.php
 .phpunit.result.cache
+package-lock.json
+.pnpm-store/
