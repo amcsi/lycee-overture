@@ -2,7 +2,7 @@
   <span>
     <label>
       <el-checkbox
-        :value="value"
+        :checked="!!modelValue"
         @input="
           $emit(
             'update:modelValue',
