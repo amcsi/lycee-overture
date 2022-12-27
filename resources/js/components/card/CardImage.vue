@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="computedContainerStyle" v-on="$listeners">
+  <div class="container" :style="computedContainerStyle" v-bind="$attrs">
     <img
       v-if="fallbackToCardback"
       alt="fallback"
