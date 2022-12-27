@@ -1,11 +1,5 @@
 <template>
-  <textarea
-    v-if="$attrs.type === 'textarea'"
-    v-bind="$attrs"
-    :value="value"
-    @input="$emit('input', $event.target.value)"
-  ></textarea>
-  <input v-else v-bind="$attrs" :value="value" @input="$emit('input', $event.target.value)" />
+  <el-input v-bind="$attrs" :model-value="modelValue" @input="$emit('update:modelValue', $event)" />
 </template>
 
 <script>
@@ -13,8 +7,9 @@
 export default {
   name: 'AInput',
   props: {
-    value: String,
+    modelValue: String,
   },
+  emits: ['update:modelValue'],
 };
 </script>
 

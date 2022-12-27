@@ -1,8 +1,10 @@
 <template>
-  <CardListContainer>
-    <CardFilters />
-    <CardList />
-  </CardListContainer>
+  <div>
+    <CardListContainer>
+      <CardFilters />
+      <CardList />
+    </CardListContainer>
+  </div>
 </template>
 
 <script>
@@ -33,7 +35,11 @@ function beforeRouteLeave(to, from, next) {
 /** @class CardListPage */
 export default {
   name: 'CardListPage',
-  components: { CardList, CardFilters, CardListContainer },
+  components: {
+    CardList,
+    CardFilters,
+    CardListContainer,
+  },
   computed: {
     ...mapState({
       dirtyTranslationCardIds: state => state.translation.dirtyTranslationCardIds,
