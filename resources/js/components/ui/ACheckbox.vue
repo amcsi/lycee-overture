@@ -1,11 +1,13 @@
 <template>
   <span>
     <label>
-      <input
-        type="checkbox"
-        :value="value"
+      <el-checkbox
+        :checked="!!modelValue"
         @input="
-          $emit('input', $event.target.checked ? this.trueLabel ?? 'on' : this.falseValue ?? '')
+          $emit(
+            'update:modelValue',
+            $event.target.checked ? this.trueLabel ?? 'on' : this.falseValue ?? ''
+          )
         "
         v-bind="$attrs"
       />
@@ -20,10 +22,11 @@ export default {
   name: 'ACheckbox',
   props: {
     label: String,
-    value: String,
+    modelValue: String,
     'true-label': String,
     'false-label': String,
   },
+  emits: ['update:modelValue'],
 };
 </script>
 

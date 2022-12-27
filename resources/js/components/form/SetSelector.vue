@@ -1,6 +1,10 @@
 <template>
   <el-form-item label="Set" v-loading="listLoading">
-    <el-select placeholder="-" :value="value" @input="$emit('input', $event)">
+    <el-select
+      placeholder="-"
+      :model-value="modelValue"
+      @change="$emit('update:modelValue', $event)"
+    >
       <el-option label="-" value=""></el-option>
       <el-option label="(Unknown or no set)" value="-1"></el-option>
       <el-option
@@ -20,8 +24,9 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'SetSelector',
   props: {
-    value: [Number, String],
+    modelValue: [Number, String],
   },
+  emits: ['update:modelValue'],
   computed: {
     ...mapState('sets', ['listLoading', 'list']),
   },

@@ -6,8 +6,8 @@
 
     <a-input
       type="textarea"
-      :value="value"
-      @input="$emit('input', $event)"
+      :model-value="modelValue"
+      @update:modelValue="$emit('update:modelValue', $event)"
       :placeholder="placeholder"
     ></a-input>
   </el-form-item>
@@ -25,9 +25,10 @@ export default {
     translationDraft: Object,
     path: [String, Array],
     placeholder: String,
-    value: String,
+    modelValue: String,
     dirty: Boolean,
   },
+  emits: ['update:modelValue'],
   computed: {
     _label() {
       let ret = this.label;

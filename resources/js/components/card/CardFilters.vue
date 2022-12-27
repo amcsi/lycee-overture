@@ -79,7 +79,7 @@ const debouncedChangeRoute = debounce(($router, query) => {
 
 // Configuration for common query filter properties.
 const filterConfig = [
-  //{ name: 'brand' },
+  { name: 'brand' },
   { name: 'deck' },
   { name: 'set' },
   { name: 'cardId', debouncing: true },
@@ -101,8 +101,6 @@ const x = {
           return this.filterData[name];
         },
         set(value) {
-          console.info('this.filterData[name]', this.filterData[name]);
-
           this.filterData[name] = value;
           const query = { ...this.$route.query };
           delete query.page; // Always clear the page when the filters change.

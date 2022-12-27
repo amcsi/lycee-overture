@@ -1,6 +1,10 @@
 <template>
   <el-form-item label="Starter deck" v-loading="listLoading">
-    <el-select placeholder="-" :value="value" @input="$emit('input', $event)">
+    <el-select
+      placeholder="-"
+      :model-value="modelValue"
+      @change="$emit('update:modelValue', $event)"
+    >
       <el-option label="-" value=""></el-option>
       <el-option
         v-for="deck in list"
@@ -19,8 +23,9 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'DeckSelector',
   props: {
-    value: [Number, String],
+    modelValue: [Number, String],
   },
+  emits: ['update:modelValue'],
   computed: {
     ...mapState('decks', ['listLoading', 'list']),
   },
