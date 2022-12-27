@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 const temporaryInitial = { id: null, variant: null };
 
 let _savedCardVariants;
@@ -30,9 +28,9 @@ export const savedCardVariants = Vue.observable(_savedCardVariants);
  */
 export function saveCardVariant(id, variant) {
   if (variant) {
-    Vue.set(savedCardVariants.preferences, id, variant);
+    savedCardVariants.preferences[id] = variant;
   } else {
-    Vue.delete(savedCardVariants.preferences, id);
+    delete savedCardVariants.preferences[id];
   }
   localStorage.setItem('cardVariants', JSON.stringify(savedCardVariants.preferences));
 }

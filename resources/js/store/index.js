@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import Vuex, { createStore } from 'vuex';
+import { createStore } from 'vuex';
 import articles from './modules/articles';
 import auth from './modules/auth';
 import cards from './modules/cards';
@@ -13,8 +12,6 @@ import translation from './modules/translation';
  *
  * We also add an axios interceptor to log out the user if any response says that his token expired.
  */
-
-Vue.use(Vuex);
 
 const store = createStore({
   modules: {

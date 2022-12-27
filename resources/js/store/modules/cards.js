@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import { listCards, showCard } from '../../api/endpoints/cards';
 
 export default {
@@ -46,7 +45,7 @@ export default {
       const cardList = state.list.data;
       const index = cardList.findIndex(card => card.id === toCard.id);
       if (index >= 0) {
-        Vue.set(cardList, index, toCard);
+        cardList[index] = toCard;
       }
     },
   },
