@@ -8,24 +8,18 @@ RUN apt-get update && apt-get install -y \
   curl \
   wget \
   gnupg \
-
+  \
   # For "The `/path/to/project/node_modules/mozjpeg/vendor/cjpeg` binary doesn't seem to work correctly"
   # https://github.com/imagemin/imagemin-mozjpeg/issues/26
   nasm \
   libpng-dev \
-
+  \
   # To proxy to Swoole.
   nginx \
-
+  \
   # For composer
   libzip-dev \
   zlib1g-dev
-
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-  apt-get update && \
-  apt-get install -y nodejs && \
-  node --version && \
-  npm --version
 
 # This includes the docker-php-pecl-install executable
 COPY bin/docker-php-pecl-install /usr/local/bin/
@@ -35,10 +29,18 @@ RUN docker-php-ext-install \
   pdo_mysql \
   # Newer Laravel Swoole needs this for some reason.
   pcntl \
-
+  \
   zip
 
 RUN docker-php-pecl-install swoole
+
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+  apt-get update && \
+  apt-get install -y nodejs && \
+  node --version && \
+  npm --version && \
+  npm install -g pnpm && \
+  pnpm --version
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer --version
@@ -55,9 +57,9 @@ RUN mkdir -p database/factories
 RUN composer install --no-scripts
 
 COPY package.json .
-COPY package-lock.json .
+COPY pnpm-lock.yaml .
 
-RUN npm install
+RUN pnpm install
 
 COPY resources resources
 COPY vite.config.js .
