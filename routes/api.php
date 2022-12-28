@@ -27,6 +27,7 @@ Route::get('/statistics', [StatisticsController::class, 'index']);
 Route::get('/articles', [ArticleController::class, 'index']);
 Route::get('/suggestions', [SuggestionController::class, 'index']);
 Route::get('/footer-data', [FooterDataController::class, 'index']);
+Route::get('/sentry-test', fn() => throw new \Exception('Sentry test'));
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('suggestions', [SuggestionController::class, 'store']);
