@@ -30,7 +30,7 @@ Sentry.init({
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ['localhost', 'lycee-tcg.eu', /^\//],
+      tracingOrigins: ['localhost', 'https://lycee-tcg.eu'],
     }),
   ],
   // Set tracesSampleRate to 1.0 to capture 100%
