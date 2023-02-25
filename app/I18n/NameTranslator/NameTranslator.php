@@ -60,11 +60,11 @@ class NameTranslator
             function (string $untranslated) use ($textTypes, $useKanjiNameTranslation) {
                 $translated = $this->manualNameTranslator->tryToTranslate($untranslated, $textTypes);
                 if ($translated === $untranslated) {
-                    // Try to translate katakana.
-                    $translated = $this->kanaTranslator->translate($untranslated);
+                    $translated = $this->kanjiTranslator->translate($untranslated);
                 }
                 if ($translated === $untranslated) {
-                    $translated = $this->kanjiTranslator->translate($untranslated);
+                    // Try to translate katakana.
+                    $translated = $this->kanaTranslator->translate($untranslated);
                 }
 
                 return $translated;
