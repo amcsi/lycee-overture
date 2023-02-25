@@ -13,17 +13,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name_ja
  * @property string $version
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Support\Carbon $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
+ * @property \Carbon\CarbonImmutable $created_at
  * @property-read mixed $brand
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Set newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Set newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Set query()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Set whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Set whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Set whereNameJa($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Set whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Set whereVersion($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Set newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Set newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Set query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Set whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Set whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Set whereNameJa($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Set whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Set whereVersion($value)
  * @mixin \Eloquent
  */
 class Set extends Model

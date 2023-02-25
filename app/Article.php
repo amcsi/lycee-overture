@@ -12,17 +12,17 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $markdown
  * @property string $html
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Support\Carbon $created_at
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article query()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article whereHtml($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article whereMarkdown($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Article whereUpdatedAt($value)
+ * @property \Carbon\CarbonImmutable $updated_at
+ * @property \Carbon\CarbonImmutable $created_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Article newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Article query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereHtml($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereMarkdown($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Article extends Model

@@ -12,18 +12,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int $id
  * @property string $name_ja
  * @property string $name_en
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\amcsi\LyceeOverture\Card[] $cards
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\Card> $cards
  * @property-read int|null $cards_count
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Deck newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Deck newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Deck query()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Deck whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Deck whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Deck whereNameEn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Deck whereNameJa($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Deck whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deck newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deck newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deck query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deck whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deck whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deck whereNameEn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deck whereNameJa($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Deck whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Deck extends Model

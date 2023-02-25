@@ -33,51 +33,52 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $sp
  * @property int $dmg
  * @property int $ability_type
- * @property \Illuminate\Support\Carbon $created_at
- * @property \Illuminate\Support\Carbon $updated_at
+ * @property \Carbon\CarbonImmutable $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
  * @property-read \amcsi\LyceeOverture\Set|null $set
- * @property-read \Illuminate\Database\Eloquent\Collection|\amcsi\LyceeOverture\Suggestion[] $suggestions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\Suggestion> $suggestions
  * @property-read int|null $suggestions_count
  * @property-read \amcsi\LyceeOverture\CardTranslation|null $translation
- * @property-read \Illuminate\Database\Eloquent\Collection|\amcsi\LyceeOverture\CardTranslation[] $translations
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\CardTranslation> $translations
  * @property-read int|null $translations_count
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card listsTranslations($translationField)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card notTranslatedIn($locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card orWhereTranslation($translationField, $value, $locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card orWhereTranslationLike($translationField, $value, $locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card orderByTranslation($translationField, $sortMethod = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card query()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card translated()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card translatedIn($locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereAbilityType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereAp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereCostFlower($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereCostMoon($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereCostSnow($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereCostSpace($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereCostStar($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereCostSun($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereDmg($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereDp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereEx($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereFlower($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereMoon($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereRarity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereSetId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereSnow($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereSp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereSpace($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereSun($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereTranslation($translationField, $value, $locale = null, $method = 'whereHas', $operator = '=')
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereTranslationLike($translationField, $value, $locale = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereType($value)0
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card whereVariants($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Card withTranslation()
+ * @method static \Database\Factories\CardFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Card listsTranslations(string $translationField)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Card newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Card notTranslatedIn(?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card orWhereTranslation(string $translationField, $value, ?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card orWhereTranslationLike(string $translationField, $value, ?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card orderByTranslation(string $translationField, string $sortMethod = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder|Card query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Card translated()
+ * @method static \Illuminate\Database\Eloquent\Builder|Card translatedIn(?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereAbilityType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereAp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereCostFlower($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereCostMoon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereCostSnow($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereCostSpace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereCostStar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereCostSun($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereDmg($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereDp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereEx($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereFlower($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereMoon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereRarity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereSetId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereSnow($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereSp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereSpace($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereSun($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereTranslation(string $translationField, $value, ?string $locale = null, string $method = 'whereHas', string $operator = '=')
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereTranslationLike(string $translationField, $value, ?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card whereVariants($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Card withTranslation()
  * @mixin \Eloquent
  */
 class Card extends Model

@@ -19,24 +19,25 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $ability_cost
  * @property string $ability_description
  * @property string $comments
- * @property \Illuminate\Support\Carbon $updated_at
- * @property \Illuminate\Support\Carbon $created_at
+ * @property \Carbon\CarbonImmutable $updated_at
+ * @property \Carbon\CarbonImmutable $created_at
  * @property-read \amcsi\LyceeOverture\Card $card
  * @property-read \amcsi\LyceeOverture\User|null $creator
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion query()
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereAbilityCost($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereAbilityDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereBasicAbilities($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereCardId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereComments($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereCreatorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereLocale($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion wherePreComments($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\amcsi\LyceeOverture\Suggestion whereUpdatedAt($value)
+ * @method static \Database\Factories\SuggestionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereAbilityCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereAbilityDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereBasicAbilities($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereCardId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereCreatorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereLocale($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion wherePreComments($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Suggestion whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Suggestion extends Model
