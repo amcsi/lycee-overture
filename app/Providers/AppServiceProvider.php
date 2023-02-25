@@ -6,6 +6,7 @@ namespace amcsi\LyceeOverture\Providers;
 use amcsi\LyceeOverture\Console\Commands\DownloadTranslations;
 use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
 use amcsi\LyceeOverture\I18n\NameTranslator\CachedDeeplTranslator;
+use amcsi\LyceeOverture\I18n\NameTranslator\DeeplCacheStore;
 use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
@@ -134,5 +135,6 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $app->singleton(Translator::class, fn () => new Translator(config('services.deepl.authKey')));
+        $app->singleton(DeeplCacheStore::class);
     }
 }
