@@ -17,10 +17,12 @@ class NameTranslatorTest extends TestCase
      * @var KanaTranslator|\Mockery\LegacyMockInterface|\Mockery\MockInterface
      */
     private $kanaTranslator;
+    private $kanjiTranslator;
 
     public function setUp(): void
     {
         $this->kanaTranslator = \Mockery::mock(KanaTranslator::class);
+        $this->kanjiTranslator = \Mockery::mock(KanjiTranslator::class);
     }
 
     public function testNotFoundTranslationShouldJustReturnSameText()
@@ -28,6 +30,7 @@ class NameTranslatorTest extends TestCase
         $instance = $this->createInstance();
         $input = 'asdf';
         $this->kanaTranslator->expects()->translate($input)->andReturn($input);
+        $this->kanjiTranslator->expects()->translate($input)->andReturn($input);
         self::assertSame($input, $instance->tryTranslateCharacterType($input));
     }
 
@@ -49,7 +52,7 @@ class NameTranslatorTest extends TestCase
                     ],
                 ],
             ]
-        ), $this->kanaTranslator, \Mockery::mock(KanjiTranslator::class));
+        ), $this->kanaTranslator, $this->kanjiTranslator);
     }
 
     public function testTryToTranslateCharacterTypeExact()

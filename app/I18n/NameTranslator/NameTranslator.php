@@ -63,7 +63,7 @@ class NameTranslator
                     // Try to translate katakana.
                     $translated = $this->kanaTranslator->translate($untranslated);
                 }
-                if ($translated === $untranslated && $useKanjiNameTranslation) {
+                if ($translated === $untranslated) {
                     $translated = $this->kanjiTranslator->translate($untranslated);
                 }
 

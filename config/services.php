@@ -34,4 +34,8 @@ return [
     'discord' => [
         'webhookUrl' => env('DISCORD_WEBHOOK_URL'),
     ],
+
+    'deepl' => [
+        'authKey' => env('DEEPL_AUTH_KEY'),
+    ],
 ];

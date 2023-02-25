@@ -5,12 +5,13 @@ namespace amcsi\LyceeOverture\Providers;
 
 use amcsi\LyceeOverture\Console\Commands\DownloadTranslations;
 use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
+use amcsi\LyceeOverture\I18n\NameTranslator\CachedDeeplTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\KanjiTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\ManualNameTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
+use amcsi\LyceeOverture\I18n\NullTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
-use amcsi\LyceeOverture\I18n\TranslatorApi\YahooKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use amcsi\LyceeOverture\Import\CsvDownloader;
@@ -19,7 +20,7 @@ use amcsi\LyceeOverture\Import\ImportConstants;
 use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 use amcsi\LyceeOverture\Set;
 use Carbon\CarbonImmutable;
-use Illuminate\Cache\CacheManager;
+use DeepL\Translator;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
@@ -103,10 +104,12 @@ class AppServiceProvider extends ServiceProvider
 
         $app->when(KanjiTranslator::class)->needs(TranslatorInterface::class)->give(
             function () use ($app) {
-                return new YahooKanjiTranslator(
-                    $app->make(YahooRawKanjiTranslator::class),
-                    $app->make(CacheManager::class)->driver('yahooTranslations')
-                );
+                try {
+                    return $app->get(CachedDeeplTranslator::class);
+                } catch (\Throwable $e) {
+                    report($e);
+                    return $app->get(NullTranslator::class);
+                }
             }
         );
 
@@ -129,5 +132,7 @@ class AppServiceProvider extends ServiceProvider
         $app->when(NameTranslator::class)->needs('$namesToTranslateAsWhole')->give(
             config('lycee.names_to_translate_as_whole')
         );
+
+        $app->singleton(Translator::class, fn () => new Translator(config('services.deepl.authKey')));
     }
 }
