@@ -52,7 +52,7 @@ class SuggestionControllerTest extends DatabaseTestCase
         self::assertCount(1, $errors);
         self::assertArrayHasKey('ability_description', $errors);
         self::assertSame(
-            ['validation.no_japanese_characters'],
+            [trans('validation.no_japanese_characters', ['attribute' => 'ability description'])],
             $errors['ability_description']
         );
     }
