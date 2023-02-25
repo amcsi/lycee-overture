@@ -17,7 +17,7 @@ class TurnAndBattle
         return str_replace(
             'ゲーム中',
             'during the game',
-            preg_replace_callback($pattern, ['self', 'callback'], $text)
+            preg_replace_callback($pattern, self::callback(...), $text)
         );
     }
 
@@ -33,7 +33,7 @@ class TurnAndBattle
         return "(味方キャラがダウンした|自分のデッキがダメージを受けた)?(次の)?(この|自分?|相手|($subjectRegex))?の?(ターン|バトル|(?:攻撃)?宣言|攻撃|防御|ウェイクアップ)(開始時|中|終了時(?:まで)?|に対応|で)?((?:に|して)使用する|(?:に|して)使用できない)?";
     }
 
-    private static function callback(array $matches): string
+    public static function callback(array $matches): string
     {
         $allyDownOrDeckDamagedSource = next($matches);
         $next = next($matches);

@@ -226,7 +226,7 @@ class Subject
                     $nounPlural = true;
                 }
                 if ($noun && $nounPlural) {
-                    $noun = "${noun}s";
+                    $noun = "{$noun}s";
                 }
                 if ($howMany) {
                     $howManyOrMore = $howMany;

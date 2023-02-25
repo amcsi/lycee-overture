@@ -10,10 +10,10 @@ class DiscardFromDeck
 {
     public static function autoTranslate(string $text): string
     {
-        return preg_replace_callback('/(自分|相手)のデッキを(\d)枚破棄する/', ['self', 'callback'], $text);
+        return preg_replace_callback('/(自分|相手)のデッキを(\d)枚破棄する/', self::callback(...), $text);
     }
 
-    private static function callback(array $matches): string
+    public static function callback(array $matches): string
     {
         $youOrOpponent = $matches[1];
         $amount = $matches[2];

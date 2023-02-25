@@ -12,7 +12,7 @@ class CapitalizationFixer
 
         return preg_replace_callback(
             sprintf('/((?:%s\s+|^\s*|\[)[a-z](?!ttp))/mu', $capitalizerCharacterRegex),
-            ['self', 'uppercaseCallback'],
+            self::uppercaseCallback(...),
             $text
         );
     }

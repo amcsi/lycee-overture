@@ -16,10 +16,10 @@ class WhenAppears
 
         // "This character gains X."
         $pattern = "/($subjectRegex)が登場(したとき|している場合)/u";
-        return preg_replace_callback($pattern, ['self', 'callback'], $text);
+        return preg_replace_callback($pattern, self::callback(...), $text);
     }
 
-    private static function callback(array $matches): string
+    public static function callback(array $matches): string
     {
         $subjectSource = next($matches);
         $partOrCurrent = next($matches);

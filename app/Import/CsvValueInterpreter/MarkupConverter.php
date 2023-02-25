@@ -15,14 +15,14 @@ class MarkupConverter
     public static function convert(string $text): string
     {
         $text = self::normalizeBrackets($text);
-        $text = preg_replace_callback('/\[([雪月花宙日無])]/u', ['self', 'elementCallback'], $text);
+        $text = preg_replace_callback('/\[([雪月花宙日無])]/u', self::elementCallback(...), $text);
 
         $japaneseToMarkup = BasicAbility::getJapaneseToMarkup();
         $japaneseBasicAbilitiesRegex = implode('|', array_keys($japaneseToMarkup));
 
         $text = preg_replace_callback(
             "/\\[($japaneseBasicAbilitiesRegex)(?=[\\]:])/u",
-            ['self', 'basicAbilityCallback'],
+            self::basicAbilityCallback(...),
             $text
         );
 
@@ -30,7 +30,7 @@ class MarkupConverter
 
         $text = preg_replace_callback(
             "/\\[($abilityTypesRegex)]/u",
-            ['self', 'abilityTypeCallback'],
+            self::abilityTypeCallback(...),
             $text
         );
 
@@ -39,7 +39,7 @@ class MarkupConverter
 
     public static function normalizeBrackets($input)
     {
-        return preg_replace_callback('/\[([TＴ雪月花宙日無]{2,})]/u', ['self', 'normalizeBracketsCallback'], $input);
+        return preg_replace_callback('/\[([TＴ雪月花宙日無]{2,})]/u', self::normalizeBracketsCallback(...), $input);
     }
 
     private static function normalizeBracketsCallback(array $matches)

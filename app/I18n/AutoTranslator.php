@@ -161,7 +161,7 @@ class AutoTranslator
                 $can = next($matches) === 'できる';
                 $s = '1' !== $howMany;
                 $youCan = $can ? 'you can ' : '';
-                return "${youCan}discard $howMany card$s from your hand";
+                return "{$youCan}discard $howMany card$s from your hand";
             },
             $autoTranslated
         );
@@ -206,7 +206,7 @@ class AutoTranslator
 
         $autoTranslated = preg_replace_callback(
             '/^' . Subject::getUncapturedRegex() . '$/um',
-            ['self', 'subjectReplaceCallback'],
+            self::subjectReplaceCallback(...),
             $autoTranslated
         );
 

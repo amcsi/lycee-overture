@@ -11,10 +11,10 @@ class Equip
     {
         $subjectRegex = Subject::getUncapturedRegex();
 
-        return preg_replace_callback("/($subjectRegex)を($subjectRegex)に装備する/u", ['self', 'callback'], $text);
+        return preg_replace_callback("/($subjectRegex)を($subjectRegex)に装備する/u", self::callback(...), $text);
     }
 
-    private static function callback(array $matches): string
+    public static function callback(array $matches): string
     {
         return sprintf(
             'equip %s to %s',

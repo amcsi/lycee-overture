@@ -15,14 +15,14 @@ class MoveCharacter
         $pattern = "/($subjectRegex)[をと]($subjectRegex)(を入れ替える|に移動(する|できる))/u";
         $text = preg_replace_callback(
             $pattern,
-            ['self', 'callback'],
+            self::callback(...),
             $text
         );
 
         return $text;
     }
 
-    private static function callback(array $matches): string
+    public static function callback(array $matches): string
     {
         $sourceSubject = Subject::createInstance(next($matches));
         $destination = Subject::createInstance(next($matches));

@@ -18,7 +18,7 @@ class StatChanges
         $turnAndBattleRegex = TurnAndBattle::getUncapturedRegex();
 
         // language=regexp
-        $statPlusMinusAction = "に(${turnAndBattleRegex})?((?:(?:AP|DP|SP|DMG)[+-](?:\\d|\\[$subjectRegex])(?:, |または)?)+)";
+        $statPlusMinusAction = "に({$turnAndBattleRegex})?((?:(?:AP|DP|SP|DMG)[+-](?:\\d|\\[$subjectRegex])(?:, |または)?)+)";
         // language=regexp
         $statsToNumberAction = "を(\\d|\[$subjectRegex])に";
 

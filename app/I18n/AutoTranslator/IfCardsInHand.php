@@ -9,11 +9,11 @@ class IfCardsInHand
     {
         // language=regexp
         $pattern = '/自分の手札が(\d)枚(?:以(下|上))?の場合/';
-        $text = preg_replace_callback($pattern, ['self', 'callback'], $text);
+        $text = preg_replace_callback($pattern, self::callback(...), $text);
         return $text;
     }
 
-    private static function callback(array $matches): string
+    public static function callback(array $matches): string
     {
         $amount = next($matches);
         $moreOrLessSource = next($matches);

@@ -10,10 +10,10 @@ class DrawCards
 {
     public static function autoTranslate(string $text): string
     {
-        return preg_replace_callback('/(相手は)?(\d)枚ドロー(する|できる)/', ['self', 'callback'], $text);
+        return preg_replace_callback('/(相手は)?(\d)枚ドロー(する|できる)/', self::callback(...), $text);
     }
 
-    private static function callback(array $matches): string
+    public static function callback(array $matches): string
     {
         $opponent = next($matches);
         $amount = next($matches);

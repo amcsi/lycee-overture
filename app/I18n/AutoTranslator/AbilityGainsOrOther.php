@@ -17,7 +17,7 @@ class AbilityGainsOrOther
 
         $turnAndBattleRegex = TurnAndBattle::getUncapturedRegex();
         // language=regexp
-        $getsSomethingActionRegex = "は(${turnAndBattleRegex})?((?:\\[.+?\\])+)を(得る|失う)|を(?:(破棄|未行動に|行動済みに|手札に入|登場|除外)(れる|する|できる)|(デッキの[下上]に置く))";
+        $getsSomethingActionRegex = "は({$turnAndBattleRegex})?((?:\\[.+?\\])+)を(得る|失う)|を(?:(破棄|未行動に|行動済みに|手札に入|登場|除外)(れる|する|できる)|(デッキの[下上]に置く))";
 
         // "This character gains X."
         $pattern = "/(相手は)?($subjectRegex)($getsSomethingActionRegex)/u";
