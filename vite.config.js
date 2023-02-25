@@ -20,6 +20,9 @@ export default defineConfig({
           base: null,
           includeAbsolute: false,
         },
+        compilerOptions: {
+          whitespace: 'preserve',
+        },
       },
     }),
     AutoImport({
