@@ -18,10 +18,12 @@ use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
 use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 use amcsi\LyceeOverture\Set;
+use Carbon\CarbonImmutable;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\ServiceProvider;
 use JpnForPhp\Transliterator\Transliterator;
 use League\Flysystem\Filesystem;
@@ -67,6 +69,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Date::use(CarbonImmutable::class);
+
         /** @var Repository $config */
         $config = $this->app->get('config');
         $app = $this->app;
