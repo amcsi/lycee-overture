@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CardImage extends Model
 {
-    protected $dates = ['last_uploaded'];
+    protected $casts = ['last_uploaded' => 'datetime'];
 
     public function getMd5(): string
     {
