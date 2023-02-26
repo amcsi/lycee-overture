@@ -1,7 +1,4 @@
 #!/bin/bash
-# Remove old pid file if it exists.
-rm -f storage/logs/swoole_http.pid
-
 # Migrate the DB. Need to force to migrate on production.
 php artisan migrate --force
 
@@ -15,5 +12,5 @@ php artisan lycee:import-all --no-cache --translations --images --lackey &
 # Start nginx.
 nginx
 
-# Run the Swoole HTTP server.
-php artisan swoole:http start
+# Run the Octane HTTP server.
+php artisan octane:start --host=127.0.0.1 --port=1215
