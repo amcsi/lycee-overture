@@ -26,7 +26,7 @@ class DeeplTranslateCommand extends Command
 {
     public const COMMAND = 'lycee:deepl-translate';
 
-    protected $signature = self::COMMAND . ' {--dump-to-file}';
+    protected $signature = self::COMMAND . ' {--dump-to-file} {--dry-run}';
     protected $description = 'Attempts translations from Japanese description text with DeepL.';
 
 
@@ -77,6 +77,8 @@ class DeeplTranslateCommand extends Command
 
         $updatedCount = 0;
 
+        $dryRun = (bool) $this->option('dry-run');
+
         // Iterate each Japanese card to create the English variant.
         // We must make sure to only auto translate those properties which have not been manually translated.
         // We must also make sure to copy all non-auto-translatable properties from Japanese,
@@ -93,7 +95,7 @@ class DeeplTranslateCommand extends Command
             foreach (CardTranslation::TEXT_COLUMNS as $key) {
                 try {
                     $translation = $autoTranslator->partialAutoTranslate($japaneseCard->$key);
-                    $translation = $cachedDeeplTranslator->translate($translation);
+                    $translation = $cachedDeeplTranslator->translate($translation, $dryRun);
                     $englishCard[$key] = $translation;
                 } catch (LogicException $e) {
                     $this->output->warning(
@@ -115,7 +117,9 @@ class DeeplTranslateCommand extends Command
                 $englishCard->toArray()
             );
 
-            $englishCard->save();
+            if (!$dryRun) {
+                $englishCard->save();
+            }
 
             if ($englishCard->updated_at > $updatedNowThreshold) {
                 ++$updatedCount;
@@ -137,7 +141,7 @@ class DeeplTranslateCommand extends Command
 
         $this->output->writeln("Finished auto translation of cards. Updated: $updatedCount");
 
-        $charactersSentColor = $characterCounter->charactersSent > 0 ? 'yellow' : 'green';
+        $charactersSentColor = $characterCounter->charactersSent > 0 && !$dryRun ? 'yellow' : 'green';
         $messages[] = "Characters sent: <fg=$charactersSentColor>$characterCounter->charactersSent</>";
         $messages[] = 'Characters passed: ' . $characterCounter->charactersPassed;
         $messages[] = 'Characters attempted: ' . $characterCounter->charactersAttempted;
@@ -147,7 +151,9 @@ class DeeplTranslateCommand extends Command
 
         $this->output->writeln($messages);
 
-        app(DeeplTranslatorLastUsedUpdater::class)->updateLastUsed();
+        if (!$dryRun) {
+            app(DeeplTranslatorLastUsedUpdater::class)->updateLastUsed();
+        }
 
         $this->output->text(
             "Finished DeepL translation of cards in " . Profiling::stopwatchToHuman($stopwatchEvent->stop())

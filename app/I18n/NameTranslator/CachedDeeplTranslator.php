@@ -17,7 +17,7 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
     ) {
     }
 
-    public function translate(string $text): string
+    public function translate(string $text, $dryRun = false): string
     {
         if (!$text) {
             return $text;
@@ -38,10 +38,10 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
 
         return $this->cacheStore->rememberForever(
             $text,
-            function () use ($text, $characterCounter, $characterCount) {
+            function () use ($text, $dryRun, $characterCounter, $characterCount) {
                 $characterCounter->addCharactersSent($characterCount);
 
-                return $this->deeplTranslator->translateText($text, null, 'en-US')->text;
+                return $dryRun ? $text : $this->deeplTranslator->translateText($text, null, 'en-US')->text;
             }
         );
     }
