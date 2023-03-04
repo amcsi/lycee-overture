@@ -16,7 +16,7 @@ class StatChangesTest extends TestCase
         self::assertSame($expected, StatChanges::autoTranslate($input));
     }
 
-    public function provideAutoTranslate()
+    public static function provideAutoTranslate()
     {
         return [
             [

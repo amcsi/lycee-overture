@@ -16,7 +16,7 @@ class MarkupConverterTest extends TestCase
         self::assertSame($expected, MarkupConverter::convert($input));
     }
 
-    public function provideConvert(): array
+    public static function provideConvert(): array
     {
         return [
             [
@@ -54,7 +54,7 @@ class MarkupConverterTest extends TestCase
         self::assertSame($expected, MarkupConverter::normalizeBrackets($input));
     }
 
-    public function provideNormalizeBrackets(): array
+    public static function provideNormalizeBrackets(): array
     {
         return [
             [

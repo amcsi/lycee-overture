@@ -18,7 +18,7 @@ class AbilityGainsOrOtherTest extends TestCase
         self::assertSame($expected, AbilityGainsOrOther::autoTranslate($input));
     }
 
-    public function provideAutoTranslate(): array
+    public static function provideAutoTranslate(): array
     {
         return [
             [

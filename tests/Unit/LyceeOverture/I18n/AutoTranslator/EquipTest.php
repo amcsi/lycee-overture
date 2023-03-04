@@ -16,7 +16,7 @@ class EquipTest extends TestCase
         self::assertSame($expected, Equip::autoTranslate($input));
     }
 
-    public function provideAutoTranslate(): array
+    public static function provideAutoTranslate(): array
     {
         return [
             [

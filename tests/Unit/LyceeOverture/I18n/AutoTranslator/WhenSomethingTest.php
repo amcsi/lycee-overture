@@ -16,7 +16,7 @@ class WhenSomethingTest extends TestCase
         self::assertSame($expected, WhenSomething::autoTranslate($input));
     }
 
-    public function provideAutoTranslate()
+    public static function provideAutoTranslate()
     {
         return [
             [

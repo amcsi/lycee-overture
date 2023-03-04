@@ -16,7 +16,7 @@ class WhenSupportingTest extends TestCase
         self::assertSame($expected, WhenSupporting::autoTranslate($input));
     }
 
-    public function provideAutoTranslate()
+    public static function provideAutoTranslate()
     {
         return [
             'getting supported by certain character' => [

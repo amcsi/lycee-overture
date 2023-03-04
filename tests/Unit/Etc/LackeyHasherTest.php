@@ -16,7 +16,7 @@ class LackeyHasherTest extends TestCase
         self::assertSame($expected, LackeyHasher::hashFile($filename));
     }
 
-    public function provideFilesToHash()
+    public static function provideFilesToHash()
     {
         return [
             [350485, __DIR__ . '/350485.txt'],

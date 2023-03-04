@@ -16,7 +16,7 @@ class DrawCardsTest extends TestCase
         self::assertSame($expected, DrawCards::autoTranslate($input));
     }
 
-    public function provideAutoTranslate()
+    public static function provideAutoTranslate()
     {
         return [
             [

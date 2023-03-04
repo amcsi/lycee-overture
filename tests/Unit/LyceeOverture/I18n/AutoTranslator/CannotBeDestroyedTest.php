@@ -16,7 +16,7 @@ class CannotBeDestroyedTest extends TestCase
         self::assertSame($expected, CannotBeDestroyed::autoTranslate($input));
     }
 
-    public function provideAutoTranslate(): array
+    public static function provideAutoTranslate(): array
     {
         return [
             ' that character cannot be destroyed by battle until the end of the turn' => [

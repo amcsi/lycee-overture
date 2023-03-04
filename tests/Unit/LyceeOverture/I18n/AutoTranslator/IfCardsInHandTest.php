@@ -18,7 +18,7 @@ class IfCardsInHandTest extends TestCase
         self::assertSame($expected, IfCardsInHand::autoTranslate($input));
     }
 
-    public function provideAutoTranslate(): array
+    public static function provideAutoTranslate(): array
     {
         return [
             [

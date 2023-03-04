@@ -16,7 +16,7 @@ class CapitalizationFixerTest extends TestCase
         self::assertSame($expected, CapitalizationFixer::fixCapitalization($input));
     }
 
-    public function provideFixCapitalization()
+    public static function provideFixCapitalization()
     {
         return [
             [

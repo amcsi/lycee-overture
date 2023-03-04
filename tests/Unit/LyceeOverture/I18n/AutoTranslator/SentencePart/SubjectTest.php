@@ -16,7 +16,7 @@ class SubjectTest extends TestCase
         self::assertSame($expected, Subject::createInstance($input)->getSubjectText());
     }
 
-    public function provideCreateInstance()
+    public static function provideCreateInstance()
     {
         return [
             [

@@ -16,7 +16,7 @@ class TurnAndBattleTest extends TestCase
         self::assertSame($expected, TurnAndBattle::autoTranslate($input));
     }
 
-    public function provideAutoTranslate()
+    public static function provideAutoTranslate()
     {
         return [
             [

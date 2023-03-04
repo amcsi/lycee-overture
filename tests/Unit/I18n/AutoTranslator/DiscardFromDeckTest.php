@@ -16,7 +16,7 @@ class DiscardFromDeckTest extends TestCase
         self::assertSame($expected, DiscardFromDeck::autoTranslate($input));
     }
 
-    public function provideAutoTranslate(): array
+    public static function provideAutoTranslate(): array
     {
         return [
             [

@@ -20,7 +20,7 @@ class PreCommentTranslatorTest extends TestCase
         );
     }
 
-    public function provideTranslate()
+    public static function provideTranslate()
     {
         return [
             [

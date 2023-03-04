@@ -18,7 +18,7 @@ class KanaTranslatorTest extends TestCase
         self::assertSame($expected, $instance->translate($input));
     }
 
-    public function provideTranslate()
+    public static function provideTranslate()
     {
         return [
             [

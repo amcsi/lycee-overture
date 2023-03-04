@@ -16,7 +16,7 @@ class WhenAppearsTest extends TestCase
         self::assertSame($expected, WhenAppears::autoTranslate($input));
     }
 
-    public function provideAutoTranslate(): array
+    public static function provideAutoTranslate(): array
     {
         return [
             [

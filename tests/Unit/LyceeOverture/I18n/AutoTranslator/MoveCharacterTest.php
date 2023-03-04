@@ -16,7 +16,7 @@ class MoveCharacterTest extends TestCase
         self::assertSame($expected, MoveCharacter::autoTranslate($input));
     }
 
-    public function provideAutoTranslate()
+    public static function provideAutoTranslate()
     {
         return [
             [

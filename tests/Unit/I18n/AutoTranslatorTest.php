@@ -16,7 +16,7 @@ class AutoTranslatorTest extends TestCase
         self::assertSame($expected, TestUtils::createAutoTranslator()->autoTranslate($input));
     }
 
-    public function provideAutoTranslate()
+    public static function provideAutoTranslate()
     {
         return [
             [

@@ -22,7 +22,7 @@ class YahooKanjiTranslatorTest extends TestCase
         self::assertSame($expected, $instance->translate($input));
     }
 
-    public function provideTranslate(): array
+    public static function provideTranslate(): array
     {
         return [
             'two word translation gets translated' => [

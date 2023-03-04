@@ -19,7 +19,7 @@ class CsvValueInterpreterTest extends TestCase
         self::assertSame($expected, CsvValueInterpreter::getType([CsvColumns::TYPE => $inputCell]));
     }
 
-    public function provideGetType(): array
+    public static function provideGetType(): array
     {
         return [
             [Type::CHARACTER, 'キャラクター'],
@@ -43,7 +43,7 @@ class CsvValueInterpreterTest extends TestCase
         self::assertSame($expected, CsvValueInterpreter::getElements([CsvColumns::ELEMENTS => $elements]));
     }
 
-    public function provideElements(): array
+    public static function provideElements(): array
     {
         return [
             [[], '無'],
@@ -67,7 +67,7 @@ class CsvValueInterpreterTest extends TestCase
         self::assertSame($expected, CsvValueInterpreter::getCosts([CsvColumns::COST => $costs]));
     }
 
-    public function provideCosts(): array
+    public static function provideCosts(): array
     {
         return [
             [[], ''],
@@ -92,7 +92,7 @@ class CsvValueInterpreterTest extends TestCase
         self::assertSame($expected, CsvValueInterpreter::getAbilityPartsFromAbility($input));
     }
 
-    public function provideAbilities(): array
+    public static function provideAbilities(): array
     {
         return [
             [

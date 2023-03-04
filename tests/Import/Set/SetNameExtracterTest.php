@@ -16,7 +16,7 @@ class SetNameExtracterTest extends TestCase
         self::assertSame($expected, SetNameExtracter::extract($input));
     }
 
-    public function provideExtract()
+    public static function provideExtract()
     {
         return [
             'Something and a version' => [

@@ -16,7 +16,7 @@ class ImagePathOriginalVariantDeterminerTest extends TestCase
         self::assertTrue(ImagePathOriginalVariantDeterminer::isOriginalVariant($input));
     }
 
-    public function provideOriginalVariant()
+    public static function provideOriginalVariant()
     {
         return [
             ['LO-0001.png'],
@@ -32,7 +32,7 @@ class ImagePathOriginalVariantDeterminerTest extends TestCase
         self::assertFalse(ImagePathOriginalVariantDeterminer::isOriginalVariant($input));
     }
 
-    public function provideNotOriginalVariant()
+    public static function provideNotOriginalVariant()
     {
         return [
             ['LO-0001-A.png'],

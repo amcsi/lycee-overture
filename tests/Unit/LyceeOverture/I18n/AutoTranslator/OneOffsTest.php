@@ -16,7 +16,7 @@ class OneOffsTest extends TestCase
         self::assertSame($expected, OneOffs::autoTranslate($input));
     }
 
-    public function provideAutoTranslate()
+    public static function provideAutoTranslate()
     {
         return [
             'untap and move' => [
