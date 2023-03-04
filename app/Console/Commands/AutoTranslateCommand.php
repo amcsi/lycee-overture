@@ -9,6 +9,7 @@ use amcsi\LyceeOverture\I18n\AutoTranslator;
 use amcsi\LyceeOverture\I18n\AutoTranslator\NameSyncer;
 use amcsi\LyceeOverture\I18n\CommentTranslator\CommentTranslator;
 use amcsi\LyceeOverture\I18n\CommentTranslator\PreCommentTranslator;
+use amcsi\LyceeOverture\I18n\DeeplTranslator\DeeplTranslatorLastUsedUpdater;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
@@ -145,6 +146,8 @@ class AutoTranslateCommand extends Command
             $progressBar->advance();
         }
         $progressBar->clear();
+
+        app(DeeplTranslatorLastUsedUpdater::class)->updateLastUsed();
 
         $this->output->writeln("Finished auto translation of cards. Updated: $updatedCount");
 

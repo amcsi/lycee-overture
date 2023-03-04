@@ -13,6 +13,7 @@ use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use amcsi\LyceeOverture\I18n\NullTranslator;
 use amcsi\LyceeOverture\I18n\OneSkyClient;
 use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
+use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use amcsi\LyceeOverture\Import\CsvDownloader;
@@ -136,5 +137,6 @@ class AppServiceProvider extends ServiceProvider
 
         $app->singleton(Translator::class, fn () => new Translator(config('services.deepl.authKey')));
         $app->singleton(DeeplCacheStore::class);
+        $app->scoped(TranslationUsedTracker::class);
     }
 }
