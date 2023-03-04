@@ -26,7 +26,7 @@ class DeeplTranslateCommand extends Command
 {
     public const COMMAND = 'lycee:deepl-translate';
 
-    protected $signature = self::COMMAND . ' {--dump-to-file} {--dry-run}';
+    protected $signature = self::COMMAND . ' {--dump-to-file} {--dry-run}  {--limit-translation-sends=0}';
     protected $description = 'Attempts translations from Japanese description text with DeepL.';
 
 
@@ -78,6 +78,10 @@ class DeeplTranslateCommand extends Command
         $updatedCount = 0;
 
         $dryRun = (bool) $this->option('dry-run');
+        $limitTranslationSends = (int) $this->option('limit-translation-sends');
+
+        $translationsUsedTracker = app(TranslationUsedTracker::class);
+        $characterCounter = $translationsUsedTracker->getCharacterCounter();
 
         // Iterate each Japanese card to create the English variant.
         // We must make sure to only auto translate those properties which have not been manually translated.
@@ -133,13 +137,15 @@ class DeeplTranslateCommand extends Command
             }
 
             $progressBar->advance();
+
+            if ($limitTranslationSends && $characterCounter->translationsSent >= $limitTranslationSends) {
+                $this->warn('Translation limit reached.');
+                break;
+            }
         }
         $progressBar->clear();
 
-        $translationsUsedTracker = app(TranslationUsedTracker::class);
-        $characterCounter = $translationsUsedTracker->getCharacterCounter();
-
-        $this->output->writeln("Finished auto translation of cards. Updated: $updatedCount");
+        $this->output->writeln("Finished DeepL translation of cards. Updated: $updatedCount");
 
         $charactersSentColor = $characterCounter->charactersSent > 0 && !$dryRun ? 'yellow' : 'green';
         $messages[] = "Characters sent: <fg=$charactersSentColor>$characterCounter->charactersSent</>";
