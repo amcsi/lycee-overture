@@ -21,6 +21,7 @@
     "erusev/parsedown": "^1.7",
     "guzzlehttp/guzzle": "^7.0.1",
     "guzzlehttp/psr7": "^1.5",
+    "itsgoingd/clockwork": "^5.1",
     "laravel/framework": "10.*",
     "laravel/octane": "^1.4",
     "laravel/sanctum": "^3.2",
