@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
+use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use DeepL\Translator;
@@ -26,6 +27,10 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
         $characterCount = mb_strlen($text);
 
         $characterCounter->addCharactersAttempted($characterCount);
+
+        if (! JapaneseCharacterCounter::countJapaneseCharacters($text)) {
+            return $text;
+        }
 
         $characterCounter->addCharactersPassed($characterCount);
 
