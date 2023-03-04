@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
+use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use DeepL\Translator;
 
-class CachedDeeplTranslator implements TranslatorInterface
+readonly class CachedDeeplTranslator implements TranslatorInterface
 {
     public function __construct(
-        private readonly Translator $deeplTranslator,
-        private readonly DeeplCacheStore $cacheStore
+        private Translator $deeplTranslator,
+        private DeeplCacheStore $cacheStore,
+        private TranslationUsedTracker $translationUsedTracker
     ) {
     }
 
@@ -20,9 +22,22 @@ class CachedDeeplTranslator implements TranslatorInterface
             return $text;
         }
 
+        $characterCounter = $this->translationUsedTracker->getCharacterCounter();
+        $characterCount = mb_strlen($text);
+
+        $characterCounter->addCharactersAttempted($characterCount);
+
+        $characterCounter->addCharactersPassed($characterCount);
+
+        $this->translationUsedTracker->add($text);
+
         return $this->cacheStore->rememberForever(
             $text,
-            fn() => $this->deeplTranslator->translateText($text, null, 'en-US')->text
+            function () use ($text, $characterCounter, $characterCount) {
+                $characterCounter->addCharactersSent($characterCount);
+
+                return $this->deeplTranslator->translateText($text, null, 'en-US')->text;
+            }
         );
     }
 }

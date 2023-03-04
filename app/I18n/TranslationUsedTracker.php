@@ -5,7 +5,19 @@ namespace amcsi\LyceeOverture\I18n;
 
 class TranslationUsedTracker
 {
-    private $translationsUsed = [];
+    private array $translationsUsed;
+    private TranslationServiceCharacterCounter $characterCounter;
+
+    public function __construct()
+    {
+        $this->flush();
+    }
+
+    public function flush()
+    {
+        $this->translationsUsed = [];
+        $this->characterCounter = new TranslationServiceCharacterCounter();
+    }
 
     public function add($source)
     {
@@ -17,8 +29,8 @@ class TranslationUsedTracker
         return $this->translationsUsed;
     }
 
-    public function flush()
+    public function getCharacterCounter(): TranslationServiceCharacterCounter
     {
-        $this->translationsUsed = [];
+        return $this->characterCounter;
     }
 }

@@ -11,6 +11,7 @@ use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\CachedDeeplTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
+use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use Carbon\Carbon;
 use Eloquent;
 use GuzzleHttp\Psr7\Utils;
@@ -131,9 +132,22 @@ class DeeplTranslateCommand extends Command
         }
         $progressBar->clear();
 
-        app(DeeplTranslatorLastUsedUpdater::class)->updateLastUsed();
+        $translationsUsedTracker = app(TranslationUsedTracker::class);
+        $characterCounter = $translationsUsedTracker->getCharacterCounter();
 
         $this->output->writeln("Finished auto translation of cards. Updated: $updatedCount");
+
+        $charactersSentColor = $characterCounter->charactersSent > 0 ? 'yellow' : 'green';
+        $messages[] = "Characters sent: <fg=$charactersSentColor>$characterCounter->charactersSent</>";
+        $messages[] = 'Characters passed: ' . $characterCounter->charactersPassed;
+        $messages[] = 'Characters attempted: ' . $characterCounter->charactersAttempted;
+        $messages[] = 'Translations sent: ' . $characterCounter->translationsSent;
+        $messages[] = 'Translations passed: ' . $characterCounter->translationsPassed;
+        $messages[] = 'Translations attempted: ' . $characterCounter->translationsAttempted;
+
+        $this->output->writeln($messages);
+
+        app(DeeplTranslatorLastUsedUpdater::class)->updateLastUsed();
 
         $this->output->text(
             "Finished DeepL translation of cards in " . Profiling::stopwatchToHuman($stopwatchEvent->stop())

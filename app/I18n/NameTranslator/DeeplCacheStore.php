@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
 use amcsi\LyceeOverture\DeeplTranslation;
-use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use Illuminate\Database\Eloquent\Collection;
 
 class DeeplCacheStore
@@ -27,8 +26,6 @@ class DeeplCacheStore
             $translationsBySource[$text] = $deeplTranslation;
             $deeplTranslation->save();
         }
-
-        app(TranslationUsedTracker::class)->add($text);
 
         return $deeplTranslation->translation;
     }
