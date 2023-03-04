@@ -21,3 +21,4 @@ yarn-error.log
 .phpunit.result.cache
 package-lock.json
 .pnpm-store/
+.phpunit.cache/
