@@ -98,6 +98,8 @@ class Card extends Model
 
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
+    protected $keyType = 'string';
+
     public function getId(): string
     {
         return $this->getAttribute('id');
