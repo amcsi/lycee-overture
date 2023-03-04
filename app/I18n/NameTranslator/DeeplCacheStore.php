@@ -20,6 +20,9 @@ class DeeplCacheStore
         $translationsBySource = $this->getAllBySource();
         if (($deeplTranslation = $translationsBySource->get($text)) === null) {
             $translation = $callback();
+            if ($translation === null) {
+                return $text;
+            }
             $deeplTranslation = new DeeplTranslation();
             $deeplTranslation->source = $text;
             $deeplTranslation->translation = $translation;
