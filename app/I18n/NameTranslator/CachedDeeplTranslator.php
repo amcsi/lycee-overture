@@ -16,6 +16,10 @@ class CachedDeeplTranslator implements TranslatorInterface
 
     public function translate(string $text): string
     {
+        if (!$text) {
+            return $text;
+        }
+
         return $this->cacheStore->rememberForever(
             $text,
             fn() => $this->deeplTranslator->translateText($text, null, 'en-US')->text

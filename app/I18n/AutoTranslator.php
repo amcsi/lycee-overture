@@ -233,6 +233,17 @@ class AutoTranslator
     }
 
     /**
+     * For AI translations.
+     */
+    public function partialAutoTranslate($text)
+    {
+        $text = MarkupConverter::normalizeBrackets($text);
+        $text = MarkupConverter::convert($text);
+
+        return $text;
+    }
+
+    /**
      * Use this method to keep track of how many brackets there are before and after automatically translating.
      * Having not the same count is bad, and it means some logic in the code is replacing text badly.
      */

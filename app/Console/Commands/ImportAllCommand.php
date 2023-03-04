@@ -52,6 +52,7 @@ class ImportAllCommand extends Command
         }
 
         $this->call(AutoTranslateCommand::COMMAND);
+        $this->call(DeeplTranslateCommand::COMMAND);
 
         if ($this->option('lackey')) {
             try {

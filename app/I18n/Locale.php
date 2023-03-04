@@ -10,5 +10,7 @@ class Locale
 
     public const ENGLISH_AUTO = 'en-auto';
 
+    public const ENGLISH_DEEPL = 'en-deepl';
+
     public const TRANSLATION_LOCALES = [self::ENGLISH];
 }
