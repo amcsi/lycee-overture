@@ -15,10 +15,16 @@ export default {
       return !this.cardHasApprovedTranslation && this.suggestion;
     },
     bestTranslation() {
+      const autoTranslation = this.translationsByLocale[`${this.locale}-auto`];
+
+      const autoTranslationIfFullyTranslated =
+        autoTranslation?.kanji_count === 0 ? autoTranslation : null;
+
       return (
         this.translationsByLocale[this.locale] ??
-        this.translationsByLocale[`${this.locale}-auto`] ??
+        autoTranslationIfFullyTranslated ??
         this.translationsByLocale[`${this.locale}-deepl`] ??
+        autoTranslation ??
         this.translationsByLocale.ja
       );
     },

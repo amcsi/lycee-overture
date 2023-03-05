@@ -24,6 +24,7 @@ class CardTranslationResource extends JsonResource
             'comments' => $cardTranslation->comments,
             'character_type' => $cardTranslation->character_type,
             'locale' => $cardTranslation->locale,
+            'kanji_count' => $cardTranslation->kanji_count,
         ];
     }
 }
