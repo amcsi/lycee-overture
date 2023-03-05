@@ -78,9 +78,10 @@ class AutoTranslateCommand extends Command
         // By default the english japanese character count is the same as the Japanese (untranslated).
         $cardCount = $japaneseBuilder->count();
 
-        $beforeEnglishKanjiRemovalRatio = $translationCoverageChecker->calculateRatioOfJapaneseCharacterRemoval();
-        $beforeEnglishFullTranslationRatio = $translationCoverageChecker->calculateRatioOfFullyTranslated();
-        $beforeEnglishFullTranslationCount = $translationCoverageChecker->countFullyTranslated();
+        $beforeStatistics = $translationCoverageChecker->calculateStatistics([]);
+        $beforeEnglishKanjiRemovalRatio = $beforeStatistics->getKanjiRemovalRatio();
+        $beforeEnglishFullTranslationRatio = $beforeStatistics->getFullyTranslatedRatio();
+        $beforeEnglishFullTranslationCount = $beforeStatistics->getTranslatedCards();
 
         \Eloquent::unguard();
 
@@ -153,9 +154,10 @@ class AutoTranslateCommand extends Command
 
         // Report on translations with kanji count removal percentage as translation percentage.
 
-        $afterEnglishKanjiRemovalRatio = $translationCoverageChecker->calculateRatioOfJapaneseCharacterRemoval();
-        $afterEnglishFullTranslationRatio = $translationCoverageChecker->calculateRatioOfFullyTranslated();
-        $afterEnglishFullTranslationCount = $translationCoverageChecker->countFullyTranslated();
+        $afterStatistics = $translationCoverageChecker->calculateStatistics([]);
+        $afterEnglishKanjiRemovalRatio = $afterStatistics->getKanjiRemovalRatio();
+        $afterEnglishFullTranslationRatio = $afterStatistics->getFullyTranslatedRatio();
+        $afterEnglishFullTranslationCount = $afterStatistics->getTranslatedCards();
 
         $oldTranslationPercent = $beforeEnglishKanjiRemovalRatio * 100;
         $newTranslationPercent = $afterEnglishKanjiRemovalRatio * 100;
