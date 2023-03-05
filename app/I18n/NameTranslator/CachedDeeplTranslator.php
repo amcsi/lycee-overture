@@ -41,7 +41,7 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
             function () use ($text, $dryRun, $characterCounter, $characterCount) {
                 $characterCounter->addCharactersSent($characterCount);
 
-                return $dryRun ? null : $this->deeplTranslator->translateText($text, null, 'en-US')->text;
+                return $dryRun ? null : $this->deeplTranslator->translateText($text, 'ja', 'en-US')->text;
             }
         );
     }
