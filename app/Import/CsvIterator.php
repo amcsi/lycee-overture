@@ -41,7 +41,7 @@ class CsvIterator
         // Explode by comma.
         $reader = (function () use ($rows) {
             foreach ($rows as $row) {
-                yield explode(',', $row);
+                yield array_map(trim(...), explode(',', $row));
             }
         })();
 

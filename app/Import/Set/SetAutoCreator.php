@@ -48,7 +48,7 @@ class SetAutoCreator
      */
     private function setSetsAndKeyByFullName(Collection $sets): void
     {
-        $this->sets = $sets->keyBy(function (Set $set) {
+        $this->sets = $sets->sortByDesc('id')->keyBy(function (Set $set) {
             return trim(sprintf('%s %s', $set->name_ja, $set->version));
         });
     }
