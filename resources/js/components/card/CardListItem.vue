@@ -65,34 +65,53 @@
           <CardTranslator v-if="translateMode" :card="card" :id="this.card.id" />
         </div>
         <div style="flex: 1" />
-        <div class="show-when-hovering" style="text-align: right">
+        <div style="text-align: right">
+          <span class="show-when-hovering">
+            <span
+              v-if="isLocaleJapanese"
+              title="Please switch the site language to English on the top right before translating."
+              >Suggest Translation</span
+            >
+            <span v-else class="clickable" @click="onSuggestTranslationClick"
+              >{{ translateMode ? 'Collapse' : '' }} Suggest Translation</span
+            >
+            -
+            <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
+            <span v-if="showLanguageSelectors">
+              <span
+                class="language-link clickable"
+                tabindex="0"
+                :class="{ active: localLocale !== 'ja' }"
+                @click="localLocale = 'en'"
+              >
+                <FlagImage locale="en" />
+              </span>
+              <span
+                class="language-link clickable"
+                tabindex="0"
+                :class="{ active: localLocale === 'ja' }"
+                @click="localLocale = 'ja'"
+              >
+                <FlagImage locale="ja" />
+              </span>
+            </span>
+          </span>
           <span
-            v-if="isLocaleJapanese"
-            title="Please switch the site language to English on the top right before translating."
-            >Suggest Translation</span
+            class="language-link clickable"
+            tabindex="0"
+            :style="{ visibility: locale === 'ja' ? 'hidden' : undefined }"
+            :class="{
+              active: translationFlavor === 'deepl',
+              'show-when-hovering': translationFlavor !== 'deepl',
+            }"
+            :title="
+              translationFlavor === 'deepl'
+                ? `This card's translation was made by DeepL. Click to toggle.`
+                : 'Click to show DeepL translation.'
+            "
+            @click="preferAutoTranslated = !preferAutoTranslated"
           >
-          <span v-else class="clickable" @click="onSuggestTranslationClick"
-            >{{ translateMode ? 'Collapse' : '' }} Suggest Translation</span
-          >
-          -
-          <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
-          <span v-if="showLanguageSelectors">
-            <span
-              class="language-link clickable"
-              tabindex="0"
-              :class="{ active: localLocale !== 'ja' }"
-              @click="localLocale = 'en'"
-            >
-              <FlagImage locale="en" />
-            </span>
-            <span
-              class="language-link clickable"
-              tabindex="0"
-              :class="{ active: localLocale === 'ja' }"
-              @click="localLocale = 'ja'"
-            >
-              <FlagImage locale="ja" />
-            </span>
+            🧠
           </span>
         </div>
       </div>
@@ -140,6 +159,7 @@ export default {
       localLocale: null,
       translateMode: false,
       translateNamesOpen: false,
+      preferAutoTranslated: true,
     };
   },
   computed: {
@@ -201,6 +221,13 @@ export default {
     currentRarity() {
       const index = this.card.variants.findIndex(obj => obj.variant === this.currentVariant);
       return this.card.variants[index].rarity;
+    },
+    translationFlavor() {
+      return this.bestTranslation.locale.endsWith('deepl')
+        ? 'deepl'
+        : this.bestTranslation.locale.endsWith('auto')
+        ? 'auto'
+        : '';
     },
     ...mapComputed('auth', ['user']),
   },

@@ -19,9 +19,11 @@ export default {
 
       const autoTranslationIfFullyTranslated =
         autoTranslation?.kanji_count === 0 ? autoTranslation : null;
+      const autoTranslationIfPreferred = this.preferAutoTranslated ? autoTranslation : null;
 
       return (
         this.translationsByLocale[this.locale] ??
+        autoTranslationIfPreferred ??
         autoTranslationIfFullyTranslated ??
         this.translationsByLocale[`${this.locale}-deepl`] ??
         autoTranslation ??
