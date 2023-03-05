@@ -36,7 +36,7 @@
         Original
       </div>
 
-      <CardDescription :translation="card.japanese" />
+      <CardDescription :translation="translationsByLocale.ja" />
     </el-card>
 
     <div v-if="autoTranslated">
@@ -157,6 +157,7 @@
 import { isEqual } from 'lodash-es';
 import { mapActions, mapMutations } from 'vuex';
 import api from '../../api';
+import cardMixin from '../../utils/cardMixin';
 import { normalizeError, reportError, VALIDATION_FAILURE } from '../../utils/errorHandling';
 import { characterType, itemType } from '../../value/cardType';
 import ExternalLink from '../common/ExternalLink.vue';
@@ -196,6 +197,7 @@ export default {
     id: String,
     card: Object,
   },
+  mixins: [cardMixin],
   data() {
     return {
       loading: false,
@@ -215,10 +217,10 @@ export default {
   },
   computed: {
     autoTranslated() {
-      return this.card.auto_translation || this.card.translation;
+      return this.translationsByLocale['en-auto'];
     },
     isManuallyTranslated() {
-      return !!this.card.auto_translation;
+      return !!this.translationsByLocale.en;
     },
     lineCount() {
       return Math.max(
@@ -249,7 +251,7 @@ export default {
       return draftToCardTranslation(this.currentDraft);
     },
     lastSavedTranslationDraft() {
-      return cardTranslationToDraft(this.lastSavedTranslationSuggestion || this.card.translation);
+      return cardTranslationToDraft(this.lastSavedTranslationSuggestion || this.bestTranslation);
     },
     // Show a dirty check per translate input.
     dirtyValues() {
@@ -290,7 +292,7 @@ export default {
       return cardTranslationToDraft(this.autoTranslated);
     },
     bestTranslationAsDraft() {
-      return cardTranslationToDraft(this.card.translation);
+      return cardTranslationToDraft(this.bestTranslation);
     },
     isCurrentDraftEqualToAutoTranslated() {
       return isEqual(this.autoTranslatedAsDraft, this.currentDraft);
@@ -418,7 +420,7 @@ export default {
         this.lastSavedTranslationSuggestion = lastSavedSuggestion;
         this.currentDraft = cardTranslationToDraft(lastSavedSuggestion);
       } else {
-        this.setCurrentTranslation(this.card.translation);
+        this.setCurrentTranslation(this.bestTranslation);
       }
     } catch (e) {
       const normalizedError = normalizeError(e);

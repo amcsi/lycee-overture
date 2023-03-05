@@ -10,7 +10,7 @@
         ability type translations.
       </el-alert>
       <div v-for="nameProperty of nameProperties" :key="nameProperty.key">
-        <template v-if="card.japanese[nameProperty.key]">
+        <template v-if="translationsByLocale.ja[nameProperty.key]">
           <h3>{{ nameProperty.name }}</h3>
           <div v-for="(japanese, index) of japaneseComponentsByProperty[nameProperty.key]">
             <el-tag effect="plain">
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import cardMixin from '../../utils/cardMixin';
 import { oneSkyProjectUrl } from '../../value/env';
 import ExternalLink from '../common/ExternalLink.vue';
 import FlagImage from '../common/FlagImage.vue';
@@ -51,6 +52,7 @@ export default {
   props: {
     card: Object,
   },
+  mixings: [cardMixin],
   data() {
     const nameProperties = [
       { key: 'name', name: 'Name' },
@@ -60,8 +62,8 @@ export default {
     const japaneseComponentsByProperty = {};
     const translatedComponentsByProperty = {};
     for (const { key } of Object.values(nameProperties)) {
-      const japanese = this.card.japanese[key];
-      const translated = this.card.translation[key];
+      const japanese = this.translationsByLocale.ja[key];
+      const translated = this.bestTranslation[key];
 
       let japaneseSplit;
       let translatedSplit;

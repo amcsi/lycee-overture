@@ -183,7 +183,7 @@ export default {
       );
     },
     showLanguageSelectors() {
-      return !!this.card.translation && !this.translateMode;
+      return !this.translateMode;
     },
     rulingsLink() {
       let link = `https://lycee-tcg.com/faq/?word=${this.card.id}`;
@@ -202,9 +202,6 @@ export default {
       const index = this.card.variants.findIndex(obj => obj.variant === this.currentVariant);
       return this.card.variants[index].rarity;
     },
-    locale() {
-      return this.localLocale;
-    },
     ...mapComputed('auth', ['user']),
   },
   methods: {
@@ -218,7 +215,7 @@ export default {
     },
   },
   created() {
-    this.localLocale = this.card.translation ? 'en' : 'ja';
+    this.localLocale = this.bestTranslation.locale.substring(0, 2);
   },
 };
 </script>

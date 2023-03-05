@@ -77,9 +77,6 @@ export default {
     imageVariant() {
       return getCurrentVariant(this.card.id);
     },
-    locale() {
-      return this.card.translation ? 'en' : 'ja';
-    },
   },
 };
 </script>

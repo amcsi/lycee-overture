@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Card;
 
 use amcsi\LyceeOverture\Card;
-use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\ManualTranslation\SuggestionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,7 +15,6 @@ class CardResource extends JsonResource
     public function toArray($request)
     {
         $card = $this->resource;
-        $locale = \App::getLocale();
 
         $rarities = collect(explode(',', $card->rarity));
         $variants = collect(explode(',', $card->variants));
@@ -35,21 +33,9 @@ class CardResource extends JsonResource
                 'rarity' => $rarity,
                 'variant' => $variants[$index],
             ]),
-            'translation' => $locale !== Locale::JAPANESE ?
-                new CardTranslationResource(($card->getBestTranslation())) :
-                null,
-            'japanese' => new CardTranslationResource($card->getTranslation('ja')),
+            'translations' => CardTranslationResource::collection($card->translations),
             'created_at' => $card->created_at,
             'set' => new SetResource($this->whenLoaded('set')),
-            'auto_translation' => new CardTranslationResource(
-                $this->when(
-                    $locale !== Locale::JAPANESE && \Auth::check() && $card->hasTranslation($locale),
-                    function () use ($card, $locale) {
-                        // If logged in, provide the auto-translation for comparison on the FE.
-                        return $card->getTranslation("$locale-auto");
-                    }
-                )
-            ),
             'suggestions' => SuggestionResource::collection($this->whenLoaded('suggestions'))
         ];
     }

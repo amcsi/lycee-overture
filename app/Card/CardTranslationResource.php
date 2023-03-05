@@ -23,6 +23,7 @@ class CardTranslationResource extends JsonResource
             'ability_description' => $cardTranslation->ability_description,
             'comments' => $cardTranslation->comments,
             'character_type' => $cardTranslation->character_type,
+            'locale' => $cardTranslation->locale,
         ];
     }
 }
