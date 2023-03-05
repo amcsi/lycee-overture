@@ -38,7 +38,7 @@ function getIcon(name, text, long) {
 }
 
 function simpleCallback(match, contents) {
-  return getIcon(contents, match);
+  return getIcon(contents.toLowerCase(), match);
 }
 
 /**
@@ -95,7 +95,7 @@ export default function (text = '') {
     return `<a href="${href}" data-key="name" data-value="${safeName}">${opening}${safeName}${closing}</a>`;
   });
   text = text.replace(/\[T]/g, getIcon('tap'));
-  text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/g, simpleCallback);
+  text = text.replace(/\[(0|star|snow|moon|flower|space|sun)]/gi, simpleCallback);
   text = text.replace(/\[([T無雪月花宙日]+)]/g, japaneseElementsCallback);
   text = text.replace(/\[(Activate|Trigger|Continuous|Cost|Hand Activate)]/g, abilityTypeCallback);
   text = text.replace(japaneseAbilityTypeRegex, abilityTypeCallback);
