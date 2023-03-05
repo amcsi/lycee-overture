@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-height: 3rem">
     <CardText
       v-if="translation.basic_abilities"
       class="basic-abilities"
