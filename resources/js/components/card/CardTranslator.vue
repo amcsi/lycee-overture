@@ -204,7 +204,6 @@ export default {
       saving: false,
       lastSavedTranslationSuggestion: null,
       errors: {},
-      locale: 'en',
       // Current draft.
       currentDraft: {
         basicAbilities: '',

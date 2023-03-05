@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="japaneseComponentsByProperty">
     <el-card>
       <el-alert show-icon title="Guidelines" type="warning">
         Please read
@@ -52,8 +52,8 @@ export default {
   props: {
     card: Object,
   },
-  mixings: [cardMixin],
-  data() {
+  mixins: [cardMixin],
+  created() {
     const nameProperties = [
       { key: 'name', name: 'Name' },
       { key: 'ability_name', name: 'Ability Name' },
@@ -79,11 +79,9 @@ export default {
       translatedComponentsByProperty[key] = translatedSplit;
     }
 
-    return {
-      nameProperties,
-      japaneseComponentsByProperty,
-      translatedComponentsByProperty,
-    };
+    this.nameProperties = nameProperties;
+    this.japaneseComponentsByProperty = japaneseComponentsByProperty;
+    this.translatedComponentsByProperty = translatedComponentsByProperty;
   },
   computed: {
     translateLinkByProperty() {
