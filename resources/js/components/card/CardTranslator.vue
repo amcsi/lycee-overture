@@ -49,6 +49,16 @@
       </el-card>
     </div>
 
+    <div v-if="translationsByLocale['en-deepl']">
+      <div class="spacer" />
+
+      <el-card>
+        <div slot="header">🧠 DeepL Translated</div>
+
+        <CardDescription :translation="translationsByLocale['en-deepl']" />
+      </el-card>
+    </div>
+
     <div class="spacer" />
 
     <el-card>
