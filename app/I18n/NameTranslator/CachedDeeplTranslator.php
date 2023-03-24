@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
+use amcsi\LyceeOverture\I18n\Tools\JapaneseSentenceSplitter;
 use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use DeepL\Translator;
@@ -23,9 +24,21 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
             return $text;
         }
 
+        $self = $this;
+        return JapaneseSentenceSplitter::replaceCallback(
+            $text,
+            (static fn(array $match) => $self->translateSentence($match[0], $dryRun))
+        );
+    }
+
+    public function translateSentence(string $text, bool $dryRun): string
+    {
+        if (!$text) {
+            return $text;
+        }
+
         $characterCounter = $this->translationUsedTracker->getCharacterCounter();
         $characterCount = mb_strlen($text);
-
         $characterCounter->addCharactersAttempted($characterCount);
 
         if (! JapaneseCharacterCounter::countJapaneseCharacters($text)) {
