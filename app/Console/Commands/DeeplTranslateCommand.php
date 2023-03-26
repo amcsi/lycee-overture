@@ -5,7 +5,6 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
-use amcsi\LyceeOverture\I18n\AutoTranslator;
 use amcsi\LyceeOverture\I18n\DeeplTranslator\DeeplTranslatorLastUsedUpdater;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
@@ -32,7 +31,6 @@ class DeeplTranslateCommand extends Command
 
     public function handle(
         CardTranslation $cardTranslation,
-        AutoTranslator $autoTranslator,
         NameTranslator $nameTranslator,
         CachedDeeplTranslator $cachedDeeplTranslator,
     ) {
@@ -98,7 +96,10 @@ class DeeplTranslateCommand extends Command
             // Iterate the auto-translatable fields.
             foreach (CardTranslation::TEXT_COLUMNS as $key) {
                 try {
-                    $translation = $cachedDeeplTranslator->translate($japaneseCard->$key, $dryRun);
+                    $translation = $cachedDeeplTranslator->translate(
+                        $japaneseCard->$key,
+                        Locale::ENGLISH, $dryRun
+                    );
                     $englishCard[$key] = $translation;
                 } catch (LogicException $e) {
                     $this->output->warning(

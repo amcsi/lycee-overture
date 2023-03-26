@@ -8,7 +8,7 @@ namespace amcsi\LyceeOverture\I18n;
  */
 class NullTranslator implements TranslatorInterface
 {
-    public function translate(string $text): string
+    public function translate(string $text, string $locale): string
     {
         return $text;
     }

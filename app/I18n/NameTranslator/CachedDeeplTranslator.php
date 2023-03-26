@@ -20,7 +20,7 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
     ) {
     }
 
-    public function translate(string $text, $dryRun = false): string
+    public function translate(string $text, string $locale, $dryRun = false): string
     {
         if (!$text) {
             return $text;

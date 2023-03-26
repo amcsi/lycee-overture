@@ -19,11 +19,11 @@ class YahooRawKanjiTranslator implements TranslatorInterface
     {
     }
 
-    public function translate(string $kanji): string
+    public function translate(string $text, string $locale): string
     {
         $query = [
             'appid' => $this->apiKey,
-            'sentence' => $kanji,
+            'sentence' => $text,
         ];
         $body = [
             'id' => Str::random(),
@@ -46,7 +46,7 @@ class YahooRawKanjiTranslator implements TranslatorInterface
                 str_contains((string) $response->getBody(), 'invalid parameter: sentence')
             ) {
                 // Bad kanji. Just return the input string.
-                return $kanji;
+                return $text;
             }
             throw $exception;
         }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
+use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 
 /**
@@ -16,6 +17,6 @@ class KanjiTranslator
 
     public function translate(string $text): string
     {
-        return $this->cachedDeeplTranslator->translate($text);
+        return $this->cachedDeeplTranslator->translate($text, Locale::ENGLISH);
     }
 }

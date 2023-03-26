@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\TranslatorApi;
 
+use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Cache\Repository;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +20,7 @@ class YahooKanjiTranslatorTest extends TestCase
         $arrayRepository = new Repository($arrayStore);
         $arrayStore->forever($input, $cacheResult);
         $instance = new YahooKanjiTranslator(\Mockery::mock(YahooRawKanjiTranslator::class), $arrayRepository);
-        self::assertSame($expected, $instance->translate($input));
+        self::assertSame($expected, $instance->translate($input, Locale::ENGLISH));
     }
 
     public static function provideTranslate(): array

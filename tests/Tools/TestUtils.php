@@ -22,7 +22,7 @@ class TestUtils
     public static function createKanjiTranslator(): KanjiTranslator
     {
         return new KanjiTranslator(new class implements TranslatorInterface {
-            public function translate(string $text): string
+            public function translate(string $text, string $locale): string
             {
                 // Return the text as-is.
                 return $text;

@@ -13,12 +13,12 @@ class YahooKanjiTranslator implements TranslatorInterface
     {
     }
 
-    public function translate(string $text): string
+    public function translate(string $text, string $locale): string
     {
         // Try to get the cached translation, otherwise use the service to call the Yahoo API.
         $translated = $this->cache->get($text);
         if ($translated === null) {
-            $translated = $this->yahooRawKanjiTranslator->translate($text);
+            $translated = $this->yahooRawKanjiTranslator->translate($text, $locale);
             if ($translated === $text) {
                 // Couldn't be translated with the translation service.
                 return $text;

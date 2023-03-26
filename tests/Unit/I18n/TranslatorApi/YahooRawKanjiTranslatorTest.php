@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\I18n\TranslatorApi;
 
+use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -30,7 +31,7 @@ class YahooRawKanjiTranslatorTest extends TestCase
 
         $instance = new YahooRawKanjiTranslator($guzzleClient, $apiKey);
 
-        self::assertSame('isuzu hana', $instance->translate($kanjiInput));
+        self::assertSame('isuzu hana', $instance->translate($kanjiInput, Locale::ENGLISH));
     }
 
     public function testBadSentenceReturnsSameKanji(): void
@@ -50,7 +51,7 @@ class YahooRawKanjiTranslatorTest extends TestCase
 
         $instance = new YahooRawKanjiTranslator($guzzleClient, $apiKey);
 
-        self::assertSame($kanjiInput, $instance->translate($kanjiInput));
+        self::assertSame($kanjiInput, $instance->translate($kanjiInput, Locale::ENGLISH));
     }
 
     private static function assertCorrectRequestUrl(Request $request, string $apiKey, string $kanjiInput): void
