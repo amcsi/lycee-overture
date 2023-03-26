@@ -21,7 +21,7 @@ class DeeplMarkupToolTest extends TestCase
         self::assertSame($input, DeeplMarkupTool::reassembleString($expectedText, $expectedParts));
     }
 
-    public function provideSplitToMarkup()
+    public static function provideSplitToMarkup()
     {
         return [
             [
