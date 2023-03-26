@@ -10,14 +10,6 @@ class JapaneseSentenceSplitterTest extends TestCase
 {
 
     /**
-     * @dataProvider provideSplit
-     */
-    public function testSplit(array $expected, string $input)
-    {
-        self::assertSame($expected, JapaneseSentenceSplitter::split($input));
-    }
-
-    /**
      * @dataProvider provideReplace
      */
     public function testReplaceCallback(string $expected, string $input)
@@ -25,18 +17,7 @@ class JapaneseSentenceSplitterTest extends TestCase
         self::assertSame($expected, JapaneseSentenceSplitter::replaceCallback($input, static fn($match) => $match[0] . '¤'));
     }
 
-    public function provideSplit()
-    {
-        return [
-            'simple' => [['hey'], 'hey'],
-            'line break' => [["hey\n", 'yo'], "hey\nyo"],
-            'periods' => [['る。', 'yo'], "る。yo"],
-            'period and line break' => [['る。', "\n", ''],  "る。\n"],
-            'periods and line breaks' => [["る。", "\n", "き。", "\n", ''], "る。\nき。\n"],
-        ];
-    }
-
-    public function provideReplace()
+    public static function provideReplace()
     {
         return [
             'simple' => ['hey¤', 'hey'],
@@ -44,6 +25,7 @@ class JapaneseSentenceSplitterTest extends TestCase
             'periods' => ["る。¤yo¤", "る。yo"],
             'period and line break' => ["る。¤\n¤",  "る。\n"],
             'periods and line breaks' => ["る。¤\n¤き。¤\n¤", "る。\nき。\n"],
+            'periods in brackets' => ["[ペナルティ:[１枚ドローする。]]。¤る。¤", "[ペナルティ:[１枚ドローする。]]。る。"],
         ];
     }
 }
