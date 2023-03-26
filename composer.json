@@ -54,6 +54,7 @@
     ],
     "psr-4": {
       "amcsi\\LyceeOverture\\": "app/",
+      "Tests\\": "tests/",
       "Database\\Factories\\": "database/factories/",
       "Database\\Seeders\\": "database/seeders/",
       "Database\\Tools\\": "database/tools/"
@@ -61,7 +62,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": "tests/"
+      "Tests\\Unit\\": "tests/Unit/",
+      "Tests\\Feature\\": "tests/Feature/"
     }
   },
   "extra": {

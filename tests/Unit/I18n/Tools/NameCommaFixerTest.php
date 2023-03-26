@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\I18n\Tools;
+namespace Tests\Unit\I18n\Tools;
 
 use amcsi\LyceeOverture\I18n\Tools\NameCommaFixer;
 use PHPUnit\Framework\TestCase;

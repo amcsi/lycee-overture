@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Import\Set;
+namespace Tests\Unit\Import\Set;
 
 use amcsi\LyceeOverture\Import\Set\SetNameExtracter;
 use PHPUnit\Framework\TestCase;
