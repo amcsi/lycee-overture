@@ -17,8 +17,7 @@ class MarkupConverter
         $text = self::normalizeBrackets($text);
         $text = preg_replace_callback('/\[([雪月花宙日無])]/u', self::elementCallback(...), $text);
 
-        $japaneseToMarkup = BasicAbility::getJapaneseToMarkup();
-        $japaneseBasicAbilitiesRegex = implode('|', array_keys($japaneseToMarkup));
+        $japaneseBasicAbilitiesRegex = self::getJapaneseBasicAbilitiesRegex();
 
         $text = preg_replace_callback(
             "/\\[($japaneseBasicAbilitiesRegex)(?=[\\]:])/u",
@@ -26,10 +25,10 @@ class MarkupConverter
             $text
         );
 
-        $abilityTypesRegex = implode('|', array_keys(AbilityType::getJapaneseMap()));
+        $abilityTypesRegex = self::getAbilityTypesRegex();
 
         $text = preg_replace_callback(
-            "/\\[($abilityTypesRegex)]/u",
+            "/$abilityTypesRegex/u",
             self::abilityTypeCallback(...),
             $text
         );
@@ -62,5 +61,18 @@ class MarkupConverter
     {
         $markupMap = AbilityType::getJapaneseToMarkup();
         return '[' . $markupMap[$matches[1]] . ']';
+    }
+
+    public static function getJapaneseBasicAbilitiesRegex(): string
+    {
+        $japaneseToMarkup = BasicAbility::getJapaneseToMarkup();
+        return implode('|', array_keys($japaneseToMarkup));
+    }
+
+    public static function getAbilityTypesRegex(): string
+    {
+        $abilityTypesRegex = implode('|', array_keys(AbilityType::getJapaneseMap()));
+
+        return "\\[($abilityTypesRegex)]";
     }
 }

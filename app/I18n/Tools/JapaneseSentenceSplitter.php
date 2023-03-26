@@ -12,6 +12,9 @@ class JapaneseSentenceSplitter
     {
         $ret = preg_split(self::REGEX, $text);
 
+        // todo handle periods in brackets
+        // e.g. このキャラは[ペナルティ:[１枚ドローする。
+
         if ($ret === false) {
             throw new \LogicException(preg_last_error_msg());
         }

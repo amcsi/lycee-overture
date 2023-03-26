@@ -107,7 +107,6 @@ class AutoTranslateCommand extends Command
             // Iterate the auto-translatable fields.
             foreach (self::AUTO_TRANSLATE_FIELDS as $key) {
                 try {
-                    // TODO: make sure manual translation of auto-translatable fields do not get overwritten.
                     $englishCard[$key] = $autoTranslator->autoTranslate($japaneseCard->$key);
                 } catch (\LogicException $e) {
                     $this->output->warning(

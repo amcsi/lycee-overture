@@ -98,8 +98,7 @@ class DeeplTranslateCommand extends Command
             // Iterate the auto-translatable fields.
             foreach (CardTranslation::TEXT_COLUMNS as $key) {
                 try {
-                    $translation = $autoTranslator->partialAutoTranslate($japaneseCard->$key);
-                    $translation = $cachedDeeplTranslator->translate($translation, $dryRun);
+                    $translation = $cachedDeeplTranslator->translate($japaneseCard->$key, $dryRun);
                     $englishCard[$key] = $translation;
                 } catch (LogicException $e) {
                     $this->output->warning(

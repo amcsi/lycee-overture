@@ -31,6 +31,10 @@ class MarkupConverterTest extends TestCase
                 '[Order Step:[D1]]',
                 '[オーダーステップ:[D1]]',
             ],
+            [
+                '[Aggressive]',
+                '[アグレッシブ]',
+            ],
             'with tap' => [
                 '[T][snow][moon][flower][space][sun][star]',
                 '[T雪月花宙日無]',

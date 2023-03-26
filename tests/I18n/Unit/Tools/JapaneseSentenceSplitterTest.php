@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\I18n\Tools;
+namespace Tests\I18n\Unit\Tools;
 
 use amcsi\LyceeOverture\I18n\Tools\JapaneseSentenceSplitter;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +25,8 @@ class JapaneseSentenceSplitterTest extends TestCase
         self::assertSame($expected, JapaneseSentenceSplitter::replaceCallback($input, static fn($match) => $match[0] . '¤'));
     }
 
-    public function provideSplit() {
+    public function provideSplit()
+    {
         return [
             'simple' => [['hey'], 'hey'],
             'line break' => [["hey\n", 'yo'], "hey\nyo"],
@@ -35,7 +36,8 @@ class JapaneseSentenceSplitterTest extends TestCase
         ];
     }
 
-    public function provideReplace() {
+    public function provideReplace()
+    {
         return [
             'simple' => ['hey¤', 'hey'],
             'line break' => ["hey\n¤yo¤", "hey\nyo"],
