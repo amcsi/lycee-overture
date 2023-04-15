@@ -42,6 +42,9 @@ class DeeplMarkupToolTest extends TestCase
             [
                 'hey <m id=0 /> yo', ['[オーダーステップ:[雪]]'], 'hey [オーダーステップ:[雪]] yo',
             ],
+            [
+                'hey <m id=0 /> yo', ['[オーダーステップ:[0]]'], 'hey [オーダーステップ:[0]] yo',
+            ],
         ];
     }
 }

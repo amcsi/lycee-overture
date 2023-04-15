@@ -5,6 +5,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Debug\Profiling;
+use amcsi\LyceeOverture\I18n\AutoTranslator\SpaceAfterPeriodFixer;
 use amcsi\LyceeOverture\I18n\DeeplTranslator\DeeplTranslatorLastUsedUpdater;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
@@ -25,7 +26,7 @@ class DeeplTranslateCommand extends Command
 {
     public const COMMAND = 'lycee:deepl-translate';
 
-    protected $signature = self::COMMAND . ' {--dump-to-file} {--dry-run}  {--limit-translation-sends=0}';
+    protected $signature = self::COMMAND . ' {--dump-to-file} {--locale=en} {--dry-run}  {--limit-translation-sends=0}';
     protected $description = 'Attempts translations from Japanese description text with DeepL.';
 
 
@@ -51,8 +52,9 @@ class DeeplTranslateCommand extends Command
             null;
         $propertiesToDump = ['card_id', ...CardTranslation::NAME_COLUMNS, ...CardTranslation::TEXT_COLUMNS];
 
-        $locale = Locale::ENGLISH_DEEPL;
-        $englishCards = $cardTranslation->newQuery()
+        $deeplLocale = $this->option('locale');
+        $locale = "$deeplLocale-deepl";
+        $translatedCards = $cardTranslation->newQuery()
             ->where('locale', $locale)
             ->get()
             ->keyBy(
@@ -63,7 +65,7 @@ class DeeplTranslateCommand extends Command
                 }
             );
 
-        // By default the english japanese character count is the same as the Japanese (untranslated).
+        // By default the translated japanese character count is the same as the Japanese (untranslated).
         $cardCount = $japaneseBuilder->count();
 
         Eloquent::unguard();
@@ -81,16 +83,16 @@ class DeeplTranslateCommand extends Command
         $translationsUsedTracker = app(TranslationUsedTracker::class);
         $characterCounter = $translationsUsedTracker->getCharacterCounter();
 
-        // Iterate each Japanese card to create the English variant.
+        // Iterate each Japanese card to create the translated variant.
         // We must make sure to only auto translate those properties which have not been manually translated.
         // We must also make sure to copy all non-auto-translatable properties from Japanese,
         // but only ones that haven't been manually translated.
         foreach ($japaneseCards as $japaneseCard) {
             $cardId = $japaneseCard->card_id;
-            $englishCard = $englishCards->get($cardId) ?
-                // Update based on the existing English card data.
-                $englishCards[$cardId] :
-                // Create a new English card based on the Japanese one.
+            $translatedCard = $translatedCards->get($cardId) ?
+                // Update based on the existing translated card data.
+                $translatedCards[$cardId] :
+                // Create a new translated card based on the Japanese one.
                 $japaneseCard->replicate()->setAttribute('locale', $locale);
 
             // Iterate the auto-translatable fields.
@@ -98,40 +100,42 @@ class DeeplTranslateCommand extends Command
                 try {
                     $translation = $cachedDeeplTranslator->translate(
                         $japaneseCard->$key,
-                        Locale::ENGLISH, $dryRun
+                        $deeplLocale,
+                        $dryRun,
                     );
-                    $englishCard[$key] = $translation;
+                    $translation = SpaceAfterPeriodFixer::fix($translation);
+                    $translatedCard[$key] = $translation;
                 } catch (LogicException $e) {
                     $this->output->warning(
-                        $englishCard['card_id'] . ' - ' . $japaneseCard->$key . ': ' . $e->getMessage()
+                        $translatedCard['card_id'] . ' - ' . $japaneseCard->$key . ': ' . $e->getMessage()
                     );
                     // Retain the original Japanese text in case of an exception.
-                    $englishCard[$key] = $japaneseCard->$key;
+                    $translatedCard[$key] = $japaneseCard->$key;
                 }
             }
 
             // Manual translations for names, types etc.
-            $englishCard['name'] = $nameTranslator->tryTranslateName($japaneseCard['name'], true);
-            $englishCard['ability_name'] = $nameTranslator->tryTranslateName($japaneseCard['ability_name']);
-            $englishCard['character_type'] = $nameTranslator->tryTranslateCharacterType(
+            $translatedCard['name'] = $nameTranslator->tryTranslateName($japaneseCard['name'], true);
+            $translatedCard['ability_name'] = $nameTranslator->tryTranslateName($japaneseCard['ability_name']);
+            $translatedCard['character_type'] = $nameTranslator->tryTranslateCharacterType(
                 $japaneseCard['character_type']
             );
 
-            $englishCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow(
-                $englishCard->toArray()
+            $translatedCard['kanji_count'] = JapaneseCharacterCounter::countJapaneseCharactersForDbRow(
+                $translatedCard->toArray()
             );
 
             if (!$dryRun) {
-                $englishCard->save();
+                $translatedCard->save();
             }
 
-            if ($englishCard->updated_at > $updatedNowThreshold) {
+            if ($translatedCard->updated_at > $updatedNowThreshold) {
                 ++$updatedCount;
             }
 
             if ($dumpFile) {
                 foreach ($propertiesToDump as $property) {
-                    fwrite($dumpFile, "$property: $englishCard[$property]\n");
+                    fwrite($dumpFile, "$property: $translatedCard[$property]\n");
                 }
                 fwrite($dumpFile, "\n");
             }

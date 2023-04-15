@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Http\Middleware;
 
+use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
@@ -14,7 +15,7 @@ class SetLocale
     /**
      * The available languages.
      */
-    protected $languages = ['en', 'ja'];
+    protected $languages = [...Locale::TRANSLATION_LOCALES, 'ja'];
 
     /**
      * Handle an incoming request.

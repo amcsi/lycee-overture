@@ -29,10 +29,13 @@
     <a class="el-menu-item" v-if="authDetails" href="/logout"> Log out </a>
 
     <div class="language-links">
-      <a :href="enHref" class="language-link" :class="{ active: locale !== 'ja' }">
+      <a :href="enHref" class="language-link" :class="{ active: activeLocale === 'en' }">
         <FlagImage locale="en" />
       </a>
-      <a :href="jaHref" class="language-link" :class="{ active: locale === 'ja' }">
+      <a :href="huHref" class="language-link" :class="{ active: activeLocale === 'hu' }">
+        <FlagImage locale="hu" />
+      </a>
+      <a :href="jaHref" class="language-link" :class="{ active: activeLocale === 'ja' }">
         <FlagImage locale="ja" />
       </a>
     </div>
@@ -63,8 +66,14 @@ export default {
     enHref() {
       return getLocaleChangeUrl(this, 'en');
     },
+    huHref() {
+      return getLocaleChangeUrl(this, 'hu');
+    },
     jaHref() {
       return getLocaleChangeUrl(this, 'ja');
+    },
+    activeLocale() {
+      return this.locale ?? 'en';
     },
   },
   methods: {

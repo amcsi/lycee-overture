@@ -10,19 +10,20 @@ class DeeplCacheStore
 {
     private $translationsBySource;
 
-    public function get(string $text): ?string
+    public function get(string $text, string $locale): ?string
     {
-        return $this->getAllBySource()->get($text)?->translation;
+        return $this->getAllBySource($locale)->get($text)?->translation;
     }
 
-    public function rememberForever($text, callable $callback): string
+    public function rememberForever($text, string $locale, callable $callback): string
     {
-        $translationsBySource = $this->getAllBySource();
+        $translationsBySource = $this->getAllBySource($locale);
         if (! $translationsBySource->has($text)) {
             $translation = $callback();
             $deeplTranslation = new DeeplTranslation();
             $deeplTranslation->source = $text;
             $deeplTranslation->translation = $translation;
+            $deeplTranslation->locale = $locale;
             $translationsBySource[$text] = $deeplTranslation;
             if ($translation !== null) {
                 $deeplTranslation->save();
@@ -38,8 +39,14 @@ class DeeplCacheStore
     /**
      * @return Collection|DeeplTranslation[]
      */
-    private function getAllBySource(): Collection
+    private function getAllBySource(string $locale): Collection
     {
-        return $this->translationsBySource ??= DeeplTranslation::all()->keyBy('source');
+        $this->translationsBySource ??= DeeplTranslation::all()->keyBy('source')->groupBy('locale', true);
+
+        if (!$this->translationsBySource->get($locale)) {
+            $this->translationsBySource[$locale] = new Collection();
+        }
+
+        return $this->translationsBySource[$locale];
     }
 }

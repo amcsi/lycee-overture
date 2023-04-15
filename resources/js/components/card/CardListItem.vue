@@ -79,14 +79,15 @@
             <ExternalLink :href="rulingsLink">Rulings</ExternalLink>
             <span v-if="showLanguageSelectors">
               <span
+                v-for="locale in translationLocales"
+                :key="locale"
                 class="language-link clickable"
                 tabindex="0"
-                :class="{ active: localLocale !== 'ja' }"
-                @click="localLocale = 'en'"
+                :class="{ active: localLocale === locale }"
+                @click="localLocale = locale"
               >
-                <FlagImage locale="en" />
-              </span>
-              <span
+                <FlagImage :locale="locale" /></span
+              ><span
                 class="language-link clickable"
                 tabindex="0"
                 :class="{ active: localLocale === 'ja' }"
@@ -124,6 +125,7 @@ import { mapComputed } from '../../store/storeUtils';
 import cardMixin from '../../utils/cardMixin';
 import { getCurrentVariant } from '../../utils/cardVariant';
 import formatCardMixin from '../../utils/formatCardMixin';
+import { translationLocales } from '../../utils/locale';
 import { areaType, characterType, eventType, itemType } from '../../value/cardType';
 import ExternalLink from '../common/ExternalLink.vue';
 import FlagImage from '../common/FlagImage.vue';
@@ -160,6 +162,7 @@ export default {
       translateMode: false,
       translateNamesOpen: false,
       preferAutoTranslated: true,
+      translationLocales,
     };
   },
   computed: {

@@ -5,14 +5,18 @@ namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
 use amcsi\LyceeOverture\I18n\DeeplTranslator\DeeplMarkupTool;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
+use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\Tools\JapaneseSentenceSplitter;
 use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
+use DeepL\TranslateTextOptions;
 use DeepL\Translator;
 
 readonly class CachedDeeplTranslator implements TranslatorInterface
 {
+    private const TARGET_LANG_MAP = [Locale::ENGLISH => 'en-US'];
+
     public function __construct(
         private Translator $deeplTranslator,
         private DeeplCacheStore $cacheStore,
@@ -29,11 +33,11 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
         $self = $this;
         return JapaneseSentenceSplitter::replaceCallback(
             $text,
-            (static fn(array $match) => $self->translateSentence($match[0], $dryRun))
+            (static fn(array $match) => $self->translateSentence($match[0], $locale, $dryRun))
         );
     }
 
-    public function translateSentence(string $originalSentenceText, bool $dryRun): string
+    public function translateSentence(string $originalSentenceText, string $locale, bool $dryRun): string
     {
         if (!$originalSentenceText) {
             return $originalSentenceText;
@@ -50,7 +54,7 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
         $characterCounter->addCharactersAttempted($characterCount);
 
         if (! JapaneseCharacterCounter::countJapaneseCharacters($text)) {
-            return $text;
+            return DeeplMarkupTool::reassembleString($text, $translatedParts);
         }
 
         $characterCounter->addCharactersPassed($characterCount);
@@ -59,7 +63,8 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
 
         $translated = $this->cacheStore->rememberForever(
             $text,
-            function () use ($text, $dryRun, $characterCounter, $characterCount, $originalSentenceText) {
+            $locale,
+            function () use ($text, $locale, $dryRun, $characterCounter, $characterCount, $originalSentenceText) {
                 $characterCounter->addCharactersSent($characterCount);
 
                 if ($dryRun) {
@@ -68,7 +73,16 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
                     echo "\n";
                 }
 
-                return $dryRun ? null : $this->deeplTranslator->translateText($text, 'ja', 'en-US')->text;
+                return $dryRun ?
+                    null :
+                    $this->deeplTranslator->translateText(
+                        $text,
+                        Locale::JAPANESE,
+                        self::TARGET_LANG_MAP[$locale] ?? $locale,
+                        [
+                            TranslateTextOptions::FORMALITY => 'prefer_less',
+                        ],
+                    )->text;
             }
         );
 

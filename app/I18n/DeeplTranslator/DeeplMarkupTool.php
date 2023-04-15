@@ -32,7 +32,7 @@ class DeeplMarkupTool
 
     private static function getMarkupRegex()
     {
-        $costElementRegex = '\[[TＴ]?([雪月花宙日無])+]';
+        $costElementRegex = '\[[TＴ]?([雪月花宙日無0])+]';
 
         $japaneseBasicAbilitiesRegex = MarkupConverter::getJapaneseBasicAbilitiesRegex();
 

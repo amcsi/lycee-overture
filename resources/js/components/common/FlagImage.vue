@@ -1,5 +1,6 @@
 <template>
   <img v-if="locale === 'en'" src="../../../images/flags/gb.png" :alt="title" :title="title" />
+  <img v-else-if="locale === 'hu'" src="../../../images/flags/hu.png" :alt="title" :title="title" />
   <img v-else-if="locale === 'ja'" src="../../../images/flags/jp.png" :alt="title" :title="title" />
   <span v-else />
 </template>
@@ -16,6 +17,8 @@ export default {
       switch (this.locale) {
         case 'en':
           return 'English';
+        case 'hu':
+          return 'Magyar';
         case 'ja':
           return '日本語';
       }
