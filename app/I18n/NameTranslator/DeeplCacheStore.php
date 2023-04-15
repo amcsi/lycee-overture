@@ -41,7 +41,9 @@ class DeeplCacheStore
      */
     private function getAllBySource(string $locale): Collection
     {
-        $this->translationsBySource ??= DeeplTranslation::all()->keyBy('source')->groupBy('locale', true);
+        $this->translationsBySource ??= DeeplTranslation::all()
+            ->groupBy('locale')
+            ->map(fn(Collection $group) => $group->keyBy('source'));
 
         if (!$this->translationsBySource->get($locale)) {
             $this->translationsBySource[$locale] = new Collection();
