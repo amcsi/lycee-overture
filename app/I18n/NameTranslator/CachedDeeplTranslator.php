@@ -30,11 +30,23 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
             return $text;
         }
 
+        $byLine = explode("\n", $text);
+
         $self = $this;
-        return JapaneseSentenceSplitter::replaceCallback(
-            $text,
-            (static fn(array $match) => $self->translateSentence($match[0], $locale, $dryRun))
-        );
+
+        return implode("\n", \Arr::map($byLine, function ($line) use ($self, $locale, $dryRun) {
+            try {
+                return $self->translateSentence($line, $locale, $dryRun);
+            } catch (\Throwable $e) {
+                \Log::warning('Failed to translate the following by line: ' . $line . "\n$e");
+
+                // Fall back to translating by sentence.
+                return JapaneseSentenceSplitter::replaceCallback(
+                    $line,
+                    (static fn(array $match) => $self->translateSentence($match[0], $locale, $dryRun))
+                );
+            }
+        }));
     }
 
     public function translateSentence(string $originalSentenceText, string $locale, bool $dryRun): string
