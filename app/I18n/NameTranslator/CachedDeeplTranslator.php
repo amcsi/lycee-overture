@@ -93,6 +93,7 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
                         self::TARGET_LANG_MAP[$locale] ?? $locale,
                         [
                             TranslateTextOptions::FORMALITY => 'prefer_less',
+                            TranslateTextOptions::TAG_HANDLING => 'xml',
                         ],
                     )->text;
             }
