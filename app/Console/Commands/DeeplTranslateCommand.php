@@ -12,6 +12,7 @@ use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\CachedDeeplTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
+use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 use Carbon\Carbon;
 use Eloquent;
 use GuzzleHttp\Psr7\Utils;
@@ -98,10 +99,17 @@ class DeeplTranslateCommand extends Command
             // Iterate the auto-translatable fields.
             foreach (CardTranslation::TEXT_COLUMNS as $key) {
                 try {
+                    $translation = $japaneseCard->$key;
+                    $noPerLineOrMarkup = $deeplLocale === Locale::ENGLISH;
+                    if ($noPerLineOrMarkup) {
+                        $translation = MarkupConverter::normalizeBrackets($translation);
+                        $translation = MarkupConverter::convert($translation);
+                    }
                     $translation = $cachedDeeplTranslator->translate(
-                        $japaneseCard->$key,
+                        $translation,
                         $deeplLocale,
                         $dryRun,
+                        $noPerLineOrMarkup,
                     );
                     $translation = SpaceAfterPeriodFixer::fix($translation);
                     $translatedCard[$key] = $translation;

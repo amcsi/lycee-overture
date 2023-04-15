@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
 use amcsi\LyceeOverture\I18n\DeeplTranslator\DeeplMarkupTool;
+use amcsi\LyceeOverture\I18n\DeeplTranslator\DeeplMarkupWrapped;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\Tools\JapaneseSentenceSplitter;
@@ -24,10 +25,14 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
     ) {
     }
 
-    public function translate(string $text, string $locale, $dryRun = false): string
+    public function translate(string $text, string $locale, $dryRun = false, $noPerLineOrMarkup = false): string
     {
         if (!$text) {
             return $text;
+        }
+
+        if ($noPerLineOrMarkup) {
+            return $this->translateSentence($text, $locale, $dryRun, $noPerLineOrMarkup);
         }
 
         $byLine = explode("\n", $text);
@@ -49,15 +54,21 @@ readonly class CachedDeeplTranslator implements TranslatorInterface
         }));
     }
 
-    public function translateSentence(string $originalSentenceText, string $locale, bool $dryRun): string
-    {
+    public function translateSentence(
+        string $originalSentenceText,
+        string $locale,
+        bool $dryRun,
+        $noMarkup = false
+    ): string {
         if (!$originalSentenceText) {
             return $originalSentenceText;
         }
 
         // We convert some Lycee markup into XML markup so DeepL would avoid translating that part.
         // https://www.deepl.com/docs-api/general/working-with-placeholder-tags/
-        $deeplMarkupWrapped = DeeplMarkupTool::splitToMarkup($originalSentenceText);
+        $deeplMarkupWrapped = $noMarkup ?
+            new DeeplMarkupWrapped($originalSentenceText, []) :
+            DeeplMarkupTool::splitToMarkup($originalSentenceText);
         $text = $deeplMarkupWrapped->text;
         $translatedParts = collect($deeplMarkupWrapped->parts)->map(fn ($part) => MarkupConverter::convert($part))->toArray();
 
