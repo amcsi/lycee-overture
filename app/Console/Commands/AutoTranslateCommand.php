@@ -105,7 +105,7 @@ class AutoTranslateCommand extends Command
                 $japaneseCard->replicate()->setAttribute('locale', $locale);
 
             // Iterate the auto-translatable fields.
-            foreach (self::AUTO_TRANSLATE_FIELDS as $key) {
+            foreach (['basic_abilities', 'ability_description', 'ability_cost'] as $key) {
                 try {
                     $englishCard[$key] = $autoTranslator->autoTranslate($japaneseCard->$key);
                 } catch (\LogicException $e) {
