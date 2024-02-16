@@ -54,14 +54,6 @@ class ImportAllCommand extends Command
         $this->call(AutoTranslateCommand::COMMAND);
         $this->call(DeeplTranslateCommand::COMMAND);
 
-        if ($this->option('lackey')) {
-            try {
-                $this->call(BuildLackeyCommand::COMMAND);
-            } catch (\Throwable $exception) {
-                Log::warning((string) $exception);
-            }
-        }
-
         if ($this->option('images')) {
             $this->call(ImageDownloadCommand::COMMAND, ['--new-only' => true]);
             $this->call(ImageUploadCommand::COMMAND, ['--new-only' => true]);
@@ -83,6 +75,14 @@ class ImportAllCommand extends Command
         $newCards = Card::where('created_at', '>=', $start)->get();
         if (count($newCards)) {
             app(GlobalNotifiable::class)->notify(new NewCardsNotification($newCards));
+        }
+
+        if ($this->option('lackey')) {
+            try {
+                $this->call(BuildLackeyCommand::COMMAND);
+            } catch (\Throwable $exception) {
+                Log::warning((string) $exception);
+            }
         }
     }
 }
