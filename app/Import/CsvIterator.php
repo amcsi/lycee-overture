@@ -19,29 +19,26 @@ class CsvIterator
         $f = try_fopen(storage_path(ImportConstants::CSV_PATH), 'r');
 
         $expectedColumnCount = 22;
-        $expectedCommaCount = $expectedColumnCount - 1;
 
         $rows = [];
 
         while (($row = fgets($f)) !== false) {
-            while (($commaCount = substr_count($row, ',')) < $expectedCommaCount) {
-                $additionalRow = fgets($f);
-                if (!$additionalRow) {
-                    throw new \RuntimeException("Could not get any more rows.");
-                }
-                $row .= $additionalRow;
-            }
-            if ($commaCount > $expectedCommaCount) {
-                throw new \RuntimeException("Comma count went over $expectedCommaCount.");
-            }
             $rows[] = $row;
         }
 
         $rows = array_reverse($rows);
         // Explode by comma.
-        $reader = (function () use ($rows) {
-            foreach ($rows as $row) {
-                yield array_map(trim(...), explode(',', $row));
+        $reader = (function () use ($rows, $expectedColumnCount) {
+            foreach ($rows as $line) {
+                $row = array_map(trim(...), explode(',', $line));
+                if ($row[CsvColumns::ID] === 'LO-3558' && $row[CsvColumns::TYPE] === '向坂 海希') {
+                    $row = array_merge(array_slice($row, 0, CsvColumns::TYPE), array_slice($row, CsvColumns::TYPE + 1));
+                }
+                $columnCount = count($row);
+                if ($columnCount > $expectedColumnCount) {
+                    throw new \RuntimeException("Column count went over $expectedColumnCount.");
+                }
+                yield $row;
             }
         })();
 
