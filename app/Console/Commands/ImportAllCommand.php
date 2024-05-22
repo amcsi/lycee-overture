@@ -52,7 +52,8 @@ class ImportAllCommand extends Command
         }
 
         $this->call(AutoTranslateCommand::COMMAND);
-        $this->call(DeeplTranslateCommand::COMMAND);
+        $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'es']);
+        $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'hu']);
 
         if ($this->option('images')) {
             $this->call(ImageDownloadCommand::COMMAND, ['--new-only' => true]);

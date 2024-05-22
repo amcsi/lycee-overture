@@ -32,6 +32,9 @@
       <a :href="enHref" class="language-link" :class="{ active: activeLocale === 'en' }">
         <FlagImage locale="en" />
       </a>
+      <a :href="esHref" class="language-link" :class="{ active: activeLocale === 'es' }">
+        <FlagImage locale="es" />
+      </a>
       <a :href="huHref" class="language-link" :class="{ active: activeLocale === 'hu' }">
         <FlagImage locale="hu" />
       </a>
@@ -65,6 +68,9 @@ export default {
   computed: {
     enHref() {
       return getLocaleChangeUrl(this, 'en');
+    },
+    esHref() {
+      return getLocaleChangeUrl(this, 'es');
     },
     huHref() {
       return getLocaleChangeUrl(this, 'hu');
