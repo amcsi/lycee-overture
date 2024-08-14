@@ -52,6 +52,7 @@ class ImportAllCommand extends Command
         }
 
         $this->call(AutoTranslateCommand::COMMAND);
+        $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'en']);
         $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'es']);
         $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'hu']);
 
