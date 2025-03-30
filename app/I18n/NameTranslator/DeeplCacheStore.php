@@ -36,6 +36,11 @@ class DeeplCacheStore
         return $deeplTranslation->translation ?? $text;
     }
 
+    public function flush()
+    {
+        $this->translationsBySource = null;
+    }
+
     /**
      * @return Collection|DeeplTranslation[]
      */

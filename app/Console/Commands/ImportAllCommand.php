@@ -5,6 +5,8 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\Card;
 use amcsi\LyceeOverture\Debug\Profiling;
+use amcsi\LyceeOverture\I18n\NameTranslator\DeeplCacheStore;
+use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use amcsi\LyceeOverture\Notifications\GlobalNotifiable;
 use amcsi\LyceeOverture\Notifications\NewCardsNotification;
 use Illuminate\Console\Command;
@@ -55,6 +57,10 @@ class ImportAllCommand extends Command
         $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'en']);
         $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'es']);
         $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'hu']);
+        // Ideally this would be done via garbage collection, not manually.
+        // These instances should not be configured as singletons in AppServiceProvider.
+        app(DeeplCacheStore::class)->flush();
+        app(TranslationUsedTracker::class)->flush();
 
         if ($this->option('images')) {
             $this->call(ImageDownloadCommand::COMMAND, ['--new-only' => true]);
