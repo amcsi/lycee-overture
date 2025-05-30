@@ -54,9 +54,22 @@ class ImportAllCommand extends Command
         }
 
         $this->call(AutoTranslateCommand::COMMAND);
-        $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'en']);
-        $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'es']);
-        $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'hu']);
+
+        $actions = [
+            fn() => $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'en']),
+            fn() => $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'es']),
+            fn() => $this->call(DeeplTranslateCommand::COMMAND, ['--locale' => 'hu']),
+        ];
+
+        foreach ($actions as $action) {
+            try {
+                $action();
+            } catch (\Throwable $exception) {
+                Log::warning($exception->getMessage());
+                report($exception);
+            }
+        }
+
         // Ideally this would be done via garbage collection, not manually.
         // These instances should not be configured as singletons in AppServiceProvider.
         app(DeeplCacheStore::class)->flush();
