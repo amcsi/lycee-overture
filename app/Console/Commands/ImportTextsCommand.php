@@ -7,6 +7,8 @@ use amcsi\LyceeOverture\CardTranslation;
 use amcsi\LyceeOverture\Import\CsvIterator;
 use amcsi\LyceeOverture\Import\TextImportTextExtractor;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
+use Illuminate\Support\LazyCollection;
 
 class ImportTextsCommand extends Command
 {
@@ -26,9 +28,19 @@ class ImportTextsCommand extends Command
     {
         $this->output->writeln('Started import of japanese texts.');
 
-        $rows = iterator_to_array($this->textImportTextExtractor->toDatabaseRows($this->csvIterator->getIterator()));
-        $insertedCount = CardTranslation::getQuery()->insertIgnore($rows);
-        $updatedCount = CardTranslation::getQuery()->myUpsert($rows) / 2;
+        $allRowsIterable = $this->textImportTextExtractor->toDatabaseRows($this->csvIterator->getIterator());
+        $lazyCollection = LazyCollection::make(function () use ($allRowsIterable) {
+            foreach ($allRowsIterable as $row) {
+                yield $row;
+            }
+        });
+        $insertedCount = 0;
+        $updatedCount = 0;
+        $lazyCollection->chunk(1000)->each(function ($lazyRows) use (&$updatedCount, &$insertedCount) {
+            $rows = array_values(iterator_to_array($lazyRows));
+            $insertedCount += CardTranslation::getQuery()->insertIgnore($rows);
+            $updatedCount += CardTranslation::getQuery()->myUpsert($rows) / 2;
+        });
 
         $this->output->writeln(sprintf(
             'Finished import of japanese texts. Inserted: %s, Updated: %s',
