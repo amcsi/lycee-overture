@@ -140,8 +140,8 @@ class BuildLackeyCommand extends Command
             'plugininfo.txt' => $getPublicUrl('plugininfo.txt'),
             'version.txt' => $versionFileUrl,
             'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
-            'bot.jpg' => 'https://cdn.discordapp.com/attachments/477535411871416332/652989736847409152/dummy_card_3.png',
-            'sets/setimages/general/cardback.jpg' => 'https://cdn.discordapp.com/attachments/477535411871416332/652989736847409152/dummy_card_3.png',
+            'bot.jpg' => 'https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/cardback.jpg',
+            'sets/setimages/general/cardback.jpg' => 'https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/cardback.jpg',
         ];
         foreach ($dstAdapter->listContents('decks') as $file) {
             $deckPath = $file['path'];
