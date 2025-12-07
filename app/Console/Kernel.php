@@ -28,11 +28,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $logPath = storage_path(sprintf('logs/schedule-%s.log', date('Y-m-d')));
-        $schedule->command(ImportAllCommand::COMMAND . ' --translations --images --no-cache')
+        $schedule->command(ImportAllCommand::COMMAND . ' --images --no-cache')
             ->dailyAt('20:00')
             ->sentryMonitor('translations-with-images')
             ->sendOutputTo($logPath);
-        $schedule->command(ImportAllCommand::COMMAND . ' --translations')
+        $schedule->command(ImportAllCommand::COMMAND)
             ->hourly()
             ->sendOutputTo($logPath);
         $schedule->command(BuildLackeyCommand::COMMAND)
