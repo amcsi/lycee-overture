@@ -256,6 +256,8 @@ export default {
 .card-list-item {
   position: relative;
   margin-bottom: 1rem;
+  // For the thumbnails.
+  visibility: visible;
 }
 
 .card-list-item-inner {
