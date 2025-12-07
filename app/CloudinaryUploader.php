@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture;
 
-use Cloudinary\Uploader;
+use Cloudinary\Api\Upload\UploadApi;
 
 class CloudinaryUploader
 {
@@ -12,6 +12,6 @@ class CloudinaryUploader
         $params = array_replace(config('cloudinary.defaults'), $params);
         $params['public_id'] = $publicId;
 
-        Uploader::upload($filename, $params);
+        (new UploadApi())->upload($filename, $params);
     }
 }
