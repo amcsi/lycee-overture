@@ -22,6 +22,7 @@ use amcsi\LyceeOverture\Import\ImportConstants;
 use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 use amcsi\LyceeOverture\Set;
 use Carbon\CarbonImmutable;
+use Cloudinary\Configuration\Configuration;
 use DeepL\Translator;
 use Illuminate\Cache\Repository;
 use Illuminate\Database\Connection;
@@ -61,6 +62,7 @@ class AppServiceProvider extends ServiceProvider
         }
         Builder::macro('myUpsert', require __DIR__ . '/../../app/Database/upsert.php');
         Builder::macro('insertIgnore', require __DIR__ . '/../../app/Database/insertIgnore.php');
+        Configuration::instance(['cloud' => config('cloudinary.defaults')]);
 
         self::$booted = true;
     }
