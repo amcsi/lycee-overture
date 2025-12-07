@@ -7,7 +7,7 @@ php artisan config:cache
 php artisan view:cache
 
 # Do the import tasks (in the background).
-php artisan lycee:import-all --no-cache --translations --images --lackey &
+php -d memory_limit=256M artisan lycee:import-all --no-cache --translations --images --lackey &
 
 # Start nginx.
 nginx
