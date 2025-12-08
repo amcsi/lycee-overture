@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Etc;
 
+use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\Log;
-use function GuzzleHttp\Psr7\try_fopen;
+use RuntimeException;
 
 class LackeyHasher
 {
@@ -16,8 +17,8 @@ class LackeyHasher
     public static function hashFile($filename): int
     {
         try {
-            $fp = try_fopen($filename, 'rb');
-        } catch (\RuntimeException $exception) {
+            $fp = Utils::tryFopen($filename, 'rb');
+        } catch (RuntimeException $exception) {
             Log::warning((string) $exception);
             return 0;
         }

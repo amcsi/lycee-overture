@@ -7,11 +7,9 @@ use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
 use Cake\Chronos\Chronos;
+use GuzzleHttp\Psr7\Utils;
 use Illuminate\Console\Command;
 use Symfony\Component\Stopwatch\Stopwatch;
-use function GuzzleHttp\Psr7\copy_to_stream;
-use function GuzzleHttp\Psr7\stream_for;
-use function GuzzleHttp\Psr7\try_fopen;
 
 class DownloadCsvCommand extends Command
 {
@@ -43,9 +41,9 @@ class DownloadCsvCommand extends Command
 
         $response = $this->csvDownloader->download();
 
-        $cacheFileStream = stream_for(try_fopen($cacheFile, 'w+'));
+        $cacheFileStream = Utils::streamFor(Utils::tryFopen($cacheFile, 'w+'));
         // Copy contents of download to CSV file.
-        copy_to_stream($response->getBody(), $cacheFileStream);
+        Utils::copyToStream($response->getBody(), $cacheFileStream);
 
         $importCsvStopwatchEvent->stop();
         $output->text('Done importing CSV. ' . Profiling::stopwatchToHuman($importCsvStopwatchEvent));

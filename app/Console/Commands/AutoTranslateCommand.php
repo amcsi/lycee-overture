@@ -15,11 +15,11 @@ use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Utils;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Stopwatch\Stopwatch;
-use function GuzzleHttp\Psr7\try_fopen;
 
 /**
  * Attempts translations from Japanese description text based on patterns.
@@ -59,7 +59,7 @@ class AutoTranslateCommand extends Command
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $fileDumpDir));
         }
         $dumpFile = $this->option('dump-to-file') ?
-            try_fopen($fileDumpPath, 'wb') :
+            Utils::tryFopen($fileDumpPath, 'wb') :
             null;
         $propertiesToDump = ['card_id', 'name', 'ability_name', 'character_type', ...self::AUTO_TRANSLATE_FIELDS];
 

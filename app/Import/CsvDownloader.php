@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Import;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Message;
 use Psr\Http\Message\ResponseInterface;
-use function GuzzleHttp\Psr7\str;
 
 /**
  * Downloads the CSV from the official Lycee website.
@@ -23,7 +23,7 @@ class CsvDownloader
         $url = $config['importBaseUrl'] . '?' . http_build_query($config['importQueryParameters']);
         $response = $this->client->get($url);
         if ($response->getStatusCode() !== 200) {
-            throw new \RuntimeException("Status code not 200: " . str($response));
+            throw new \RuntimeException("Status code not 200: " . Message::toString($response));
         }
         return $response;
     }

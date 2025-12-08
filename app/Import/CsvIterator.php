@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import;
 
-use function GuzzleHttp\Psr7\try_fopen;
+use GuzzleHttp\Psr7\Utils;
 
 /**
  * Returns an iterator the Lycee Overture CSV file imported from the Japanese website
@@ -16,7 +16,7 @@ class CsvIterator
      */
     public function getIterator()
     {
-        $f = try_fopen(storage_path(ImportConstants::CSV_PATH), 'r');
+        $f = Utils::tryFopen(storage_path(ImportConstants::CSV_PATH), 'r');
 
         $expectedColumnCount = 22;
 

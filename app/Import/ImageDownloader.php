@@ -7,13 +7,13 @@ namespace amcsi\LyceeOverture\Import;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Pool;
+use GuzzleHttp\Psr7\Message;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\StreamWrapper;
 use League\Csv\Reader;
 use League\Flysystem\FilesystemOperator;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use function GuzzleHttp\Psr7\str;
 
 /**
  * Downloads images of the cards.
@@ -74,7 +74,7 @@ class ImageDownloader
                     // Not Modified; no need to download.
                 } else {
                     // Other status code = error.
-                    $output->error(str($response));
+                    $output->error(Message::toString($response));
                 }
             },
             'rejected' => function ($reason, $cardId) use ($output, $getOutputText) {
