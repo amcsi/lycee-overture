@@ -1,13 +1,13 @@
 #!/bin/bash
 # Migrate the DB. Need to force to migrate on production.
-php artisan migrate --force
+bin/php artisan migrate --force
 
 # Run cache commands.
-php artisan config:cache
-php artisan view:cache
+bin/php artisan config:cache
+bin/php artisan view:cache
 
 # Do the import tasks (in the background).
-php -d memory_limit=256M artisan lycee:import-all \
+bin/php -d memory_limit=256M artisan lycee:import-all \
   --no-cache \
   --images \
   --lackey \
@@ -17,4 +17,4 @@ php -d memory_limit=256M artisan lycee:import-all \
 nginx
 
 # Run the Octane HTTP server.
-php artisan octane:start --host=127.0.0.1 --port=1215
+bin/php artisan octane:start --host=127.0.0.1 --port=1215

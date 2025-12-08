@@ -7,7 +7,7 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     container:
-      image: kirschbaumdevelopment/laravel-test-runner:8.2
+      image: kirschbaumdevelopment/laravel-test-runner:8.3
     services:
       mysql:
         image: mysql:5.7

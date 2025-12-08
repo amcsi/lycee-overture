@@ -4,4 +4,4 @@
 
 set -e
 
-APP_ENV=testing php artisan migrate:fresh
+APP_ENV=testing bin/php artisan migrate:fresh
