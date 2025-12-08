@@ -22,3 +22,10 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.el-card {
+  // For the thumbnails.
+  overflow: visible;
+}
+</style>

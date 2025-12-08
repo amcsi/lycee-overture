@@ -1,5 +1,5 @@
 <template>
-  <el-card class="card-list-item" :class="cls">
+  <el-card class="card-list-item" :class="cls" body-style="overflow: visible">
     <div class="card-list-item-inner">
       <CardThumbnail class="card-thumbnail" :id="card.id" :variants="card.variants" />
       <div class="card-details">
@@ -256,8 +256,6 @@ export default {
 .card-list-item {
   position: relative;
   margin-bottom: 1rem;
-  // For the thumbnails.
-  visibility: visible;
 }
 
 .card-list-item-inner {
