@@ -8,7 +8,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": "^8.3",
+    "php": "^8.4",
     "ext-json": "*",
     "ext-pdo": "*",
     "ext-pdo_mysql": "*",
@@ -23,7 +23,7 @@
     "guzzlehttp/psr7": "^2",
     "itsgoingd/clockwork": "^5.1",
     "laravel/framework": "10.*",
-    "laravel/octane": "^1.4",
+    "laravel/octane": "^2",
     "laravel/sanctum": "^3.2",
     "laravel/tinker": "^2.0",
     "laravel/ui": "^4.0",

@@ -2,7 +2,7 @@
 
 # Runs a command with the right PHP executable.
 
-PHP_VERSION=8.3
+PHP_VERSION=8.4
 VERSION_PHP_BIN="php$PHP_VERSION"
 
 # If PHP_BIN was not provided...
