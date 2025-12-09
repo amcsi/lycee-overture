@@ -105,12 +105,14 @@ class BuildLackeyCommand extends Command
             },
         ];
         $writer->insertOne(array_keys($definitions));
-        $writer->insertAll(
-            Card::with('set')->get()
-                ->filter(fn(Card $card
-                ) => !$card->getBestTranslation()->kanji_count) // Exclude ones not fully translated.
-                ->map(fn(Card $card) => array_map(fn(callable $cb) => $cb($card), $definitions))
-        );
+        Card::with('set')->chunk(1000, function ($cards) use ($writer, $definitions) {
+            $writer->insertAll(
+                $cards
+                    // Exclude ones not fully translated.
+                    ->filter(fn(Card $card) => !$card->getBestTranslation()->kanji_count)
+                    ->map(fn(Card $card) => array_map(static fn(callable $cb) => $cb($card), $definitions))
+            );
+        });
         $dstAdapter->writeStream('sets/carddata.txt', Utils::tryFopen($tempnam, 'rb'));
 
         /*
