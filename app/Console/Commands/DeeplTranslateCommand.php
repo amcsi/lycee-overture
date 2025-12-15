@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Eloquent;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder;
 use LogicException;
 use RuntimeException;
@@ -39,9 +40,9 @@ class DeeplTranslateCommand extends Command
         $stopwatchEvent = (new Stopwatch())->start('deepl-translate-command');
         $this->output->writeln('Starting DeepL translation of cards.');
         /** @var Builder $japaneseBuilder */
-        $japaneseBuilder = $cardTranslation->newQuery()->where('locale', Locale::JAPANESE);
-        /** @var CardTranslation[] $japaneseCards */
-        $japaneseCards = $japaneseBuilder->get();
+        $japaneseBuilder = $cardTranslation->newQuery()
+            ->where('locale', Locale::JAPANESE)
+            ->orderBy('card_id');
 
         $fileDumpPath = sprintf(storage_path('dump/deeplTranslate/%s.txt'), date('Y-m-d--His'));
         $fileDumpDir = dirname($fileDumpPath);
@@ -55,16 +56,6 @@ class DeeplTranslateCommand extends Command
 
         $deeplLocale = $this->option('locale');
         $locale = "$deeplLocale-deepl";
-        $translatedCards = $cardTranslation->newQuery()
-            ->where('locale', $locale)
-            ->get()
-            ->keyBy(
-                function (
-                    CardTranslation $cardTranslation
-                ) {
-                    return $cardTranslation->card_id;
-                }
-            );
 
         // By default the translated japanese character count is the same as the Japanese (untranslated).
         $cardCount = $japaneseBuilder->count();
@@ -88,14 +79,19 @@ class DeeplTranslateCommand extends Command
         // We must make sure to only auto translate those properties which have not been manually translated.
         // We must also make sure to copy all non-auto-translatable properties from Japanese,
         // but only ones that haven't been manually translated.
-        foreach ($japaneseCards as $japaneseCard) {
-            $cardId = $japaneseCard->card_id;
-            $translatedCard = $translatedCards->get($cardId) ?
-                // Update based on the existing translated card data.
-                $translatedCards[$cardId] :
-                // Create a new translated card based on the Japanese one.
-                $japaneseCard->replicate()->setAttribute('locale', $locale);
-
+        $translate = function (CardTranslation $japaneseCard, CardTranslation $translatedCard) use (
+            $characterCounter,
+            $limitTranslationSends,
+            $progressBar,
+            $propertiesToDump,
+            $dumpFile,
+            &$updatedCount,
+            $updatedNowThreshold,
+            $nameTranslator,
+            $dryRun,
+            $cachedDeeplTranslator,
+            $deeplLocale,
+        ) {
             // Iterate the auto-translatable fields.
             foreach (CardTranslation::TEXT_COLUMNS as $key) {
                 try {
@@ -152,9 +148,43 @@ class DeeplTranslateCommand extends Command
 
             if ($limitTranslationSends && $characterCounter->translationsSent >= $limitTranslationSends) {
                 $this->warn('Translation limit reached.');
-                break;
+                return false;
             }
-        }
+
+            return true;
+        };
+        $japaneseBuilder->chunk(1000, function (Collection $japaneseCards) use (
+            $translate,
+            $locale,
+            $cardTranslation
+        ) {
+            /** @var CardTranslation $first */
+            $first = $japaneseCards->first();
+            /** @var CardTranslation $last */
+            $last = $japaneseCards->last();
+            $translatedCards = $cardTranslation->newQuery()
+                ->where('locale', $locale)
+                ->orderBy('card_id')
+                ->where('card_id', '>=', $first->card_id)
+                ->where('card_id', '<=', $last->card_id)
+                ->get()
+                ->keyBy(
+                    function (
+                        CardTranslation $cardTranslation
+                    ) {
+                        return $cardTranslation->card_id;
+                    }
+                );
+            foreach ($japaneseCards as $japaneseCard) {
+                $cardId = $japaneseCard->card_id;
+                $translatedCard = $translatedCards->get($cardId) ?
+                    // Update based on the existing translated card data.
+                    $translatedCards[$cardId] :
+                    // Create a new translated card based on the Japanese one.
+                    $japaneseCard->replicate()->setAttribute('locale', $locale);
+                $translate($japaneseCard, $translatedCard);
+            }
+        });
         $progressBar->clear();
 
         $this->output->writeln("Finished DeepL translation of cards. Updated: $updatedCount");
