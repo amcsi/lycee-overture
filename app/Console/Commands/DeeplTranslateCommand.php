@@ -11,14 +11,14 @@ use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\CachedDeeplTranslator;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
+use amcsi\LyceeOverture\I18n\Tools\CardTranslationIterator;
 use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
 use Carbon\Carbon;
 use Eloquent;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use LogicException;
 use RuntimeException;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -153,38 +153,7 @@ class DeeplTranslateCommand extends Command
 
             return true;
         };
-        $japaneseBuilder->chunk(1000, function (Collection $japaneseCards) use (
-            $translate,
-            $locale,
-            $cardTranslation
-        ) {
-            /** @var CardTranslation $first */
-            $first = $japaneseCards->first();
-            /** @var CardTranslation $last */
-            $last = $japaneseCards->last();
-            $translatedCards = $cardTranslation->newQuery()
-                ->where('locale', $locale)
-                ->orderBy('card_id')
-                ->where('card_id', '>=', $first->card_id)
-                ->where('card_id', '<=', $last->card_id)
-                ->get()
-                ->keyBy(
-                    function (
-                        CardTranslation $cardTranslation
-                    ) {
-                        return $cardTranslation->card_id;
-                    }
-                );
-            foreach ($japaneseCards as $japaneseCard) {
-                $cardId = $japaneseCard->card_id;
-                $translatedCard = $translatedCards->get($cardId) ?
-                    // Update based on the existing translated card data.
-                    $translatedCards[$cardId] :
-                    // Create a new translated card based on the Japanese one.
-                    $japaneseCard->replicate()->setAttribute('locale', $locale);
-                $translate($japaneseCard, $translatedCard);
-            }
-        });
+        CardTranslationIterator::iterateLazy($cardTranslation->newQuery(), $locale, $translate);
         $progressBar->clear();
 
         $this->output->writeln("Finished DeepL translation of cards. Updated: $updatedCount");

@@ -14,6 +14,7 @@ use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\NameTranslator;
 use amcsi\LyceeOverture\I18n\Statistics\TranslationCoverageChecker;
+use amcsi\LyceeOverture\I18n\Tools\CardTranslationIterator;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Console\Command;
@@ -50,8 +51,6 @@ class AutoTranslateCommand extends Command
         $this->output->writeln('Starting auto translation of cards.');
         /** @var Builder $japaneseBuilder */
         $japaneseBuilder = $cardTranslation->newQuery()->where('locale', Locale::JAPANESE);
-        /** @var CardTranslation[] $japaneseCards */
-        $japaneseCards = $japaneseBuilder->get();
 
         $fileDumpPath = sprintf(storage_path('dump/autoTranslate/%s.txt'), date('Y-m-d--His'));
         $fileDumpDir = dirname($fileDumpPath);
@@ -64,16 +63,6 @@ class AutoTranslateCommand extends Command
         $propertiesToDump = ['card_id', 'name', 'ability_name', 'character_type', ...self::AUTO_TRANSLATE_FIELDS];
 
         $locale = Locale::ENGLISH . '-auto';
-        $englishCards = $cardTranslation->newQuery()
-            ->where('locale', $locale)
-            ->get()
-            ->keyBy(
-                function (
-                    CardTranslation $cardTranslation
-                ) {
-                    return $cardTranslation->card_id;
-                }
-            );
 
         // By default the english japanese character count is the same as the Japanese (untranslated).
         $cardCount = $japaneseBuilder->count();
@@ -96,14 +85,16 @@ class AutoTranslateCommand extends Command
         // We must make sure to only auto translate those properties which have not been manually translated.
         // We must also make sure to copy all non-auto-translatable properties from Japanese,
         // but only ones that haven't been manually translated.
-        foreach ($japaneseCards as $japaneseCard) {
-            $cardId = $japaneseCard->card_id;
-            $englishCard = $englishCards->get($cardId) ?
-                // Update based on the existing English card data.
-                $englishCards[$cardId] :
-                // Create a new English card based on the Japanese one.
-                $japaneseCard->replicate()->setAttribute('locale', $locale);
-
+        $translate = function (CardTranslation $japaneseCard, CardTranslation $englishCard) use (
+            $progressBar,
+            $propertiesToDump,
+            $dumpFile,
+            &$updatedCount,
+            $updatedNowThreshold,
+            $commentTranslator,
+            $preCommentTranslator,
+            $nameTranslator,
+            $autoTranslator) {
             // Iterate the auto-translatable fields.
             foreach (['basic_abilities', 'ability_description', 'ability_cost'] as $key) {
                 try {
@@ -144,7 +135,8 @@ class AutoTranslateCommand extends Command
             }
 
             $progressBar->advance();
-        }
+        };
+        CardTranslationIterator::iterateLazy($cardTranslation->newQuery(), $locale, $translate);
         $progressBar->clear();
 
         app(DeeplTranslatorLastUsedUpdater::class)->updateLastUsed();
