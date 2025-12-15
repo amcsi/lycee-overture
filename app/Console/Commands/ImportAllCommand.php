@@ -105,5 +105,7 @@ class ImportAllCommand extends Command
                 Log::warning((string) $exception);
             }
         }
+
+        $this->info(sprintf("Peak memory usage: %.2f MB", memory_get_peak_usage() / 1024 / 1024));
     }
 }
