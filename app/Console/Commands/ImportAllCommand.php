@@ -25,6 +25,8 @@ class ImportAllCommand extends Command
 
     protected $description = 'Does importing of the CSV, its data, and auto translations.';
 
+    private int $peakMemoryUsage = 0;
+
     public function handle()
     {
         $stopwatch = new Stopwatch();
@@ -106,6 +108,22 @@ class ImportAllCommand extends Command
             }
         }
 
-        $this->info(sprintf("Peak memory usage: %.2f MB", memory_get_peak_usage() / 1024 / 1024));
+        $this->noteGlobalPeakMemoryUsage();
+
+        $this->info(sprintf("Peak memory usage: %.2f MB", $this->peakMemoryUsage / 1024 / 1024));
+    }
+
+    public function call($command, array $arguments = []): void
+    {
+        $this->noteGlobalPeakMemoryUsage();
+        memory_reset_peak_usage();
+        parent::call($command, $arguments);
+        $memoryUsage = memory_get_peak_usage();
+        $this->info(sprintf("Memory usage: %.2f MB", $memoryUsage / 1024 / 1024));
+    }
+
+    private function noteGlobalPeakMemoryUsage(): void
+    {
+        $this->peakMemoryUsage = max($this->peakMemoryUsage, memory_get_peak_usage());
     }
 }
