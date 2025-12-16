@@ -12,7 +12,10 @@ class DeeplTranslatorLastUsedUpdater
     {
         $now = \DB::raw('CURRENT_TIMESTAMP(6)');
         $translationsUsedTracker = app(TranslationUsedTracker::class);
-        foreach (array_chunk($translationsUsedTracker->get(), 1000) as $translationChunk) {
+        $translationsUsed = array_values($translationsUsedTracker->get());
+        $chunkSize = 1000;
+        for ($i = 0, $iMax = count($translationsUsed); $i < $iMax; $i += $chunkSize) {
+            $translationChunk = array_slice($translationsUsed, $i, $chunkSize);
             DeeplTranslation::whereIn('source', $translationChunk)->update(['last_used_at' => $now]);
         }
         $translationsUsedTracker->flush();

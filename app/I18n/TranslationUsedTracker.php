@@ -21,12 +21,12 @@ class TranslationUsedTracker
 
     public function add($source)
     {
-        $this->translationsUsed[] = $source;
+        $this->translationsUsed[$source] = true;
     }
 
     public function get()
     {
-        return $this->translationsUsed;
+        return array_values($this->translationsUsed);
     }
 
     public function getCharacterCounter(): TranslationServiceCharacterCounter
