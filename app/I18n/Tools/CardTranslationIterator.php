@@ -25,14 +25,11 @@ class CardTranslationIterator
             $locale,
             $builder,
         ) {
-            /** @var CardTranslation $first */
-            $first = $japaneseCards->first();
-            /** @var CardTranslation $last */
-            $last = $japaneseCards->last();
+            // Only load translated cards for the specific card_ids in this chunk to minimize memory usage
+            $cardIds = $japaneseCards->pluck('card_id')->all();
             $translatedCards = (clone $builder)
                 ->where('locale', $locale)
-                ->where('card_id', '>=', $first->card_id)
-                ->where('card_id', '<=', $last->card_id)
+                ->whereIn('card_id', $cardIds)
                 ->get()
                 ->keyBy(
                     function (
