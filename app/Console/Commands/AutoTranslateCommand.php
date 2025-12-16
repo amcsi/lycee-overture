@@ -81,6 +81,8 @@ class AutoTranslateCommand extends Command
 
         $updatedCount = 0;
 
+        gc_collect_cycles();
+
         // Iterate each Japanese card to create the English variant.
         // We must make sure to only auto translate those properties which have not been manually translated.
         // We must also make sure to copy all non-auto-translatable properties from Japanese,
