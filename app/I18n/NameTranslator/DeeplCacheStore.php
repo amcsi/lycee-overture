@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class DeeplCacheStore
 {
-    private $translationsBySource;
+    private $translationsBySource = [];
 
     public function get(string $text, string $locale): ?string
     {
@@ -46,14 +46,8 @@ class DeeplCacheStore
      */
     private function getAllBySource(string $locale): Collection
     {
-        $this->translationsBySource ??= DeeplTranslation::all()
-            ->groupBy('locale')
-            ->map(fn(Collection $group) => $group->keyBy('source'));
-
-        if (!$this->translationsBySource->get($locale)) {
-            $this->translationsBySource[$locale] = new Collection();
-        }
-
-        return $this->translationsBySource[$locale];
+        return $this->translationsBySource[$locale] ??= DeeplTranslation::where('locale', $locale)
+            ->get()
+            ->keyBy('source');
     }
 }
