@@ -36,7 +36,7 @@ class ImportTextsCommand extends Command
         });
         $insertedCount = 0;
         $updatedCount = 0;
-        $lazyCollection->chunk(1000)->each(function ($lazyRows) use (&$updatedCount, &$insertedCount) {
+        $lazyCollection->chunk(500)->each(function ($lazyRows) use (&$updatedCount, &$insertedCount) {
             $rows = array_values(iterator_to_array($lazyRows));
             $insertedCount += CardTranslation::getQuery()->insertIgnore($rows);
             $updatedCount += CardTranslation::getQuery()->myUpsert($rows) / 2;
