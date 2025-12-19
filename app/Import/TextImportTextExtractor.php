@@ -14,7 +14,10 @@ class TextImportTextExtractor
 {
     public function toDatabaseRows(iterable $reader): \Traversable
     {
-        $cardIds = Card::all('id')->pluck('id')->toArray();
+        $cardIds = [];
+        foreach (Card::query()->lazy() as $card) {
+            $cardIds[] = $card->id;
+        }
 
         foreach ($reader as $csvRow) {
             $id = $csvRow[CsvColumns::ID];
