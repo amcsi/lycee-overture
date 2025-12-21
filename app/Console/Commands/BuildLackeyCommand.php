@@ -105,7 +105,7 @@ class BuildLackeyCommand extends Command
             },
         ];
         $writer->insertOne(array_keys($definitions));
-        Card::with('set')->chunk(1000, function ($cards) use ($writer, $definitions) {
+        Card::with(['set', 'translations'])->chunk(1000, function ($cards) use ($writer, $definitions) {
             $writer->insertAll(
                 $cards
                     // Exclude ones not fully translated.

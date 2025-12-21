@@ -21,6 +21,8 @@ class SuggestionApprover
         $attributes = $suggestion->only($keyAttributes);
         $values = $suggestion->attributesToArray();
 
+        $suggestion->loadMissing('card.translations');
+
         $cardAutoTranslation = $suggestion->card->getTranslation("$locale-auto");
         $newTranslationData = $cardAutoTranslation->replicate()->toArray();
 

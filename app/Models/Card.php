@@ -97,8 +97,6 @@ class Card extends Model
         'ability_description',
     ];
 
-    protected $with = ['translations'];
-
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
     protected $keyType = 'string';

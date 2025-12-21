@@ -41,7 +41,7 @@ class CardController extends Controller
     private function getRelations(): array
     {
         $locale = \App::getLocale();
-        $relations = ['set'];
+        $relations = ['set', 'translations'];
         if ($locale !== Locale::JAPANESE) {
             $relations[] = 'suggestions';
         }
