@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Http\Controllers;
 
 use amcsi\LyceeOverture\Card\DeckResource;
-use amcsi\LyceeOverture\Deck;
+use amcsi\LyceeOverture\Models\Deck;
 
 class DeckController extends Controller
 {

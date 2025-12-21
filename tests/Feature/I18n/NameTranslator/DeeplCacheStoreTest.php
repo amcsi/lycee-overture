@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\I18n\NameTranslator;
 
-use amcsi\LyceeOverture\DeeplTranslation;
+use amcsi\LyceeOverture\Models\DeeplTranslation;
 use amcsi\LyceeOverture\I18n\Locale;
 use amcsi\LyceeOverture\I18n\NameTranslator\DeeplCacheStore;
 use Tests\DatabaseTestCase;

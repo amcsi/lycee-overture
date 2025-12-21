@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers;
 
-use amcsi\LyceeOverture\Card;
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Card\Type;
+use amcsi\LyceeOverture\Models\Card;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\Locale;
-use amcsi\LyceeOverture\Suggestion;
-use amcsi\LyceeOverture\User;
+use amcsi\LyceeOverture\Models\Suggestion;
+use amcsi\LyceeOverture\Models\User;
 use Tests\DatabaseTestCase;
 
 class SuggestionControllerTest extends DatabaseTestCase
@@ -164,7 +165,7 @@ class SuggestionControllerTest extends DatabaseTestCase
 
         $translation = CardTranslation::factory()->create();
         $card = $translation->card;
-        $card->type = Card\Type::CHARACTER;
+        $card->type = Type::CHARACTER;
         $card->save();
 
         $translation->ability_cost = '[宣言] [0]';

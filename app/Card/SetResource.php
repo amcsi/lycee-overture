@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Card;
 
-use amcsi\LyceeOverture\Set;
+use amcsi\LyceeOverture\Models\Set;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

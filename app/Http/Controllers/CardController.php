@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Http\Controllers;
 
-use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Models\Card;
 use amcsi\LyceeOverture\Card\CardBuilderFactory;
 use amcsi\LyceeOverture\Card\CardResource;
 use amcsi\LyceeOverture\I18n\Locale;

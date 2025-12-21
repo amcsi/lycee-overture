@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture;
+namespace amcsi\LyceeOverture\Models;
 
+use amcsi\LyceeOverture\Models\Card;
+use amcsi\LyceeOverture\Models\CardDeck;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -14,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $name_en
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\Card> $cards
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\Models\Card> $cards
  * @property-read int|null $cards_count
  * @method static \Illuminate\Database\Eloquent\Builder|Deck newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Deck newQuery()

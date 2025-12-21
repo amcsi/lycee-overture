@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n;
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\Console\Commands\AutoTranslateCommand;
 
 /**
@@ -25,7 +25,7 @@ class JapaneseCharacterCounter
     /**
      * @param CardTranslation|string[] $dbRow
      */
-    public static function countJapaneseCharactersForDbRow(\amcsi\LyceeOverture\CardTranslation|array $dbRow): int
+    public static function countJapaneseCharactersForDbRow(\amcsi\LyceeOverture\Models\CardTranslation|array $dbRow): int
     {
         $stringToCountJapaneseCharactersFor = '';
         foreach (AutoTranslateCommand::AUTO_TRANSLATE_FIELDS as $column) {

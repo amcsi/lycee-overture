@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
-use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Models\Card;
 use amcsi\LyceeOverture\Card\Image\CardImageCloudinaryUploader;
-use amcsi\LyceeOverture\CardImage;
+use amcsi\LyceeOverture\Models\CardImage;
 use amcsi\LyceeOverture\Debug\Profiling;
 use Illuminate\Console\Command;
 use Symfony\Component\Stopwatch\Stopwatch;

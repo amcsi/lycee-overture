@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Notifications;
 
-use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Models\Card;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notification;
 use SnoerenDevelopment\DiscordWebhook\DiscordMessage;

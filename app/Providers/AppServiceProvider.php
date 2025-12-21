@@ -20,7 +20,7 @@ use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
 use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
-use amcsi\LyceeOverture\Set;
+use amcsi\LyceeOverture\Models\Set;
 use Carbon\CarbonImmutable;
 use Cloudinary\Configuration\Configuration;
 use DeepL\Translator;

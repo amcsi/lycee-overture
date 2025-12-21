@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace amcsi\LyceeOverture\Http\Controllers\Auth;
 
 use amcsi\LyceeOverture\Http\Controllers\Controller;
-use amcsi\LyceeOverture\User;
+use amcsi\LyceeOverture\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -58,7 +58,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @return \amcsi\LyceeOverture\User
+     * @return \amcsi\LyceeOverture\Models\User
      */
     protected function create(array $data)
     {

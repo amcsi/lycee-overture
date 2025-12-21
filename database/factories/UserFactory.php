@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use amcsi\LyceeOverture\User;
+use amcsi\LyceeOverture\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

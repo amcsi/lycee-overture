@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => amcsi\LyceeOverture\User::class,
+            'model' => \amcsi\LyceeOverture\Models\User::class,
         ],
 
         // 'users' => [

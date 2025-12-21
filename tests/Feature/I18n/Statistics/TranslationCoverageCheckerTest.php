@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\I18n\Statistics;
 
-use amcsi\LyceeOverture\Card;
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\Card;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\Etc\Statistics;
 use amcsi\LyceeOverture\Etc\StatisticsResource;
 use amcsi\LyceeOverture\I18n\Locale;

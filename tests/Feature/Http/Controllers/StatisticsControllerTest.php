@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers;
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\Locale;
-use amcsi\LyceeOverture\Suggestion;
+use amcsi\LyceeOverture\Models\Suggestion;
 use Tests\DatabaseTestCase;
 
 class StatisticsControllerTest extends DatabaseTestCase

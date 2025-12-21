@@ -13,7 +13,7 @@ declare(strict_types=1);
 */
 
 use amcsi\LyceeOverture\Http\Controllers\Auth\LoginController;
-use amcsi\LyceeOverture\User;
+use amcsi\LyceeOverture\Models\User;
 
 Auth::routes();
 

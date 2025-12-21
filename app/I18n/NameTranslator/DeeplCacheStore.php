@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\NameTranslator;
 
-use amcsi\LyceeOverture\DeeplTranslation;
+use amcsi\LyceeOverture\Models\DeeplTranslation;
 use Illuminate\Support\Collection;
 
 class DeeplCacheStore

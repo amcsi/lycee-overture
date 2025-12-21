@@ -5,7 +5,7 @@ namespace amcsi\LyceeOverture\Console\Commands;
 
 use amcsi\LyceeOverture\Notifications\GlobalNotifiable;
 use amcsi\LyceeOverture\Notifications\NewSuggestionsNotification;
-use amcsi\LyceeOverture\Suggestion;
+use amcsi\LyceeOverture\Models\Suggestion;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 

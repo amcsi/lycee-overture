@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture;
+namespace amcsi\LyceeOverture\Models;
 
+use amcsi\LyceeOverture\Models\Card;
 use amcsi\LyceeOverture\Models\Traits\HasCreator;
+use amcsi\LyceeOverture\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,8 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $comments
  * @property \Carbon\CarbonImmutable $updated_at
  * @property \Carbon\CarbonImmutable $created_at
- * @property-read \amcsi\LyceeOverture\Card $card
- * @property-read \amcsi\LyceeOverture\User|null $creator
+ * @property-read \amcsi\LyceeOverture\Models\Card $card
+ * @property-read \amcsi\LyceeOverture\Models\User|null $creator
  * @method static \Database\Factories\SuggestionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Suggestion newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Suggestion newQuery()

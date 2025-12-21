@@ -7,7 +7,7 @@ use amcsi\LyceeOverture\Http\Requests\SuggestionCreateRequest;
 use amcsi\LyceeOverture\Http\Requests\SuggestionListRequest;
 use amcsi\LyceeOverture\I18n\ManualTranslation\SuggestionApprover;
 use amcsi\LyceeOverture\I18n\ManualTranslation\SuggestionResource;
-use amcsi\LyceeOverture\Suggestion;
+use amcsi\LyceeOverture\Models\Suggestion;
 
 class SuggestionController
 {

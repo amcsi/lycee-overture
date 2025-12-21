@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 

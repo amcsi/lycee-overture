@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use amcsi\LyceeOverture\User;
+use amcsi\LyceeOverture\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Testing\TestResponse;

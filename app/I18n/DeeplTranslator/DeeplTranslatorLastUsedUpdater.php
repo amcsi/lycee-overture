@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\DeeplTranslator;
 
-use amcsi\LyceeOverture\DeeplTranslation;
+use amcsi\LyceeOverture\Models\DeeplTranslation;
 use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 
 class DeeplTranslatorLastUsedUpdater

@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture;
+namespace amcsi\LyceeOverture\Models;
 
+use amcsi\LyceeOverture\Models\CardTranslation;
+use amcsi\LyceeOverture\Models\Set;
+use amcsi\LyceeOverture\Models\Suggestion;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,11 +38,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $ability_type
  * @property \Carbon\CarbonImmutable $created_at
  * @property \Carbon\CarbonImmutable $updated_at
- * @property-read \amcsi\LyceeOverture\Set|null $set
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\Suggestion> $suggestions
+ * @property-read \amcsi\LyceeOverture\Models\Set|null $set
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\Models\Suggestion> $suggestions
  * @property-read int|null $suggestions_count
- * @property-read \amcsi\LyceeOverture\CardTranslation|null $translation
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\CardTranslation> $translations
+ * @property-read \amcsi\LyceeOverture\Models\CardTranslation|null $translation
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \amcsi\LyceeOverture\Models\CardTranslation> $translations
  * @property-read int|null $translations_count
  * @method static \Database\Factories\CardFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Card listsTranslations(string $translationField)

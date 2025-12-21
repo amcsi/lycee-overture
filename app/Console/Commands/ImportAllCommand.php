@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
-use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Models\Card;
 use amcsi\LyceeOverture\Debug\Profiling;
 use amcsi\LyceeOverture\I18n\NameTranslator\DeeplCacheStore;
 use amcsi\LyceeOverture\I18n\TranslationUsedTracker;

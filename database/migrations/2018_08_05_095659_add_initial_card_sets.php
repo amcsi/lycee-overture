@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use amcsi\LyceeOverture\Deck;
+use amcsi\LyceeOverture\Models\Deck;
 use Illuminate\Database\Migrations\Migration;
 
 class AddInitialCardSets extends Migration

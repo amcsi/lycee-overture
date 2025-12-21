@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use Illuminate\Console\Command;
 

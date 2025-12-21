@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\Import\CsvIterator;
 use amcsi\LyceeOverture\Import\TextImportTextExtractor;
 use Illuminate\Console\Command;

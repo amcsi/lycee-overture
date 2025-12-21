@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\AutoTranslator;
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Query\JoinClause;
 

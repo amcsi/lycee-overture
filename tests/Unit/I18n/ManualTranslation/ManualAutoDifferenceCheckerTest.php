@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace I18n\ManualTranslation;
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\ManualTranslation\ManualAutoDifferenceChecker;
-use amcsi\LyceeOverture\Suggestion;
+use amcsi\LyceeOverture\Models\Suggestion;
 use PHPUnit\Framework\TestCase;
 
 class ManualAutoDifferenceCheckerTest extends TestCase

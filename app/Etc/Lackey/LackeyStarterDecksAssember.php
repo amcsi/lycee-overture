@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Etc\Lackey;
 
-use amcsi\LyceeOverture\CardDeck;
-use amcsi\LyceeOverture\Deck;
+use amcsi\LyceeOverture\Models\CardDeck;
+use amcsi\LyceeOverture\Models\Deck;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 

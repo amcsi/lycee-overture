@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Console\Commands;
 
-use amcsi\LyceeOverture\Article;
+use amcsi\LyceeOverture\Models\Article;
 use Illuminate\Console\Command;
 
 class PostArticleCommand extends Command

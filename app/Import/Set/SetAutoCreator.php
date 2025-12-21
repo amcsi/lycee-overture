@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import\Set;
 
-use amcsi\LyceeOverture\Set;
+use amcsi\LyceeOverture\Models\Set;
 use Illuminate\Support\Collection;
 
 /**

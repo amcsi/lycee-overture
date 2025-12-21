@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\Tools;
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\Locale;
-use amcsi\LyceeOverture\Suggestion;
+use amcsi\LyceeOverture\Models\Suggestion;
 
 class TextFixer
 {

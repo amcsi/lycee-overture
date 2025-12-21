@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Card;
 
-use amcsi\LyceeOverture\Card;
-use amcsi\LyceeOverture\CardDeck;
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\Card;
+use amcsi\LyceeOverture\Models\CardDeck;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;

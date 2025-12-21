@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Import;
 
-use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Models\Card;
 use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;

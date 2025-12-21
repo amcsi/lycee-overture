@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace amcsi\LyceeOverture;
+namespace amcsi\LyceeOverture\Models;
 
 use amcsi\LyceeOverture\Card\BrandMapper;
 use amcsi\LyceeOverture\I18n\Locale;

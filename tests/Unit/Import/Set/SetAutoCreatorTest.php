@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Import\Set;
 
-use amcsi\LyceeOverture\Set;
+use amcsi\LyceeOverture\Models\Set;
 use PHPUnit\Framework\TestCase;
 use Tests\Tools\SetAutoCreatorStubber;
 

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\I18n\ManualTranslation;
 
-use amcsi\LyceeOverture\Suggestion;
+use amcsi\LyceeOverture\Models\Suggestion;
 use amcsi\LyceeOverture\User\UserBareResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 

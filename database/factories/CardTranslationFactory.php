@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use amcsi\LyceeOverture\Card;
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\Card;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Eloquent\Factories\Factory;

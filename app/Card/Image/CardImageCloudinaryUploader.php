@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Card\Image;
 
-use amcsi\LyceeOverture\CardImage;
+use amcsi\LyceeOverture\Models\CardImage;
 use amcsi\LyceeOverture\CloudinaryUploader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;

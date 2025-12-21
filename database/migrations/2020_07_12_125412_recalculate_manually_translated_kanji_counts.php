@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use amcsi\LyceeOverture\CardTranslation;
+use amcsi\LyceeOverture\Models\CardTranslation;
 use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Migrations\Migration;

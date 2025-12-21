@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use amcsi\LyceeOverture\Card;
-use amcsi\LyceeOverture\CardDeck;
-use amcsi\LyceeOverture\Deck;
+use amcsi\LyceeOverture\Models\Card;
+use amcsi\LyceeOverture\Models\CardDeck;
+use amcsi\LyceeOverture\Models\Deck;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

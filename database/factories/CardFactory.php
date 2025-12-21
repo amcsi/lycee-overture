@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Models\Card;
 use amcsi\LyceeOverture\Card\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

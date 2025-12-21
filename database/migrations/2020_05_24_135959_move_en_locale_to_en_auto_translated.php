@@ -18,7 +18,7 @@ class MoveEnLocaleToEnAutoTranslated extends Migration
         Schema::table(
             'card_translation',
             function () use ($from, $to) {
-                \amcsi\LyceeOverture\CardTranslation::whereLocale($from)->update(['locale' => $to]);
+                \amcsi\LyceeOverture\Models\CardTranslation::whereLocale($from)->update(['locale' => $to]);
             }
         );
     }

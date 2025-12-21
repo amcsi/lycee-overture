@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use amcsi\LyceeOverture\Card;
+use amcsi\LyceeOverture\Models\Card;
 use amcsi\LyceeOverture\I18n\Locale;
-use amcsi\LyceeOverture\Suggestion;
-use amcsi\LyceeOverture\User;
+use amcsi\LyceeOverture\Models\Suggestion;
+use amcsi\LyceeOverture\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SuggestionFactory extends Factory

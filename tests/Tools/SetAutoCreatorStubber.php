@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests\Tools;
 
 use amcsi\LyceeOverture\Import\Set\SetAutoCreator;
-use amcsi\LyceeOverture\Set;
+use amcsi\LyceeOverture\Models\Set;
 use Illuminate\Support\Collection;
 
 class SetAutoCreatorStubber

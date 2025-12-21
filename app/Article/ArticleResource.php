@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Article;
 
-use amcsi\LyceeOverture\Article;
+use amcsi\LyceeOverture\Models\Article;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Card;
 
-use amcsi\LyceeOverture\Deck;
+use amcsi\LyceeOverture\Models\Deck;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Http\Resources\Json\JsonResource;
 
