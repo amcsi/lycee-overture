@@ -64,7 +64,7 @@ COPY pnpm-lock.yaml .
 RUN pnpm install
 
 COPY resources resources
-COPY vite.config.js .
+COPY vite.config.ts .
 COPY .babelrc .
 RUN npm run build
 RUN ls -al public/build/manifest.json
