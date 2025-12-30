@@ -37,6 +37,7 @@
               newestSuggestionDaysAgo
                 ? `${newestSuggestionDaysAgo} days ago.`
                 : 'Less than a day ago.'
+
             }})
           </span>
         </p>

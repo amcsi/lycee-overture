@@ -1,9 +1,9 @@
-import { mapGetters } from 'vuex';
-import formatCardText, { formatBrands } from './formatCard';
+import { mapGetters } from "vuex";
+import formatCardText, { formatBrands } from "./formatCard";
 
 export default {
   computed: {
-    ...mapGetters('sets', ['brandsMarkupRegexp']),
+    ...mapGetters("sets", ["brandsMarkupRegexp"]),
   },
   methods: {
     formatCardText(cardText) {

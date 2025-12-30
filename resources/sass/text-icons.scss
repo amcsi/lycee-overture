@@ -1,9 +1,9 @@
 $abilityTypeColors: (
-        activate: #0163b1,
-        trigger: #dc3888,
-        continuous: #01a299,
-        cost: #ec5009,
-        hand-activate: #d9000a,
+  activate: #0163b1,
+  trigger: #dc3888,
+  continuous: #01a299,
+  cost: #ec5009,
+  hand-activate: #d9000a,
 );
 
 .card-text-icon {
@@ -14,7 +14,7 @@ $abilityTypeColors: (
   background-size: contain;
   // https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b
   position: relative;
-  top: .125em;
+  top: 0.125em;
   color: rgba(0, 0, 0, 0);
   overflow: hidden;
 
@@ -42,7 +42,7 @@ $abilityTypeColors: (
       font-size: 0.9em;
       background-color: $color;
       position: relative;
-      top: -.1em;
+      top: -0.1em;
       color: white;
       border-radius: 0.2rem;
     }
@@ -61,7 +61,7 @@ $abilityTypeColors: (
 
 .brand {
   position: relative;
-  top: -.1em;
+  top: -0.1em;
   background-color: black;
   color: white;
   font-size: 0.8em;

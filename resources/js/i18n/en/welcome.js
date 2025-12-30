@@ -1,3 +1,3 @@
 export default {
-  websiteTitle: 'Lycee Overture TCG Translation Website',
+  websiteTitle: "Lycee Overture TCG Translation Website",
 };

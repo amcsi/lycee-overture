@@ -1,5 +1,5 @@
 export default {
   elements: {
-    flower: 'flower',
+    flower: "flower",
   },
 };

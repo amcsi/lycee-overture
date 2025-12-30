@@ -1,4 +1,4 @@
-import { listArticles } from '../../api/endpoints/articles';
+import { listArticles } from "../../api/endpoints/articles";
 
 export default {
   namespaced: true,
@@ -12,9 +12,9 @@ export default {
   },
   actions: {
     async loadArticles({ commit }, limit) {
-      commit('SET_ARTICLES', null);
+      commit("SET_ARTICLES", null);
       const articles = await listArticles(limit);
-      commit('SET_ARTICLES', articles || undefined);
+      commit("SET_ARTICLES", articles || undefined);
     },
   },
 };

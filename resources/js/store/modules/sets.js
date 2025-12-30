@@ -1,4 +1,4 @@
-import { listSets } from '../../api/endpoints/sets';
+import { listSets } from "../../api/endpoints/sets";
 
 export default {
   namespaced: true,
@@ -19,7 +19,7 @@ export default {
       return list.map(({ brand }) => brand).filter(filterByUnique);
     },
     brandsMarkupRegexp(state, { brands }) {
-      const pattern = `\\[(${brands.join('|')})]`;
+      const pattern = `\\[(${brands.join("|")})]`;
       return new RegExp(pattern);
     },
   },
@@ -41,12 +41,12 @@ export default {
         // Do not load again.
         return;
       }
-      commit('SETS_LOADING');
+      commit("SETS_LOADING");
       try {
         const cards = await listSets();
-        commit('SETS_LOADED', cards);
+        commit("SETS_LOADED", cards);
       } catch (e) {
-        commit('SETS_LOADING_FAILED');
+        commit("SETS_LOADING_FAILED");
         throw e;
       }
     },

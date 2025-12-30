@@ -1,11 +1,11 @@
-import { reactive } from 'vue';
+import { reactive } from "vue";
 
 const temporaryInitial = { id: null, variant: null };
 
 let _savedCardVariants;
 try {
   _savedCardVariants = {
-    preferences: JSON.parse(localStorage.getItem('cardVariants') ?? '{}'),
+    preferences: JSON.parse(localStorage.getItem("cardVariants") ?? "{}"),
     temporary: temporaryInitial,
   };
 } catch (e) {
@@ -34,7 +34,7 @@ export function saveCardVariant(id, variant) {
   } else {
     delete savedCardVariants.preferences[id];
   }
-  localStorage.setItem('cardVariants', JSON.stringify(savedCardVariants.preferences));
+  localStorage.setItem("cardVariants", JSON.stringify(savedCardVariants.preferences));
 }
 
 /** Set a variant for a card temporarily (hovering over the variant). */
@@ -50,7 +50,7 @@ export function unsetTemporaryVariant() {
 
 /** Reactively returns the saved variant, falling back to the empty string variant. */
 export function getSavedVariant(id) {
-  return savedCardVariants.preferences[id] ?? '';
+  return savedCardVariants.preferences[id] ?? "";
 }
 
 /**

@@ -1,9 +1,9 @@
-import { createI18n } from 'vue-i18n';
-import en from './en';
+import { createI18n } from "vue-i18n";
+import en from "./en";
 
 const i18n = createI18n({
   locale: window.locale,
-  fallbackLocale: 'en',
+  fallbackLocale: "en",
   messages: {
     en,
   },

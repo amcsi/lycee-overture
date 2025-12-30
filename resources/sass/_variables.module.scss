@@ -1,4 +1,4 @@
-@import 'element-plus/theme-chalk/src/common/var.scss';
+@import "element-plus/theme-chalk/src/common/var.scss";
 
 // Body
 $body-bg: #f5f8fa;
@@ -14,13 +14,17 @@ $cardHeightWidthRatio: 0.71538461538;
 
 //noinspection CssUnknownProperty
 :export {
-  cardHeightWidthRatio: $cardHeightWidthRatio
+  cardHeightWidthRatio: $cardHeightWidthRatio;
 }
 
 @mixin for-tablet-landscape-up {
-  @media (min-width: 900px) { @content; }
+  @media (min-width: 900px) {
+    @content;
+  }
 }
 
 @mixin not-for-tablet-landscape-up {
-  @media (max-width: 899px) { @content; }
+  @media (max-width: 899px) {
+    @content;
+  }
 }

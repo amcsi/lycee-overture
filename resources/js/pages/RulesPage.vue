@@ -37,8 +37,7 @@
         </el-menu>
       </el-col>
 
-      <el-col :span="16" class="content-column">
-        <router-view></router-view> </el-col
+      <el-col :span="16" class="content-column"> <router-view></router-view> </el-col
     ></el-row>
   </div>
 </template>

@@ -1,14 +1,14 @@
 export const mapComputed = normalizeNamespace(function mapComputed(namespace, data) {
   var res = {};
-  if (process.env.NODE_ENV !== 'production' && !isValidMap(data)) {
-    console.error('[vuex] mapComputed: mapper parameter must be either an Array or an Object');
+  if (process.env.NODE_ENV !== "production" && !isValidMap(data)) {
+    console.error("[vuex] mapComputed: mapper parameter must be either an Array or an Object");
   }
   normalizeMap(data).forEach(function (ref) {
     var key = ref.key;
     var val = ref.val;
     var gettersVal = namespace + val;
     res[key] = function mappedGetter() {
-      if (namespace && !getModuleByNamespace(this.$store, 'mapData', namespace)) {
+      if (namespace && !getModuleByNamespace(this.$store, "mapData", namespace)) {
         return;
       }
       var state = this.$store.state;
@@ -17,11 +17,11 @@ export const mapComputed = normalizeNamespace(function mapComputed(namespace, da
         return getters[gettersVal];
       }
       if (namespace) {
-        var module = getModuleByNamespace(this.$store, 'mapData', namespace);
+        var module = getModuleByNamespace(this.$store, "mapData", namespace);
         state = module.context.state;
         getters = module.context.getters;
       }
-      return typeof val === 'function' ? val.call(this, state, getters) : state[val];
+      return typeof val === "function" ? val.call(this, state, getters) : state[val];
     };
     res[key].vuex = true;
   });
@@ -35,11 +35,11 @@ export const mapComputed = normalizeNamespace(function mapComputed(namespace, da
  */
 function normalizeNamespace(fn) {
   return function (namespace, map) {
-    if (typeof namespace !== 'string') {
+    if (typeof namespace !== "string") {
       map = namespace;
-      namespace = '';
-    } else if (namespace.charAt(namespace.length - 1) !== '/') {
-      namespace += '/';
+      namespace = "";
+    } else if (namespace.charAt(namespace.length - 1) !== "/") {
+      namespace += "/";
     }
     return fn(namespace, map);
   };
@@ -54,8 +54,8 @@ function normalizeNamespace(fn) {
  */
 function getModuleByNamespace(store, helper, namespace) {
   var module = store._modulesNamespaceMap[namespace];
-  if (process.env.NODE_ENV !== 'production' && !module) {
-    console.error('[vuex] module namespace not found in ' + helper + '(): ' + namespace);
+  if (process.env.NODE_ENV !== "production" && !module) {
+    console.error("[vuex] module namespace not found in " + helper + "(): " + namespace);
   }
   return module;
 }

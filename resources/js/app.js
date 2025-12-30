@@ -3,15 +3,15 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import { BrowserTracing } from '@sentry/tracing';
-import * as Sentry from '@sentry/vue';
-import { ElMessage } from 'element-plus';
-import 'element-plus/theme-chalk/index.css';
-import { createApp } from 'vue';
-import App from './App.vue';
-import i18n from './i18n';
-import router from './router';
-import store from './store/index';
+import { BrowserTracing } from "@sentry/tracing";
+import * as Sentry from "@sentry/vue";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/index.css";
+import { createApp } from "vue";
+import App from "./App.vue";
+import i18n from "./i18n";
+import router from "./router";
+import store from "./store/index";
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,7 +30,7 @@ Sentry.init({
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ['localhost', 'https://lycee-tcg.eu'],
+      tracingOrigins: ["localhost", "https://lycee-tcg.eu"],
     }),
   ],
   // Set tracesSampleRate to 1.0 to capture 100%
@@ -40,20 +40,20 @@ Sentry.init({
   logErrors: true,
 });
 
-app.mount('#app');
+app.mount("#app");
 
 function formatDate(value) {
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     value = new Date(value);
   }
-  return value ? dateFormatter.format(value) : '';
+  return value ? dateFormatter.format(value) : "";
 }
 
 const toastDuration = 10000;
 
 function displaySuccess(message) {
   return ElMessage({
-    type: 'success',
+    type: "success",
     message,
     duration: toastDuration,
   });
@@ -61,16 +61,16 @@ function displaySuccess(message) {
 
 function displayError(message) {
   return ElMessage({
-    type: 'error',
+    type: "error",
     message,
     duration: toastDuration,
   });
 }
 
 const dateFormatter = new Intl.DateTimeFormat(void 0, {
-  year: 'numeric',
-  month: 'numeric',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
 });

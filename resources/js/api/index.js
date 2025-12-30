@@ -1,13 +1,13 @@
-import axios from 'axios';
-import { getCookie } from '../utils/browser';
+import axios from "axios";
+import { getCookie } from "../utils/browser";
 
 const api = axios.create({
   baseURL: window.vars.apiBaseUrl,
 });
 
-api.interceptors.request.use(config => {
+api.interceptors.request.use((config) => {
   // Forward xdebug/clockwork cookies to the API.
-  const xdebugSessionValue = getCookie('XDEBUG_SESSION');
+  const xdebugSessionValue = getCookie("XDEBUG_SESSION");
   if (!config.params) {
     config.params = {};
   }

@@ -5,6 +5,7 @@
         <span v-if="statistics" v-show="totalCards > 0">
           Fully translated: {{ statistics.translated_cards }} ({{
             getPercentOfRatio(statistics.fully_translated_ratio)
+
           }}). Text translation percent: {{ getPercentOfRatio(statistics.kanji_removal_ratio) }}.
         </span>
         <span v-else-if="!isLocaleJapanese" v-loading="true">&nbsp;</span>

@@ -1,4 +1,4 @@
-import { listCards, showCard } from '../../api/endpoints/cards';
+import { listCards, showCard } from "../../api/endpoints/cards";
 
 export default {
   namespaced: true,
@@ -43,7 +43,7 @@ export default {
         return;
       }
       const cardList = state.list.data;
-      const index = cardList.findIndex(card => card.id === toCard.id);
+      const index = cardList.findIndex((card) => card.id === toCard.id);
       if (index >= 0) {
         cardList[index] = toCard;
       }
@@ -58,19 +58,19 @@ export default {
         return;
       }
 
-      commit('CARDS_LOADING');
+      commit("CARDS_LOADING");
       try {
         const cards = await listCards(query);
-        commit('CARDS_LOADED', cards);
-        commit('CARDS_SET_LAST_PARAMS', stringifiedParams);
+        commit("CARDS_LOADED", cards);
+        commit("CARDS_SET_LAST_PARAMS", stringifiedParams);
       } catch (e) {
-        commit('CARDS_LOADING_FAILED');
+        commit("CARDS_LOADING_FAILED");
         throw e;
       }
     },
     async refreshCard({ commit, state }, cardId) {
       const card = (await showCard(cardId)).data;
-      commit('UPDATE_CARD_IN_LIST', card);
+      commit("UPDATE_CARD_IN_LIST", card);
     },
     async listCardsForPrinting({ commit, state }, queryInput) {
       // Manipulate query to remove the page and make sure the limit is 60.
@@ -84,16 +84,16 @@ export default {
         return;
       }
 
-      commit('CARDS_PRINT_LOADING');
+      commit("CARDS_PRINT_LOADING");
       try {
         const cards = (await listCards(query)).data.sort(
           // Ensure cards are sorted in ID order.
-          (card1, card2) => (card1.id > card2.id ? 1 : -1)
+          (card1, card2) => (card1.id > card2.id ? 1 : -1),
         );
-        commit('CARDS_PRINT_SET_LAST_PARAMS', stringifiedParams);
-        commit('CARDS_PRINT_LOADED', cards);
+        commit("CARDS_PRINT_SET_LAST_PARAMS", stringifiedParams);
+        commit("CARDS_PRINT_LOADED", cards);
       } catch (e) {
-        commit('CARDS_PRINT_LOADING_FAILED');
+        commit("CARDS_PRINT_LOADING_FAILED");
       }
     },
   },

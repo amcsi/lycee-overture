@@ -1,9 +1,9 @@
-import vue from '@vitejs/plugin-vue';
-import laravel from 'laravel-vite-plugin';
-import AutoImport from 'unplugin-auto-import/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
-import Components from 'unplugin-vue-components/vite';
-import { defineConfig } from 'vite';
+import vue from "@vitejs/plugin-vue";
+import laravel from "laravel-vite-plugin";
+import AutoImport from "unplugin-auto-import/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import Components from "unplugin-vue-components/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   resolve: {
@@ -12,7 +12,7 @@ export default defineConfig({
   plugins: [
     laravel([
       //'resources/css/app.scss',
-      'resources/js/app.js',
+      "resources/js/app.js",
     ]),
     vue({
       template: {
@@ -21,7 +21,7 @@ export default defineConfig({
           includeAbsolute: false,
         },
         compilerOptions: {
-          whitespace: 'preserve',
+          whitespace: "preserve",
         },
       },
     }),

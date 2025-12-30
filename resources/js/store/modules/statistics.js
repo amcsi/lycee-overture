@@ -1,4 +1,4 @@
-import api from '../../api/index';
+import api from "../../api/index";
 
 export default {
   namespaced: true,
@@ -34,13 +34,13 @@ export default {
 
       // If e.g. only a page change happened, then the statistics would not need to be reloaded.
       if (stringifiedParams !== state.lastStatisticsParams) {
-        commit('STATISTICS_LOADING');
+        commit("STATISTICS_LOADING");
         try {
-          const statistics = (await api.get('/statistics', { params })).data.data;
-          commit('STATISTICS_SET_LAST_PARAMS', stringifiedParams);
-          commit('STATISTICS_LOADING_SUCCEEDED', statistics);
+          const statistics = (await api.get("/statistics", { params })).data.data;
+          commit("STATISTICS_SET_LAST_PARAMS", stringifiedParams);
+          commit("STATISTICS_LOADING_SUCCEEDED", statistics);
         } catch (e) {
-          commit('STATISTICS_LOADING_FAILED');
+          commit("STATISTICS_LOADING_FAILED");
           throw e;
         }
       }

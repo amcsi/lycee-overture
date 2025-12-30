@@ -1,4 +1,4 @@
-import { listDecks } from '../../api/endpoints/decks';
+import { listDecks } from "../../api/endpoints/decks";
 
 export default {
   namespaced: true,
@@ -24,12 +24,12 @@ export default {
         // Do not load again.
         return;
       }
-      commit('DECKS_LOADING');
+      commit("DECKS_LOADING");
       try {
         const cards = await listDecks();
-        commit('DECKS_LOADED', cards);
+        commit("DECKS_LOADED", cards);
       } catch (e) {
-        commit('DECKS_LOADING_FAILED');
+        commit("DECKS_LOADING_FAILED");
         throw e;
       }
     },

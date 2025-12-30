@@ -1,4 +1,4 @@
-import { init } from 'rollbar';
+import { init } from "rollbar";
 
 //export const rollbar = init({
 //  accessToken: window.vars.rollbarToken,

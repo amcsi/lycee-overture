@@ -1,11 +1,11 @@
-import { captureException } from '@sentry/vue';
-import { isProduction } from '../value/env';
+import { captureException } from "@sentry/vue";
+import { isProduction } from "../value/env";
 
-const genericErrorMessage = 'An error has occurred.';
+const genericErrorMessage = "An error has occurred.";
 
-export const VALIDATION_FAILURE = 'validation_failure';
-export const FILE_TOO_LARGE = 'file_too_large';
-export const NOT_FOUND = 'not_found';
+export const VALIDATION_FAILURE = "validation_failure";
+export const FILE_TOO_LARGE = "file_too_large";
+export const NOT_FOUND = "not_found";
 
 /**
  * Normalizes (ajax) errors.
@@ -19,13 +19,13 @@ export function normalizeError(error) {
   const ret = { message: genericErrorMessage, normalizedError: true };
   let response, status, data;
   // No response or response status.
-  if (typeof error !== 'object' || !(response = error.response) || !(status = response.status)) {
+  if (typeof error !== "object" || !(response = error.response) || !(status = response.status)) {
     return ret;
   }
 
   if (status === 413) {
     ret.type = FILE_TOO_LARGE;
-    ret.message = 'The uploaded file was too large.';
+    ret.message = "The uploaded file was too large.";
   }
 
   if (!(data = response.data)) {
