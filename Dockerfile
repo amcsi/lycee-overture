@@ -36,7 +36,7 @@ RUN docker-php-ext-install \
 
 RUN docker-php-pecl-install swoole
 
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash - && \
   apt-get update && \
   apt-get install -y nodejs && \
   node --version && \
