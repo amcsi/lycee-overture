@@ -67,6 +67,7 @@ COPY resources resources
 COPY vite.config.js .
 COPY .babelrc .
 RUN npm run build
+RUN ls -al public/build/manifest.json
 
 COPY . .
 
