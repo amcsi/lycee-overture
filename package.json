@@ -6,7 +6,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.18.6",
-    "axios": "^0.21",
+    "axios": "^1.13.2",
     "cross-env": "^5.2.0",
     "laravel-vite-plugin": "^0.5.3",
     "popper.js": "^1.12",
