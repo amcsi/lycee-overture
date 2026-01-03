@@ -38,8 +38,10 @@ class Set extends Model
         return sprintf('%s %s', $name, $this->version);
     }
 
-    public function getBrandAttribute()
+    protected function brand(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
-        return BrandMapper::getBrand($this->name_ja);
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(get: function () {
+            return BrandMapper::getBrand($this->name_ja);
+        });
     }
 }

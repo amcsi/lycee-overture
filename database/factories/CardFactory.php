@@ -7,6 +7,9 @@ use amcsi\LyceeOverture\Models\Card;
 use amcsi\LyceeOverture\Card\Type;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\amcsi\LyceeOverture\Models\Card>
+ */
 class CardFactory extends Factory
 {
     private static $increment = 1;

@@ -20,7 +20,7 @@ class CreateCardSets extends Migration
                 $table->increments('id');
                 $table->string('name_jp');
                 $table->string('name_en')->default('');
-                $table->string('cards')->string();
+                $table->string('cards');
                 $table->boolean('deck');
                 $table->timestamps();
             }

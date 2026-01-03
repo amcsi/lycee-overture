@@ -9,6 +9,9 @@ use amcsi\LyceeOverture\Models\Suggestion;
 use amcsi\LyceeOverture\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\amcsi\LyceeOverture\Models\Suggestion>
+ */
 class SuggestionFactory extends Factory
 {
     protected $model = Suggestion::class;

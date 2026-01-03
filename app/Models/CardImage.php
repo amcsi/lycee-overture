@@ -27,8 +27,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CardImage extends Model
 {
-    protected $casts = ['last_uploaded' => 'datetime'];
-
     public function getMd5(): string
     {
         return $this->getAttribute('md5');
@@ -37,5 +35,9 @@ class CardImage extends Model
     public function getLastUploaded(): ?\DateTimeInterface
     {
         return $this->getAttribute('last_uploaded');
+    }
+    protected function casts(): array
+    {
+        return ['last_uploaded' => 'datetime'];
     }
 }

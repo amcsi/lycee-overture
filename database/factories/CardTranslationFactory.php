@@ -9,6 +9,9 @@ use amcsi\LyceeOverture\I18n\JapaneseCharacterCounter;
 use amcsi\LyceeOverture\I18n\Locale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\amcsi\LyceeOverture\Models\CardTranslation>
+ */
 class CardTranslationFactory extends Factory
 {
     protected $model = CardTranslation::class;
