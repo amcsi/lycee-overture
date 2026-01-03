@@ -17,7 +17,7 @@ class SpaceAfterPeriodFixerTest extends TestCase
         self::assertSame($expected, SpaceAfterPeriodFixer::fix($input));
     }
 
-    public function provideFix()
+    public static function provideFix(): array
     {
         return [
             ['hey', 'hey'],
