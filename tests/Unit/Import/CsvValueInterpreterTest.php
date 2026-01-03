@@ -7,13 +7,12 @@ use amcsi\LyceeOverture\Card\Element;
 use amcsi\LyceeOverture\Card\Type;
 use amcsi\LyceeOverture\Import\CsvColumns;
 use amcsi\LyceeOverture\Import\CsvValueInterpreter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CsvValueInterpreterTest extends TestCase
 {
-    /**
-     * @dataProvider provideGetType
-     */
+    #[DataProvider('provideGetType')]
     public function testGetType($expected, $inputCell): void
     {
         self::assertSame($expected, CsvValueInterpreter::getType([CsvColumns::TYPE => $inputCell]));
@@ -29,9 +28,7 @@ class CsvValueInterpreterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideElements
-     */
+    #[DataProvider('provideElements')]
     public function testGetElements($expectedTrueElements, $elements): void
     {
         // All costs need to be present, so let's merge all-zeros with the non-zero expected costs.
@@ -56,9 +53,7 @@ class CsvValueInterpreterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCosts
-     */
+    #[DataProvider('provideCosts')]
     public function testGetCosts($expectedNonZeroCosts, $costs): void
     {
         // All costs need to be present, so let's merge all-zeros with the non-zero expected costs.
@@ -84,9 +79,7 @@ class CsvValueInterpreterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAbilities
-     */
+    #[DataProvider('provideAbilities')]
     public function testGetAbilityParts(array $expected, string $input): void
     {
         self::assertSame($expected, CsvValueInterpreter::getAbilityPartsFromAbility($input));
@@ -189,7 +182,7 @@ class CsvValueInterpreterTest extends TestCase
                 [
                     'pre_comments' => '',
                     'ability_cost' => "[常時]\n[宣言] [無無無]",
-                    'ability_description' => 'このキャラにＤＭＧ－２する。' . "\n" .
+                    'ability_description' => 'このキャラにＤＭＧ－２する。'."\n".
                         '相手ターン中に使用する。このアイテムを除外する。',
                     'comments' => '',
                 ],

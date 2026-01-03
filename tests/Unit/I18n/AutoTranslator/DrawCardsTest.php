@@ -8,9 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class DrawCardsTest extends TestCase
 {
-    /**
-     * @dataProvider provideAutoTranslate
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideAutoTranslate')]
     public function testAutoTranslate(string $expected, string $input)
     {
         self::assertSame($expected, DrawCards::autoTranslate($input));

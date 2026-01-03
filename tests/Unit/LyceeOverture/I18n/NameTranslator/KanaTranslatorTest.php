@@ -5,13 +5,12 @@ namespace Tests\Unit\LyceeOverture\I18n\NameTranslator;
 
 use amcsi\LyceeOverture\I18n\JpnForPhp\TransliteratorFactory;
 use amcsi\LyceeOverture\I18n\NameTranslator\KanaTranslator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class KanaTranslatorTest extends TestCase
 {
-    /**
-     * @dataProvider provideTranslate
-     */
+    #[DataProvider('provideTranslate')]
     public function testTranslate($expected, $input)
     {
         $instance = new KanaTranslator(TransliteratorFactory::getInstance());

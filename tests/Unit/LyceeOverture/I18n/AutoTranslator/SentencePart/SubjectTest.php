@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\LyceeOverture\I18n\AutoTranslator\SentencePart;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\SentencePart\Subject;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class SubjectTest extends TestCase
 {
-    /**
-     * @dataProvider provideCreateInstance
-     */
+    #[DataProvider('provideCreateInstance')]
     public function testCreateInstance(string $expected, string $input): void
     {
         self::assertSame($expected, Subject::createInstance($input)->getSubjectText());

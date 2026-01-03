@@ -13,7 +13,7 @@ class BasicImportCsvFiltererTest extends TestCase
 {
     public function testToDatabaseRows()
     {
-        $exampleCsvReader = Reader::createFromPath(__DIR__ . '/test.csv');
+        $exampleCsvReader = Reader::from(__DIR__.'/test.csv');
 
         $setAutoCreator = SetAutoCreatorStubber::createInstanceWithSets();
 

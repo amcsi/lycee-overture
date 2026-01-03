@@ -4,14 +4,13 @@ declare(strict_types=1);
 namespace Tests\Unit\I18n\DeeplTranslator;
 
 use amcsi\LyceeOverture\I18n\DeeplTranslator\DeeplMarkupTool;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DeeplMarkupToolTest extends TestCase
 {
 
-    /**
-     * @dataProvider provideSplitToMarkup
-     */
+    #[DataProvider('provideSplitToMarkup')]
     public function testSplitToMarkupAndReassemble(string $expectedText, array $expectedParts, string $input)
     {
         $split = DeeplMarkupTool::splitToMarkup($input);

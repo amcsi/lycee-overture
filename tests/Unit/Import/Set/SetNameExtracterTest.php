@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Import\Set;
 
 use amcsi\LyceeOverture\Import\Set\SetNameExtracter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class SetNameExtracterTest extends TestCase
 {
-    /**
-     * @dataProvider provideExtract
-     */
+    #[DataProvider('provideExtract')]
     public function testExtract($expected, $input)
     {
         self::assertSame($expected, SetNameExtracter::extract($input));

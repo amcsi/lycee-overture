@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\DiscardFromDeck;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DiscardFromDeckTest extends TestCase
 {
-    /**
-     * @dataProvider provideAutoTranslate
-     */
+    #[DataProvider('provideAutoTranslate')]
     public function testAutoTranslate($expected, $input)
     {
         self::assertSame($expected, DiscardFromDeck::autoTranslate($input));

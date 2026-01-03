@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\WhenAppears;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class WhenAppearsTest extends TestCase
 {
-    /**
-     * @dataProvider provideAutoTranslate
-     */
+    #[DataProvider('provideAutoTranslate')]
     public function testAutoTranslate(string $expected, string $input)
     {
         self::assertSame($expected, WhenAppears::autoTranslate($input));

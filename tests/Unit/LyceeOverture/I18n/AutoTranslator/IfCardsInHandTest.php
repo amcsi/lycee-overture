@@ -4,15 +4,16 @@ declare(strict_types=1);
 namespace Tests\Unit\LyceeOverture\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\IfCardsInHand;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class IfCardsInHandTest extends TestCase
 {
     /**
-     * @dataProvider provideAutoTranslate
      * @param $expected
      * @param $input
      */
+    #[DataProvider('provideAutoTranslate')]
     public static function testAutoTranslate(string $expected, string $input): void
     {
         self::assertSame($expected, IfCardsInHand::autoTranslate($input));

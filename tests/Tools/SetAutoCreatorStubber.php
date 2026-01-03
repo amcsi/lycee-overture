@@ -10,10 +10,10 @@ use Illuminate\Support\Collection;
 class SetAutoCreatorStubber
 {
     /**
-     * @param Set|null $setModel Optional Set model override for mocking DB operations.
+     * @param  Set|null  $setModel  Optional Set model override for mocking DB operations.
      * @return SetAutoCreator
      */
-    public static function createInstanceWithSets(Set $setModel = null): SetAutoCreator
+    public static function createInstanceWithSets(?Set $setModel = null): SetAutoCreator
     {
         $set = new Set();
         $set->id = 1;

@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\LyceeOverture\Card\Image;
 
 use amcsi\LyceeOverture\Card\Image\ImagePathOriginalVariantDeterminer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ImagePathOriginalVariantDeterminerTest extends TestCase
 {
-    /**
-     * @dataProvider provideOriginalVariant
-     */
+    #[DataProvider('provideOriginalVariant')]
     public function testOriginalVariant(string $input)
     {
         self::assertTrue(ImagePathOriginalVariantDeterminer::isOriginalVariant($input));
@@ -24,9 +23,7 @@ class ImagePathOriginalVariantDeterminerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideNotOriginalVariant
-     */
+    #[DataProvider('provideNotOriginalVariant')]
     public function testNotOriginalVariant(string $input)
     {
         self::assertFalse(ImagePathOriginalVariantDeterminer::isOriginalVariant($input));

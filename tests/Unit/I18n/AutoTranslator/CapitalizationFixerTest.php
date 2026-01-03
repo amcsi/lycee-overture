@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\CapitalizationFixer;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CapitalizationFixerTest extends TestCase
 {
-    /**
-     * @dataProvider provideFixCapitalization
-     */
+    #[DataProvider('provideFixCapitalization')]
     public function testFixCapitalization(string $expected, string $input)
     {
         self::assertSame($expected, CapitalizationFixer::fixCapitalization($input));

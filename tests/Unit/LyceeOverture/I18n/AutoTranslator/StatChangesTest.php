@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\LyceeOverture\I18n\AutoTranslator;
 
 use amcsi\LyceeOverture\I18n\AutoTranslator\StatChanges;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class StatChangesTest extends TestCase
 {
-    /**
-     * @dataProvider provideAutoTranslate
-     */
+    #[DataProvider('provideAutoTranslate')]
     public function testAutoTranslate(string $expected, string $input): void
     {
         self::assertSame($expected, StatChanges::autoTranslate($input));

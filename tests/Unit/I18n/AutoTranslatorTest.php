@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace Tests\Unit\I18n;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Tests\Tools\TestUtils;
 
 class AutoTranslatorTest extends TestCase
 {
-    /**
-     * @dataProvider provideAutoTranslate
-     */
+    #[DataProvider('provideAutoTranslate')]
     public function testAutoTranslate(string $expected, string $input)
     {
         self::assertSame($expected, TestUtils::createAutoTranslator()->autoTranslate($input));

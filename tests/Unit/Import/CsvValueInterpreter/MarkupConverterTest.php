@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Unit\Import\CsvValueInterpreter;
 
 use amcsi\LyceeOverture\Import\CsvValueInterpreter\MarkupConverter;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class MarkupConverterTest extends TestCase
 {
-    /**
-     * @dataProvider provideConvert
-     */
+    #[DataProvider('provideConvert')]
     public function testConvert(string $expected, string $input): void
     {
         self::assertSame($expected, MarkupConverter::convert($input));
@@ -50,9 +49,7 @@ class MarkupConverterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideNormalizeBrackets
-     */
+    #[DataProvider('provideNormalizeBrackets')]
     public function testNormalizeBrackets($expected, $input): void
     {
         self::assertSame($expected, MarkupConverter::normalizeBrackets($input));
