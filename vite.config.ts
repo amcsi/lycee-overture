@@ -1,3 +1,4 @@
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import laravel from "laravel-vite-plugin";
 import AutoImport from "unplugin-auto-import/vite";
@@ -31,6 +32,10 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
     }),
+    sentryVitePlugin({
+      org: "attila",
+      project: "lycee-overture",
+    }),
   ],
   css: {
     preprocessorOptions: {
@@ -38,5 +43,8 @@ export default defineConfig({
         quietDeps: true,
       },
     },
+  },
+  build: {
+    sourcemap: true,
   },
 });

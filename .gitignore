@@ -23,3 +23,6 @@ package-lock.json
 .pnpm-store/
 .phpunit.cache/
 storage/clockwork/
+public/build
+# Sentry Config File
+.env.sentry-build-plugin
