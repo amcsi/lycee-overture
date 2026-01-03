@@ -32,7 +32,7 @@ jobs:
           php artisan key:generate
 
       - name: Migrate tests
-        run: bin/migrate-tests.sh
+        run: bin/php artisan migrate:fresh --force
 
       - name: Run Testsuite
         run: vendor/bin/phpunit tests/
