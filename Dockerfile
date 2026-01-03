@@ -66,6 +66,12 @@ RUN pnpm install
 COPY resources resources
 COPY vite.config.ts .
 COPY .babelrc .
+
+# 1. Capture the build-arg from GitHub Actions
+ARG SENTRY_AUTH_TOKEN
+# 2. Export it as an environment variable so Vite can see it
+ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
+
 RUN npm run build
 RUN ls -al public/build/manifest.json
 

@@ -35,6 +35,7 @@ export default defineConfig({
     sentryVitePlugin({
       org: "attila",
       project: "lycee-overture",
+      authToken: process.env.SENTRY_AUTH_TOKEN, // Explicitly pass the token here
     }),
   ],
   css: {
