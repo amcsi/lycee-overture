@@ -6,5 +6,6 @@ declare(strict_types=1);
  */
 return [
     'importBaseUrl' => 'https://lycee-tcg.com/card',
-    'importQueryParameters' => ['limit' => '100000', 'output' => 'csv'],
+    // Base query parameters; pagination parameters are added at call time.
+    'importQueryParameters' => ['output' => 'csv'],
 ];

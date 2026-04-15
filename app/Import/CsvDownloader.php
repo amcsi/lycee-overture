@@ -19,8 +19,17 @@ class CsvDownloader
 
     public function download(): ResponseInterface
     {
+        return $this->downloadPage(page: 1, limit: 100000);
+    }
+
+    public function downloadPage(int $page, int $limit = 1000): ResponseInterface
+    {
         $config = $this->config;
-        $url = $config['importBaseUrl'] . '?' . http_build_query($config['importQueryParameters']);
+        $query = array_merge(
+            $config['importQueryParameters'] ?? [],
+            ['page' => (string) $page, 'limit' => (string) $limit]
+        );
+        $url = $config['importBaseUrl'] . '?' . http_build_query($query);
         $response = $this->client->get($url);
         if ($response->getStatusCode() !== 200) {
             throw new \RuntimeException("Status code not 200: " . Message::toString($response));

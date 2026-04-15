@@ -39,11 +39,19 @@ class DownloadCsvCommand extends Command
             return;
         }
 
-        $response = $this->csvDownloader->download();
-
         $cacheFileStream = Utils::streamFor(Utils::tryFopen($cacheFile, 'w+'));
-        // Copy contents of download to CSV file.
-        Utils::copyToStream($response->getBody(), $cacheFileStream);
+        $page = 1;
+        $limit = 1000;
+        while (true) {
+            $response = $this->csvDownloader->downloadPage(page: $page, limit: $limit);
+            $chunk = $response->getBody()->getContents();
+            if ($chunk === '') {
+                break;
+            }
+
+            $cacheFileStream->write($chunk);
+            $page++;
+        }
 
         $importCsvStopwatchEvent->stop();
         $output->text('Done importing CSV. ' . Profiling::stopwatchToHuman($importCsvStopwatchEvent));
