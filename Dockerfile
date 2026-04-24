@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y \
   # To proxy to Swoole.
   nginx \
   \
-  # For Swoole.
+  # For Swoole (OpenSSL + Brotli).
+  libssl-dev \
   libbrotli-dev \
   # For composer
   libzip-dev \
