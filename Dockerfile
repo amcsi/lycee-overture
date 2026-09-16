@@ -61,6 +61,8 @@ RUN composer install --no-scripts
 
 COPY package.json .
 COPY pnpm-lock.yaml .
+# pnpm 11 reads allowBuilds/overrides from here (not package.json#pnpm).
+COPY pnpm-workspace.yaml .
 
 RUN pnpm install
 

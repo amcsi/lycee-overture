@@ -1,0 +1,11 @@
+# pnpm 11 project settings (replaces package.json#pnpm).
+# This is not a multi-package workspace unless you also add a `packages:` list.
+
+overrides:
+  vite: npm:rolldown-vite@latest
+
+# Allow postinstall/build scripts for these deps (required by pnpm 11).
+allowBuilds:
+  '@parcel/watcher': true # native file watcher for sass/vite
+  '@sentry/cli': true # uploads source maps during vite build
+  vue-demi: true # Vue 2/3 dual-package helper used by some libs
