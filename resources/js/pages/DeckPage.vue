@@ -3,7 +3,12 @@
     <h1>{{ $t('nav.deck') }}</h1>
 
     <deck-container v-slot="{ decks }">
-      <el-select placeholder="-" :value="$route.params.deck" @change="deckChange">
+      <el-select
+        class="deck-select"
+        placeholder="-"
+        :value="$route.params.deck"
+        @change="deckChange"
+      >
         <el-option label="-" value=""></el-option>
         <el-option
           v-for="deck in decks"
@@ -37,4 +42,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.deck-select {
+  --el-select-width: 225px;
+  width: 225px;
+}
+</style>

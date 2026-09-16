@@ -187,7 +187,10 @@ export default {
 </script>
 
 <style scoped>
-.card-id-input {
+/* Element Plus 2.5+ defaults el-select to width 100%, which collapses in inline forms. */
+.card-id-input,
+:deep(.el-select) {
+  --el-select-width: 225px;
   width: 225px;
 }
 </style>
