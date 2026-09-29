@@ -37,7 +37,7 @@ class BuildLackeyCommand extends Command
 
         $variants = [
             new LackeyVariant('lycee-overture-translated', 'w_281/cards', 'medium'),
-            new LackeyVariant('lycee-overture-translated-highquality', 'q_auto/cards', 'high'),
+            new LackeyVariant('lycee-overture-translated-highquality', 'q_auto,f_auto/cards', 'high'),
         ];
 
         foreach ($variants as $variant) {
