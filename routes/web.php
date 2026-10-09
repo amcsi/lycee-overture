@@ -15,11 +15,20 @@ declare(strict_types=1);
 use amcsi\LyceeOverture\Http\Controllers\Auth\LoginController;
 use amcsi\LyceeOverture\Image\ImageUrlBuilder;
 use amcsi\LyceeOverture\Image\ImageUrlTemplates;
+use amcsi\LyceeOverture\Image\Local\LocalImageFiles;
 use amcsi\LyceeOverture\Models\User;
 
 Auth::routes();
 
 Route::get('logout', [LoginController::class, 'logout']);
+// Normally served by nginx; this covers setups without its /storage/images/ location, e.g. local development.
+// Without the web middleware, as its cookies would keep Cloudflare from caching the images.
+Route::get('storage/images/{path}', function (string $path) {
+    $file = LocalImageFiles::resolve(config('images.output_path'), $path);
+    abort_if($file === null, 404);
+    return response()->file($file, ['Cache-Control' => 'public, max-age=2592000']);
+})->where('path', '.*')->withoutMiddleware('web');
+
 Route::get(
     '{any}',
     function () {

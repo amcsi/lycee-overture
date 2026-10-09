@@ -33,6 +33,15 @@ class CloudinaryImageUrlBuilderTest extends TestCase
         ];
     }
 
+    public function testJpegUrlIsTheSameAsUrl(): void
+    {
+        $builder = new CloudinaryImageUrlBuilder('drkxqkguu');
+        self::assertSame(
+            'https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/cards/LO-0001.jpg',
+            $builder->jpegUrl('cards/LO-0001', ImageFormat::Full),
+        );
+    }
+
     #[DataProvider('provideFolderUrls')]
     public function testFolderUrl(string $expected, string $folder, ImageFormat $format): void
     {

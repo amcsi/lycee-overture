@@ -12,11 +12,11 @@ $cardIds = request()->get('cardId') ?
     [];
 $ogWidth = 249;
 $ogHeight = 423;
-$ogImageUrl = $imageUrlBuilder->url('og_image', \amcsi\LyceeOverture\Image\ImageFormat::Full);
+$ogImageUrl = $imageUrlBuilder->jpegUrl('og_image', \amcsi\LyceeOverture\Image\ImageFormat::Full);
 if (!empty($cardIds)) {
     $ogWidth = 346;
     $ogHeight = 484;
-    $ogImageUrl = $imageUrlBuilder->url("cards/{$cardIds[0]}", \amcsi\LyceeOverture\Image\ImageFormat::Full);
+    $ogImageUrl = $imageUrlBuilder->jpegUrl("cards/{$cardIds[0]}", \amcsi\LyceeOverture\Image\ImageFormat::Full);
 }
 @endphp
 <!doctype html>

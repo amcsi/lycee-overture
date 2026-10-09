@@ -14,6 +14,12 @@ class CloudinaryImageUrlBuilder implements ImageUrlBuilder
         return "{$this->baseUrl($format)}/$path.jpg";
     }
 
+    public function jpegUrl(string $path, ImageFormat $format): string
+    {
+        // f_auto already serves JPEG to clients that don't advertise newer formats.
+        return $this->url($path, $format);
+    }
+
     public function folderUrl(string $folder, ImageFormat $format): string
     {
         return "{$this->baseUrl($format)}/$folder/";

@@ -18,7 +18,7 @@ class ImportAllCommand extends Command
     public const COMMAND = 'lycee:import-all';
 
     protected $signature = self::COMMAND .
-    ' {--images : Also download images from website and upload to cloudinary}' .
+    ' {--images : Also download images from website and generate their variants}' .
     ' {--lackey : Build LackeyCCG plugin(s)}' .
     ' {--translations : Also download manual translations from OneSky}' .
     ' {--no-cache : Do not use cache for downloading the CSV}';
@@ -79,7 +79,10 @@ class ImportAllCommand extends Command
 
         if ($this->option('images')) {
             $this->call(ImageDownloadCommand::COMMAND, ['--new-only' => true]);
-            $this->call(ImageUploadCommand::COMMAND, ['--new-only' => true]);
+            $this->call(GenerateImagesCommand::COMMAND);
+            if (config('images.url_builder') === 'cloudinary') {
+                $this->call(ImageUploadCommand::COMMAND, ['--new-only' => true]);
+            }
         }
 
         if ($doTranslationSteps) {

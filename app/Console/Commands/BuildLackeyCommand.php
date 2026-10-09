@@ -140,7 +140,7 @@ class BuildLackeyCommand extends Command
         $getPublicUrl = fn($path) => $dstAdapter->url($path);
         $versionFileUrl = $getPublicUrl('version.txt');
 
-        $cardbackUrl = $this->imageUrlBuilder->url('cardback', ImageFormat::Full);
+        $cardbackUrl = $this->imageUrlBuilder->jpegUrl('cardback', ImageFormat::Full);
         $fileList = [
             'plugininfo.txt' => $getPublicUrl('plugininfo.txt'),
             'version.txt' => $versionFileUrl,

@@ -12,6 +12,12 @@ interface ImageUrlBuilder
     public function url(string $path, ImageFormat $format): string;
 
     /**
+     * URL of a real JPEG, for clients that can't handle other formats (LackeyCCG, og:image scrapers). Only Full and
+     * Width281 are guaranteed to have one.
+     */
+    public function jpegUrl(string $path, ImageFormat $format): string;
+
+    /**
      * URL of a folder that clients append "<name>.jpg" to, e.g. LackeyCCG's CardGeneralURLs.
      */
     public function folderUrl(string $folder, ImageFormat $format): string;

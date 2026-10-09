@@ -28,8 +28,8 @@ class UploadStaticImagesCommandTest extends TestCase
         $this->artisan('lycee:upload-static-images', ['folder' => 'rules'])->assertSuccessful();
 
         self::assertCount(27, $uploaded);
-        self::assertSame(resource_path('images/rules/index_2_img1.png'), $uploaded['rules/index_2_img1']);
-        self::assertSame(resource_path('images/rules/index_4_number3.jpg'), $uploaded['rules/index_4_number3']);
+        self::assertSame(resource_path('image-sources/rules/index_2_img1.png'), $uploaded['rules/index_2_img1']);
+        self::assertSame(resource_path('image-sources/rules/index_4_number3.jpg'), $uploaded['rules/index_4_number3']);
     }
 
     public function testFailsForAMissingFolder(): void

@@ -10,15 +10,15 @@ class UploadStaticImagesCommand extends Command
 {
     public const COMMAND = 'lycee:upload-static-images';
 
-    protected $signature = self::COMMAND . ' {folder : Folder within resources/images, e.g. "rules"}';
-    protected $description = 'Uploads the images of a resources/images folder to cloud service, keeping their paths.';
+    protected $signature = self::COMMAND . ' {folder : Folder within resources/image-sources, e.g. "rules"}';
+    protected $description = 'Uploads the images of a resources/image-sources folder to cloud service, keeping their paths.';
 
     public function handle(CloudinaryUploader $cloudinaryUploader): int
     {
         $folder = $this->argument('folder');
-        $files = glob(resource_path("images/$folder") . '/*');
+        $files = glob(resource_path("image-sources/$folder") . '/*');
         if (!$files) {
-            $this->error("No images found in resources/images/$folder");
+            $this->error("No images found in resources/image-sources/$folder");
             return self::FAILURE;
         }
 

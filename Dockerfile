@@ -22,10 +22,17 @@ RUN apt-get update && apt-get install -y \
   libbrotli-dev \
   # For composer
   libzip-dev \
-  zlib1g-dev
+  zlib1g-dev \
+  \
+  # For GD, which generates the image variants.
+  libjpeg62-turbo-dev \
+  libwebp-dev \
+  libavif-dev
 
 # This includes the docker-php-pecl-install executable
 COPY bin/docker-php-pecl-install /usr/local/bin/
+
+RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-avif
 
 # PHP extensions
 RUN docker-php-ext-install \
@@ -33,7 +40,8 @@ RUN docker-php-ext-install \
   # Newer Laravel Swoole needs this for some reason.
   pcntl \
   \
-  zip
+  zip \
+  gd
 
 RUN docker-php-pecl-install swoole
 

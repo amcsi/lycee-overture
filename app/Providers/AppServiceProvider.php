@@ -18,6 +18,9 @@ use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
 use amcsi\LyceeOverture\Image\CloudinaryImageUrlBuilder;
 use amcsi\LyceeOverture\Image\ImageUrlBuilder;
+use amcsi\LyceeOverture\Image\Local\ImageSources;
+use amcsi\LyceeOverture\Image\Local\ImageVariantGenerator;
+use amcsi\LyceeOverture\Image\Local\LocalImageUrlBuilder;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
@@ -95,8 +98,21 @@ class AppServiceProvider extends ServiceProvider
 
         $app->singleton(
             ImageUrlBuilder::class,
-            fn() => new CloudinaryImageUrlBuilder((string) $config->get('cloudinary.defaults.cloud_name'))
+            fn() => match ($config->get('images.url_builder')) {
+                'local' => new LocalImageUrlBuilder($config->get('images.base_url')),
+                default => new CloudinaryImageUrlBuilder((string) $config->get('cloudinary.defaults.cloud_name')),
+            }
         );
+
+        $app->when(ImageSources::class)
+            ->needs('$cardsDir')
+            ->give(storage_path(ImportConstants::ORIGINAL_CARD_IMAGES_PATH));
+        $app->when(ImageSources::class)
+            ->needs('$staticDir')
+            ->give($config->get('images.static_sources_path'));
+        $app->when(ImageVariantGenerator::class)
+            ->needs('$outputDir')
+            ->give($config->get('images.output_path'));
 
         $app->when(OneSkyClient::class)
             ->needs('$oneSkyConfig')
