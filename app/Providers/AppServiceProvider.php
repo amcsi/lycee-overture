@@ -16,6 +16,8 @@ use amcsi\LyceeOverture\I18n\SetTranslator\SetTranslator;
 use amcsi\LyceeOverture\I18n\TranslationUsedTracker;
 use amcsi\LyceeOverture\I18n\TranslatorApi\YahooRawKanjiTranslator;
 use amcsi\LyceeOverture\I18n\TranslatorInterface;
+use amcsi\LyceeOverture\Image\CloudinaryImageUrlBuilder;
+use amcsi\LyceeOverture\Image\ImageUrlBuilder;
 use amcsi\LyceeOverture\Import\CsvDownloader;
 use amcsi\LyceeOverture\Import\ImageDownloader;
 use amcsi\LyceeOverture\Import\ImportConstants;
@@ -90,6 +92,11 @@ class AppServiceProvider extends ServiceProvider
                 $adapter = new LocalFilesystemAdapter(storage_path(ImportConstants::ORIGINAL_CARD_IMAGES_PATH));
                 return new Filesystem($adapter);
             });
+
+        $app->singleton(
+            ImageUrlBuilder::class,
+            fn() => new CloudinaryImageUrlBuilder((string) $config->get('cloudinary.defaults.cloud_name'))
+        );
 
         $app->when(OneSkyClient::class)
             ->needs('$oneSkyConfig')

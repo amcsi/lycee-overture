@@ -7,7 +7,7 @@
       can be used to achieve various effects during the game.
     </p>
 
-    <cloudinary-fetch-img src="https://lycee-tcg.com/rule/images/index_8_img1.png" />
+    <rule-image name="index_8_img1" />
 
     <table>
       <tr>
@@ -141,12 +141,12 @@
 
 <script>
 import CardText from '../card/CardText.vue';
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
+import RuleImage from './RuleImage.vue';
 
 /** @class BasicAbilityRules */
 export default {
   name: 'BasicAbilityRules',
-  components: { CloudinaryFetchImg, CardText },
+  components: { RuleImage, CardText },
 };
 </script>
 

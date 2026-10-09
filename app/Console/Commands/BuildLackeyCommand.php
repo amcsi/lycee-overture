@@ -11,6 +11,8 @@ use amcsi\LyceeOverture\Etc\Lackey\LackeyNameFormatter;
 use amcsi\LyceeOverture\Etc\Lackey\LackeyStarterDecksAssember;
 use amcsi\LyceeOverture\Etc\LackeyHasher;
 use amcsi\LyceeOverture\Etc\LackeyVariant;
+use amcsi\LyceeOverture\Image\ImageFormat;
+use amcsi\LyceeOverture\Image\ImageUrlBuilder;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +27,7 @@ class BuildLackeyCommand extends Command
 
     protected $description = 'Builds plugins for LackeyCCG';
 
-    public function __construct()
+    public function __construct(private ImageUrlBuilder $imageUrlBuilder)
     {
         parent::__construct();
     }
@@ -36,8 +38,8 @@ class BuildLackeyCommand extends Command
         $this->output->text('Started building plugin for LackeyCCG.');
 
         $variants = [
-            new LackeyVariant('lycee-overture-translated', 'w_281/cards', 'medium'),
-            new LackeyVariant('lycee-overture-translated-highquality', 'q_auto,f_auto/cards', 'high'),
+            new LackeyVariant('lycee-overture-translated', ImageFormat::Width281, 'medium'),
+            new LackeyVariant('lycee-overture-translated-highquality', ImageFormat::Full, 'high'),
         ];
 
         foreach ($variants as $variant) {
@@ -138,12 +140,13 @@ class BuildLackeyCommand extends Command
         $getPublicUrl = fn($path) => $dstAdapter->url($path);
         $versionFileUrl = $getPublicUrl('version.txt');
 
+        $cardbackUrl = $this->imageUrlBuilder->url('cardback', ImageFormat::Full);
         $fileList = [
             'plugininfo.txt' => $getPublicUrl('plugininfo.txt'),
             'version.txt' => $versionFileUrl,
             'sets/carddata.txt' => $getPublicUrl('sets/carddata.txt'),
-            'bot.jpg' => 'https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/cardback.jpg',
-            'sets/setimages/general/cardback.jpg' => 'https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/cardback.jpg',
+            'bot.jpg' => $cardbackUrl,
+            'sets/setimages/general/cardback.jpg' => $cardbackUrl,
         ];
         foreach ($dstAdapter->listContents('decks') as $file) {
             $deckPath = $file['path'];
@@ -160,11 +163,7 @@ class BuildLackeyCommand extends Command
         }
         $newUpdateListContents .= "\n";
         $newUpdateListContents .= "CardGeneralURLs:\n";
-        $newUpdateListContents .= sprintf(
-            "https://res.cloudinary.com/%s/image/upload/%s/\n",
-            config('cloudinary.defaults.cloud_name'),
-            $lackeyVariant->getImagePrefix()
-        );
+        $newUpdateListContents .= $this->imageUrlBuilder->folderUrl('cards', $lackeyVariant->getImageFormat()) . "\n";
 
         if ($lastUpdateListContents !== $newUpdateListContents) {
             // version.txt

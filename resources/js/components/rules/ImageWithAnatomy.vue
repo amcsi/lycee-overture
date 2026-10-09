@@ -1,6 +1,6 @@
 <template>
   <div class="anatomy-container">
-    <cloudinary-fetch-img :src="src" :alt="alt" />
+    <rule-image :name="name" :alt="alt" />
     <AnatomyTable>
       <slot></slot>
     </AnatomyTable>
@@ -8,15 +8,16 @@
 </template>
 
 <script>
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
+import RuleImage from './RuleImage.vue';
 import AnatomyTable from './AnatomyTable.vue';
 
 /** @class ImageWithAnatomy */
 export default {
   name: 'ImageWithAnatomy',
-  components: { CloudinaryFetchImg, AnatomyTable },
+  components: { RuleImage, AnatomyTable },
   props: {
-    src: {
+    /** Rules image name, see RuleImage. */
+    name: {
       type: String,
       required: true,
     },

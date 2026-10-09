@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace amcsi\LyceeOverture\Etc;
 
+use amcsi\LyceeOverture\Image\ImageFormat;
+
 class LackeyVariant
 {
-    public function __construct(private string $pluginFolderName, private string $imagePrefix, private string $quality)
+    public function __construct(private string $pluginFolderName, private ImageFormat $imageFormat, private string $quality)
     {
     }
 
@@ -14,9 +16,9 @@ class LackeyVariant
         return $this->pluginFolderName;
     }
 
-    public function getImagePrefix(): string
+    public function getImageFormat(): ImageFormat
     {
-        return $this->imagePrefix;
+        return $this->imageFormat;
     }
 
     public function getQuality(): string

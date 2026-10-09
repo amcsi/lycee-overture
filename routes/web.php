@@ -13,6 +13,8 @@ declare(strict_types=1);
 */
 
 use amcsi\LyceeOverture\Http\Controllers\Auth\LoginController;
+use amcsi\LyceeOverture\Image\ImageUrlBuilder;
+use amcsi\LyceeOverture\Image\ImageUrlTemplates;
 use amcsi\LyceeOverture\Models\User;
 
 Auth::routes();
@@ -33,7 +35,7 @@ Route::get(
 
         $vars = [
             'apiBaseUrl' => "$appUrl/api",
-            'cloudinaryCloudName' => config('cloudinary.defaults.cloud_name'),
+            'imageUrlTemplates' => ImageUrlTemplates::build(app(ImageUrlBuilder::class)),
             'sentryToken' => env('SENTRY_LARAVEL_DSN'),
             'gitSha1' => env('GIT_SHA1'),
             'environment' => config('app.env'),

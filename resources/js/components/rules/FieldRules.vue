@@ -10,8 +10,8 @@
     </ul>
 
     <p>
-      <cloudinary-fetch-img
-        src="https://lycee-tcg.com/rule/images/index_3_img.jpg"
+      <rule-image
+        name="index_3_img"
         :alt="$t('rules.field.imageAlt')"
       />
     </p>
@@ -56,12 +56,12 @@
 </template>
 
 <script>
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
+import RuleImage from './RuleImage.vue';
 
 /** @class FieldRules */
 export default {
   name: 'FieldRules',
-  components: { CloudinaryFetchImg },
+  components: { RuleImage },
 };
 </script>
 

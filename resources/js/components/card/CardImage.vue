@@ -14,7 +14,7 @@
 
 <script>
 import variables from '../../../sass/_variables.module.scss';
-import { assembleCloudinaryImageCardUrl, assembleCloudinaryImageUrl } from '../../utils/image';
+import { cardImageUrl, ImageFormat, imageUrl } from '../../utils/image';
 
 const { cardHeightWidthRatio } = variables;
 
@@ -30,9 +30,10 @@ export default {
       type: Number,
       default: false,
     },
-    cloudinaryHeight: {
-      type: Number,
-      default: false,
+    /** One of ImageFormat. */
+    imageFormat: {
+      type: String,
+      default: ImageFormat.Full,
     },
     noPointerEvents: {
       type: Boolean,
@@ -52,7 +53,7 @@ export default {
   },
   computed: {
     src() {
-      return assembleCloudinaryImageCardUrl(this.id + (this.variant ?? ''), this);
+      return cardImageUrl(this.id + (this.variant ?? ''), this.imageFormat);
     },
     width() {
       // Card width/height ratio.
@@ -70,7 +71,7 @@ export default {
       return this.id + this.variant;
     },
     cardbackSrc() {
-      return assembleCloudinaryImageUrl('cardback');
+      return imageUrl('cardback');
     },
   },
 };

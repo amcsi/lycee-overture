@@ -2,7 +2,7 @@
   <tr>
     <td class="number-and-name-column">
       <div class="number-and-name-container">
-        <cloudinary-fetch-img :src="numberImageUrl" :alt="number" />
+        <rule-image :name="numberImageName" :alt="number" />
 
         <div class="number-and-name--name">
           {{ name }}
@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
+import RuleImage from './RuleImage.vue';
 
 /** @class AnatomyRow */
 export default {
   name: 'AnatomyRow',
-  components: { CloudinaryFetchImg },
+  components: { RuleImage },
   props: {
     number: {
       type: [Number, String],
@@ -34,12 +34,12 @@ export default {
     onlyName: Boolean,
   },
   computed: {
-    numberImageUrl() {
+    numberImageName() {
       return this.onlyName
         ? // Blue.
-          `https://lycee-tcg.com/rule/images/index_4_number${this.number}.jpg`
+          `index_4_number${this.number}`
         : // Red.
-          `https://lycee-tcg.com/rule/images/index_2_number${this.number}.jpg`;
+          `index_2_number${this.number}`;
     },
   },
 };

@@ -19,7 +19,7 @@
     </p>
 
     <ImageWithAnatomy
-      src="https://lycee-tcg.com/rule/images/index_2_img1.png"
+      name="index_2_img1"
       :alt="$t('rules.characterCard.imageAlt')"
     >
       <AnatomyRow number="1" :name="$t('rules.characterCard.cardName')">
@@ -85,7 +85,7 @@
     </p>
 
     <ImageWithAnatomy
-      src="https://lycee-tcg.com/rule/images/index_2_img2.png"
+      name="index_2_img2"
       :alt="$t('rules.eventCard.imageAlt')"
     >
       <AnatomyRow number="1" :name="$t('rules.characterCard.cardName')">
@@ -118,7 +118,7 @@
     </ul>
 
     <ImageWithAnatomy
-      src="https://lycee-tcg.com/rule/images/index_2_img3.png"
+      name="index_2_img3"
       :alt="$t('rules.itemCard.imageAlt')"
     >
       <AnatomyRow number="1" :name="$t('rules.characterCard.cardName')">

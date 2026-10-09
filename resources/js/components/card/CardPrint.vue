@@ -7,7 +7,7 @@
         :id="card.id"
         :variant="imageVariant"
         :height="100"
-        :cloudinary-height="150"
+        :image-format="ImageFormat.Height150"
       />
       <div class="card-text">
         <div>
@@ -40,6 +40,7 @@
 <script>
 import cardMixin from '../../utils/cardMixin';
 import { getCurrentVariant } from '../../utils/cardVariant';
+import { ImageFormat } from '../../utils/image';
 import CardImage from './CardImage.vue';
 import CardText from './CardText.vue';
 
@@ -50,6 +51,9 @@ import CardText from './CardText.vue';
  **/
 export default {
   name: 'CardPrint',
+  setup() {
+    return { ImageFormat };
+  },
   components: { CardText, CardImage },
   props: ['card', 'withImages'],
   mixins: [cardMixin],

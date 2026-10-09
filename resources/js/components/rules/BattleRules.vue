@@ -115,7 +115,7 @@
       resolves differently based on whether or not a defending character was declared.
     </p>
 
-    <cloudinary-fetch-img src="https://lycee-tcg.com/rule/images/index_7_img1.png" />
+    <rule-image name="index_7_img1" />
 
     <h4>[With Defending Character]</h4>
 
@@ -165,7 +165,7 @@
     <h4>[With Support]</h4>
 
     <div class="card-image-with-numbered-bullets-on-side">
-      <cloudinary-fetch-img src="https://lycee-tcg.com/rule/images/index_7_img3.png" />
+      <rule-image name="index_7_img3" />
       <ol>
         <li>
           The player taking his turn declares an attack.<br />
@@ -202,12 +202,12 @@
 </template>
 
 <script>
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
+import RuleImage from './RuleImage.vue';
 
 /** @class BattleRules */
 export default {
   name: 'BattleRules',
-  components: { CloudinaryFetchImg },
+  components: { RuleImage },
 };
 </script>
 

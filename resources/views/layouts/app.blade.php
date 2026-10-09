@@ -1,4 +1,5 @@
 @php
+$imageUrlBuilder = app(\amcsi\LyceeOverture\Image\ImageUrlBuilder::class);
 $title = 'Lycee Overture TCG Translations';
 $description = 'This is a website in progress with the goal of translating the new Lycee Overture Trading Card Game and provide a useful database for being able to search for cards.';
 $cardIds = request()->get('cardId') ?
@@ -11,11 +12,11 @@ $cardIds = request()->get('cardId') ?
     [];
 $ogWidth = 249;
 $ogHeight = 423;
-$ogImageUrl = 'https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/v1619434147/og_image.jpg';
+$ogImageUrl = $imageUrlBuilder->url('og_image', \amcsi\LyceeOverture\Image\ImageFormat::Full);
 if (!empty($cardIds)) {
     $ogWidth = 346;
     $ogHeight = 484;
-    $ogImageUrl = "https://res.cloudinary.com/drkxqkguu/image/upload/q_auto,f_auto/cards/{$cardIds[0]}.jpg";
+    $ogImageUrl = $imageUrlBuilder->url("cards/{$cardIds[0]}", \amcsi\LyceeOverture\Image\ImageFormat::Full);
 }
 @endphp
 <!doctype html>

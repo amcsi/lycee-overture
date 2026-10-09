@@ -6,7 +6,7 @@
         :id="id"
         :variant="variant"
         :height="150"
-        :cloudinary-height="150"
+        :image-format="ImageFormat.Height150"
         @mouseenter="mouseEnter"
         @mouseleave="mouseLeave"
         style="cursor: pointer"
@@ -22,7 +22,7 @@
       :id="id"
       :variant="variant"
       :height="height"
-      :cloudinary-height="150"
+      :image-format="ImageFormat.Height150"
       fallback-to-cardback
       no-pointer-events
     />
@@ -34,7 +34,7 @@
       :id="id"
       :variant="variant"
       :height="height"
-      :cloudinary-height="height"
+      :image-format="largeImageFormat"
       no-pointer-events
     />
 
@@ -62,12 +62,15 @@ import {
   setTemporaryVariant,
   unsetTemporaryVariant,
 } from '../../utils/cardVariant';
-import { assembleCloudinaryImageCardUrl } from '../../utils/image';
+import { cardImageUrl, ImageFormat } from '../../utils/image';
 import CardImage from './CardImage.vue';
 
 /** @class CardThumbnail */
 export default {
   name: 'CardThumbnail',
+  setup() {
+    return { ImageFormat };
+  },
   data() {
     return {
       largerImage: false,
@@ -89,10 +92,11 @@ export default {
     height() {
       return this.largerImage ? 520 : 300;
     },
+    largeImageFormat() {
+      return this.largerImage ? ImageFormat.Height520 : ImageFormat.Height300;
+    },
     imageUrl() {
-      return assembleCloudinaryImageCardUrl(this.id + this.variantObj.variant, {
-        cloudinaryHeight: this.height,
-      });
+      return cardImageUrl(this.id + this.variantObj.variant, this.largeImageFormat);
     },
     savedCardVariant() {
       return getSavedVariant(this.id);

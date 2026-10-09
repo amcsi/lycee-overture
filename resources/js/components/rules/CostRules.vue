@@ -13,7 +13,7 @@
     </ul>
 
     <ImageWithAnatomy
-      src="https://lycee-tcg.com/rule/images/index_4_img1.png"
+      name="index_4_img1"
       :alt="$t('rules.characterCard.imageAlt')"
     >
       <AnatomyRow only-name number="1" :name="$t('rules.costCard.element')" />
@@ -26,8 +26,8 @@
     </p>
 
     <p>
-      <cloudinary-fetch-img
-        src="https://lycee-tcg.com/rule/images/index_4_img2.png"
+      <rule-image
+        name="index_4_img2"
         :alt="$t('rules.costExample.imageAlt')"
       />
     </p>
@@ -39,8 +39,8 @@
     </p>
 
     <p>
-      <cloudinary-fetch-img
-        src="https://lycee-tcg.com/rule/images/index_4_img3.png"
+      <rule-image
+        name="index_4_img3"
         :alt="$t('rules.howToSummon.imageAlt')"
       />
     </p>
@@ -147,14 +147,14 @@
 
 <script>
 import CardText from '../card/CardText.vue';
-import CloudinaryFetchImg from '../common/CloudinaryFetchImg.vue';
+import RuleImage from './RuleImage.vue';
 import AnatomyRow from './AnatomyRow.vue';
 import ImageWithAnatomy from './ImageWithAnatomy.vue';
 
 /** @class CostRules */
 export default {
   name: 'CostRules',
-  components: { CloudinaryFetchImg, CardText, AnatomyRow, ImageWithAnatomy },
+  components: { RuleImage, CardText, AnatomyRow, ImageWithAnatomy },
 };
 </script>
 
